@@ -1,0 +1,1405 @@
+@import url(https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js);
+
+.App {
+  text-align: center;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.transparent .navbar-content {
+  background-color: transparent;
+}
+
+.colored .navbar-content {
+  height: 90px;
+  background-color: #003c7de7;
+}
+
+
+.nav-menu {
+  margin-top: 10px;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  transition: background-color 0.3s ease-in-out;
+  padding: 20px;
+  background-color: transparent;
+}
+
+
+/* Homepage */
+
+.section1 {
+  padding-top: 280px;
+  padding-bottom: 280px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7)), url('/src/user-components/assets/img/bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center, center;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: large;
+}
+
+#title {
+  font-weight: 900;
+}
+
+#quote {
+  padding-top: 5px;
+  font-size: 25px;
+  color: rgb(239, 239, 239);
+}
+
+.official-list {
+  height: 200px;
+  width: 200px;
+}
+
+
+
+/* First Section - Evacuation Centers */
+
+.evacuation-section {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-Repeat: 'no-repeat';
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/src/user-components/assets/img/bg.jpg');
+}
+
+.section-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.section-content {
+  width: 100%;
+  /* height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center; */
+}
+
+.evacuation-center {
+  background: #fff;
+  width: 20%;
+  border-radius: 50px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+  transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+  padding: 14px 80px 18px 36px;
+  cursor: pointer;
+}
+
+
+.evacuation-center:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+}
+
+.popup-image {
+  object-fit: contain;
+}
+
+.evacuation {
+  width: 18 rem;
+}
+
+.evac-content-container {
+  width: 100%;
+
+}
+
+.evac-icon {
+  border-radius: 50px 50px 0 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+}
+
+.emergency-plan {
+  background-color: #0060AD;
+  color: white;
+}
+
+.contingency-card {
+  display: flex;
+  text-align: center;
+  width: 80%;
+  border-radius: 20px;
+}
+
+.card-header {
+  width: 100%;
+  text-align: center;
+}
+
+.emergency-section-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.emergency-section-content .table {
+  width: 80%;
+  text-align: center;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* -------------------------------------SUBMENUS ----------------------------------------  */
+
+/* First Section - Evacuation Centers */
+
+.category-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 50px;
+  background-Repeat: 'no-repeat';
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/src/user-components/assets/img/bg.jpg');
+}
+
+.section-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.section-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.category {
+  background-color: #D9D9D9;
+  width: 20%;
+  border-radius: 50px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: 10px;
+  min-height: 150px;
+}
+
+.business-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #0060AD;
+}
+
+.business {
+  background-color: #D9D9D9;
+  width: 20%;
+  border-radius: 50px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  min-height: 400px;
+  margin: 50px;
+}
+
+.business-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.card {
+  flex: 0 0 auto;
+}
+
+/* SERVICE SECTION */
+.service {
+  margin-top: 0px;
+  padding-top: 20px;
+  background-color: transparent;
+  width: 20%;
+  border-radius: 50px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.service.component__space {
+  width: 95%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.col__3 {
+  max-width: 33.333333%;
+  width: 33.333333%;
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 10px;
+  align-items: stretch;
+}
+
+h1.heading {
+  margin-bottom: 0px;
+  font-size: 40px;
+  color: #020881;
+  text-align: center;
+  font-weight: 700;
+  font-family: Poppins, sans-serif;
+
+}
+
+p.heading.p__color {
+  margin-bottom: 0;
+  text-align: center;
+  line-height: 1.2;
+
+}
+
+
+.service__box {
+  margin-top: 0px;
+  border-radius: 10px;
+  width: 100%;
+  background-color: #5b8fff;
+  padding: 25px;
+  transition: .4s ease;
+}
+
+.service__box:hover {
+  transform: translateY(5px);
+  background-image: linear-gradient(90deg, rgb(255, 222, 116), #F4D160);
+}
+
+.service__box:hover .icon {
+  color: #fff;
+}
+
+.service__box:hover p.service__text .p__color {
+  color: #fff !important;
+}
+
+.icon {
+  font-size: 44px;
+  font-weight: 400;
+  margin-bottom: 23px;
+  display: inline-flex;
+  color: #1d00f9;
+}
+
+
+
+h1.service__text {
+  font-size: 16px;
+  font-family: Poppins, sans-serif;
+  padding: 10px 0px;
+}
+
+
+@media only screen and (max-width: 1024px) {
+  .col__3 {
+    max-width: 50%;
+    width: 50%;
+  }
+}
+
+
+
+@media only screen and (max-width: 768px) {
+  .service.component__space {
+    flex-direction: row;
+    margin-top: 20px;
+  }
+
+  .col__3 {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .service__box {
+    padding: 15px;
+  }
+
+  .icon {
+    font-size: 34px;
+  }
+
+  h1.service__text {
+    font-size: 14px;
+  }
+
+  /* Add this CSS to your existing redesign-services.css or create a new CSS file and import it */
+
+  .blue-box {
+    background-color: blue;
+    color: white;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-radius: 5px;
+  }
+
+}
+
+/* POP-UP FORMS DESIGN */
+.popup-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 800px;
+
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.793);
+  z-index: 9998;
+}
+
+
+
+.certificate {
+  border: 2px solid #000000;
+  padding: 20px;
+  text-align: center;
+}
+
+.certificate-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.certificate-content {
+  margin-bottom: 20px;
+
+}
+
+.certificate-content .form-group {
+  margin-bottom: 10px;
+}
+
+.certificate-content label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.certificate-content .form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #737272;
+  border-radius: 4px;
+}
+
+.form-buttons {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.form-buttons button {
+  margin-right: 10px;
+}
+
+.success-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background-color: #2ecc95;
+  color: #fff;
+  padding: 40px;
+  text-align: center;
+  font-size: 30px;
+  border-radius: 30px;
+}
+
+/* to top button */
+
+.scroll-to-top-button {
+  display: none;
+  position: fixed;
+  bottom: 95px;
+  right: 35px;
+  z-index: 9999;
+  background-color: #4287f5;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+  height: 50px;
+  width: 50px;
+}
+
+.scroll-to-top-button.visible {
+  display: block;
+}
+
+.scroll-to-top-button:hover {
+  opacity: 0.8;
+}
+
+/* userprofile */
+.userprof {
+  background: #f8f8f8
+}
+
+/* ANNOUNCEMENT SUBMENU  */
+.submenu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 170px;
+  position: absolute;
+  left: 49%;
+  flex-direction: column;
+  background-color: #0060AD;
+  padding: 8px;
+  margin-top: 4px;
+  list-style-type: none;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  padding: 2px 2px;
+  margin-bottom: 8px;
+}
+
+.submenu li {
+  cursor: pointer;
+  padding: 4px;
+}
+
+.submenu li:hover {
+  width: 170px;
+  background-color: #e6e6e6;
+}
+
+
+
+/* HOME SUBMENU  */
+.Homesubmenu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 170px;
+  position: absolute;
+  left: 37%;
+  flex-direction: column;
+  background-color: #0060AD;
+  padding: 8px;
+  margin-top: 4px;
+  list-style-type: none;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  padding: 2px 2px;
+  margin-bottom: 8px;
+}
+
+.Homesubmenu li {
+  cursor: pointer;
+  padding: 4px;
+
+}
+
+.Homesubmenu li:hover {
+  width: 170px;
+  background-color: #e6e6e6;
+}
+
+
+/* PROFILE SUBMENU  */
+.Profilesubmenu {
+  position: absolute;
+  left: 78%;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  background-color: #0060AD;
+  padding: 8px;
+  margin-top: 4px;
+  list-style-type: none;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+
+}
+
+.Profilesubmenu li {
+  cursor: pointer;
+  padding: 4px;
+  color: white;
+
+}
+
+/* --------------------------------------------------- PROFILE SUBMENU CONTENT DESIGN  -------------------------------------------------------------- */
+.profile-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.profile-icon {
+  font-size: 46px;
+  margin-right: 8px;
+}
+
+.profile-info span {
+  font-weight: bold;
+
+
+}
+
+.request-summary {
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.column {
+  flex: 1;
+}
+
+.column p {
+  margin: 10;
+  font-size: 10px;
+
+}
+
+.sample-status {
+  margin: 4px;
+  padding: 2px 2px;
+  border: 4px solid #eeffd1;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 10px;
+
+}
+
+.sample-status:hover {
+  background-color: #e0e0e0;
+}
+
+.sample-status-denied {
+  margin: 4px;
+  padding: 2px 2px;
+  border: 4px solid #cf2402;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 10px;
+
+}
+
+.sample-status-claimed {
+  margin: 4px;
+  padding: 2px 2px;
+  border: 4px solid #02cf02;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 30px;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+
+.button:hover {
+  background-color: #e0e0e0;
+}
+
+
+/* ---------------------------------------------------  END OF SUBMENU --------------------------------------------------------------- */
+
+/* --------------------------------------------------- TOP NAV CONTENT --------------------------------------------------------------- */
+/* TOPNAV TEXT DESIGN  */
+.link {
+  text-decoration: none;
+  display: inline;
+  padding: 15px 50px;
+  font-weight: 700;
+  font-size: large;
+  cursor: pointer;
+  color: white;
+}
+
+.link a {
+  padding: 15px 0;
+}
+
+.link:hover {
+  color: orange
+}
+
+.navbar-content .link img {
+  margin-right: 10px;
+}
+
+
+/* Barangay Harapin ang Bukas TEXT */
+.navbar-content .link span {
+  font-weight: bold;
+  color: white !important;
+  text-decoration: none;
+}
+
+
+/* OVERALL BLUE NAVBAR  */
+.navbar-content {
+  padding: 20px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* Profile Icon*/
+.user-icon {
+  font-size: 30px;
+}
+
+
+
+/* --------------------------------------------------- SCROLL TO TOP BUTTON --------------------------------------------------------------- */
+.top-btn-position {
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+  color: #0060AD;
+}
+
+
+
+
+
+
+/* --------------------------------------------------- RESPONSIVENESSSHITZ OF SUBMENUS--------------------------------------------------------------- */
+@media screen and (max-width: 768px) {
+  .submenu {
+    position: relative;
+    top: 0;
+    left: 0;
+    font-size: 10px;
+    columns: 1;
+    column-gap: 5px;
+    list-style-type: none;
+    background-color: #0060AD;
+    color: white;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    max-width: 300px;
+
+
+  }
+
+  li {
+    cursor: pointer;
+    padding: 2px;
+  }
+}
+
+li {
+  cursor: pointer;
+  padding: 2px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .Homesubmenu {
+    position: relative;
+    top: 0;
+    left: 0;
+    font-size: 10px;
+    columns: 1;
+    column-gap: 5px;
+    list-style-type: none;
+    background-color: #0060AD;
+    color: white;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    max-width: 300px;
+
+  }
+
+  li {
+    cursor: pointer;
+    padding: 2px;
+  }
+}
+
+li {
+  cursor: pointer;
+  padding: 2px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .Profilesubmenu {
+    position: relative;
+    /* top: 300px; */
+    left: 0;
+    right: unset;
+    width: 100%;
+    max-width: unset;
+    font-size: 10px;
+    columns: 1;
+    column-gap: 5px;
+    background-color: #0060AD;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .Profilesubmenu li {
+    padding: 2px;
+  }
+}
+
+/* --------------------------------------------------- END OF SUBMENUS--------------------------------------------------------------- */
+
+
+/* --------------------------------------------------- MENU ICON WHEN RESPONSIVE --------------------------------------------------------------- */
+.menu-icon {
+  display: none;
+  cursor: pointer;
+}
+
+.bar {
+  width: 35px;
+  height: 5px;
+  background-color: #333;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+/* Style the bars to form an 'X' icon when the menu is open */
+.bar1.bar,
+.bar3.bar {
+  transform: rotate(0);
+}
+
+.bar2.bar {
+  opacity: 1;
+}
+
+
+
+/* ---------------------------------------------------------------------- RESPONSIVE 1435px pero di working edi DONT --------------------------------------------------------  */
+
+@media screen and (max-width: 1435px) {
+  .menu-icon {
+    display: block;
+  }
+
+  /* Hide the menu items by default on smaller screens */
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    z-index: 1000;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    max-width: 300px;
+    background-color: #0060AD;
+    padding: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Show the menu items when the menu is open */
+  .nav-menu.active {
+    display: flex;
+    left: 0;
+    transition: left 0.4s ease-in-out;
+
+  }
+
+  .bar1.bar {
+    transform: rotate(-45deg) translate(-9px, 4px);
+  }
+
+  .bar2.bar {
+    opacity: 10;
+    transform: rotate(45deg) translate(-4px, 1px);
+  }
+
+  .bar3 {
+    opacity: 0;
+    /* Hide the middle bar to form the 'X' */
+  }
+
+  /* STYLE OF MENU ITEMS */
+  .nav-menu.active li {
+    margin-bottom: 20px;
+    cursor: pointer;
+    padding: 4px;
+    color: white;
+  }
+}
+
+/* ---------------------------------------------------------------------- RESPONSIVE 768px --------------------------------------------------------  */
+@media screen and (max-width: 768px) {
+  .menu-icon {
+    display: block;
+  }
+
+  /* Hide the menu items by default on smaller screens */
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    z-index: 1000;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    max-width: 300px;
+    background-color: #0060AD;
+    padding: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Show the menu items when the menu is open */
+  .nav-menu.active {
+    display: flex;
+    left: 0;
+    transition: left 0.4s ease-in-out;
+
+  }
+
+  .bar1.bar {
+    transform: rotate(-45deg) translate(-9px, 4px);
+  }
+
+  .bar2.bar {
+    opacity: 10;
+    transform: rotate(45deg) translate(-4px, 1px);
+  }
+
+  .bar3 {
+    opacity: 0;
+    /* Hide the middle bar to form the 'X' */
+  }
+
+  /* STYLE OF MENU ITEMS */
+  .nav-menu.active li {
+    margin-bottom: 20px;
+    cursor: pointer;
+    padding: 4px;
+    color: white;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/* ---------------------------------------------------------------------- RESPONSIVE 350px --------------------------------------------------------  */
+@media screen and (max-width: 350px) {
+  .menu-icon {
+    display: block;
+  }
+
+  /* Hide the menu items by default on smaller screens */
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    z-index: 1000;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    max-width: 300px;
+    background-color: #0060AD;
+    padding: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Show the menu items when the menu is open */
+  .nav-menu.active {
+    display: flex;
+    left: 0;
+    transition: left 0.4s ease-in-out;
+
+  }
+
+  .bar1.bar {
+    transform: rotate(-45deg) translate(-9px, 4px);
+  }
+
+  .bar2.bar {
+    opacity: 10;
+    transform: rotate(45deg) translate(-4px, 1px);
+  }
+
+  .bar3 {
+    opacity: 0;
+    /* Hide the middle bar to form the 'X' */
+  }
+
+  /* STYLE OF MENU ITEMS */
+  .nav-menu.active li {
+    margin-bottom: 20px;
+    cursor: pointer;
+    padding: 4px;
+    color: white;
+  }
+}
+
+
+
+/* ---------------------------------------------------------------------- RESPONSIVE 568px --------------------------------------------------------  */
+
+@media screen and (max-width: 568px) {
+  .menu-icon {
+    display: block;
+  }
+
+  /* Hide the menu items by default on smaller screens */
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    z-index: 1000;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    max-width: 300px;
+    background-color: #0060AD;
+    padding: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Show the menu items when the menu is open */
+  .nav-menu.active {
+    display: flex;
+    left: 0;
+    transition: left 0.4s ease-in-out;
+
+  }
+
+  .bar1.bar {
+    transform: rotate(-45deg) translate(-9px, 4px);
+  }
+
+  .bar2.bar {
+    opacity: 10;
+    transform: rotate(45deg) translate(-4px, 1px);
+  }
+
+  .bar3 {
+    opacity: 0;
+    /* Hide the middle bar to form the 'X' */
+  }
+
+  /* STYLE OF MENU ITEMS */
+  .nav-menu.active li {
+    margin-bottom: 20px;
+    cursor: pointer;
+    padding: 4px;
+    color: white;
+  }
+}
+
+/* nav profile */
+
+.propic {
+  width: 30px;
+  height: 30px;
+  border-radius: 20px;
+}
+
+.dropbtn {
+  background-color: none;
+  border: none;
+  border-radius: 20px;
+  margin-top: 10px;
+  width: 175px;
+}
+
+/* End of nav profile */
+
+.user-announcement-background {
+  width: 100%;
+  height: 100%;
+  background-Repeat: 'no-repeat';
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/src/user-components/assets/img/bg.jpg');
+}
+
+.announcement-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+}
+
+.announcement-card-item {
+  width: 60%;
+}
+
+.img-container {
+  display: flex;
+  justify-content: center;
+}
+
+/* end of Announcement */
+
+
+
+/* start of livelihood */
+.livelihood-container {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  flex-direction: column;
+  background-Repeat: 'no-repeat';
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/src/user-components/assets/img/bg.jpg');
+}
+
+.livelihood-card {
+  width: 60%;
+}
+
+.livelihood-img {
+  width: auto;
+  height: 30vh;
+  background-image: url('/src/user-components/assets/img/helping.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+/* end of livelihood */
+
+/* START OF LOGIN DESIGN */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+
+
+.main {
+  height: 100vh;
+}
+
+.left-side {
+  font-family: 'Poppins', sans-serif;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8)), url('/src/user-components/assets/img/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+}
+
+.right-side {
+  background-color: #0060AD;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 20px;
+  width: 400px;
+  height: fit-content;
+  padding: 20px;
+  background-color: rgba(255, 255, 255);
+}
+
+.login-container h2 {
+  text-align: center;
+  font-weight: 900;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 20px;
+}
+
+.login-container input {
+  border-radius: 15px;
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}
+
+.login-container button {
+  width: 80%;
+  padding: 10px;
+  background-color: rgb(232, 187, 23);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.login-container button:hover {
+  background-color: rgb(208, 168, 23);
+}
+
+.register-link {
+  font-size: 15px;
+  color: white;
+  margin-top: 10px;
+}
+
+.register-link a {
+  color: rgb(232, 187, 23);
+}
+
+/* END OF LOGIN DESIGN */
+
+
+/* START OF REGISTRATION DESIGN */
+.registration-component {
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/src/user-components/assets/img/BG1.jpg');
+  background-size: cover;
+  background-position: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+
+}
+
+.main-reg {
+  height: 100vh;
+}
+
+.left-side-reg {
+  background-color: #0060AD;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.right-side-reg {
+  font-family: 'Poppins', sans-serif;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8)), url('/src/user-components/assets/img/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+}
+
+.registration-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  text-align: start;
+  border-radius: 20px;
+  width: 70%;
+  height: fit-content;
+  padding: 15px;
+  background-color: rgba(255, 255, 255)
+}
+
+.reg-desc {
+  font-family: 'Poppins', sans-serif;
+}
+.reg-p {
+  font-size: 12px;
+
+}
+
+.registration-container input {
+  border-radius: 50px;
+  height: 30px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+
+}
+
+
+.form-group {
+  margin-bottom: 0px;
+
+}
+
+
+.form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+}
+
+.form-column {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+
+/* SUB-HEADINGS */
+.heading {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+}
+
+
+/* HEADING - Registration */
+.registration-heading {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
+
+.registration-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4287f5;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.registration-container button:hover {
+  background-color: #3573c3;
+}
+
+
+.label {
+  /* width: 100px;  */
+  text-align: flex-start;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+.checkbox-container {
+  display: flex;
+  align-items: c;
+  gap: 10px;
+}
+
+/* DROPDOWN DESIGH */
+
+.option {
+  width: 250px;
+  height: 30px;
+  border-radius: 50px;
+
+}
+
+/* DROPDOWN DESIGN SA MAHAHABA WORDS */
+.option2 {
+  width: 250px;
+  height: 30px;
+  border-radius: 50px;
+
+
+}
+
+.input-field {
+
+  width: 250px;
+
+}
+
+
+
+/*  AYAW GUMANA EDI DONT
+.form-column {
+  flex-basis: 50%; 
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+} */
+
+
+
+/* END OF REGISTRATION DESIGN */
+
+.profile-menu {
+  width: 30px;
+}

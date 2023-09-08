@@ -1,0 +1,395 @@
+import { Link, NavLink, Route } from 'react-router-dom';
+import Chart from 'chart.js/auto';
+import { useEffect, useRef, useState } from 'react';
+import logo from '../admin-components/assets/img/brgy.png';
+import { BiMenu, BiChevronDown,BiLogOut, BiCog } from 'react-icons/bi';
+import { AiOutlineDashboard } from 'react-icons/ai';
+import {
+    BsPersonFill,
+    BsMegaphoneFill,
+    BsTelephoneFill,
+    BsTerminal,
+    BsFillFileEarmarkFill,
+    BsFillPersonBadgeFill,
+    BsFillFileEarmarkArrowDownFill,
+    BsFillPeopleFill,
+    BsEnvelopePaper,
+    BsBuildingFillUp,
+    BsMailbox,
+} from "react-icons/bs";
+
+import {
+    RiFolderWarningFill,
+} from "react-icons/ri";
+import './assets/css/style.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import React from 'react';
+import { FaUserCircle } from "react-icons/fa";
+
+
+function Dashboard() {
+    const pieChartRef = useRef(null);
+    const lineChartRef = useRef(null);
+
+    useEffect(() => {
+        const pieChartCtx = pieChartRef.current.getContext('2d');
+        const lineChartCtx = lineChartRef.current.getContext('2d');
+        let pieChartInstance = null;
+        let lineChartInstance = null;
+
+        const createPieChart = () => {
+            pieChartInstance = new Chart(pieChartCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+                    datasets: [
+                        {
+                            data: [12, 19, 3, 5, 2],
+                            backgroundColor: ['red', 'blue', 'yellow', 'green', 'purple'],
+                        },
+                    ],
+                },
+            });
+        };
+
+        const createLineChart = () => {
+            lineChartInstance = new Chart(lineChartCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [
+                        {
+                            label: 'Revenue',
+                            data: [500, 800, 900, 700, 600, 1000],
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1,
+                            yAxisID: 'revenue-axis',
+                        },
+                        {
+                            label: 'Profit',
+                            data: [200, 400, 600, 800, 1000, 1200],
+                            borderColor: 'rgb(192, 75, 192)',
+                            tension: 0.1,
+                            yAxisID: 'profit-axis',
+                        },
+                    ],
+                },
+                options: {
+                    scales: {
+                        y: {
+                            id: 'revenue-axis',
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                        },
+                        y1: {
+                            id: 'profit-axis',
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                        },
+                    },
+                },
+            });
+        };
+
+        const destroyCharts = () => {
+            if (pieChartInstance) {
+                pieChartInstance.destroy();
+            }
+            if (lineChartInstance) {
+                lineChartInstance.destroy();
+            }
+        };
+
+        createPieChart();
+        createLineChart();
+
+        return () => {
+            destroyCharts();
+        };
+    }, []);
+
+    const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+    const handleSidebarCollapse = () => {
+        setSidebarCollapsed(!isSidebarCollapsed);
+    };
+
+
+
+
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
+    const profileRef = useRef(null);
+    const toggleDropdown = () => {
+        setDropdownOpen(!isDropdownOpen);
+    };
+
+    const [ProfilesubmenuVisible, setProfileSubmenuVisible] = useState(false);
+    const toggleProfileSubmenu = () => {
+        setProfileSubmenuVisible(!ProfilesubmenuVisible);
+    };
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (profileRef.current && !profileRef.current.contains(event.target)) {
+                setProfileSubmenuVisible(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    return (
+        <>
+            <div className="topbarsection">
+                <div className="topnavbar d-flex justify-content-between align-items-center">
+                    <div className="topnavleft">
+                        <button className="collapse-button" onClick={handleSidebarCollapse}>
+                            <BiMenu />
+                        </button>
+                    </div>
+                    <div className="topnavmid">
+                        <h3>Barangay Harapin Ang Bukas</h3>
+                    </div>
+                    <div className="topnavright">
+                        <div ref={profileRef}>
+                            <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                            {ProfilesubmenuVisible && (
+                                <div className="Profilesubmenuadmin">
+                                    <div className="admininfo">
+                                        <div className="rightprofile">
+                                            <FaUserCircle className="adminprofile" />
+                                        </div>
+                                        <div className="leftprofile">
+                                            <h5>CLARISE ANNELY</h5>
+                                            <h5>clariseannely@gmail.com</h5>
+                                        </div>
+                                    </div>
+                                    <div className="lowerprofile">
+                                        <div className="button-profile1">
+                                            <NavLink to="/admin-profile" activeClassName="active">
+                                                <div href="#" className="profilebuttons">
+                                                    <BiCog className="profileicons" /> Settings
+                                                </div>
+                                            </NavLink>
+                                        </div>
+                                        <hr />
+                                        <div className="button-profile1">
+
+                                            <NavLink to="/admin" activeClassName="active">
+                                                <div href="#" className="profilebuttons">
+                                                    <BiLogOut className="profileicons" /> Log out
+                                                </div>
+                                            </NavLink>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''} d-none d-md-block`}>
+                <div className="newsidebar">
+                    <div className="text-center">
+                        <Link className="navbar-brand" to="/dashboard">
+                            <img className="tblImage w-50 h-100" src={logo} alt="" />
+                        </Link>
+                        <h6>Barangay Harapin Ang Bukas</h6>
+                    </div>
+                    <ul>
+
+                        <li>
+                            <Link to="/dashboard" className="nav-link ">
+                                <AiOutlineDashboard className="sidebaricon " />
+                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/announcement-admin" className="nav-link ">
+                                <BsMegaphoneFill className="sidebaricon" />
+                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Announcement</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/emergency-admin" className="nav-link ">
+                                <BsTelephoneFill className="sidebaricon" />
+                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Emergency</span>
+                            </Link>
+                        </li>
+                        {/* <li className={`dropdown-sidebar ${isDropdownOpen ? 'open' : ''}`}> */}
+                        <li className="dropdown-sidebar">
+                            <Link to="" className="nav-link ">
+                                <div className="barangaymodule">
+                                    <span onClick={toggleDropdown}>
+                                        <BsFillFileEarmarkFill className="sidebaricon" />
+                                        <span className="sidebarlabel ms-1">
+                                            Barangay Module <BiChevronDown />
+                                        </span>
+                                    </span>
+                                </div>
+                            </Link>
+                            {/* <ul className="sidebar-submenu"> */}
+                            <ul className={`sidebar-submenu w-100 ${isDropdownOpen ? 'open' : ''}`}>
+                                {isDropdownOpen && (
+                                    <>
+                                        <li>
+                                            <Link to="/b-officials-admin" className="nav-link ">
+                                                <BsFillPersonBadgeFill className="sidebaricon" />
+                                                <span className="sidebarlabel ms-1 d-none d-sm-inline"> Barangay Officials</span>
+
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/d-barangay-certificate" className="nav-lin">
+                                                <BsFillFileEarmarkArrowDownFill className="sidebaricon" />
+                                                <span className="sidebarlabel ms-1 d-none d-sm-inline"> Document Requests</span>
+
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/blotter-admin" className="nav-link ">
+                                                <RiFolderWarningFill className="sidebaricon" />
+                                                <span className="sidebarlabel ms-1 d-none d-sm-inline"> Blotter Records</span>
+
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/residents-admin" className="nav-link">
+                                                <BsFillPeopleFill className="sidebaricon" />
+                                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
+
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/b-permit-admin" className="nav-link">
+                                                <BsEnvelopePaper className="sidebaricon" />
+                                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Permit</span>
+
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/b-promotion-admin" className="nav-link">
+                                                <BsBuildingFillUp className="sidebaricon" />
+                                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Promotion</span>
+
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/feedbacks-admin" className="nav-link">
+                                                <BsMailbox className="sidebaricon" />
+                                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Feedbacks</span>
+
+                                            </Link>
+                                        </li>
+                                    </>
+                                )}
+                            </ul>
+                        </li>
+                        <li className={`${isDropdownOpen ? 'hide' : ''}`}>
+                            <Link to="/staff-logs-admin" className="nav-link">
+                                <BsTerminal className="sidebaricon" />
+                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Staff Logs</span>
+                            </Link>
+                        </li>
+                        <li className={`${isDropdownOpen ? 'hide' : ''}`}>
+                            <Link to="/admin-accounts" className="nav-link">
+                                <BsPersonFill className="sidebaricon" />
+                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Admin Accounts</span>
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div className={`dashboard-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
+                <div className="row m-5">
+                    <div className="col-lg-8">
+                        <div className="row">
+                            <div className="dashboard-topside d-flex justify-content-evenly w-100">
+                                <div className="card topcard m-1 col-md-4">
+                                    <div className="card-body">
+                                        <h5 className="card-title">Special title treatment</h5>
+                                        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                        <a href="#" className="btn btn-primary">
+                                            Go somewhere
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="card topcard m-1 col-md-4 ">
+                                    <div className="card-body ">
+                                        <h5 className="card-title">Special title treatment</h5>
+                                        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                        <a href="#" className="btn btn-primary">
+                                            Go somewhere
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="card topcard m-1 col-md-4">
+                                    <div className="card-body">
+                                        <h5 className="card-title">Special title treatment</h5>
+                                        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                        <a href="#" className="btn btn-primary">
+                                            Go somewhere
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-12 p-1">
+                                <div className="card mt-3">
+                                    <div className="filter">
+                                        {/* Dropdown menu */}
+                                        {/* ... */}
+                                    </div>
+
+                                    <div className="axis-chart card-body Chart">
+                                        <h5 className="card-title">Line Chart</h5>
+
+                                        {/* Line Chart container */}
+                                        <canvas ref={lineChartRef} id="lineChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="card">
+                            <div className="filter">
+                                {/* Dropdown menu */}
+                                {/* ... */}
+                            </div>
+
+                            <div className="card-body Chart">
+                                <h5 className="card-title">Pie Chart</h5>
+
+                                {/* Pie Chart container */}
+                                <canvas ref={pieChartRef} id="pieChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+
+                        <div className="card mt-3">
+                            <div className="card-body">
+                                <h5 className="card-title">Special title treatment</h5>
+                                <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                <a href="#" className="btn btn-primary">
+                                    Go somewhere
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
+
+export default Dashboard;

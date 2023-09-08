@@ -1,0 +1,490 @@
+@import url(https://fonts.gstatic.com/);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i);
+@import url(https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js);
+@import url(https://unpkg.com/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js);
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+
+
+
+
+/* ADMIN LOGIN START */
+
+.admin-background-image {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/src/admin-components/assets/img/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.admin-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.admin-login-box {
+  border-radius: 20px;
+  padding: 20px;
+  width: 400px;
+  background-color: white;
+  /* Add a background color */
+}
+
+/* ADMIN LOGIN END */
+
+
+
+/* NEW SIDEBAR STARTS */
+.containersidebar {
+
+  background-color: #75C2F6;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 270px;
+  height: 100%;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+
+.containersidebar.collapsed {
+  width: 0;
+}
+
+.newsidebar {
+  padding-top: 20px;
+  width: 100%;
+}
+
+.newsidebar ul {
+  list-style: none;
+  padding: 0;
+
+}
+
+.newsidebar ul li {
+  width: 100%;
+  padding: 0;
+
+}
+
+.newsidebar ul li a {
+  display: block;
+  padding: 10px 10px 10px 20px;
+  color: black;
+  font-size: 16px;
+  position: relative;
+  font-family: 'open sans', sans-serif;
+  text-decoration: none;
+  transition: 0.3s ease;
+  font-size: 15px;
+
+}
+
+.sidebarlabel {
+  padding-left: 5px;
+}
+
+.newsidebar .sidebaricon {
+  font-size: 20px;
+
+}
+
+.sidebar-submenu li {
+  padding-left: 70px;
+  width: 100;
+}
+
+.dropdown-sidebar {
+  cursor: default;
+}
+
+.newsidebar ul li a:hover,
+.newsidebar ul li a.active {
+  background-color: #F4D160;
+  color: #0060AD;
+}
+
+
+.sidebar-submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.sidebar-submenu.open {
+  max-height: 500px;
+}
+
+
+/* NEW SIDEBAR ENDS */
+
+
+/* TOPBAR */
+
+.topbarsection {
+  background-color: #1D5D9B;
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 9999;
+  border-bottom: 2px solid white;
+}
+
+.topnavbar {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+}
+
+.collapse-button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.topbarsection h3 {
+  color: white;
+
+}
+
+.topnavright {
+  position: relative;
+}
+.Profilesubmenuadmin {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: block;
+  list-style-type: none;
+  padding: 0;
+  height: auto;
+  width: 250px;
+}
+
+.Profilesubmenuadmin {
+  padding: 10px;
+  font-size: 30px;
+}
+
+.admininfo {
+  display: flex;
+  align-items: center;
+}
+
+.adminprofile {
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 60px;
+}
+
+.adminicon {
+  font-size: 35px;
+  cursor: pointer;
+  color: white;
+}
+
+.leftprofile h5:last-child {
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.lowerprofile {
+  text-align: left;
+  padding: 10px;
+  margin-top: 10px;
+  padding: 2px;
+
+}
+
+.profilebuttons {
+  color: black;
+  font-size: 15px;
+  display: inline-block;
+  padding-left: 10px; /* Add space to the left of the text for the icon */
+}
+
+.profilebuttons a {
+  margin-right: 5px; /* Add spacing between the icon and text */
+  font-size: 18px; /* Adjust the icon size as needed */
+}
+.profileicons{
+  font-size: 30px;
+}
+
+/* Topbar Ends */
+
+/* DASHBOARD STARTS */
+
+.dashboard-body {
+  z-index: 1;
+  height: 100%;
+  width: auto;
+  margin-left: 270px;
+  transition: all 0.5s ease;
+  margin-top: 80px;
+}
+
+.dashboard-body.expanded {
+  margin-left: 0;
+}
+
+.topbarsection.collapsed {
+  width: calc(100% - 225px);
+  transition: all 0.5s ease;
+}
+
+/* DASHBOARD ENDS */
+
+
+/* ANNOUNCEMENT STARTS */
+.container-documents {
+  z-index: 1;
+  height: 100%;
+  width: auto;
+  margin-left: 270px;
+  /* Adjust based on your sidebar width */
+  transition: all 0.5s ease;
+  margin-top: 80px;
+  /* Adjust based on your top navbar height */
+}
+
+.container-documents.expanded {
+  margin-left: 0;
+}
+
+
+.topbarsection.collapsed .container-documents {
+  width: calc(100% - 225px);
+  /* Adjust based on your sidebar width */
+  transition: all 0.5s ease;
+}
+
+/* ANNOUNCMENT END */
+
+
+/* EMERGENCY STARTS */
+
+.emergency-body {
+  z-index: 1;
+  height: 100%;
+  width: auto;
+  margin-left: 270px;
+  transition: all 0.5s ease;
+  margin-top: 80px;
+}
+
+.emergency-body.expanded {
+  margin-left: 0;
+}
+
+
+.topbarsection.collapsed .emergency-body {
+  width: calc(100% - 225px);
+  transition: all 0.5s ease;
+}
+
+/* EMERGENCY END */
+
+/* BARANGAY OFFICIALS START */
+
+.bofficials-body {
+  z-index: 1;
+  height: 100%;
+  width: auto;
+  margin-left: 280px;
+  margin-right: 10px;
+  transition: all 0.5s ease;
+  margin-top: 80px;
+
+}
+
+.bofficials-body.expanded {
+  margin-left: 10px;
+}
+
+
+.topbarsection.collapsed .bofficials-body {
+  width: calc(100% - 300px);
+  transition: all 0.5s ease;
+}
+
+/* BARANGAY OFFICIALS ENDS */
+
+/* BARANGAY DOCUMENTS START */
+
+.container-documents {
+  z-index: 1;
+  height: 100%;
+  width: auto;
+  margin-left: 280px;
+  transition: all 0.5s ease;
+  margin-top: 80px;
+
+}
+
+.container-documents.expanded {
+  margin-left: 0px;
+}
+
+
+.topbarsection.collapsed .container-documents {
+  width: calc(100% - 300px);
+  transition: all 0.5s ease;
+}
+
+/* BARANGAY DOCUMENTS ENDS */
+
+/* BUSINESS DOCUMENTS START */
+.business-body {
+  z-index: 1;
+  height: 100%;
+  width: auto;
+  margin-left: 300px;
+  margin-right: 30px;
+  transition: all 0.5s ease;
+  margin-top: 80px;
+
+}
+
+.business-body.expanded {
+  margin-left: 30px;
+}
+
+
+.topbarsection.collapsed .business-body {
+  width: calc(100% - 300px);
+  transition: all 0.5s ease;
+}
+
+/* BUSINESS DOCUMENTS ENDS */
+
+/* Table - Admin Accounts */
+.table tbody tr {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+
+
+
+
+
+
+/*==================== MEDIA QUERIES ====================*/
+
+/* For small devices */
+@media screen and (max-width: 600px) {
+  /* Center everything */
+  /* .topnavbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .newsidebar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+
+  .topnavbar div,
+  .newsidebar ul {
+    margin: 5px 0;
+  } */
+}
+
+
+@media screen and (max-width: 350px) {
+
+  /* topbar */
+  .topnavbar {
+    width: 350px;
+    justify-content: space-between;
+    padding: 5px 10px;
+  }
+
+  .topnavlef {
+    flex: 1;
+  }
+
+  .topnavmid h3 {
+    font-size: 14px;
+  }
+
+  .topnavright {
+    flex: 1;
+    text-align: right;
+  }
+
+  .topnavright .mr-10 {
+    margin-right: 10px;
+  }
+
+  .collapse-button {
+    font-size: 30px;
+  }
+
+  /* sidebar */
+  .containersidebar {
+    width: 350px;
+    top: 60px;
+    left: 0;
+    height: auto;
+    z-index: 1000;
+  }
+
+  .containersidebar.collapsed {
+    width: 0;
+  }
+
+  .newsidebar ul li {
+    width: 100%;
+    padding: 0;
+    text-align: center;
+    left: 0;
+  }
+
+  .newsidebar ul li a {
+    padding: 13px 0;
+  }
+
+  .sidebar-submenu li {
+    margin-left: 0;
+  }
+
+  /* Announcement */
+
+}
+
+/* For medium devices */
+@media screen and (max-width:568px) {}
+
+/* For large devices */
+@media screen and (min-width: 768px) {}
+
+/*For x-large devices */
+@media screen and (min-width: 1024px) {}
