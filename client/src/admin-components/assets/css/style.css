@@ -387,6 +387,50 @@
 }
 
 
+/* UPPER TABLE */
+
+
+/* Custom CSS for the elements */
+.toppart-table {
+  display: inline-flex;
+  margin: 10px; /* Add margin as needed */
+  border: 2px solid #0000; /* Add the border style you desire */
+  padding: 10px; /* Add padding as needed */
+}
+
+
+/* Style the search input and button */
+.search-form input[type="text"] {
+  width: 100%;
+  padding: 5px;
+}
+
+.search-form button {
+  background-color: #007bff; /* Change to your desired button color */
+  color: #000000;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Style the dropdown button */
+.dropdown-center button {
+  width: 100%;
+}
+
+/* Style the dropdown menu */
+.dropdown-menu li {
+  padding: 5px 10px;
+}
+
+/* Style the select dropdown */
+.Table-numbers {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc; /* Add the border style you desire */
+  outline: none;
+}
+
 
 
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const RegistrationComponent = () => {
@@ -21,252 +21,36 @@ const RegistrationComponent = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const submitAccount = () => {
-    Axios.post('http://localhost:3001/api/insert/useraccount', {
-      firstName: firstName,
-      middleName: middleName,
-      lastName: lastName,
-      gender: gender,
-      religion: religion,
-      civilStatus: civilStatus,
-      employmentStatus: employmentStatus,
-      highestEducation: highestEducation,
-      nationality: nationality,
-      address: address,
-      householdMember: householdMember,
-      dateOfBirth: dateOfBirth,
-      phoneNumber: phoneNumber,
-      email: email,
-      password: password
-    });
-    alert("Account created");
-    document.getElementById("register").reset();
-    navigate('/login');
-  };
+  async function register(e){
+    e.preventDefault();
 
+    try{
+
+        await axios.post("http://localhost:8000/signup",{
+            firstName,middleName,lastName,gender,religion,civilStatus,employmentStatus,highestEducation,nationality,address,householdMember,dateOfBirth,phoneNumber,email,password
+        })  
+        .then(res=>{
+          if(res.data=="exist"){
+            alert("User already exist");
+          }
+          else if(res.data=="notexist"){
+              navigate("/login");
+          }
+      })
+      .catch(e=>{
+          alert("wrong details")
+          console.log(e);
+      })
+
+    }
+    catch(e){
+        console.log(e);
+
+    }
+
+}
 
   return (
-    // <div className="registration-component">
-    //   <div className="registration-container" id="registration-container">
-    //     <form id="register">
-
-    //       <h1 className="registration-heading"> REGISTRATION</h1>
-    //       <div className="form-container">
-    //         {/*--------------- BASIC INFORMATION --------------- */}
-    //         <div className="form-column">
-    //           <h3 className="heading">BASIC INFORMATION</h3>
-    //           <div className="form-group">
-    //             <label className="label" htmlFor="first-name">First Name</label>
-    //             <input
-    //               type="text" className="input-field"
-    //               id="first-name"
-
-    //               onChange={(e) => setFirstName(e.target.value)} required />
-
-
-    //             <div className="form-group">
-    //               <label className="label" htmlFor="middle-name">Middle Name</label>
-    //               <input
-    //                 type="text" className="input-field"
-    //                 id="middle-name"
-
-    //                 onChange={(e) => setMiddleName(e.target.value)}
-    //                 required
-    //               />
-    //             </div>
-
-    //             <div className="form-group">
-    //               <label className="label" htmlFor="last-name">Last Name</label>
-    //               <input
-    //                 type="text" className="input-field"
-    //                 id="last-name"
-
-    //                 onChange={(e) => setLastName(e.target.value)}
-    //                 required
-    //               />
-    //             </div>
-
-    //             {/* GENDER */}
-    //             <div className="form-group">
-    //               <label className="label" htmlFor="gender">Gender</label>
-    //               <select
-    //                 id="gender"
-
-    //                 onChange={(e) => setGender(e.target.value)}
-    //                 className="option" style={{ fontSize: '14px', marginBottom: '10px' }}
-
-    //               >
-    //                 <option value="">Select Gender</option>
-    //                 <option value="male">Male</option>
-    //                 <option value="female">Female</option>
-    //                 <option value="secret">Secret</option>
-    //               </select>
-    //             </div>
-
-    //             {/* RELIGION */}
-    //             <div className="form-group">
-    //               <label className="label" htmlFor="religion">Religion</label>
-    //               <select
-    //                 id="religion"
-
-    //                 onChange={(e) => setReligion(e.target.value)}
-    //                 className="option" style={{ fontSize: '14px', marginBottom: '10px' }}
-    //               >
-    //                 <option value="">Select Religion</option>
-    //                 <option value="catholic">Roman Catholic</option>
-    //                 <option value="inc">Iglesia ni Cristo</option>
-    //                 <option value="muslim">Muslim</option>
-    //                 <option value="islam">Islam</option>
-    //                 <option value="sda">Seventh Day Adventist</option>
-    //                 <option value="jw">Jehovah's Witness</option>
-    //                 <option value="others">Other religious affiliations</option>
-    //               </select>
-    //             </div>
-
-
-    //             {/* CIVIL STATUS */}
-    //             <div className="form-group">
-    //               <label className="label" htmlFor="civilStatus">Civil Status</label>
-    //               <select
-    //                 id="civilStatuss"
-    //                 value={civilStatus}
-    //                 onChange={(e) => setCivilStatus(e.target.value)}
-    //                 className="option" style={{ fontSize: '14px', marginBottom: '10px' }}
-    //               >
-    //                 <option value="">Select Civil Status</option>
-    //                 <option value="single">Single</option>
-    //                 <option value="married">Married</option>
-    //                 <option value="divorced">Divorced</option>
-    //                 <option value="separated">Separated</option>
-    //               </select>
-    //             </div>
-
-    //             {/* NATIONALITY */}
-    //             <div className="form-group">
-    //               <label className="label" htmlFor="nationality">Nationality</label>
-    //               <input
-    //                 type="text" className="input-field"
-    //                 id="nationality"
-
-    //                 onChange={(e) => setNationality(e.target.value)}
-    //                 required
-    //               />
-    //             </div>
-
-
-    //             {/* ADDRESS */}
-    //             <div className="form-group">
-    //               <label className="label" htmlFor="address">Address</label>
-    //               <input
-    //                 type="text" className="input-field"
-    //                 id="address"
-
-    //                 onChange={(e) => setAddress(e.target.value)}
-    //                 required
-    //               />
-    //             </div>
-
-
-
-    //             {/* Highest Educational Attaintment */}
-    //             <div className="form-group">
-    //               <label className="label" htmlFor="H-Educational-A">Highest Educational Attaintment</label>
-    //               <select
-    //                 id="h-educational-a"
-
-    //                 onChange={(e) => setHighestEducation(e.target.value)}
-    //                 className="option2" style={{ fontSize: '14px', marginBottom: '10px' }}
-    //               >
-    //                 <option value="">Select Highest Educational Attaintment</option>
-    //                 <option value="undergrad">Undergraduate (Bachelor's Degree)</option>
-    //                 <option value="postgrad">Postgraduate (Master's Degree)</option>
-    //                 <option value="doctoral">Doctoral (PhD)</option>
-    //               </select>
-    //             </div>
-
-    //             {/* Employment Status */}
-    //             <div className="form-group">
-    //               <label className="label" htmlFor="employmentStatus"> Employment Status</label>
-    //               <select
-    //                 id="employmentStatus"
-
-    //                 onChange={(e) => setEmploymentStatus(e.target.value)}
-    //                 className="option2" style={{ fontSize: '14px', marginBottom: '10px' }}
-    //               >
-    //                 <option value="">Select Employment Status</option>
-    //                 <option value="worker">Worker</option>
-    //                 <option value="employee">Employee</option>
-    //                 <option value="self-employed">Self-Employed</option>
-    //                 <option value="unemployed">Unemployed</option>
-    //               </select>
-    //             </div>
-
-
-    //             {/* hOUSEHOLD MEMBER */}
-    //             <div className="form-group">
-    //               <label className="label" htmlFor="householdMember">Household Member</label>
-    //               <input
-    //                 type="text" className="input-field"
-    //                 id="householdMember"
-
-    //                 onChange={(e) => setHouseholdMember(e.target.value)}
-    //                 required
-    //               />
-    //             </div>
-
-    //             {/* DATE OF BIRTH */}
-    //             <div className="form-group">
-    //               <label className="label" htmlFor="dateOfBirth">Date of Birth</label>
-    //               <input
-    //                 type="date"
-    //                 id="dateOfBirth"
-
-    //                 onChange={(e) => setDateOfBirth(e.target.value)}
-    //                 required
-    //               />
-    //             </div>
-    //           </div>
-
-    //           {/*--------------- CONTACT DETAILS --------------- */}
-    //           <div className="form-group">
-    //             <label className="label" htmlFor="phoneNumber">Phone Number</label>
-    //             <input
-    //               type="tel"
-    //               id="phoneNumber"
-
-    //               onChange={(e) => setPhoneNumber(e.target.value)}
-    //               required
-    //             />
-    //           </div>
-    //            {/* EMAIL ADDRESS*/}
-    //            <div className="form-group">
-    //             <label className="label" htmlFor="email">Email Address</label>
-    //             <input
-    //               type="email"
-    //               id="email"
-
-    //               onChange={(e) => setEmail(e.target.value)}
-    //               required
-    //             />
-    //           </div>
-    //               {/* 2ND NUMBER*/}
-    //               <div className="form-group">
-    //             <label className="label" htmlFor="password">Password</label>
-    //             <input
-    //               type="password"
-    //               id="password"
-    //               onChange={(e) => setPassword(e.target.value)}
-    //             />
-    //           </div>
-    //           <div className="form-column">
-    //           <button type="submit" onClick={submitAccount}>Submit</button>
-    //         </div>
-    //         </div> 
-    //       </div>
-    //     </form>
-    //   </div >
-    // </div >
-
     <div className="container-fluid main-reg">
       <div className="row">
         <div className="col-12 col-md-8 left-side-reg">
@@ -496,7 +280,7 @@ const RegistrationComponent = () => {
                   {/*------------------------------------------------------------------------------ */}
                 </div>
                 <div className="form-column">
-                  <button type="submit" onClick={submitAccount}>Submit</button>
+                  <button type="submit" onClick={register}>Submit</button>
                   <p className="register-link text-center text-dark">
                     Already have an account? <a href="login">Log-in here</a>
                   </p>
