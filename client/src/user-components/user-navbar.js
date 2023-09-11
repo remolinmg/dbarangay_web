@@ -154,7 +154,7 @@ function UserNav() {
                       </NavLink>
                     </li>
                     <li>
-                      <a href="#" className="button">Sign Out</a>
+                      <a href="/login" className="button">Sign Out</a>
                     </li>
                   </ul>
                 )}

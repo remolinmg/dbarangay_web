@@ -1,55 +1,44 @@
 import React, { useState } from 'react';
 import './assets/css/user-style.css';
-import Axios from 'axios';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { BiCheckCircle } from "react-icons/bi";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const login = () => {
-    Axios.post('http://localhost:3001/api/loginuser', {
-      username: username,
-      password: password,
-    }).then((response) => {
-      if (response.data.message) {
-        alert("Account does not exist");
+  async function login(e){
+    e.preventDefault();
 
-      } else {
-        navigate('/');
-      }
-    });
-  };
+    try{
+
+        await axios.post("http://localhost:8000/login",{
+            email,password
+        })
+        .then(res=>{
+            if(res.data=="exist"){
+              navigate("/")
+            }
+            else if(res.data=="notexist"){
+                alert("User have not sign up")
+            }
+        })
+        .catch(e=>{
+            alert("wrong details")
+            console.log(e);
+        })
+
+    }
+    catch(e){
+        console.log(e);
+
+    }
+
+}
 
   return (
-    // <div className="login-component">
-    //   <div className="login-message w-50 h-100 bg-light">
-    //     <row>
-    //       <span>Welcome to Barangay Harapin Ang Bukas</span>
-    //     </row>
-    //   </div>
-    //   <div className="w-50 p-3">
-    //     <div className="login-container">
-    //       <h2>LOGIN</h2>
-    //       <input
-    //         type="text"
-    //         placeholder="Username"
-    //         onChange={(e) => { setUsername(e.target.value) }}
-    //       />
-    //       <input
-    //         type="password"
-    //         placeholder="Password"
-    //         onChange={(e) => { setPassword(e.target.value) }}
-    //       />
-    //       <button onClick={login}>Login</button>
-    //       <p className="register-link">
-    //         New user? <a href="registration">Register here</a>
-    //       </p>
-    //     </div>
-    //   </div>
-    // </div>
     <div className="container-fluid main">
       <div className="row">
         <div className="col-12 col-md-8 left-side text-light">
@@ -68,8 +57,8 @@ const Login = () => {
             <h2>LOGIN</h2>
             <input
               type="text"
-              placeholder="Username"
-              onChange={(e) => { setUsername(e.target.value) }}
+              placeholder="Email"
+              onChange={(e) => { setEmail(e.target.value) }}
             />
             <input
               type="password"
