@@ -1,28 +1,41 @@
 import React, { useState } from 'react';
 import './assets/css/style.css';
-import Axios from "axios";
+import axios from "axios";
 import {useNavigate } from 'react-router-dom';
 
 
 const Admin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate =useNavigate();
-  
+  const [type,setType] = useState('admin');
+  const navigate = useNavigate();
+  async function login(e){
+    e.preventDefault();
 
-  const login = () =>{
-    Axios.post('http://localhost:3001/api/loginadmin',{
-      email:email,
-      password:password,
-    }).then((response)=>{
-      if(response.data.message){
-        alert("Account does not exist");
+    try{
+        await axios.post("http://localhost:8000/adminlogin",{
+            email,password,type
+        })
+        .then(res=>{
+            if(res.data=="exist"){
+              navigate("/dashboard")
+            }
+            else if(res.data=="notexist"){
+                alert("Login Failed!")
+            }
+        })
+        .catch(e=>{
+            alert("Login Failed!")
+            console.log(e);
+        })
 
-      }else{
-       navigate('/dashboard');
-      }
-    });
-};
+    }
+    catch(e){
+        console.log(e);
+
+    }
+
+}
 
   return (
     <div className="admin-background-image">
@@ -53,7 +66,6 @@ const Admin = () => {
                 onChange={(e) => {setPassword(e.target.value)}}
               />
             </div>
-          
             <button type="submit" className="btn btn-primary" onClick={login}>
               Submit
             </button>
