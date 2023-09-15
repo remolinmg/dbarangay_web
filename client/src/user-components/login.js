@@ -7,26 +7,26 @@ import { BiCheckCircle } from "react-icons/bi";
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [status, setStatus] = useState('active');
   const navigate = useNavigate();
 
   async function login(e){
     e.preventDefault();
 
     try{
-
         await axios.post("http://localhost:8000/login",{
-            email,password
+            email,password,status
         })
         .then(res=>{
             if(res.data=="exist"){
               navigate("/")
             }
             else if(res.data=="notexist"){
-                alert("User have not sign up")
+                alert("Login Failed!")
             }
         })
         .catch(e=>{
-            alert("wrong details")
+            alert("Login Failed!")
             console.log(e);
         })
 
@@ -55,6 +55,7 @@ const Login = () => {
         <div className="col-12 col-md-4 right-side">
           <div className="login-container">
             <h2>LOGIN</h2>
+            <form action="POST">
             <input
               type="text"
               placeholder="Email"
@@ -69,6 +70,7 @@ const Login = () => {
             <p className="register-link text-center text-dark">
               New user? <a href="registration">Register here</a>
             </p>
+            </form>
           </div>
         </div>
       </div>

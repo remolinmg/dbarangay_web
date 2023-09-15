@@ -5,18 +5,20 @@ import { MdConstruction, MdOutlineInstallDesktop, MdOutlineFactCheck, MdOutlineA
 import { HiOutlineIdentification } from "react-icons/hi";
 import UserNav from './user-navbar';
 import Bot from "./faqbot"
+import axios from 'axios';
+
 
 
 function UserService() {
+
   const [currentService, setCurrentService] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [inputValues, setInputValues] = useState({
-    residentsName: '',
-    Address: '',
+    residentName: '',
+    address: '',
     reasonOfRequest: '',
     issuedDate: '',
   });
-
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const handleInputChange = (e) => {
@@ -65,7 +67,161 @@ function UserService() {
     }
   }, [isSubmitted]);
 
+  const [residentName, setResidentName] = useState('');
+  const [businessName, setBusinessName] = useState('');
+  const [address, setAddress] = useState('');
+  const [reasonOfRequest, setReasonOfRequest] = useState('');
+  const [pickUpDate, setPickUpDate] = useState('');
+  const [type, setType] = useState('');
 
+  //certificate connection
+  async function barangayCertificate(e){
+    e.preventDefault();
+  
+    try{
+  
+        await axios.post("http://localhost:8000/barangaycertificate",{
+          residentName,address,reasonOfRequest,pickUpDate
+        })  
+        .then(res=>{
+          if(res.data=="exist"){
+            alert("You already sent the same request!");
+          }
+          else if(res.data=="notexist"){
+            setIsSubmitted(true);
+            setShowPopup(false);
+          }
+      })
+      .catch(e=>{
+          alert("Failed!")
+          console.log(e);
+      })
+  
+    }
+    catch(e){
+        console.log(e);
+  
+    }
+  
+  }
+  //business clearance connection
+  async function businessClearance(e){
+    e.preventDefault();
+  
+    try{
+  
+        await axios.post("http://localhost:8000/businessclearance",{
+          businessName,address,residentName,type,reasonOfRequest,pickUpDate
+        })  
+        .then(res=>{
+          if(res.data=="exist"){
+            alert("You already sent the same request!");
+          }
+          else if(res.data=="notexist"){
+            setIsSubmitted(true);
+            setShowPopup(false);
+          }
+      })
+      .catch(e=>{
+          alert("Failed!")
+          console.log(e);
+      })
+  
+    }
+    catch(e){
+        console.log(e);
+  
+    }
+  }
+   //barangayid
+   async function barangayID(e){
+    e.preventDefault();
+  
+    try{
+  
+        await axios.post("http://localhost:8000/barangayid",{
+          residentName,address,pickUpDate
+        })  
+        .then(res=>{
+          if(res.data=="exist"){
+            alert("You already sent the same request!");
+          }
+          else if(res.data=="notexist"){
+            setIsSubmitted(true);
+            setShowPopup(false);
+          }
+      })
+      .catch(e=>{
+          alert("Failed!")
+          console.log(e);
+      })
+  
+    }
+    catch(e){
+        console.log(e);
+  
+    }
+  }
+     //installation
+     async function installation(e){
+      e.preventDefault();
+    
+      try{
+    
+          await axios.post("http://localhost:8000/installation",{
+            residentName,address,reasonOfRequest,pickUpDate
+          })  
+          .then(res=>{
+            if(res.data=="exist"){
+              alert("You already sent the same request!");
+            }
+            else if(res.data=="notexist"){
+              setIsSubmitted(true);
+              setShowPopup(false);
+            }
+        })
+        .catch(e=>{
+            alert("Failed!")
+            console.log(e);
+        })
+    
+      }
+      catch(e){
+          console.log(e);
+    
+      }
+    }
+  //construction
+  async function construction(e){
+    e.preventDefault();
+  
+    try{
+  
+        await axios.post("http://localhost:8000/construction",{
+          residentName,address,reasonOfRequest,pickUpDate
+        })  
+        .then(res=>{
+          if(res.data=="exist"){
+            alert("You already sent the same request!");
+          }
+          else if(res.data=="notexist"){
+            setIsSubmitted(true);
+            setShowPopup(false);
+          }
+      })
+      .catch(e=>{
+          alert("Failed!")
+          console.log(e);
+      })
+  
+    }
+    catch(e){
+        console.log(e);
+  
+    }
+  
+  }
+  
   return (
     <body>
       <UserNav />
@@ -81,7 +237,7 @@ function UserService() {
                   <MdOutlineFactCheck size={52} />
                 </div>
                 <div className="service__meta">
-                  <h1 className="service__text">BARANGAY CLEARANCE </h1>
+                  <h1 className="service__text">BARANGAY CERTIFICATE </h1>
                   <p className="p service__text p__color">
                     A barangay clearance is a document issued by the barangay or local community government in the Philippines to certify the residency and good conduct of an individual within the barangay.</p>
                 </div>
@@ -95,7 +251,7 @@ function UserService() {
                   <MdOutlineAddBusiness size={52} />
                 </div>
                 <div className="service__meta">
-                  <h1 className="service__text">BUSINESS PERMIT</h1>
+                  <h1 className="service__text">BUSINESS CLEARANCE</h1>
                   <p className="p service__text p__color">
                     Business Permit is an official document or license issued by the government that grants permission to individuals or organizations to conduct business within a jurisdiction.
                   </p>
@@ -126,7 +282,7 @@ function UserService() {
                   <IoMdFiling size={32} />
                 </div>
                 <div className="service__meta">
-                  <h1 className="service__text">FILE COMPLAINT </h1>
+                  <h1 className="service__text">FILE COMPLAINT</h1>
                   <p className="p service__text p__color">
                     A barangay complaint is a formal statement made by a resident or group within a barangay to address a specific issue or concern within their community, seeking resolution or intervention from the barangay officials.</p>
                 </div>
@@ -164,7 +320,7 @@ function UserService() {
         {showPopup && currentService === 'barangayClearance' && (
           <div className="popup-overlay">
             <div className="popup-form">
-              <form onSubmit={handleSubmit}>
+              <form >
                 <div className="certificate">
                   <h2 className="certificate-title">Certificate Request Form</h2>
                   <div className="certificate-content">
@@ -172,10 +328,9 @@ function UserService() {
                       <label htmlFor="residentsName">Residents Name:</label>
                       <input
                         type="text"
-                        id="residentsName"
-                        name="residentsName"
-                        value={inputValues.residentsName}
-                        onChange={handleInputChange}
+                        id="residentName"
+                        name="residentName"
+                        onChange={(e) => setResidentName(e.target.value)}
                         className="form-control"
                         required /></div>
 
@@ -183,10 +338,9 @@ function UserService() {
                       <label htmlFor="Address"> Address</label>
                       <input
                         type="text"
-                        id="Address"
-                        name="Address"
-                        value={inputValues.Address}
-                        onChange={handleInputChange}
+                        id="address"
+                        name="address"
+                        onChange={(e) => setAddress(e.target.value)}
                         className="form-control"
                         required /> </div>
 
@@ -196,23 +350,21 @@ function UserService() {
                         type="text"
                         id="reasonOfRequest"
                         name="reasonOfRequest"
-                        value={inputValues.reasonOfRequest}
-                        onChange={handleInputChange}
+                        onChange={(e) => setReasonOfRequest(e.target.value)}
                         className="form-control"
                         required /></div>
 
                     <div className="form-group">
-                      <label htmlFor="issuedDate">Issued Date:</label>
+                      <label htmlFor="pickUpDate">Pick-up Date:</label>
                       <input
                         type="date"
-                        id="issuedDate"
-                        name="issuedDate"
-                        value={inputValues.issuedDate}
-                        onChange={handleInputChange}
+                        id="pickUpDate"
+                        name="pickUpDate"
+                        onChange={(e) => setPickUpDate(e.target.value)}
                         className="form-control" required /></div>
 
                     <div className="form-buttons">
-                      <button type="submit" className="btn btn-primary">Submit </button>
+                      <button type="submit" className="btn btn-primary" onClick={barangayCertificate}>Submit </button>
                       <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
                     </div>
                   </div>
@@ -227,9 +379,9 @@ function UserService() {
         {showPopup && currentService === 'businessPermit' && (
           <div className="popup-overlay">
             <div className="popup-form">
-              <form onSubmit={handleSubmit}>
+              <form>
                 <div className="certificate">
-                  <h2 className="certificate-title">Business Permit Request Form</h2>
+                  <h2 className="certificate-title">Business Clearance Request Form</h2>
                   <div className="certificate-content">
 
                     <div className="form-group">
@@ -238,8 +390,7 @@ function UserService() {
                         type="text"
                         id="businessPermitField1"
                         name="businessPermitField1"
-                        value={inputValues.bussinessName}
-                        onChange={handleInputChange}
+                        onChange={(e) => setBusinessName(e.target.value)}
                         className="form-control"
                         required /></div>
 
@@ -249,35 +400,55 @@ function UserService() {
                         type="text"
                         id="Address"
                         name="Address"
-                        value={inputValues.Address}
-                        onChange={handleInputChange}
+                        onChange={(e) => setAddress(e.target.value)}
+                        className="form-control"
+                        required /></div>
+                      
+                    <div className="form-group">
+                    <label htmlFor="residentsName">Owner's Name:</label>
+                      <input
+                        type="text"
+                        id="residentName"
+                        name="residentName"
+                        onChange={(e) => setResidentName(e.target.value)}
                         className="form-control"
                         required /></div>
 
+                       <div className="form-group">
+                      <label htmlFor="ownertype">Ownership type</label>
+                      <select
+                        id="ownertype"
+                        onChange={(e) => setType(e.target.value)}
+                        style={{ fontSize: '20px', marginBottom: '10px' }}
+                      >
+                        <option value="">Type of Ownership</option>
+                        <option value="sole">Sole Proprietorship</option>
+                        <option value="partnership">Partnership/Corporation</option>
+                      </select>
+                      </div> 
+
                     <div className="form-group">
-                      <label htmlFor="reasonOfRequest">Reason Of Request</label>
+                      <label htmlFor="reasonOfRequest">Nature of Business</label>
                       <input
                         type="text"
                         id="reasonOfRequest"
                         name="reasonOfRequest"
-                        value={inputValues.reasonOfRequest}
-                        onChange={handleInputChange}
+                        onChange={(e) => setReasonOfRequest(e.target.value)}
                         className="form-control"
                         required /></div>
 
                     <div className="form-group">
-                      <label htmlFor="issuedDate">Issued Date:</label>
+                      <label htmlFor="issuedDate">Pick-up Date:</label>
                       <input
                         type="date"
                         id="issuedDate"
                         name="issuedDate"
-                        value={inputValues.issuedDate}
-                        onChange={handleInputChange}
+                        onChange={(e) => setPickUpDate(e.target.value)}
                         className="form-control"
                         required /> </div>
 
                     <div className="form-buttons">
-                      <button type="submit" className="btn btn-primary">Submit</button>
+                      <button type="submit" className="btn btn-primary"onClick={businessClearance}>Submit</button>
                       <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard</button>
                     </div>
                   </div>
@@ -293,56 +464,52 @@ function UserService() {
         {showPopup && currentService === 'installation' && (
           <div className="popup-overlay">
             <div className="popup-form">
-              <form onSubmit={handleSubmit}>
+              <form>
                 <div className="certificate">
                   <h2 className="installation-permit-title">Installation Permit Form</h2>
                   <div className="installation-permit-content">
                     <div className="form-group">
-                      <label htmlFor="applicantName">N/A</label>
+                      <label htmlFor="applicantName">Resident's Name</label>
                       <input
                         type="text"
                         id="applicantName"
                         name="applicantName"
-                        value={inputValues.applicantName}
-                        onChange={handleInputChange}
+                        onChange={(e) => setResidentName(e.target.value)}
                         className="form-control"
                         required />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="installationAddress">N/A</label>
+                      <label htmlFor="installationAddress">Address</label>
                       <input
                         type="text"
                         id="installationAddress"
                         name="installationAddress"
-                        value={inputValues.installationAddress}
-                        onChange={handleInputChange}
+                        onChange={(e) => setAddress(e.target.value)}
                         className="form-control"
                         required />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="installationType">N/A</label>
+                      <label htmlFor="installationType">Reason of Request</label>
                       <input
                         type="text"
                         id="installationType"
                         name="installationType"
-                        value={inputValues.installationType}
-                        onChange={handleInputChange}
+                        onChange={(e) => setReasonOfRequest(e.target.value)}
                         className="form-control"
                         required />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="installationDate">N/A</label>
+                      <label htmlFor="installationDate">Pick-up Date</label>
                       <input
                         type="date"
-                        id="installationDate"
-                        name="installationDate"
-                        value={inputValues.installationDate}
-                        onChange={handleInputChange}
+                        id="pickUpDate"
+                        name="pickUpDate"
+                        onChange={(e) => setPickUpDate(e.target.value)}
                         className="form-control"
                         required />
                     </div>
                     <div className="form-buttons">
-                      <button type="submit" className="btn btn-primary"> Submit </button>
+                      <button type="submit" className="btn btn-primary" onClick={installation}> Submit </button>
                       <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
                     </div>
                   </div>
@@ -357,7 +524,7 @@ function UserService() {
         {showPopup && currentService === 'barangayID' && (
           <div className="popup-overlay">
             <div className="popup-form">
-              <form onSubmit={handleSubmit}>
+              <form>
                 <div className="certificate">
                   <h2 className="barangay-id-title">Barangay ID Request Form</h2>
                   <div className="barangay-id-content">
@@ -367,8 +534,7 @@ function UserService() {
                         type="text"
                         id="residentsName"
                         name="residentsName"
-                        value={inputValues.residentsName}
-                        onChange={handleInputChange}
+                        onChange={(e) => setResidentName(e.target.value)}
                         className="form-control" required />
                     </div>
                     <div className="form-group">
@@ -377,24 +543,22 @@ function UserService() {
                         type="text"
                         id="address"
                         name="address"
-                        value={inputValues.address}
-                        onChange={handleInputChange}
+                        onChange={(e) => setAddress(e.target.value)}
                         className="form-control"
                         required />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="birthdate">Birthdate:</label>
+                      <label htmlFor="issueddate">Pick-up Date:</label>
                       <input
                         type="date"
-                        id="birthdate"
-                        name="birthdate"
-                        value={inputValues.birthdate}
-                        onChange={handleInputChange}
+                        id="issueddate"
+                        name="issueddate"
+                        onChange={(e) => setPickUpDate(e.target.value)}
                         className="form-control"
                         required />
                     </div>
                     <div className="form-buttons">
-                      <button type="submit" className="btn btn-primary"> Submit </button>
+                      <button type="submit" className="btn btn-primary" onClick={barangayID}> Submit </button>
                       <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
                     </div>
                   </div>
@@ -496,7 +660,7 @@ function UserService() {
         {showPopup && currentService === 'constructionPermit' && (
           <div className="popup-overlay">
             <div className="popup-form">
-              <form onSubmit={handleSubmit}>
+              <form>
                 <div className="certificate">
                   <h2 className="certificate-title">Construction Permit Request Form</h2>
                   <div className="certificate-content">
@@ -506,8 +670,7 @@ function UserService() {
                         type="text"
                         id="residentsName"
                         name="residentsName"
-                        value={inputValues.residentsName}
-                        onChange={handleInputChange}
+                        onChange={(e) => setResidentName(e.target.value)}
                         className="form-control"
                         required />
                     </div>
@@ -517,8 +680,7 @@ function UserService() {
                         type="text"
                         id="Address"
                         name="Address"
-                        value={inputValues.Address}
-                        onChange={handleInputChange}
+                        onChange={(e) => setAddress(e.target.value)}
                         className="form-control"
                         required />
                     </div>
@@ -528,24 +690,22 @@ function UserService() {
                         type="text"
                         id="reasonOfRequest"
                         name="reasonOfRequest"
-                        value={inputValues.reasonOfRequest}
-                        onChange={handleInputChange}
+                        onChange={(e) => setReasonOfRequest(e.target.value)}
                         className="form-control"
                         required /></div>
 
                     <div className="form-group">
-                      <label htmlFor="issuedDate">Issued Date:</label>
+                      <label htmlFor="issuedDate">Pick-up Date:</label>
                       <input
                         type="date"
                         id="issuedDate"
                         name="issuedDate"
-                        value={inputValues.issuedDate}
-                        onChange={handleInputChange}
+                        onChange={(e) => setPickUpDate(e.target.value)}
                         className="form-control"
                         required />  </div>
 
                     <div className="form-buttons">
-                      <button type="submit" className="btn btn-primary"> Submit </button>
+                      <button type="submit" className="btn btn-primary" onClick={construction}> Submit </button>
                       <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard </button>
                     </div>
                   </div>

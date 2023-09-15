@@ -31,14 +31,14 @@ const RegistrationComponent = () => {
         })  
         .then(res=>{
           if(res.data=="exist"){
-            alert("User already exist");
+            alert("User Already Exist!");
           }
           else if(res.data=="notexist"){
               navigate("/login");
           }
       })
       .catch(e=>{
-          alert("wrong details")
+          alert("Registration Failed!")
           console.log(e);
       })
 
@@ -105,7 +105,6 @@ const RegistrationComponent = () => {
                       <label className="label" htmlFor="gender">Gender</label>
                       <select
                         id="gender"
-
                         onChange={(e) => setGender(e.target.value)}
                         className="option" style={{ fontSize: '14px', marginBottom: '10px' }}
 
