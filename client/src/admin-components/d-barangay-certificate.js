@@ -1,13 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import './assets/css/style.css';
 import { Link, NavLink, Route } from 'react-router-dom';
-import logo from '../admin-components/assets/img/brgy.png';
-import { BiMenu, BiChevronDown,BiLogOut, BiCog } from 'react-icons/bi';
-import { FiUser } from 'react-icons/fi';
-import { AiOutlineDashboard } from 'react-icons/ai';
-import {RiFolderWarningFill} from "react-icons/ri";
-import { format } from 'date-fns';
+import React, { useState, useEffect, useRef } from "react";
+import './assets/css/style.css';
 import Axios from 'axios';
+import logo from '../admin-components/assets/img/brgy.png';
+import { BiMenu, BiChevronDown } from 'react-icons/bi';
+import { BiLogOut, BiCog } from "react-icons/bi";
+import { AiOutlineDashboard } from 'react-icons/ai';
+import { format } from 'date-fns';
 
 import {
   BsPersonFill,
@@ -22,90 +21,348 @@ import {
   BsBuildingFillUp,
   BsMailbox
 } from "react-icons/bs";
+import {
+  RiFolderWarningFill,
+} from "react-icons/ri";
+import 'bootstrap/dist/css/bootstrap.css';
 import { FaUserCircle } from "react-icons/fa";
-function Bceritificate() {
-  
-// ---------------------------------- SIDEBAR COLLAPSED  ----------------------------------
 
-const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
+function BclearanceAdmin() {
+  //  ------------------------------ SIDEBAR TOPBAR ------------------------------
+  const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-const handleSidebarCollapse = () => {
+  const handleSidebarCollapse = () => {
     setSidebarCollapsed(!isSidebarCollapsed);
-};
-
-
-
-
-const [isDropdownOpen, setDropdownOpen] = useState(false);
-const profileRef = useRef(null);
-const toggleDropdown = () => {
+  };
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const profileRef = useRef(null);
+  const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
-};
+  };
 
-const [ProfilesubmenuVisible, setProfileSubmenuVisible] = useState(false);
-const toggleProfileSubmenu = () => {
+  const [ProfilesubmenuVisible, setProfileSubmenuVisible] = useState(false);
+  const toggleProfileSubmenu = () => {
     setProfileSubmenuVisible(!ProfilesubmenuVisible);
-};
-useEffect(() => {
+  };
+  useEffect(() => {
     const handleClickOutside = (event) => {
-        if (profileRef.current && !profileRef.current.contains(event.target)) {
-            setProfileSubmenuVisible(false);
-        }
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setProfileSubmenuVisible(false);
+      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-}, []);
+  }, []);
 
- //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
- const [SelectedRowId, setSelectedRowId] = useState(null);
- const [editlast_name, setEditlast_name] = useState('');
- const [editmiddle_initial, setEditmiddle_initial] = useState('');
- const [editfirst_name, setEditfirst_name] = useState('');
- const [editaddress, setEditaddress] = useState('');
- const [editcontact_num, setEditcontact_num] = useState('');
- const [editreqs, setEditreqs] = useState('');
- const [editdaterequest, setEditdaterequest] = useState('');
- const [selectedRowData, setSelectedRowData] = useState(null);
+  // NUMBER OF ROWS DISPLAYED -----------------------------------------------
+  const [rowCount, setRowCount] = useState(10);
 
-const [showEditForm, setShowEditForm] = useState(false); //SHOW EDIT FORMS
-const [showForm, setShowForm] = useState(false); 
-const toggleForm = () => {setShowForm(!showForm);}; //SHOW ADD FORMS
-const handleEditDiscard = () => {setShowEditForm(false);}; // EDIT DISCARD FUNCTION
-const handleDiscard = () => {setShowForm(false);}; // DISCARD FUNCTION
+  // PAGE NUMBER --------------------------------------------------------------
+  const [currentPage, setCurrentPage] = useState(1);
 
+  // SEARCH QUERY --------------------------------------------------------------
+  const [searchQuery, setSearchQuery] = useState(""); // State for the search query
 
+  // SAMPLE DATA ---------------------------------------------------------------
+  const data = [
+    {
+      id: 1,
+      bc_l_name: "Doe",
+      bc_m_name: "John",
+      bc_f_name: "Jane",
+      bc_address: "123 Main Street",
+      bc_contact: "555-123-4567",
+      bc_r_request: "Sample Reason 1",
+      bc_d_request: "2023-09-16",
+    },
+    {
+      id: 2,
+      bc_l_name: "Smith",
+      bc_m_name: "Mary",
+      bc_f_name: "Robert",
+      bc_address: "456 Elm Street",
+      bc_contact: "555-987-6543",
+      bc_r_request: "Sample Reason 2",
+      bc_d_request: "2023-09-17",
+    },
+    {
+      id: 3,
+      bc_l_name: "Duco",
+      bc_m_name: "Dinosaur",
+      bc_f_name: "Clarise",
+      bc_address: "Restaurant",
+      bc_contact: "New",
+      bc_r_request: "secret",
+      bc_d_request: "kanina 2 mins ago"
+    },
+    {
+      id: 4,
+      bc_l_name: "Duco",
+      bc_m_name: "Dinosaur",
+      bc_f_name: "Clarise",
+      bc_address: "Restaurant",
+      bc_contact: "New",
+      bc_r_request: "secret",
+      bc_d_request: "kanina 2 mins ago"
+    },
+    {
+      id: 5,
+      bc_l_name: "Duco",
+      bc_m_name: "Dinosaur",
+      bc_f_name: "Clarise",
+      bc_address: "Restaurant",
+      bc_contact: "New",
+      bc_r_request: "secret",
+      bc_d_request: "kanina 2 mins ago"
+    },
+    {
+      id: 6,
+      bc_l_name: "Duco",
+      bc_m_name: "Dinosaur",
+      bc_f_name: "Clarise",
+      bc_address: "Restaurant",
+      bc_contact: "New",
+      bc_r_request: "secret",
+      bc_d_request: "kanina 2 mins ago"
+    }, {
+      id: 7,
+      bc_l_name: "Duco",
+      bc_m_name: "Dinosaur",
+      bc_f_name: "Clarise",
+      bc_address: "Restaurant",
+      bc_contact: "New",
+      bc_r_request: "secret",
+      bc_d_request: "kanina 2 mins ago"
+    },
+    {
+      id: 8,
+      bc_l_name: "Duco",
+      bc_m_name: "Dinosaur",
+      bc_f_name: "Clarise",
+      bc_address: "Restaurant",
+      bc_contact: "New",
+      bc_r_request: "secret",
+      bc_d_request: "kanina 2 mins ago"
+    },
+    {
+      id: 9,
+      bc_l_name: "Duco",
+      bc_m_name: "Dinosaur",
+      bc_f_name: "Clarise",
+      bc_address: "Restaurant",
+      bc_contact: "New",
+      bc_r_request: "secret",
+      bc_d_request: "kanina 2 mins ago"
+    }, {
+      id: 10,
+      bc_l_name: "Duco",
+      bc_m_name: "Dinosaur",
+      bc_f_name: "Clarise",
+      bc_address: "Restaurant",
+      bc_contact: "New",
+      bc_r_request: "secret",
+      bc_d_request: "kanina 2 mins ago"
+    },
+    {
+      id: 11,
+      bc_l_name: "Duco",
+      bc_m_name: "Dinosaur",
+      bc_f_name: "Clarise",
+      bc_address: "Restaurant",
+      bc_contact: "New",
+      bc_r_request: "secret",
+      bc_d_request: "kanina 2 mins ago"
+    },
+    {
+      id: 12,
+      bc_l_name: "Duco",
+      bc_m_name: "Dinosaur",
+      bc_f_name: "Clarise",
+      bc_address: "Restaurant",
+      bc_contact: "New",
+      bc_r_request: "secret",
+      bc_d_request: "kanina 2 mins ago"
+    }, {
+      id: 13,
+      bc_l_name: "Duco",
+      bc_m_name: "Dinosaur",
+      bc_f_name: "Clarise",
+      bc_address: "Restaurant",
+      bc_contact: "New",
+      bc_r_request: "secret",
+      bc_d_request: "kanina 2 mins ago"
+    },
+    {
+      id: 14,
+      bc_l_name: "Duco",
+      bc_m_name: "Dinosaur",
+      bc_f_name: "Clarise",
+      bc_address: "Restaurant",
+      bc_contact: "New",
+      bc_r_request: "secret",
+      bc_d_request: "kanina 2 mins ago"
+    },
+    {
+      id: 15,
+      bc_l_name: "Duco",
+      bc_m_name: "Dinosaur",
+      bc_f_name: "Clarise",
+      bc_address: "Restaurant",
+      bc_contact: "New",
+      bc_r_request: "secret",
+      bc_d_request: "kanina 2 mins ago"
+    },
+  ];
 
-// SELECTED ROW DATA
-  useEffect(() => {
-    if (selectedRowData) {
-      setEditlast_name(selectedRowData.last_name);
-      setEditmiddle_initial(selectedRowData.middle_initial);
-      setEditfirst_name(selectedRowData.first_name);
-      setEditaddress(selectedRowData.address);
-      setEditcontact_num(selectedRowData.contact_num);
-      setEditreqs(selectedRowData.reqs);
-      setEditdaterequest(selectedRowData.daterequest);
-      
+  // Event handler for dropdown change ----------------------------------------
+  const handleRowCountChange = (e) => {
+    const selectedRowCount = parseInt(e.target.value);
+    setRowCount(selectedRowCount);
+    setCurrentPage(1); // Reset current page to 1 when row count changes
+  };
+
+  // Event handler for search input change -------------------------------------
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset current page to 1 when search query changes
+  };
+
+  // Function to get the current page data using slice
+  const getCurrentPageData = () => {
+    const startIndex = (currentPage - 1) * rowCount;
+    const endIndex = startIndex + rowCount;
+    return filteredData.slice(startIndex, endIndex);
+  };
+
+  // Function to go to the next page ------------------------------------------
+  const nextPage = () => {
+    if (currentPage < Math.ceil(filteredData.length / rowCount)) {
+      setCurrentPage(currentPage + 1);
     }
-  }, [selectedRowData]);
+  };
 
-// ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
-const showEditFormHandler = (rowData) => {
-  setSelectedRowData(rowData);
-  setEditlast_name(rowData.last_name);
-  setEditmiddle_initial(rowData.middle_initial);
-  setEditfirst_name(rowData.first_name);
-  setEditaddress(rowData.address);
-  setEditcontact_num(rowData.contact_num);
-  setEditreqs(rowData.reqs);
-  setEditdaterequest(rowData.daterequest);
-  setSelectedRowId(rowData.id_cert);
-  setShowEditForm(true);
-};
+  // Function to go to the previous page --------------------------------------
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  // Calculate the starting and ending indices for the current page -------------
+  const startIndex = (currentPage - 1) * rowCount;
+  const endIndex = startIndex + rowCount;
+
+  // Function to filter data based on search query -----------------------------
+  const filteredData = data.filter((item) => {
+    const itemValues = Object.values(item).map((value) =>
+      value.toString().toLowerCase()
+    );
+    return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+  });
+
+  // Forms ----------------------------------------------
+  const [showForm, setShowForm] = useState(false);
+  const toggleForm = () => { setShowForm(!showForm); }; //   SHOW FORMS 
+  const handleDiscard = () => { setShowForm(false); }; //   DISCARD FUNCTION
+
+  //  DELETE  
+  const deleteRow = (row) => { Axios.delete(`http://localhost:3001/api/delete/bpermit/${row}`); }
+
+  //------------------------------------------------ Database ----------------------------
+  const [id, setId] = useState('');
+  const [bc_l_name, setLname] = useState('');
+  const [bc_m_name, setMname] = useState('');
+  const [bc_f_name, setFname] = useState('');
+  const [bc_address, setAddress] = useState('');
+  const [bc_contact, setContact] = useState('');
+  const [bc_r_request, setRrequest] = useState('');
+  const [bc_d_request, setDrequest] = useState('');
+  const [bPermitTbl, setBPermitTbl] = useState([])
+
+  //-------------------------- ADD FUNCTION -----------------------------------
+
+  useEffect(() => {
+    Axios.get('http://localhost:3001/api/get/bpermit').then((response) => { setBPermitTbl(response.data); });
+  }, [])
+
+  const submitReq = () => {
+    Axios.post('http://localhost:3001/api/insert/bpermit', {
+      bc_l_name: bc_l_name,
+      bc_m_name: bc_m_name,
+      bc_f_name: bc_f_name,
+      bc_address: bc_address,
+      bc_contact: bc_contact,
+      bc_r_request: bc_r_request,
+      bc_d_request: bc_d_request,
+    })
+
+    setBPermitTbl([
+      ...bPermitTbl,
+      {
+        bc_l_name: bc_l_name,
+        bc_m_name: bc_m_name,
+        bc_f_name: bc_f_name,
+        bc_address: bc_address,
+        bc_contact: bc_contact,
+        bc_r_request: bc_r_request,
+        bc_d_request: bc_d_request,
+      }
+    ]);
+  };
+
+  //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
+  const [SelectedRowId, setSelectedRowId] = useState(null);
+  const [editResidentName, setEditResidentName] = useState('');
+  const [editaddress, setEditAddress] = useState('');
+  const [editreason, setEditReason] = useState('');
+  const [editdate, setEditDate] = useState('');
+  const [selectedRowData, setSelectedRowData] = useState(null);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const handleEditDiscard = () => { setShowEditForm(false); };
+
+  // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
+  const showEditFormHandler = (rowData) => {
+    setSelectedRowData(rowData);
+    setEditResidentName(rowData.bc_l_name);
+    setEditAddress(rowData.bc_address);
+    setEditReason(rowData.bc_r_request);
+    setEditDate(rowData.bc_d_request);
+    setSelectedRowId(rowData.idb_permit);
+    setShowEditForm(true);
+  };
+  const updateRowData = () => {
+    Axios.put(`http://localhost:3001/api/update/bpermit/${selectedRowData.idb_permit}`, {
+      bc_l_name: editResidentName,
+      bc_address: editaddress,
+      bc_r_request: editreason,
+      bc_d_request: editdate,
+    }).then((response) => {
+
+      const updatedTableData = bPermitTbl.map((rowData) => {
+        if (rowData.idb_permit === selectedRowData.idb_permit) {
+          return {
+            ...rowData,
+            bc_l_name: editResidentName,
+            bc_address: editaddress,
+            bc_r_request: editreason,
+            bc_d_request: editdate,
+          };
+        } else {
+          return rowData;
+        }
+      });
+
+      // Update the state with the new table data
+      setBPermitTbl(updatedTableData);
+
+      // Clear the selectedRowData and close the edit form
+      setSelectedRowData(null);
+      setShowEditForm(false);
+    });
+  };
 
   return (
     <>
@@ -270,22 +527,28 @@ const showEditFormHandler = (rowData) => {
           </ul>
         </div>
       </div>
-      <div className={`container-documents vh-100 ${isSidebarCollapsed ? 'expanded' : ''}`}>
+      <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
-          <div className="row w-75">
-            <div className="col-md-4 ">
-              <form className="input-group d-flex align-items-center">
-                <input type="text" className="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-btn" />
-                <div className="input-group-append">
-                  <button className="btn btn-primary mt-2" type="submit" id="search-btn">icon</button>
-                </div>
-              </form>
+          <div className="toppart-table border row w-75 d-flex align-items-center">
+            <div className="col-4">
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search"
+                  aria-label="Enter search keyword"
+                  name="query"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                />
+                <button className="btn btn-outline-secondary" type="button">
+                  <i className="bi bi-search"></i>
+                </button>
+              </div>
             </div>
-
-            <div className="col-md-4">
-              <div class="dropdown-center mt-2">
-                <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false"> Dropdown button</button>
-
+            <div className="col-4">
+              <div className="tabsz dropdown-center">
+                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
                 <ul class="dropdown-menu">
                   <Link to="/d-barangay-certificate">
                     <li><a class="dropdown-item">Barangay Certificate</a></li></Link>
@@ -293,252 +556,268 @@ const showEditFormHandler = (rowData) => {
                     <li><a class="dropdown-item">Barangay Indigency</a></li></Link>
                   <Link to="/d-barangay-installation">
                     <li><a class="dropdown-item">Installation Permit</a></li></Link>
+                    <Link to="/d-barangay-construction">
+                    <li><a class="dropdown-item"> construction Permit</a></li></Link>
+                  <Link to="/d-barangay-id">
+                    <li><a class="dropdown-item"> Barangay ID</a></li></Link>
                 </ul>
               </div>
             </div>
-            <div className="col-md-4">
-              <div className="mb-3">
-                <select className="form-control">
-                  <option value="5">5</option>
+            <div className="col-4">
+              <div className="dropdown-tablenumbers">
+                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
                   <option value="10">10</option>
                   <option value="20">20</option>
                   <option value="50">50</option>
+                  <option value="100">100</option>
                 </select>
               </div>
             </div>
           </div>
         </div>
+        <div class="pagetitle">
+          <h1> Barangay Certificate  </h1>
+        </div>
+        <main id="main" class="main">
+          <section class="section">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div className="row p-2 d-flex justify-content-between">
+                      <div className="col-4">
+                        <div className="table-pages">
+                          <nav aria-label="Page navigation example">
+                            <ul className="pagination">
+                              <li className="page-item">
+                                <a className="page-link" href="#" aria-label="Previous" onClick={prevPage}>
+                                  <span aria-hidden="true">&laquo;</span>
+                                </a>
+                              </li>
+                              {Array.from({ length: Math.ceil(filteredData.length / rowCount) }, (_, i) => (
+                                <li className={`page-item ${i + 1 === currentPage ? 'active' : ''}`} key={i}>
+                                  <a className="page-link" href="#" onClick={() => setCurrentPage(i + 1)}>
+                                    {i + 1}
+                                  </a>
+                                </li>
+                              ))}
+                              <li className="page-item">
+                                <a className="page-link" href="#" aria-label="Next" onClick={nextPage}>
+                                  <span aria-hidden="true">&raquo;</span>
+                                </a>
+                              </li>
+                            </ul>
+                          </nav>
+                        </div>
+                      </div>
+                      <div className="col-4 text-end ">
+                        <button className="btn btn-primary float-end" onClick={toggleForm}>Add</button>
+                      </div>
+                    </div>
 
 
-{/*------------------------ TABLE STARTS -------------------------- */}
-<main id="main" class="main">
-<div class="table-container d-flex justify-content-center align-items-center">
-<div class="col border rounded p-3 m-5">
-<div class="row p-2 d-flex justify-content-between">
-  <div class="col-4">
-  <div><h1 className="search-container"><b />Barangay Certificate</h1></div>
-  </div>
-    <div class="col-4 text-end ">
-      <button className="btn btn-primary float-end" onClick={toggleForm}>Add</button>
-       </div>
-     </div>
-    <div class="row">
-     <div class="col">
-       <table class="table m-auto">
-         <thead>
-           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Middle Initial </th>
-            <th scope="col">First Name</th>
-            <th scope="col">Address</th>
-            <th scope="col">Contact No.</th>
-            <th scope="col">Reason of Request</th>
-            <th scope="col">Date Requested</th>
-            <th scope="col">Action</th>
-           </tr>
-          </thead>
-       <tbody>
-       {/* {certificatetable.map((val) => {
-         return (
-          <tr key={val.id}>
-            <th scope="row">{val.id}</th>
-                <td>{val.last_name}</td>        
-                <td>{val.middle_initial}</td>          
-                <td>{val.first_name}</td>          
-                <td>{val.address}</td>          
-                <td>{val.contact_num}</td>          
-                <td>{val.reqs}</td>          
-                <td>{format(new Date(val.daterequest), 'yyyy-MM-dd')}</td> 
-                <td>
-                <div className='gap-2 d-md-flex justify-content-start align-items-center'>
-                  <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(val)}> Edit </button>
-                  <form method='post' action=''>
-                  <input type='hidden' name='id' value={val.id} /> 
-                  <button onClick={() => { deletecertficates(val.last_name) }} className='btn btn-outline-danger' type='submit' name='deletePost' >Delete</button>
-               </form>
+
+                    <table class="table caption-top">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Resident Name</th>
+                          <th scope="col">Address</th>
+                          <th scope="col">Reason</th>
+                          <th scope="col">Date</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {getCurrentPageData().map((item, index) => (
+                          <tr key={index}>
+                            <th scope="row">{item.id}</th>
+                            <td>{item.bc_l_name} {item.bc_m_name} {item.bc_f_name}</td>
+                            <td>{item.bc_address}</td>
+                            <td>{item.bc_r_request}</td>
+                            <td>{item.bc_d_request}</td>
+                            <td>Status Value</td>
+                            <td>
+                              <button
+                                className="btn btn-primary btn-sm me-2"
+                                onClick={() => showEditFormHandler(item)}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                className="btn btn-danger btn-sm"
+                                onClick={() => deleteRow(item.id)}
+                              >
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+
+                    </table>
+                  </div>
+                </div>
               </div>
-             </td>
-            </tr>
-            ); 
-          })} */}
-      </tbody>
-     </table>
-     </div>
-   </div>
- </div>
 
-  {/* -----------------------------  POP-UP FORMS ------------------- */}
-  {/* {showForm && (
-    <div className="popup-overlay">
-     <div className="popup-form">
-       <form>
-        <div className="certificate">
-        <h2 className="certificate-title">ADD CERIFICATES INFO</h2>
-         <div className="certificate-content">
-         <div className="form-group">
-           <label htmlFor="last_name">LAST NAME</label>
-             <input
-                type="text"
-                id="last_name"
-                name="last_name"
-                onChange={(e) => {setlast_name(e.target.value);}}
-                className="form-control"required /></div>
+              {/* POP-UP FORMS */}
+              {showForm && (
+                <div className="popup-overlay">
+                  <div className="popup-form">
+                    <form onSubmit={submitReq}>
+                      <div className="certificate">
+                        <h2 className="certificate-title">ADD INSTALLATION </h2>
+                        <div className="certificate-content">
+                          <div className="form-group">
+                            <label htmlFor="ResidentName">Resident Name</label>
+                            <input
+                              type="text"
+                              id="ResidentName"
+                              name="ResidentName"
+                              onChange={(e) => {
+                                setLname(e.target.value);
+                              }}
+                              className="form-control"
+                              required
+                            />
+                          </div>
 
-         <div className="form-group">
-           <label htmlFor="first_name"> MIDDLE INITIAL </label>
-             <input
-               type="text"
-               id="first_name"
-               name="first_name"
-               onChange={(e) => {setmiddleInitial(e.target.value);}}
-               className="form-control"required /> </div>
+                          <div className="form-group">
+                            <label htmlFor="Purpose">Address</label>
+                            <input
+                              type="text"
+                              id="Purpose"
+                              name="Purpose"
+                              onChange={(e) => {
+                                setAddress(e.target.value);
+                              }}
+                              className="form-control"
+                              required
+                            />
+                          </div>
 
-          <div className="form-group">
-          <label htmlFor="first_name"> FIRST NAME </label>
-            <input
-              type="text"
-              id="first_name"
-              name="first_name"
-              onChange={(e) => {setfirst_name(e.target.value);}}
-              className="form-control" required /></div>
+                          <div className="form-group">
+                            <label htmlFor="Address">Reason of Request</label>
+                            <input
+                              type="text"
+                              id="Address"
+                              name="Address"
+                              onChange={(e) => {
+                                setRrequest(e.target.value);
+                              }}
+                              className="form-control"
+                              required
+                            />
+                          </div>
 
-           <div className="form-group">
-           <label htmlFor="address">ADDRESS </label>
-             <input
-               type="text"
-               id="address"
-               name="address"
-               onChange={(e) => {setaddress(e.target.value);}}
-               className="form-control"required /></div>
+                          <div className="form-group">
+                            <label htmlFor="issuedDate">Issued Date:</label>
+                            <input
+                              type="date"
+                              id="issuedDate"
+                              name="issuedDate"
+                              onChange={(e) => {
+                                setDrequest(e.target.value);
+                              }}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+                        </div>
 
-            <div className="form-group">
-            <label htmlFor="contact_num">CONTACT NUMBER </label>
-              <input
-                type="text"
-                id="contact_num"
-                name="contact_num"
-                onChange={(e) => {setcontact(e.target.value); }}
-                className="form-control"required /></div>
+                        <div className="form-group form-check">
+                          <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                          <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
+                        </div>
 
-           <div className="form-group">
-           <label htmlFor="reqs"> REASON OF REQUEST </label>
-             <input
-               type="text"
-               id="reqs"
-               name="reqs"
-               onChange={(e) => {setreason(e.target.value);}}
-               className="form-control"required /></div>
+                        <button type="submit" className="btn btn-primary">Submit</button>
+                        <button type="button" className="btn btn-danger" onClick={handleDiscard}>Discard</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              )}
+            </div>
 
-            <div className="form-group">
-            <label htmlFor="daterequested"> DATE REQUESTED </label>
-              <input
-                type="date"
-                id="daterequested"
-                name="daterequested"
-                onChange={(e) => {setdaterequest(e.target.value); }}
-                className="form-control"required /></div>
+            {/* EDIT FORM */}
+            {showEditForm && (
+              <div className="popup-overlay">
+                <div className="popup-form">
+                  <form>
+                    <div className="certificate">
+                      <h2 className="certificate-title">EDIT INSTALLATION</h2>
+                      <div className="certificate-content">
+                        <div className="form-group">
+                          <label htmlFor="EditResidentName">Resident Name</label>
+                          <input
+                            type="text"
+                            id="EditResidentName"
+                            name="EditResidentName"
+                            value={editResidentName}
+                            onChange={(e) => setEditResidentName(e.target.value)}
+                            className="form-control"
+                            required
+                          />
+                        </div>
 
-             <div className="form-buttons">
-               <button type="submit" className="btn btn-primary">Submit </button>
-               <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
-               </div>
-             </div>
-          </div>
-       </form>
-     </div>
-  </div>
-)} */}
+                        <div className="form-group">
+                          <label htmlFor="EditAddress">Address</label>
+                          <input
+                            type="text"
+                            id="EditAddress"
+                            name="EditAddress"
+                            value={editaddress}
+                            onChange={(e) => setEditAddress(e.target.value)}
+                            className="form-control"
+                            required
+                          />
+                        </div>
 
+                        <div className="form-group">
+                          <label htmlFor="EditReason">Reason of Request</label>
+                          <input
+                            type="text"
+                            id="EditReason"
+                            name="EditReason"
+                            value={editreason}
+                            onChange={(e) => setEditReason(e.target.value)}
+                            className="form-control"
+                            required
+                          />
+                        </div>
 
-{/* ------------------------------------------------- EDIT FORMS --------------------------------------------------------- */}
-{/* {showEditForm && selectedRowData && (
-  <div className='popup-overlay'>
-  <div className='popup-form'>
-  <form>
-    <div className='certificate'>
-     <h2 className="certificate-title">EDIT CERTIFICATE INFO</h2>
-     <div className="certificate-content">
+                        <div className="form-group">
+                          <label htmlFor="EditIssuedDate">Issued Date:</label>
+                          <input
+                            type="date"
+                            id="EditIssuedDate"
+                            name="EditIssuedDate"
+                            value={editdate}
+                            onChange={(e) => setEditDate(e.target.value)}
+                            className="form-control"
+                            required
+                          />
+                        </div>
+                      </div>
 
-      <div className="form-group">
-        <label htmlFor="last_name">LAST NAME</label>
-        <input
-          type="text"
-          id="last_name"
-          name="last_name"
-          value={editlast_name} onChange={(e) => setEditlast_name(e.target.value)} 
-          className="form-control"required /></div>
-      
-      <div className="form-group">
-      <label htmlFor="middle_initial"> MIDDLE INITIAL </label>
-        <input
-          type="text"
-          id="middle_initial"
-          name="middle_initial"
-          value={editmiddle_initial} onChange={(e) => setEditmiddle_initial(e.target.value)}
-          className="form-control"required /> </div>
+                      <div className="form-group form-check">
+                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                        <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
+                      </div>
 
-      <div className="form-group">
-      <label htmlFor="First_Name"> FIRST NAME </label>
-        <input
-          type="text"
-          id="first_name"
-          name="first_name"
-          value={editfirst_name} onChange={(e) => setEditfirst_name(e.target.value)}
-          className="form-control"required /> </div>
-
-       <div className="form-group">
-       <label htmlFor="address"> ADDRESS </label>
-        <input
-          type="text"
-          id="address"
-          name="address"
-          value={editaddress} onChange={(e) => setEditaddress(e.target.value)}
-          className="form-control" required /></div>
-
-       <div className="form-group">
-       <label htmlFor="contact_num"> CONTACT NUMBER </label>
-         <input
-           type="text"
-           id="contact_num"
-           name="contact_num"
-           value={editcontact_num} onChange={(e) => setEditcontact_num(e.target.value)}
-           className="form-control" required /></div>
-
-       <div className="form-group">
-       <label htmlFor="reqs"> REASON OF REQUEST </label>
-         <input
-           type="text"
-           id="reqs"
-           name="reqs"
-           value={editreqs} onChange={(e) => setEditreqs(e.target.value)}
-           className="form-control" required /></div>
-
-        <div className="form-group">
-        <label htmlFor="daterequest">Date REQUESTED</label>
-          <input
-           type="date"
-           id="daterequest"
-           name="daterequest"
-           value={editdaterequest} onChange={(e) => setEditdaterequest(e.target.value)}
-           className='form-control' required  />
-        </div>
-
-          <div className="form-buttons">
-          <button type='submit' className='btn btn-primary'> Submit  </button>  
-          <button type="button" className="btn btn-secondary" onClick={handleEditDiscard}> Discard </button>
-        </div>
+                      <button type="button" className="btn btn-primary" onClick={updateRowData}>Save</button>
+                      <button type="button" className="btn btn-danger" onClick={handleEditDiscard}>Discard</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
+          </section>
+        </main>
       </div>
-    </div>
-   </form>
-  </div>
-</div>
-)} */}
-</div>
-  </main>
-    </div>
     </>
   );
 }
 
-export default Bceritificate;
+export default BclearanceAdmin;

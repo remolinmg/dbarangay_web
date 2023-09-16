@@ -15,12 +15,14 @@ import BlotterAdmin from "./admin-components/blotter-admin";
 import ResidentsAdmin from "./admin-components/residents-admin";
 import BpermitAdmin from "./admin-components/b-permit-admin";
 import BpromotionAdmin from "./admin-components/b-promotion-admin";
-import BclearanceAdmin from "./admin-components/b-clearance-admin";
 import BofficialsAdmin from "./admin-components/b-officials-admin";
 import StafflogsAdmin from "./admin-components/staff-logs-admin";
 import AdminProfile from "./admin-components/admin-profile";
 import Adminaccounts from "./admin-components/admin-accounts";
 import Admindetails from "./admin-components/admin-details";
+import BconstuctionAdmin from "./admin-components/d-barangay-construction"
+import Biddmin from "./admin-components/d-barangay-id"
+
 
 
 import UserNav from "./user-components/user-navbar";
@@ -54,6 +56,8 @@ function App() {
           <Route path="d-barangay-indigency" element={<Bindigency />} />
           <Route path="d-barangay-livelihood" element={<Blivelihood />} />
           <Route path="d-barangay-installation" element={<Binstallation />} />
+          <Route path="d-barangay-construction" element={<BconstuctionAdmin />} />
+          <Route path="d-barangay-id" element={<Biddmin />} />
           <Route path="announcement-admin" element={<AnnouncementAdmin />} />
           <Route path="livelihood-admin" element={<LivelihoodAdmin />} />
           <Route path="emergency-admin" element={<EmergencyAdmin />} />
@@ -61,13 +65,13 @@ function App() {
           <Route path="residents-admin" element={<ResidentsAdmin />} />
           <Route path="b-permit-admin" element={<BpermitAdmin />} />
           <Route path="b-promotion-admin" element={<BpromotionAdmin />} />
-          <Route path="b-clearance-admin" element={<BclearanceAdmin />} />
           <Route path="b-officials-admin" element={<BofficialsAdmin />} />
           <Route path="staff-logs-admin" element={<StafflogsAdmin />} />
           <Route path="feedbacks-admin" element={<FeedbackAdmin />} />
           <Route path="admin-profile" element={<AdminProfile />} />
           <Route path="admin-accounts" element={<Adminaccounts />} />
           <Route path="admin-details" element={<Admindetails />} />
+
 
           <Route path="login" element={<Login />} />
           <Route path="registration" element={<Registration />} />
