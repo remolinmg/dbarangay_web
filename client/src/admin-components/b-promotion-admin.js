@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import './assets/css/style.css';
+import Axios from 'axios';
 import { Outlet, Link, NavLink } from 'react-router-dom';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
@@ -27,87 +28,353 @@ import { FaUserCircle } from "react-icons/fa";
 
 
 function BpromotionAdmin() {
-  const [showForm, setShowForm] = useState(false);
-  const [inputValues, setInputValues] = useState({
-    BusinessName: "",
-    TypeOfBusiness: "",
-    BusinessHours: "",
-    Address: "",
-    ContactNumber: "",
-    GALLERY: "",
-  });
-
-  // SUBMIT FUNCTION
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setInputValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
-
-  const toggleForm = () => {
-    setShowForm(!showForm);
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', inputValues);
-    setInputValues({
-      BusinessName: "",
-      TypeOfBusiness: "",
-      BusinessHours: "",
-      Address: "",
-      ContactNumber: "",
-      GALLERY: "",
-
-
-    });
-    setIsSubmitted(true);
-    setShowForm(false);
-  };
-
-  //   DISCARD FUNCTION
-  const handleDiscard = () => {
-    setInputValues({
-      BusinessName: "",
-      TypeOfBusiness: "",
-      BusinessHours: "",
-      Address: "",
-      ContactNumber: "",
-      GALLERY: "",
-
-    });
-    setShowForm(false);
-  };
-
-
-  useEffect(() => {
-    if (isSubmitted) {
-      const timer = setTimeout(() => {
-        setIsSubmitted(false);
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [isSubmitted]);
-
-
-
+  //  ------------------------------ SIDEBAR TOPBAR ------------------------------
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const profileRef = useRef(null);
+
   const handleSidebarCollapse = () => {
     setSidebarCollapsed(!isSidebarCollapsed);
   };
-
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-
+  const profileRef = useRef(null);
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
+
   const [ProfilesubmenuVisible, setProfileSubmenuVisible] = useState(false);
   const toggleProfileSubmenu = () => {
     setProfileSubmenuVisible(!ProfilesubmenuVisible);
   };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setProfileSubmenuVisible(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // NUMBER OF ROWS DISPLAYED -----------------------------------------------
+  const [rowCount, setRowCount] = useState(10);
+
+  // PAGE NUMBER --------------------------------------------------------------
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // SEARCH QUERY --------------------------------------------------------------
+  const [searchQuery, setSearchQuery] = useState(""); // State for the search query
+
+  // SAMPLE DATA ---------------------------------------------------------------
+  const data = [
+    {
+      id: 1,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant",
+      
+    },
+    {
+      id: 2,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant"
+    },
+    {
+      id: 3,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant"
+    },
+    {
+      id: 4,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant"
+    },
+    {
+      id: 5,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant"
+    },
+    {
+      id: 6,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant"
+    }, {
+      id: 7,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant"
+    },
+    {
+      id: 8,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant"
+    },
+    {
+      id: 9,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant"
+    }, 
+    {
+      id: 10,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant"
+    },
+    {
+      id: 11,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant"
+    },
+    {
+      id: 12,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant"
+    }, {
+      id: 13,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant"
+    },
+    {
+      id: 14,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant"
+    },
+    {
+      id: 15,
+      b_owner: "JERICHO",
+      b_name: "Doe's Restaurant",
+      b_address: "123 Main Street",
+      b_hours: "JERICHO",
+      type_business: "Doe's Restaurant",
+      b_contact: "123 Main Street",
+      b_picture: "Restaurant"
+    },
+  ];
+
+  // Event handler for dropdown change ----------------------------------------
+  const handleRowCountChange = (e) => {
+    const selectedRowCount = parseInt(e.target.value);
+    setRowCount(selectedRowCount);
+    setCurrentPage(1); // Reset current page to 1 when row count changes
+  };
+
+  // Event handler for search input change -------------------------------------
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset current page to 1 when search query changes
+  };
+
+  // Function to get the current page data using slice
+  const getCurrentPageData = () => {
+    const startIndex = (currentPage - 1) * rowCount;
+    const endIndex = startIndex + rowCount;
+    return filteredData.slice(startIndex, endIndex);
+  };
+
+  // Function to go to the next page ------------------------------------------
+  const nextPage = () => {
+    if (currentPage < Math.ceil(filteredData.length / rowCount)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Function to go to the previous page --------------------------------------
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  // Calculate the starting and ending indices for the current page -------------
+  const startIndex = (currentPage - 1) * rowCount;
+  const endIndex = startIndex + rowCount;
+
+  // Function to filter data based on search query -----------------------------
+  const filteredData = data.filter((item) => {
+    const itemValues = Object.values(item).map((value) =>
+      value.toString().toLowerCase()
+    );
+    return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+  });
+
+
+
+  // Forms ----------------------------------------------
+  const [showForm, setShowForm] = useState(false);
+  const toggleForm = () => { setShowForm(!showForm); }; //   SHOW FORMS 
+  const handleDiscard = () => { setShowForm(false); }; //   DISCARD FUNCTION
+
+
+
+  //  DELETE  
+  const deleteRow = (row) => { Axios.delete(`http://localhost:3001/api/delete/bpermit/${row}`); }
+
+  //------------------------------------------------ Database ----------------------------
+  const [id, setId] = useState('');
+  const [b_owner, setOwner] = useState('');
+  const [b_name, setName] = useState('');
+  const [b_address, setAddress] = useState('');
+  const [b_hours, setHours] = useState('');
+  const [type_business, setTbusiness] = useState('');
+  const [b_contact, setContact] = useState('');
+  const [b_picture, setPicture] = useState('');
+  const [bPermitTbl, setBPermitTbl] = useState([])
+
+  //-------------------------- ADD FUNCTION -----------------------------------
+
+  useEffect(() => {
+    Axios.get('http://localhost:3001/api/get/bpermit').then((response) => { setBPermitTbl(response.data); });
+  }, [])
+
+  const submitReq = () => {
+    Axios.post('http://localhost:3001/api/insert/bpermit', {
+      b_owner: b_owner,
+      b_name: b_name,
+      b_address: b_address,
+      b_hours: b_hours,
+      type_business: type_business,
+      b_contact: b_contact,
+      b_picture: b_picture,
+    })
+
+
+    setBPermitTbl([
+      ...bPermitTbl,
+      {
+        id: id,
+        b_owner: b_owner,
+        b_name: b_name,
+        b_address: b_address,
+        b_hours: b_hours,
+        type_business: type_business,
+        b_contact: b_contact,
+        b_picture: b_picture,
+      }
+    ]);
+  };
+  //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
+  const [SelectedRowId, setSelectedRowId] = useState(null);
+  const [editOwner, setEditOwner] = useState('');
+  const [editName, setEditName] = useState('');
+  const [editAddress, setEditAddress] = useState('');
+  const [editTypeBusiness, setEditTypeBusiness] = useState('');
+  const [selectedRowData, setSelectedRowData] = useState(null);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const handleEditDiscard = () => { setShowEditForm(false); };
+
+
+  // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
+
+
+  const showEditFormHandler = (rowData) => {
+    setSelectedRowData(rowData);
+    setEditOwner(rowData.b_owner);
+    setEditName(rowData.b_name);
+    setEditAddress(rowData.b_address);
+    setEditTypeBusiness(rowData.type_business);
+    setSelectedRowId(rowData.idb_permit);
+    setShowEditForm(true);
+  };
+  const updateRowData = () => {
+    Axios.put(`http://localhost:3001/api/update/bpermit/${selectedRowData.idb_permit}`, {
+      b_owner: editOwner,
+      b_name: editName,
+      b_address: editAddress,
+      type_business: editTypeBusiness,
+    }).then((response) => {
+
+      const updatedTableData = bPermitTbl.map((rowData) => {
+        if (rowData.idb_permit === selectedRowData.idb_permit) {
+          return {
+            ...rowData,
+            b_owner: editOwner,
+            b_name: editName,
+            b_address: editAddress,
+            type_business: editTypeBusiness,
+          };
+        } else {
+          return rowData;
+        }
+      });
+
+      // Update the state with the new table data
+      setBPermitTbl(updatedTableData);
+
+      // Clear the selectedRowData and close the edit form
+      setSelectedRowData(null);
+      setShowEditForm(false);
+    });
+  };
+
 
   return (
     <>
@@ -273,142 +540,176 @@ function BpromotionAdmin() {
         </div>
       </div>
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
-        <div class="pagetitle">
-          <h1> Promote Business  </h1>
+        <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
+          <div className="toppart-table border row w-75 d-flex align-items-center">
+            <div className="col-4">
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search"
+                  aria-label="Enter search keyword"
+                  name="query"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                />
+                <button className="btn btn-outline-secondary" type="button">
+                  <i className="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
+            <div className="col-4">
+              <div className="tabsz dropdown-center">
+                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
+                <ul className="dropdown-menu">
+                  <li><Link to="/announcement-admin">General</Link></li>
+                  <li><Link to="/livelihood-admin">Livelihood</Link></li>
+                </ul>
+              </div>
+            </div>
+            <div className="col-4">
+              <div className="dropdown-tablenumbers">
+                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
-        <main id="main" class="main">
-          <section class="section">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-md-flex justify-content-between align-items-center">
-                      <h5 class="card-title">Promote Business</h5>
-                      <form class="search-form d-flex align-items-center" method="POST" action="#">
-                        <input type="text" name="query" placeholder="Search" title="Enter search keyword" />
-                        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-                      </form>
+        {/* -------------------------------------------------------------  TABLE -------------------------------------------------------------  */}
+        <main id="main" className="main">
+          <div className="pagetitle"><h1> Business Promotion  </h1> </div>
+          <section className="section">
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="card">
+                  <div className="card-body">
+                    <div className="row p-2 d-flex justify-content-between">
+                      <div className="col-4">
+                        <div className="table-pages">
+                          <nav aria-label="Page navigation example">
+                            <ul className="pagination">
+                              <li className="page-item">
+                                <a className="page-link" href="#" aria-label="Previous" onClick={prevPage}>
+                                  <span aria-hidden="true">&laquo;</span>
+                                </a>
+                              </li>
+                              {Array.from({ length: Math.ceil(filteredData.length / rowCount) }, (_, i) => (
+                                <li className={`page-item ${i + 1 === currentPage ? 'active' : ''}`} key={i}>
+                                  <a className="page-link" href="#" onClick={() => setCurrentPage(i + 1)}>
+                                    {i + 1}
+                                  </a>
+                                </li>
+                              ))}
+                              <li className="page-item">
+                                <a className="page-link" href="#" aria-label="Next" onClick={nextPage}>
+                                  <span aria-hidden="true">&raquo;</span>
+                                </a>
+                              </li>
+                            </ul>
+                          </nav>
+                        </div>
+                      </div>
+                      <div className="col-4 text-end ">
+                        <button className="btn btn-primary float-end" onClick={toggleForm}>Add</button>
+                      </div>
                     </div>
-
-                    <div class="search-bar d-flex justify-content-between pt-2">
-                      <p>Brgy. Harapin ang Bukas</p>
-                      <button className="btn btn-primary float-end" onClick={toggleForm}>Add</button>
-                    </div>
-
-                    <table class="table caption-top">
+                    <table className="table">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
-                          <th scope="col">Business Name</th>
-                          <th scope="col">Business Hours</th>
-                          <th scope="col">Address</th>
-                          <th scope="col">Contact Number</th>
-                          <th scope="col">Gallery</th>
-                          <th scope="col">Action</th>
+                          <th scope="col">Business Owner</th>
+                          <th scope="col">Business Name </th>
+                          <th scope="col">Business Address </th>
+                          <th scope="col">Business Hours </th>
+                          <th scope="col">Type of Business </th>
+                          <th scope="col">Contact Number </th>
+                          <th scope="col">Business Picture </th>
+                          <th scope="col">Actions</th>
                         </tr>
                       </thead>
+
                       <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>Business</td>
-                          <td>10:00AM - 8:00PM</td>
-                          <td>address</td>
-                          <td>09876543210</td>
-                          <td>img.jpg</td>
-                          <td>
-                            <div class='gap-2 d-md-flex justify-content-start align-items-center'>
-                              <button type='button' class='btn btn-primary'><a class='text-decoration-none text-white' href=''>Edit</a></button>
-                              <form method='post' action=''>
-                                <input type='hidden' name='id' value="" />
-                                <button class='btn btn-outline-danger' type='submit' name='deletePost'>Delete</button>
-                              </form>
-                            </div>
-                          </td>
-                        </tr>
+                        {getCurrentPageData().map((val) => {
+                          return <tr key={val.id}>
+                            <th scope="row">{val.id}</th>
+                            <td>{val.b_owner}</td>
+                            <td>{val.b_name}</td>
+                            <td>{val.b_address}</td>
+                            <td>{val.b_hours}</td>
+                            <td>{val.type_business}</td>
+                            <td>{val.b_contact}</td>
+                            <td>{val.b_picture}</td>
+                            <td>
+                              <div className='gap-2 d-md-flex justify-content-start align-items-center'>
+                                <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(val)}> Edit</button>
+                                <form method='post' action=''>
+                                  <input type='hidden' name='id' value="" />
+                                  <button
+                                    className="btn btn-outline-danger"
+                                    type="submit"
+                                    name="deleteRow"
+                                    onClick={() => { deleteRow(val.b_owner); }}>Delete</button>
+                                </form>
+                              </div>
+                            </td>
+                          </tr>
+                        })}
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
-
-              {/* POP-UP FORMS */}
-              {showForm && (
+              {/* ------------------------------------------------------------ ADD POP-UP FORMS  ------------------------------------------------------------*/}
+              {/* {showForm && (
                 <div className="popup-overlay">
                   <div className="popup-form">
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={submitReq}>
                       <div className="certificate">
-                        <h2 className="certificate-title">PROMOTE BUSINESS </h2>
+                        <h2 className="certificate-title">ADD RESIDENTS INFO</h2>
                         <div className="certificate-content">
                           <div className="form-group">
-                            <label htmlFor="BusinessName">BUSINESS NAME</label>
+                            <label htmlFor="owner">Business Owner</label>
                             <input
                               type="text"
-                              id="BusinessName"
-                              name="BusinessName"
-                              value={inputValues.BusinessName}
-                              onChange={handleInputChange}
-                              className="form-control"
-                              required /></div>
+                              id="owner"
+                              name="owner"
+                              onChange={(e) => { setOwner(e.target.value); }}
+                              className="form-control" required />
+                          </div>
 
                           <div className="form-group">
-                            <label htmlFor="BusinessType"> Type of Business </label>
+                            <label htmlFor="bname"> Business Name </label>
                             <input
                               type="text"
-                              id="BusinessType"
-                              name="BusinessType"
-                              value={inputValues.BusinessType}
-                              onChange={handleInputChange}
-                              className="form-control"
-                              required /> </div>
+                              id="bname"
+                              name="bname"
+                              onChange={(e) => { setName(e.target.value); }}
+                              className="form-control" required />
+                          </div>
 
                           <div className="form-group">
-                            <label htmlFor="BusinessHours">Business Hours</label>
+                            <label htmlFor="address">Business Address </label>
                             <input
                               type="text"
-                              id="BusinessHours"
-                              name="BusinessHours"
-                              value={inputValues.BusinessHours}
-                              onChange={handleInputChange}
-                              className="form-control"
-                              required /></div>
-
-
+                              id="address"
+                              name="address"
+                              onChange={(e) => { setAddress(e.target.value); }}
+                              className="form-control" required />
+                          </div>
 
                           <div className="form-group">
-                            <label htmlFor="Address">Address</label>
+                            <label htmlFor="type">Type of Business</label>
                             <input
                               type="text"
-                              id="Address"
-                              name="Address"
-                              value={inputValues.Address}
-                              onChange={handleInputChange}
-                              className="form-control"
-                              required /></div>
-
-
-                          <div className="form-group">
-                            <label htmlFor="ContactNumber">Contact Number</label>
-                            <input
-                              type="text"
-                              id="ContactNumber"
-                              name="ContactNumber"
-                              value={inputValues.ContactNumber}
-                              onChange={handleInputChange}
-                              className="form-control"
-                              required /></div>
-
-
-
-                          <div className="form-group">
-                            <label htmlFor="InsertImage">Insert Images Here</label>
-                            <input
-                              type="file"
-                              id="InsertImage"
-                              name="InsertImage"
-                              value={inputValues.InsertImage}
-                              onChange={handleInputChange}
-                              className="form-control"
-                              required /></div>
+                              id="type"
+                              name="type"
+                              onChange={(e) => { setTypeBusiness(e.target.value); }}
+                              className="form-control" required />
+                          </div>
 
                           <div className="form-buttons">
                             <button type="submit" className="btn btn-primary">Submit </button>
@@ -419,20 +720,74 @@ function BpromotionAdmin() {
                     </form>
                   </div>
                 </div>
-              )}
+              )} */}
+
+              {/* ------------------------------------------------- EDIT FORM --------------------------------------------------------- */}
+              {/* {showEditForm && selectedRowData && (
+                <div className='popup-overlay'>
+                  <div className='popup-form'>
+                    <form onSubmit={updateRowData}>
+                      <div className='certificate'>
+                        <h2 className='certificate-title'>EDIT RESIDENTS INFO</h2>
+                        <div className='certificate-content'>
+                          <div className='form-group'>
+                            <label htmlFor='owner'> Business Owner </label>
+                            <input
+                              type='text'
+                              id='owner'
+                              name='owner'
+                              value={editOwner}
+                              onChange={(e) => setEditOwner(e.target.value)}
+                              className='form-control' required />
+                          </div>
+
+                          <div className='form-group'>
+                            <label htmlFor='bname'> Business Name </label>
+                            <input
+                              type='text'
+                              id='bname'
+                              name='bname'
+                              value={editName}
+                              onChange={(e) => setEditName(e.target.value)}
+                              className='form-control' required />
+                          </div>
+
+                          <div className='form-group'>
+                            <label htmlFor='address'>Business Address </label>
+                            <input
+                              type='text'
+                              id='address'
+                              name='address'
+                              value={editAddress}
+                              onChange={(e) => setEditAddress(e.target.value)}
+                              className='form-control' required />
+                          </div>
+
+                          <div className='form-group'>
+                            <label htmlFor='type'>Type of Business</label>
+                            <input
+                              type='text'
+                              id='type'
+                              name='type'
+                              value={editTypeBusiness}
+                              onChange={(e) => setEditTypeBusiness(e.target.value)}
+                              className='form-control' required />
+                          </div>
+
+                          <div className='form-buttons'>
+                            <button type='submit' className='btn btn-primary' onClick={updateRowData}> Submit  </button>
+                            <button type='button' className='btn btn-secondary' onClick={handleEditDiscard}> Discard </button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              )} */}
             </div>
           </section>
-
-          {isSubmitted && (
-            <div className="success-message">
-              <p>You have successfully submitted a request!</p>
-            </div>
-          )}
-
         </main>
       </div>
-
-
     </>
   );
 }

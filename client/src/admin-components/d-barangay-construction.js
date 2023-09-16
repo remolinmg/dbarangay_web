@@ -1,32 +1,33 @@
+import { Link, NavLink, Route } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from "react";
 import './assets/css/style.css';
 import Axios from 'axios';
-import { Outlet, Link, NavLink } from 'react-router-dom';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
 import { BiLogOut, BiCog } from "react-icons/bi";
 import { AiOutlineDashboard } from 'react-icons/ai';
+import { format } from 'date-fns';
+
 import {
-    BsPersonFill,
-    BsMegaphoneFill,
-    BsTelephoneFill,
-    BsTerminal,
-    BsFillFileEarmarkFill,
-    BsFillPersonBadgeFill,
-    BsFillFileEarmarkArrowDownFill,
-    BsFillPeopleFill,
-    BsEnvelopePaper,
-    BsBuildingFillUp,
-    BsMailbox
+  BsPersonFill,
+  BsMegaphoneFill,
+  BsTelephoneFill,
+  BsTerminal,
+  BsFillFileEarmarkFill,
+  BsFillPersonBadgeFill,
+  BsFillFileEarmarkArrowDownFill,
+  BsFillPeopleFill,
+  BsEnvelopePaper,
+  BsBuildingFillUp,
+  BsMailbox
 } from "react-icons/bs";
 import {
-    RiFolderWarningFill,
+  RiFolderWarningFill,
 } from "react-icons/ri";
 import 'bootstrap/dist/css/bootstrap.css';
 import { FaUserCircle } from "react-icons/fa";
 
-
-function Bindigency() {
+function BconstuctionAdmin() {
   //  ------------------------------ SIDEBAR TOPBAR ------------------------------
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -574,10 +575,11 @@ function Bindigency() {
             </div>
           </div>
         </div>
-        <div class="pagetitle">
-          <h1> Barangay Indigency  </h1>
-        </div>
+      
         <main id="main" class="main">
+        <div class="pagetitle">
+          <h1> Barangay Construction Permit  </h1>
+        </div>
           <section class="section">
             <div class="row">
               <div class="col-lg-12">
@@ -819,4 +821,4 @@ function Bindigency() {
   );
 }
 
-export default Bindigency;
+export default BconstuctionAdmin;

@@ -2,7 +2,7 @@ import { Link, NavLink, Route } from 'react-router-dom';
 import Chart from 'chart.js/auto';
 import { useEffect, useRef, useState } from 'react';
 import logo from '../admin-components/assets/img/brgy.png';
-import { BiMenu, BiChevronDown,BiLogOut, BiCog } from 'react-icons/bi';
+import { BiMenu, BiChevronDown, BiLogOut, BiCog } from 'react-icons/bi';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import {
     BsPersonFill,
@@ -28,20 +28,36 @@ import { FaUserCircle } from "react-icons/fa";
 
 
 function Dashboard() {
-    const pieChartRef = useRef(null);
+    const pieChartTopRef = useRef(null);
+    const pieChartBottomRef = useRef(null);
     const lineChartRef = useRef(null);
+    //pie chart -----------------------------------------------------------------------------------------------------------
+    const [totalPopulation, setTotalPopulation] = useState(10000); // Initial total population
+    const [registeredVoters, setRegisteredVoters] = useState(1000); // Initial registered voters
+
+    // Simulate fetching data from a backend or database
+    useEffect(() => {
+        setTimeout(() => {
+            const updatedTotalPopulation = 15000; // Updated total population
+            const updatedRegisteredVoters = 15000; // Updated registered voters
+
+            setTotalPopulation(updatedTotalPopulation);
+            setRegisteredVoters(updatedRegisteredVoters);
+        }, 2000);
+    }, []);
 
     useEffect(() => {
-        const pieChartCtx = pieChartRef.current.getContext('2d');
-        const lineChartCtx = lineChartRef.current.getContext('2d');
-        let pieChartInstance = null;
-        let lineChartInstance = null;
+        const pieChartTopCtx = pieChartTopRef.current.getContext('2d');
+        const pieChartBottomCtx = pieChartBottomRef.current.getContext('2d');
 
-        const createPieChart = () => {
-            pieChartInstance = new Chart(pieChartCtx, {
+        let pieChartTopInstance = null;
+        let pieChartBottomInstance = null;
+
+        const createPieChartTop = () => {
+            pieChartTopInstance = new Chart(pieChartTopCtx, {
                 type: 'pie',
                 data: {
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+                    labels: ['1-5', '6-12', '13-19', '20-30', '30-50'],
                     datasets: [
                         {
                             data: [12, 19, 3, 5, 2],
@@ -49,8 +65,41 @@ function Dashboard() {
                         },
                     ],
                 },
+
             });
         };
+
+        const createPieChartBottom = () => {
+            pieChartBottomInstance = new Chart(pieChartBottomCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Male', 'Female', 'Undisclosed'],
+                    datasets: [
+                        {
+                            data: [25, 35, 40], // Replace with your data
+                            backgroundColor: ['orange', 'purple', 'pink'], // Customize colors
+                        },
+                    ],
+                },
+            });
+        };
+
+        createPieChartTop();
+        createPieChartBottom();
+
+        return () => {
+            if (pieChartTopInstance) {
+                pieChartTopInstance.destroy();
+            }
+            if (pieChartBottomInstance) {
+                pieChartBottomInstance.destroy();
+            }
+        };
+    }, []);
+    //line chart ------------------------------------------------------------------------------
+    useEffect(() => {
+        const lineChartCtx = lineChartRef.current.getContext('2d');
+        let lineChartInstance = null;
 
         const createLineChart = () => {
             lineChartInstance = new Chart(lineChartCtx, {
@@ -96,22 +145,18 @@ function Dashboard() {
             });
         };
 
-        const destroyCharts = () => {
-            if (pieChartInstance) {
-                pieChartInstance.destroy();
-            }
+        createLineChart();
+
+        return () => {
             if (lineChartInstance) {
                 lineChartInstance.destroy();
             }
         };
-
-        createPieChart();
-        createLineChart();
-
-        return () => {
-            destroyCharts();
-        };
     }, []);
+
+
+
+    //SIDEBAR - TOPBAR ---------------------------------------------------------------------------------------
 
     const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -317,33 +362,42 @@ function Dashboard() {
                         <div className="row">
                             <div className="dashboard-topside d-flex justify-content-evenly w-100">
                                 <div className="card topcard m-1 col-md-4">
-                                    <div className="card-body">
-                                        <h5 className="card-title">Special title treatment</h5>
-                                        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="#" className="btn btn-primary">
-                                            Go somewhere
-                                        </a>
+                                    <div className="total-population card-body text-center">
+                                        <h5 className="card-title">Total Population</h5>
+                                        <p className="card-text">The current population of the barangay.</p>
+                                        <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                                            Population: {totalPopulation}
+                                        </p>
                                     </div>
                                 </div>
-                                <div className="card topcard m-1 col-md-4 ">
-                                    <div className="card-body ">
-                                        <h5 className="card-title">Special title treatment</h5>
-                                        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="#" className="btn btn-primary">
-                                            Go somewhere
-                                        </a>
+                                <div className="barangay-voters card topcard m-1 col-md-4">
+                                    <div className="card-body text-center">
+                                        <h5 className="card-title">Registered Voters</h5>
+                                        <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                                            Registered Voters: {registeredVoters}
+                                        </p>
+                                        <p className="card-text" style={{ fontSize: '20px' }}>
+                                            Percentage of Registered Voters: {((registeredVoters / totalPopulation) * 100).toFixed(2)}%
+                                        </p>
                                     </div>
                                 </div>
-                                <div className="card topcard m-1 col-md-4">
-                                    <div className="card-body">
-                                        <h5 className="card-title">Special title treatment</h5>
-                                        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="#" className="btn btn-primary">
-                                            Go somewhere
-                                        </a>
+                                <div className="Total-students card topcard m-1 col-md-4">
+                                    <div className="card-body text-center">
+                                        <h5 className="card-title">Student Percentage</h5>
+                                        <p className="card-text">The current Students of the barangay.</p>
+                                        <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                                            Students: 45%
+                                            <br />
+                                            Non Students: 55%
+                                        </p>
                                     </div>
                                 </div>
                             </div>
+
+
+
+
+
                             <div className="col-12 p-1">
                                 <div className="card mt-3">
                                     <div className="filter">
@@ -362,32 +416,36 @@ function Dashboard() {
                         </div>
                     </div>
                     <div className="col-lg-4">
-                        <div className="card">
-                            <div className="filter">
-                                {/* Dropdown menu */}
-                                {/* ... */}
+                        <div className="row">
+                            <div className="col-6 col-sm-12">
+                                <div className="card">
+                                    <div className="filter">
+                                        {/* Dropdown menu */}
+                                        {/* ... */}
+                                    </div>
+
+                                    <div className="pie-chart-top card-body Chart">
+                                        <h5 className="card-title">AGE</h5>
+
+                                        {/* Pie Chart container */}
+                                        <canvas ref={pieChartTopRef} id="pieChartTop" width="200" height="100"></canvas>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div className="card-body Chart">
-                                <h5 className="card-title">Pie Chart</h5>
-
-                                {/* Pie Chart container */}
-                                <canvas ref={pieChartRef} id="pieChart" width="400" height="200"></canvas>
-                            </div>
-                        </div>
-
-                        <div className="card mt-3">
-                            <div className="card-body">
-                                <h5 className="card-title">Special title treatment</h5>
-                                <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                <a href="#" className="btn btn-primary">
-                                    Go somewhere
-                                </a>
+                            <div className="col-6 col-sm-12">
+                                <div className="pie-chart-bottom card mt-3">
+                                    <div className="card-body border">
+                                        <h5 className="card-title">Sex Chart</h5>
+                                        <p className="card-text">Total Sex Registered Citizen</p>
+                                        {/* Add a canvas for the bottom pie chart */}
+                                        <canvas ref={pieChartBottomRef} id="pieChartBottom" width="200" height="100"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 }

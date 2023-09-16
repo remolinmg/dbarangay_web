@@ -1,6 +1,6 @@
 import './assets/css/style.css';
 import Axios from 'axios';
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Outlet, Link, NavLink } from 'react-router-dom';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
@@ -32,10 +32,34 @@ function BlotterAdmin() {
   // ---------------------------------- SIDEBAR COLLAPSED  ----------------------------------
 
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const handleSidebarCollapse = () => { setSidebarCollapsed(!isSidebarCollapsed); };
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const toggleDropdown = () => { setDropdownOpen(!isDropdownOpen); };
 
+  const handleSidebarCollapse = () => {
+    setSidebarCollapsed(!isSidebarCollapsed);
+  };
+
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const profileRef = useRef(null);
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
+
+  const [ProfilesubmenuVisible, setProfileSubmenuVisible] = useState(false);
+  const toggleProfileSubmenu = () => {
+    setProfileSubmenuVisible(!ProfilesubmenuVisible);
+  };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setProfileSubmenuVisible(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   //  ------------------------------ SHOW ADD FORM ---------------------------------
   const [showForm, setShowForm] = useState(false);
@@ -78,24 +102,58 @@ function BlotterAdmin() {
     <>
       <div className="topbarsection">
         <div className="topnavbar d-flex justify-content-between align-items-center">
-          <div className="topnavlef">
+          <div className="topnavleft">
             <button className="collapse-button" onClick={handleSidebarCollapse}>
               <BiMenu />
             </button>
           </div>
-          <div className="topnavmid"> <h3>Barangay Harapin Ang Bukas </h3> </div>
+          <div className="topnavmid">
+            <h3>Barangay Harapin Ang Bukas</h3>
+          </div>
           <div className="topnavright">
-            <div className="mr-10">
-              <FiUser size={24} />
+            <div ref={profileRef}>
+              <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+              {ProfilesubmenuVisible && (
+                <div className="Profilesubmenuadmin">
+                  <div className="admininfo">
+                    <div className="rightprofile">
+                      <FaUserCircle className="adminprofile" />
+                    </div>
+                    <div className="leftprofile">
+                      <h5>CLARISE ANNELY</h5>
+                      <h5>clariseannely@gmail.com</h5>
+                    </div>
+                  </div>
+                  <div className="lowerprofile">
+                    <div className="button-profile1">
+                      <NavLink to="/admin-profile" activeClassName="active">
+                        <div href="#" className="profilebuttons">
+                          <BiCog className="profileicons" /> Settings
+                        </div>
+                      </NavLink>
+                    </div>
+                    <hr />
+                    <div className="button-profile1">
+
+                      <NavLink to="/admin" activeClassName="active">
+                        <div href="#" className="profilebuttons">
+                          <BiLogOut className="profileicons" /> Log out
+                        </div>
+                      </NavLink>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
+
         </div>
       </div>
-      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
-        <div className="newsidebar ">
+      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''} d-none d-md-block`}>
+        <div className="newsidebar">
           <div className="text-center">
-            <Link className="navbar-brand" to="#">
-              <img id="tblImage" className="w-50 h-auto" src={logo} alt="" />
+            <Link className="navbar-brand" to="/dashboard">
+              <img className="tblImage w-50 h-100" src={logo} alt="" />
             </Link>
             <h6>Barangay Harapin Ang Bukas</h6>
           </div>
@@ -103,76 +161,85 @@ function BlotterAdmin() {
 
             <li>
               <Link to="/dashboard" className="nav-link ">
-                <AiOutlineDashboard className="icon" />
-                <span className="ms-1 d-none d-sm-inline">Dashboard</span>
+                <AiOutlineDashboard className="sidebaricon " />
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
               </Link>
             </li>
             <li>
               <Link to="/announcement-admin" className="nav-link ">
-                <BsMegaphoneFill className="icon" />
-                <span className="ms-1 d-none d-sm-inline">Announcement</span>
+                <BsMegaphoneFill className="sidebaricon" />
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">Announcement</span>
               </Link>
             </li>
             <li>
               <Link to="/emergency-admin" className="nav-link ">
-                <BsTelephoneFill className="icon" />
-                <span className="ms-1 d-none d-sm-inline">Emergency</span>
+                <BsTelephoneFill className="sidebaricon" />
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">Emergency</span>
               </Link>
             </li>
+            {/* <li className={`dropdown-sidebar ${isDropdownOpen ? 'open' : ''}`}> */}
             <li className="dropdown-sidebar">
               <Link to="" className="nav-link ">
                 <div className="barangaymodule">
                   <span onClick={toggleDropdown}>
-                    <BsFillFileEarmarkFill className="icon" />
-                    <span className="ms-1">
+                    <BsFillFileEarmarkFill className="sidebaricon" />
+                    <span className="sidebarlabel ms-1">
                       Barangay Module <BiChevronDown />
                     </span>
                   </span>
                 </div>
               </Link>
-              <ul className={`sidebar-submenu ${isDropdownOpen ? 'open' : ''}`}>
+              {/* <ul className="sidebar-submenu"> */}
+              <ul className={`sidebar-submenu w-100 ${isDropdownOpen ? 'open' : ''}`}>
                 {isDropdownOpen && (
                   <>
                     <li>
                       <Link to="/b-officials-admin" className="nav-link ">
-                        <BsFillPersonBadgeFill className="icon" />
-                        Barangay Officials
+                        <BsFillPersonBadgeFill className="sidebaricon" />
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Barangay Officials</span>
+
                       </Link>
                     </li>
                     <li>
                       <Link to="/d-barangay-certificate" className="nav-lin">
-                        <BsFillFileEarmarkArrowDownFill className="icon" />
-                        Document Requests
+                        <BsFillFileEarmarkArrowDownFill className="sidebaricon" />
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Document Requests</span>
+
                       </Link>
                     </li>
                     <li>
                       <Link to="/blotter-admin" className="nav-link ">
-                        <RiFolderWarningFill className="icon" />
-                        Blotter Records
+                        <RiFolderWarningFill className="sidebaricon" />
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Blotter Records</span>
+
                       </Link>
                     </li>
                     <li>
                       <Link to="/residents-admin" className="nav-link">
-                        <BsFillPeopleFill className="icon" />
-                        Residents Info
+                        <BsFillPeopleFill className="sidebaricon" />
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
+
                       </Link>
                     </li>
                     <li>
                       <Link to="/b-permit-admin" className="nav-link">
-                        <BsEnvelopePaper className="icon" />
-                        Business Permit
+                        <BsEnvelopePaper className="sidebaricon" />
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Permit</span>
+
                       </Link>
                     </li>
                     <li>
                       <Link to="/b-promotion-admin" className="nav-link">
-                        <BsBuildingFillUp className="icon" />
-                        Business Promotion
+                        <BsBuildingFillUp className="sidebaricon" />
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Promotion</span>
+
                       </Link>
                     </li>
                     <li>
                       <Link to="/feedbacks-admin" className="nav-link">
-                        <BsMailbox className="icon" />
-                        Feedbacks
+                        <BsMailbox className="sidebaricon" />
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Feedbacks</span>
+
                       </Link>
                     </li>
                   </>
@@ -181,14 +248,14 @@ function BlotterAdmin() {
             </li>
             <li className={`${isDropdownOpen ? 'hide' : ''}`}>
               <Link to="/staff-logs-admin" className="nav-link">
-                <BsTerminal className="icon" />
-                <span className="ms-1 d-none d-sm-inline">Staff Logs</span>
+                <BsTerminal className="sidebaricon" />
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">Staff Logs</span>
               </Link>
             </li>
             <li className={`${isDropdownOpen ? 'hide' : ''}`}>
-              <Link to="/admin-profile" className="nav-link">
-                <BsPersonFill className="icon" />
-                <span className="ms-1 d-none d-sm-inline">Edit Profile</span>
+              <Link to="/admin-accounts" className="nav-link">
+                <BsPersonFill className="sidebaricon" />
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">Admin Accounts</span>
               </Link>
             </li>
           </ul>

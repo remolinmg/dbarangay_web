@@ -1,12 +1,13 @@
-
-import './assets/css/style.css';
 import { Link, NavLink, Route } from 'react-router-dom';
-import Axios from 'axios';
 import React, { useState, useEffect, useRef } from "react";
+import './assets/css/style.css';
+import Axios from 'axios';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
 import { BiLogOut, BiCog } from "react-icons/bi";
 import { AiOutlineDashboard } from 'react-icons/ai';
+import { format } from 'date-fns';
+
 import {
     BsPersonFill,
     BsMegaphoneFill,
@@ -23,11 +24,10 @@ import {
 import {
     RiFolderWarningFill,
 } from "react-icons/ri";
-
 import 'bootstrap/dist/css/bootstrap.css';
 import { FaUserCircle } from "react-icons/fa";
 
-function BpermitAdmin() {
+function Biddmin() {
     //  ------------------------------ SIDEBAR TOPBAR ------------------------------
     const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -71,120 +71,150 @@ function BpermitAdmin() {
     const data = [
         {
             id: 1,
-            b_owner: "JERICHO",
-            b_name: "Doe's Restaurant",
-            b_address: "123 Main Street",
-            type_business: "Restaurant",
-            status: "New",
+            bc_l_name: "Doe",
+            bc_m_name: "John",
+            bc_f_name: "Jane",
+            bc_address: "123 Main Street",
+            bc_contact: "555-123-4567",
+            bc_r_request: "Sample Reason 1",
+            bc_d_request: "2023-09-16",
         },
         {
             id: 2,
-            b_owner: "Jane Smith",
-            b_name: "Verb Pandesal",
-            b_address: "456 Oak Avenue",
-            type_business: "Retail",
-            status: "Approved",
+            bc_l_name: "Smith",
+            bc_m_name: "Mary",
+            bc_f_name: "Robert",
+            bc_address: "456 Elm Street",
+            bc_contact: "555-987-6543",
+            bc_r_request: "Sample Reason 2",
+            bc_d_request: "2023-09-17",
         },
         {
             id: 3,
-            b_owner: "Bob Johnson",
-            b_name: "Johnson's Hardware",
-            b_address: "123 di makita",
-            type_business: "Hardware Store",
-            status: "Disapproved",
+            bc_l_name: "Duco",
+            bc_m_name: "Dinosaur",
+            bc_f_name: "Clarise",
+            bc_address: "Restaurant",
+            bc_contact: "New",
+            bc_r_request: "secret",
+            bc_d_request: "kanina 2 mins ago"
         },
         {
             id: 4,
-            b_owner: "John Doe",
-            b_name: "Doe's Restaurant",
-            b_address: "123 Main Street",
-            type_business: "Bakery",
-            status: "NEWEST AND LATEST",
+            bc_l_name: "Duco",
+            bc_m_name: "Dinosaur",
+            bc_f_name: "Clarise",
+            bc_address: "Restaurant",
+            bc_contact: "New",
+            bc_r_request: "secret",
+            bc_d_request: "kanina 2 mins ago"
         },
         {
             id: 5,
-            b_owner: "Jane Smith",
-            b_name: "Smith's Boutique",
-            b_address: "456 Oak Avenue",
-            type_business: "Retail",
-            status: "Approved",
+            bc_l_name: "Duco",
+            bc_m_name: "Dinosaur",
+            bc_f_name: "Clarise",
+            bc_address: "Restaurant",
+            bc_contact: "New",
+            bc_r_request: "secret",
+            bc_d_request: "kanina 2 mins ago"
         },
         {
             id: 6,
-            b_owner: "Bob Johnson",
-            b_name: "Johnson's Hardware",
-            b_address: "789 Elm Road",
-            type_business: "Hardware Store",
-            status: "Disapproved",
+            bc_l_name: "Duco",
+            bc_m_name: "Dinosaur",
+            bc_f_name: "Clarise",
+            bc_address: "Restaurant",
+            bc_contact: "New",
+            bc_r_request: "secret",
+            bc_d_request: "kanina 2 mins ago"
         }, {
             id: 7,
-            b_owner: "John Doe",
-            b_name: "Doe's Restaurant",
-            b_address: "123 Main Street",
-            type_business: "Restaurant",
-            status: "New",
+            bc_l_name: "Duco",
+            bc_m_name: "Dinosaur",
+            bc_f_name: "Clarise",
+            bc_address: "Restaurant",
+            bc_contact: "New",
+            bc_r_request: "secret",
+            bc_d_request: "kanina 2 mins ago"
         },
         {
             id: 8,
-            b_owner: "Jane Smith",
-            b_name: "Smith's Boutique",
-            b_address: "456 Oak Avenue",
-            type_business: "Retail",
-            status: "Approved",
+            bc_l_name: "Duco",
+            bc_m_name: "Dinosaur",
+            bc_f_name: "Clarise",
+            bc_address: "Restaurant",
+            bc_contact: "New",
+            bc_r_request: "secret",
+            bc_d_request: "kanina 2 mins ago"
         },
         {
             id: 9,
-            b_owner: "Bob Johnson",
-            b_name: "Johnson's Hardware",
-            b_address: "789 Elm Road",
-            type_business: "Hardware Store",
-            status: "Disapproved",
+            bc_l_name: "Duco",
+            bc_m_name: "Dinosaur",
+            bc_f_name: "Clarise",
+            bc_address: "Restaurant",
+            bc_contact: "New",
+            bc_r_request: "secret",
+            bc_d_request: "kanina 2 mins ago"
         }, {
             id: 10,
-            b_owner: "John Doe",
-            b_name: "Doe's Restaurant",
-            b_address: "123 Main Street",
-            type_business: "Restaurant",
-            status: "New",
+            bc_l_name: "Duco",
+            bc_m_name: "Dinosaur",
+            bc_f_name: "Clarise",
+            bc_address: "Restaurant",
+            bc_contact: "New",
+            bc_r_request: "secret",
+            bc_d_request: "kanina 2 mins ago"
         },
         {
             id: 11,
-            b_owner: "Jane Smith",
-            b_name: "Smith's Boutique",
-            b_address: "456 Oak Avenue",
-            type_business: "Retail",
-            status: "Approved",
+            bc_l_name: "Duco",
+            bc_m_name: "Dinosaur",
+            bc_f_name: "Clarise",
+            bc_address: "Restaurant",
+            bc_contact: "New",
+            bc_r_request: "secret",
+            bc_d_request: "kanina 2 mins ago"
         },
         {
             id: 12,
-            b_owner: "Bob Johnson",
-            b_name: "Johnson's Hardware",
-            b_address: "789 Elm Road",
-            type_business: "Hardware Store",
-            status: "Disapproved",
+            bc_l_name: "Duco",
+            bc_m_name: "Dinosaur",
+            bc_f_name: "Clarise",
+            bc_address: "Restaurant",
+            bc_contact: "New",
+            bc_r_request: "secret",
+            bc_d_request: "kanina 2 mins ago"
         }, {
             id: 13,
-            b_owner: "John Doe",
-            b_name: "Doe's Restaurant",
-            b_address: "123 Main Street",
-            type_business: "Restaurant",
-            status: "New",
+            bc_l_name: "Duco",
+            bc_m_name: "Dinosaur",
+            bc_f_name: "Clarise",
+            bc_address: "Restaurant",
+            bc_contact: "New",
+            bc_r_request: "secret",
+            bc_d_request: "kanina 2 mins ago"
         },
         {
             id: 14,
-            b_owner: "Jane Smith",
-            b_name: "Smith's Boutique",
-            b_address: "456 Oak Avenue",
-            type_business: "Retail",
-            status: "Approved",
+            bc_l_name: "Duco",
+            bc_m_name: "Dinosaur",
+            bc_f_name: "Clarise",
+            bc_address: "Restaurant",
+            bc_contact: "New",
+            bc_r_request: "secret",
+            bc_d_request: "kanina 2 mins ago"
         },
         {
             id: 15,
-            b_owner: "Bob Johnson",
-            b_name: "Johnson's Hardware",
-            b_address: "789 Elm Road",
-            type_business: "Hardware Store",
-            status: "Disapproved",
+            bc_l_name: "Duco",
+            bc_m_name: "Dinosaur",
+            bc_f_name: "Clarise",
+            bc_address: "Restaurant",
+            bc_contact: "New",
+            bc_r_request: "secret",
+            bc_d_request: "kanina 2 mins ago"
         },
     ];
 
@@ -221,7 +251,6 @@ function BpermitAdmin() {
             setCurrentPage(currentPage - 1);
         }
     };
-
     // Calculate the starting and ending indices for the current page -------------
     const startIndex = (currentPage - 1) * rowCount;
     const endIndex = startIndex + rowCount;
@@ -234,24 +263,23 @@ function BpermitAdmin() {
         return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
     });
 
-
-
     // Forms ----------------------------------------------
     const [showForm, setShowForm] = useState(false);
     const toggleForm = () => { setShowForm(!showForm); }; //   SHOW FORMS 
     const handleDiscard = () => { setShowForm(false); }; //   DISCARD FUNCTION
-
-
 
     //  DELETE  
     const deleteRow = (row) => { Axios.delete(`http://localhost:3001/api/delete/bpermit/${row}`); }
 
     //------------------------------------------------ Database ----------------------------
     const [id, setId] = useState('');
-    const [b_owner, setOwner] = useState('');
-    const [b_name, setName] = useState('');
-    const [b_address, setAddress] = useState('');
-    const [type_business, setTypeBusiness] = useState('');
+    const [bc_l_name, setLname] = useState('');
+    const [bc_m_name, setMname] = useState('');
+    const [bc_f_name, setFname] = useState('');
+    const [bc_address, setAddress] = useState('');
+    const [bc_contact, setContact] = useState('');
+    const [bc_r_request, setRrequest] = useState('');
+    const [bc_d_request, setDrequest] = useState('');
     const [bPermitTbl, setBPermitTbl] = useState([])
 
     //-------------------------- ADD FUNCTION -----------------------------------
@@ -262,63 +290,65 @@ function BpermitAdmin() {
 
     const submitReq = () => {
         Axios.post('http://localhost:3001/api/insert/bpermit', {
-            b_owner: b_owner,
-            b_name: b_name,
-            b_address: b_address,
-            type_business: type_business,
+            bc_l_name: bc_l_name,
+            bc_m_name: bc_m_name,
+            bc_f_name: bc_f_name,
+            bc_address: bc_address,
+            bc_contact: bc_contact,
+            bc_r_request: bc_r_request,
+            bc_d_request: bc_d_request,
         })
-
 
         setBPermitTbl([
             ...bPermitTbl,
             {
-                id: id,
-                b_owner: b_owner,
-                b_name: b_name,
-                b_address: b_address,
-                type_business: type_business,
+                bc_l_name: bc_l_name,
+                bc_m_name: bc_m_name,
+                bc_f_name: bc_f_name,
+                bc_address: bc_address,
+                bc_contact: bc_contact,
+                bc_r_request: bc_r_request,
+                bc_d_request: bc_d_request,
             }
         ]);
     };
+
     //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
     const [SelectedRowId, setSelectedRowId] = useState(null);
-    const [editOwner, setEditOwner] = useState('');
-    const [editName, setEditName] = useState('');
-    const [editAddress, setEditAddress] = useState('');
-    const [editTypeBusiness, setEditTypeBusiness] = useState('');
+    const [editResidentName, setEditResidentName] = useState('');
+    const [editaddress, setEditAddress] = useState('');
+    const [editreason, setEditReason] = useState('');
+    const [editdate, setEditDate] = useState('');
     const [selectedRowData, setSelectedRowData] = useState(null);
     const [showEditForm, setShowEditForm] = useState(false);
     const handleEditDiscard = () => { setShowEditForm(false); };
 
-
     // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
-
-
     const showEditFormHandler = (rowData) => {
         setSelectedRowData(rowData);
-        setEditOwner(rowData.b_owner);
-        setEditName(rowData.b_name);
-        setEditAddress(rowData.b_address);
-        setEditTypeBusiness(rowData.type_business);
+        setEditResidentName(rowData.bc_l_name);
+        setEditAddress(rowData.bc_address);
+        setEditReason(rowData.bc_r_request);
+        setEditDate(rowData.bc_d_request);
         setSelectedRowId(rowData.idb_permit);
         setShowEditForm(true);
     };
     const updateRowData = () => {
         Axios.put(`http://localhost:3001/api/update/bpermit/${selectedRowData.idb_permit}`, {
-            b_owner: editOwner,
-            b_name: editName,
-            b_address: editAddress,
-            type_business: editTypeBusiness,
+            bc_l_name: editResidentName,
+            bc_address: editaddress,
+            bc_r_request: editreason,
+            bc_d_request: editdate,
         }).then((response) => {
 
             const updatedTableData = bPermitTbl.map((rowData) => {
                 if (rowData.idb_permit === selectedRowData.idb_permit) {
                     return {
                         ...rowData,
-                        b_owner: editOwner,
-                        b_name: editName,
-                        b_address: editAddress,
-                        type_business: editTypeBusiness,
+                        bc_l_name: editResidentName,
+                        bc_address: editaddress,
+                        bc_r_request: editreason,
+                        bc_d_request: editdate,
                     };
                 } else {
                     return rowData;
@@ -333,7 +363,6 @@ function BpermitAdmin() {
             setShowEditForm(false);
         });
     };
-
 
     return (
         <>
@@ -520,9 +549,17 @@ function BpermitAdmin() {
                         <div className="col-4">
                             <div className="tabsz dropdown-center">
                                 <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
-                                <ul className="dropdown-menu">
-                                    <li><Link to="/announcement-admin">General</Link></li>
-                                    <li><Link to="/livelihood-admin">Livelihood</Link></li>
+                                <ul class="dropdown-menu">
+                                    <Link to="/d-barangay-certificate">
+                                        <li><a class="dropdown-item">Barangay Certificate</a></li></Link>
+                                    <Link to="/d-barangay-indigency">
+                                        <li><a class="dropdown-item">Barangay Indigency</a></li></Link>
+                                    <Link to="/d-barangay-installation">
+                                        <li><a class="dropdown-item">Installation Permit</a></li></Link>
+                                    <Link to="/d-barangay-construction">
+                                        <li><a class="dropdown-item"> construction Permit</a></li></Link>
+                                    <Link to="/d-barangay-id">
+                                        <li><a class="dropdown-item"> Barangay ID</a></li></Link>
                                 </ul>
                             </div>
                         </div>
@@ -538,14 +575,15 @@ function BpermitAdmin() {
                         </div>
                     </div>
                 </div>
-                {/* -------------------------------------------------------------  TABLE -------------------------------------------------------------  */}
-                <main id="main" className="main">
-                    <div className="pagetitle"><h1> Business Permit  </h1> </div>
-                    <section className="section">
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <div className="card">
-                                    <div className="card-body">
+                <div class="pagetitle">
+                    <h1> Barangay ID  </h1>
+                </div>
+                <main id="main" class="main">
+                    <section class="section">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
                                         <div className="row p-2 d-flex justify-content-between">
                                             <div className="col-4">
                                                 <div className="table-pages">
@@ -576,183 +614,210 @@ function BpermitAdmin() {
                                                 <button className="btn btn-primary float-end" onClick={toggleForm}>Add</button>
                                             </div>
                                         </div>
-                                        <table className="table">
+
+
+
+                                        <table class="table caption-top">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Request #</th>
-                                                    <th scope="col"> Business Owner</th>
-                                                    <th scope="col">Business Name </th>
-                                                    <th scope="col">Business Address </th>
-                                                    <th scope="col">Type of Business </th>
-                                                    <th scope="col">Status </th>
-                                                    <th scope="col">Actions</th>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Resident Name</th>
+                                                    <th scope="col">Address</th>
+                                                    <th scope="col">Reason</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Action</th>
                                                 </tr>
                                             </thead>
-
                                             <tbody>
-                                                {getCurrentPageData().map((val) => {
-                                                    return <tr key={val.id}>
-                                                        <th scope="row">{val.id}</th>
-                                                        <td>{val.b_owner}</td>
-                                                        <td>{val.b_name}</td>
-                                                        <td>{val.b_address}</td>
-                                                        <td>{val.type_business}</td>
+                                                {getCurrentPageData().map((item, index) => (
+                                                    <tr key={index}>
+                                                        <th scope="row">{item.id}</th>
+                                                        <td>{item.bc_l_name} {item.bc_m_name} {item.bc_f_name}</td>
+                                                        <td>{item.bc_address}</td>
+                                                        <td>{item.bc_r_request}</td>
+                                                        <td>{item.bc_d_request}</td>
+                                                        <td>Status Value</td>
                                                         <td>
-                                                            <div className="mb-3">
-                                                                <select type="text" id="Role" name="Role" className="form-control">
-                                                                    <option value="">New</option>
-                                                                    <option value="ongoing">Approved</option>
-                                                                    <option value="processed">Disapproved</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div className='gap-2 d-md-flex justify-content-start align-items-center'>
-                                                                <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(val)}> Edit</button>
-                                                                <form method='post' action=''>
-                                                                    <input type='hidden' name='id' value="" />
-                                                                    <button
-                                                                        className="btn btn-outline-danger"
-                                                                        type="submit"
-                                                                        name="deleteRow"
-                                                                        onClick={() => { deleteRow(val.b_owner); }}>Delete</button>
-                                                                </form>
-                                                            </div>
+                                                            <button
+                                                                className="btn btn-primary btn-sm me-2"
+                                                                onClick={() => showEditFormHandler(item)}
+                                                            >
+                                                                Edit
+                                                            </button>
+                                                            <button
+                                                                className="btn btn-danger btn-sm"
+                                                                onClick={() => deleteRow(item.id)}
+                                                            >
+                                                                Delete
+                                                            </button>
                                                         </td>
                                                     </tr>
-                                                })}
+                                                ))}
                                             </tbody>
+
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            {/* ------------------------------------------------------------ ADD POP-UP FORMS  ------------------------------------------------------------*/}
+
+                            {/* POP-UP FORMS */}
                             {showForm && (
                                 <div className="popup-overlay">
                                     <div className="popup-form">
                                         <form onSubmit={submitReq}>
                                             <div className="certificate">
-                                                <h2 className="certificate-title">ADD RESIDENTS INFO</h2>
+                                                <h2 className="certificate-title">ADD CLEARANCE </h2>
                                                 <div className="certificate-content">
                                                     <div className="form-group">
-                                                        <label htmlFor="owner">Business Owner</label>
+                                                        <label htmlFor="ResidentName">Resident Name</label>
                                                         <input
                                                             type="text"
-                                                            id="owner"
-                                                            name="owner"
-                                                            onChange={(e) => { setOwner(e.target.value); }}
-                                                            className="form-control" required />
+                                                            id="ResidentName"
+                                                            name="ResidentName"
+                                                            onChange={(e) => {
+                                                                setLname(e.target.value);
+                                                            }}
+                                                            className="form-control"
+                                                            required
+                                                        />
                                                     </div>
 
                                                     <div className="form-group">
-                                                        <label htmlFor="bname"> Business Name </label>
+                                                        <label htmlFor="Purpose">Address</label>
                                                         <input
                                                             type="text"
-                                                            id="bname"
-                                                            name="bname"
-                                                            onChange={(e) => { setName(e.target.value); }}
-                                                            className="form-control" required />
+                                                            id="Purpose"
+                                                            name="Purpose"
+                                                            onChange={(e) => {
+                                                                setAddress(e.target.value);
+                                                            }}
+                                                            className="form-control"
+                                                            required
+                                                        />
                                                     </div>
 
                                                     <div className="form-group">
-                                                        <label htmlFor="address">Business Address </label>
+                                                        <label htmlFor="Address">Reason of Request</label>
                                                         <input
                                                             type="text"
-                                                            id="address"
-                                                            name="address"
-                                                            onChange={(e) => { setAddress(e.target.value); }}
-                                                            className="form-control" required />
+                                                            id="Address"
+                                                            name="Address"
+                                                            onChange={(e) => {
+                                                                setRrequest(e.target.value);
+                                                            }}
+                                                            className="form-control"
+                                                            required
+                                                        />
                                                     </div>
 
                                                     <div className="form-group">
-                                                        <label htmlFor="type">Type of Business</label>
+                                                        <label htmlFor="issuedDate">Issued Date:</label>
                                                         <input
-                                                            type="text"
-                                                            id="type"
-                                                            name="type"
-                                                            onChange={(e) => { setTypeBusiness(e.target.value); }}
-                                                            className="form-control" required />
-                                                    </div>
-
-                                                    <div className="form-buttons">
-                                                        <button type="submit" className="btn btn-primary">Submit </button>
-                                                        <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
+                                                            type="date"
+                                                            id="issuedDate"
+                                                            name="issuedDate"
+                                                            onChange={(e) => {
+                                                                setDrequest(e.target.value);
+                                                            }}
+                                                            className="form-control"
+                                                            required
+                                                        />
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            )}
 
-                            {/* ------------------------------------------------- EDIT FORM --------------------------------------------------------- */}
-                            {showEditForm && selectedRowData && (
-                                <div className='popup-overlay'>
-                                    <div className='popup-form'>
-                                        <form onSubmit={updateRowData}>
-                                            <div className='certificate'>
-                                                <h2 className='certificate-title'>EDIT RESIDENTS INFO</h2>
-                                                <div className='certificate-content'>
-                                                    <div className='form-group'>
-                                                        <label htmlFor='owner'> Business Owner </label>
-                                                        <input
-                                                            type='text'
-                                                            id='owner'
-                                                            name='owner'
-                                                            value={editOwner}
-                                                            onChange={(e) => setEditOwner(e.target.value)}
-                                                            className='form-control' required />
-                                                    </div>
-
-                                                    <div className='form-group'>
-                                                        <label htmlFor='bname'> Business Name </label>
-                                                        <input
-                                                            type='text'
-                                                            id='bname'
-                                                            name='bname'
-                                                            value={editName}
-                                                            onChange={(e) => setEditName(e.target.value)}
-                                                            className='form-control' required />
-                                                    </div>
-
-                                                    <div className='form-group'>
-                                                        <label htmlFor='address'>Business Address </label>
-                                                        <input
-                                                            type='text'
-                                                            id='address'
-                                                            name='address'
-                                                            value={editAddress}
-                                                            onChange={(e) => setEditAddress(e.target.value)}
-                                                            className='form-control' required />
-                                                    </div>
-
-                                                    <div className='form-group'>
-                                                        <label htmlFor='type'>Type of Business</label>
-                                                        <input
-                                                            type='text'
-                                                            id='type'
-                                                            name='type'
-                                                            value={editTypeBusiness}
-                                                            onChange={(e) => setEditTypeBusiness(e.target.value)}
-                                                            className='form-control' required />
-                                                    </div>
-
-                                                    <div className='form-buttons'>
-                                                        <button type='submit' className='btn btn-primary' onClick={updateRowData}> Submit  </button>
-                                                        <button type='button' className='btn btn-secondary' onClick={handleEditDiscard}> Discard </button>
-                                                    </div>
+                                                <div className="form-group form-check">
+                                                    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                                                    <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
                                                 </div>
+
+                                                <button type="submit" className="btn btn-primary">Submit</button>
+                                                <button type="button" className="btn btn-danger" onClick={handleDiscard}>Discard</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             )}
                         </div>
+
+                        {/* EDIT FORM */}
+                        {showEditForm && (
+                            <div className="popup-overlay">
+                                <div className="popup-form">
+                                    <form>
+                                        <div className="certificate">
+                                            <h2 className="certificate-title">EDIT CLEARANCE</h2>
+                                            <div className="certificate-content">
+                                                <div className="form-group">
+                                                    <label htmlFor="EditResidentName">Resident Name</label>
+                                                    <input
+                                                        type="text"
+                                                        id="EditResidentName"
+                                                        name="EditResidentName"
+                                                        value={editResidentName}
+                                                        onChange={(e) => setEditResidentName(e.target.value)}
+                                                        className="form-control"
+                                                        required
+                                                    />
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label htmlFor="EditAddress">Address</label>
+                                                    <input
+                                                        type="text"
+                                                        id="EditAddress"
+                                                        name="EditAddress"
+                                                        value={editaddress}
+                                                        onChange={(e) => setEditAddress(e.target.value)}
+                                                        className="form-control"
+                                                        required
+                                                    />
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label htmlFor="EditReason">Reason of Request</label>
+                                                    <input
+                                                        type="text"
+                                                        id="EditReason"
+                                                        name="EditReason"
+                                                        value={editreason}
+                                                        onChange={(e) => setEditReason(e.target.value)}
+                                                        className="form-control"
+                                                        required
+                                                    />
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label htmlFor="EditIssuedDate">Issued Date:</label>
+                                                    <input
+                                                        type="date"
+                                                        id="EditIssuedDate"
+                                                        name="EditIssuedDate"
+                                                        value={editdate}
+                                                        onChange={(e) => setEditDate(e.target.value)}
+                                                        className="form-control"
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="form-group form-check">
+                                                <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                                                <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
+                                            </div>
+
+                                            <button type="button" className="btn btn-primary" onClick={updateRowData}>Save</button>
+                                            <button type="button" className="btn btn-danger" onClick={handleEditDiscard}>Discard</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        )}
                     </section>
                 </main>
             </div>
         </>
     );
 }
-export default BpermitAdmin;
+
+export default Biddmin;
