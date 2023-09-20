@@ -76,153 +76,153 @@ function UserService() {
   const [type, setType] = useState('');
 
   //certificate connection
-  async function barangayCertificate(e){
+  async function barangayCertificate(e) {
     e.preventDefault();
-  
-    try{
-  
-        await axios.post("http://localhost:8000/barangaycertificate",{
-          residentName,address,reasonOfRequest,pickUpDate
-        })  
-        .then(res=>{
-          if(res.data=="exist"){
+
+    try {
+
+      await axios.post("http://localhost:8000/barangaycertificate", {
+        residentName, address, reasonOfRequest, pickUpDate
+      })
+        .then(res => {
+          if (res.data == "exist") {
             alert("You already sent the same request!");
           }
-          else if(res.data=="notexist"){
+          else if (res.data == "notexist") {
             setIsSubmitted(true);
             setShowPopup(false);
           }
-      })
-      .catch(e=>{
+        })
+        .catch(e => {
           alert("Failed!")
           console.log(e);
-      })
-  
+        })
+
     }
-    catch(e){
-        console.log(e);
-  
+    catch (e) {
+      console.log(e);
+
     }
-  
+
   }
   //business clearance connection
-  async function businessClearance(e){
+  async function businessClearance(e) {
     e.preventDefault();
-  
-    try{
-  
-        await axios.post("http://localhost:8000/businessclearance",{
-          businessName,address,residentName,type,reasonOfRequest,pickUpDate
-        })  
-        .then(res=>{
-          if(res.data=="exist"){
+
+    try {
+
+      await axios.post("http://localhost:8000/businessclearance", {
+        businessName, address, residentName, type, reasonOfRequest, pickUpDate
+      })
+        .then(res => {
+          if (res.data == "exist") {
             alert("You already sent the same request!");
           }
-          else if(res.data=="notexist"){
+          else if (res.data == "notexist") {
             setIsSubmitted(true);
             setShowPopup(false);
           }
-      })
-      .catch(e=>{
+        })
+        .catch(e => {
           alert("Failed!")
           console.log(e);
-      })
-  
+        })
+
     }
-    catch(e){
-        console.log(e);
-  
+    catch (e) {
+      console.log(e);
+
     }
   }
-   //barangayid
-   async function barangayID(e){
+  //barangayid
+  async function barangayID(e) {
     e.preventDefault();
-  
-    try{
-  
-        await axios.post("http://localhost:8000/barangayid",{
-          residentName,address,pickUpDate
-        })  
-        .then(res=>{
-          if(res.data=="exist"){
+
+    try {
+
+      await axios.post("http://localhost:8000/barangayid", {
+        residentName, address, pickUpDate
+      })
+        .then(res => {
+          if (res.data == "exist") {
             alert("You already sent the same request!");
           }
-          else if(res.data=="notexist"){
+          else if (res.data == "notexist") {
             setIsSubmitted(true);
             setShowPopup(false);
           }
-      })
-      .catch(e=>{
+        })
+        .catch(e => {
           alert("Failed!")
           console.log(e);
-      })
-  
+        })
+
     }
-    catch(e){
-        console.log(e);
-  
+    catch (e) {
+      console.log(e);
+
     }
   }
-     //installation
-     async function installation(e){
-      e.preventDefault();
-    
-      try{
-    
-          await axios.post("http://localhost:8000/installation",{
-            residentName,address,reasonOfRequest,pickUpDate
-          })  
-          .then(res=>{
-            if(res.data=="exist"){
-              alert("You already sent the same request!");
-            }
-            else if(res.data=="notexist"){
-              setIsSubmitted(true);
-              setShowPopup(false);
-            }
+  //installation
+  async function installation(e) {
+    e.preventDefault();
+
+    try {
+
+      await axios.post("http://localhost:8000/installation", {
+        residentName, address, reasonOfRequest, pickUpDate
+      })
+        .then(res => {
+          if (res.data == "exist") {
+            alert("You already sent the same request!");
+          }
+          else if (res.data == "notexist") {
+            setIsSubmitted(true);
+            setShowPopup(false);
+          }
         })
-        .catch(e=>{
-            alert("Failed!")
-            console.log(e);
-        })
-    
-      }
-      catch(e){
+        .catch(e => {
+          alert("Failed!")
           console.log(e);
-    
-      }
+        })
+
     }
+    catch (e) {
+      console.log(e);
+
+    }
+  }
   //construction
-  async function construction(e){
+  async function construction(e) {
     e.preventDefault();
-  
-    try{
-  
-        await axios.post("http://localhost:8000/construction",{
-          residentName,address,reasonOfRequest,pickUpDate
-        })  
-        .then(res=>{
-          if(res.data=="exist"){
+
+    try {
+
+      await axios.post("http://localhost:8000/construction", {
+        residentName, address, reasonOfRequest, pickUpDate
+      })
+        .then(res => {
+          if (res.data == "exist") {
             alert("You already sent the same request!");
           }
-          else if(res.data=="notexist"){
+          else if (res.data == "notexist") {
             setIsSubmitted(true);
             setShowPopup(false);
           }
-      })
-      .catch(e=>{
+        })
+        .catch(e => {
           alert("Failed!")
           console.log(e);
-      })
-  
+        })
+
     }
-    catch(e){
-        console.log(e);
-  
+    catch (e) {
+      console.log(e);
+
     }
-  
+
   }
-  
+
   return (
     <body>
       <UserNav />
@@ -289,8 +289,6 @@ function UserService() {
                 </div>
               </div>
             </div>
-
-
             {/* ---------------------- CONSTRUCTION PERMIT  --------------------------- */}
             <div className="col-4 col__3" onClick={() => handleServiceClick('constructionPermit')}>
               <div className="service__box pointer">
@@ -301,6 +299,19 @@ function UserService() {
                   <h1 className="service__text">CONSTRUCTION PERMIT</h1>
                   <p className="p service__text p__color">
                     A Barangay construction permit is a government-issued authorization allowing individuals or organizations to legally undertake construction activities within the Barangay's jurisdictional boundaries.</p></div>                            </div>
+            </div>
+            {/* ----------------------- BRGY INDIGENCY FORM ---------------------------- */}
+            <div className=" col-4 col__3" onClick={() => handleServiceClick('barangayIndigency')}>
+              <div className="service__box pointer">
+                <div className="icon">
+                  <MdOutlineFactCheck size={52} />
+                </div>
+                <div className="service__meta">
+                  <h1 className="service__text">BARANGAY INDIGENCY </h1>
+                  <p className="p service__text p__color">
+                    The Certificate of Indigency is a document issued to less fortunate resident who desires to avail assistance such as Scholarship, Medical Services, and the likes.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -391,9 +402,9 @@ function UserService() {
                         onChange={(e) => setAddress(e.target.value)}
                         className="form-control"
                         required /></div>
-                      
+
                     <div className="form-group">
-                    <label htmlFor="residentsName">Owner's Name:</label>
+                      <label htmlFor="residentsName">Owner's Name:</label>
                       <input
                         type="text"
                         id="residentName"
@@ -402,7 +413,7 @@ function UserService() {
                         className="form-control"
                         required /></div>
 
-                       <div className="form-group">
+                    <div className="form-group">
                       <label htmlFor="ownertype">Ownership type</label>
                       <select
                         id="ownertype"
@@ -414,7 +425,7 @@ function UserService() {
                         <option value="sole">Sole Proprietorship</option>
                         <option value="partnership">Partnership/Corporation</option>
                       </select>
-                      </div> 
+                    </div>
 
                     <div className="form-group">
                       <label htmlFor="reasonOfRequest">Nature of Business</label>
@@ -437,7 +448,7 @@ function UserService() {
                         required /> </div>
 
                     <div className="form-buttons">
-                      <button type="submit" className="btn btn-primary"onClick={businessClearance}>Submit</button>
+                      <button type="submit" className="btn btn-primary" onClick={businessClearance}>Submit</button>
                       <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard</button>
                     </div>
                   </div>
@@ -446,8 +457,6 @@ function UserService() {
             </div>
           </div>
         )}
-
-
 
         {/* INSTALLATION PERMIT */}
         {showPopup && currentService === 'installation' && (
@@ -507,7 +516,6 @@ function UserService() {
             </div>
           </div>
         )}
-
 
         {/* BARANGAY ID */}
         {showPopup && currentService === 'barangayID' && (
@@ -616,6 +624,66 @@ function UserService() {
           </div>
         )}
 
+          {/* Brgy Indigency Form */}
+        {showPopup && currentService === 'barangayIndigency' && (
+          <div className="popup-overlay">
+            <div className="popup-form">
+              <form >
+                <div className="certificate">
+                  <h2 className="certificate-title">Indigency Request Form</h2>
+                  <div className="certificate-content">
+                    <div className="form-group">
+                      <label htmlFor="residentsName">Residents Name:</label>
+                      <input
+                        type="text"
+                        id="residentName"
+                        name="residentName"
+                        onChange={(e) => setResidentName(e.target.value)}
+                        className="form-control"
+                        required /></div>
+
+                    <div className="form-group">
+                      <label htmlFor="Address"> Address</label>
+                      <input
+                        type="text"
+                        id="address"
+                        name="address"
+                        onChange={(e) => setAddress(e.target.value)}
+                        className="form-control"
+                        required /> </div>
+
+                    <div className="form-group">
+                      <label htmlFor="reasonOfRequest">Reason Of Request</label>
+                      <input
+                        type="text"
+                        id="reasonOfRequest"
+                        name="reasonOfRequest"
+                        onChange={(e) => setReasonOfRequest(e.target.value)}
+                        className="form-control"
+                        required /></div>
+
+                    <div className="form-group">
+                      <label htmlFor="pickUpDate">Pick-up Date:</label>
+                      <input
+                        type="date"
+                        id="pickUpDate"
+                        name="pickUpDate"
+                        onChange={(e) => setPickUpDate(e.target.value)}
+                        className="form-control" required /></div>
+
+                    <div className="form-buttons">
+                      <button type="submit" className="btn btn-primary" 
+                      // onClick={barangayIndigency}
+                      >Submit </button>
+                      <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
         {isSubmitted && (
           <div className="success-message">
             <p>You have successfully submitted a request!</p>
@@ -625,7 +693,7 @@ function UserService() {
       <Bot />
       <Footer />
     </body >
-    
+
 
   )
 }
