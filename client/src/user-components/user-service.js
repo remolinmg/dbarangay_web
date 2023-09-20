@@ -75,6 +75,48 @@ function UserService() {
   const [pickUpDate, setPickUpDate] = useState('');
   const [type, setType] = useState('');
 
+  // gcash reference
+  const [isChecked, setIsChecked] = useState(false);
+  const [gcashInputValues, setGcashInputValues] = useState([]);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
+  const handleGcashInputChange = (index, value) => {
+    const newInputValues = [...inputValues];
+    newInputValues[index] = value;
+    setGcashInputValues(newInputValues);
+  };
+
+  const renderInputTextboxes = () => {
+    if (isChecked) {
+      // return gcashInputValues.map((value, index) => (
+      //   <input
+      //     key={index}
+      //     type="text"
+      //     value={value}
+      //     onChange={(e) => handleGcashInputChange(index, e.target.value)}
+      //     placeholder={`Input ${index + 1}`}
+      //   />
+      // ));
+      return (
+        <div>
+          <div className="form-group">
+            <label htmlFor="gcashref">GCash Reference No.</label>
+            <input
+              type="text"
+              id="gcashRefNo"
+              name="gcashRef"
+              className="form-control"
+              required />
+          </div>
+        </div>
+      )
+    }
+    return null;
+  };
+
   //certificate connection
   async function barangayCertificate(e) {
     e.preventDefault();
@@ -362,6 +404,29 @@ function UserService() {
                         onChange={(e) => setPickUpDate(e.target.value)}
                         className="form-control" required /></div>
 
+                    <div className="form-group">
+                      <label>Mode of Payment:</label>
+                      <div>
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                        />
+                        Cash on Pick-up
+                      </div>
+
+                      <div className="">
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={handleCheckboxChange}
+                        />
+                        GCash
+                      </div>
+
+                      {renderInputTextboxes()}
+                    </div>
+
                     <div className="form-buttons">
                       <button type="submit" className="btn btn-primary" onClick={barangayCertificate}>Submit </button>
                       <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
@@ -447,6 +512,29 @@ function UserService() {
                         className="form-control"
                         required /> </div>
 
+                    <div className="form-group">
+                      <label>Mode of Payment:</label>
+                      <div>
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                        />
+                        Cash on Pick-up
+                      </div>
+
+                      <div className="">
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={handleCheckboxChange}
+                        />
+                        GCash
+                      </div>
+
+                      {renderInputTextboxes()}
+                    </div>
+
                     <div className="form-buttons">
                       <button type="submit" className="btn btn-primary" onClick={businessClearance}>Submit</button>
                       <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard</button>
@@ -465,7 +553,7 @@ function UserService() {
               <form>
                 <div className="certificate">
                   <h2 className="installation-permit-title">Installation Permit Form</h2>
-                  <div className="installation-permit-content">
+                  <div className="installation-permit-content certificate-content">
                     <div className="form-group">
                       <label htmlFor="applicantName">Resident's Name</label>
                       <input
@@ -506,6 +594,30 @@ function UserService() {
                         className="form-control"
                         required />
                     </div>
+
+                    <div className="form-group">
+                      <label>Mode of Payment:</label>
+                      <div>
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                        />
+                        Cash on Pick-up
+                      </div>
+
+                      <div className="">
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={handleCheckboxChange}
+                        />
+                        GCash
+                      </div>
+
+                      {renderInputTextboxes()}
+                    </div>
+
                     <div className="form-buttons">
                       <button type="submit" className="btn btn-primary" onClick={installation}> Submit </button>
                       <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
@@ -524,7 +636,7 @@ function UserService() {
               <form>
                 <div className="certificate">
                   <h2 className="barangay-id-title">Barangay ID Request Form</h2>
-                  <div className="barangay-id-content">
+                  <div className="barangay-id-content certificate-content">
                     <div className="form-group">
                       <label htmlFor="residentsName">Resident's Name:</label>
                       <input
@@ -554,6 +666,30 @@ function UserService() {
                         className="form-control"
                         required />
                     </div>
+
+                    <div className="form-group">
+                      <label>Mode of Payment:</label>
+                      <div>
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                        />
+                        Cash on Pick-up
+                      </div>
+
+                      <div className="">
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={handleCheckboxChange}
+                        />
+                        GCash
+                      </div>
+
+                      {renderInputTextboxes()}
+                    </div>
+
                     <div className="form-buttons">
                       <button type="submit" className="btn btn-primary" onClick={barangayID}> Submit </button>
                       <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
@@ -611,7 +747,31 @@ function UserService() {
                         name="issuedDate"
                         onChange={(e) => setPickUpDate(e.target.value)}
                         className="form-control"
-                        required />  </div>
+                        required />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Mode of Payment:</label>
+                      <div>
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                        />
+                        Cash on Pick-up
+                      </div>
+
+                      <div className="">
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={handleCheckboxChange}
+                        />
+                        GCash
+                      </div>
+
+                      {renderInputTextboxes()}
+                    </div>
 
                     <div className="form-buttons">
                       <button type="submit" className="btn btn-primary" onClick={construction}> Submit </button>
@@ -624,7 +784,7 @@ function UserService() {
           </div>
         )}
 
-          {/* Brgy Indigency Form */}
+        {/* Brgy Indigency Form */}
         {showPopup && currentService === 'barangayIndigency' && (
           <div className="popup-overlay">
             <div className="popup-form">
@@ -669,10 +829,34 @@ function UserService() {
                         id="pickUpDate"
                         name="pickUpDate"
                         onChange={(e) => setPickUpDate(e.target.value)}
-                        className="form-control" required /></div>
+                        className="form-control" required />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Mode of Payment:</label>
+                      <div>
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                        />
+                        Cash on Pick-up
+                      </div>
+
+                      <div className="">
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={handleCheckboxChange}
+                        />
+                        GCash
+                      </div>
+
+                      {renderInputTextboxes()}
+                    </div>
 
                     <div className="form-buttons">
-                      <button type="submit" className="btn btn-primary" 
+                      <button type="submit" className="btn btn-primary"
                       // onClick={barangayIndigency}
                       >Submit </button>
                       <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
