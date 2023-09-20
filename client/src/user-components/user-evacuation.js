@@ -3,9 +3,13 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import 'bootstrap/js/dist/dropdown';
 import './assets/css/user-style.css';
 import bhall from './assets/img/Rooftop.jpg'
+import bhall1 from './assets/img/bhall1.png'
+import bhall2 from './assets/img/bhall2.png'
+import bhall3 from './assets/img/bhall3.png'
 import court from './assets/img/MagalonaCourt.jpg'
 import playground from './assets/img/BarangayPlayground.png'
 import map1 from './assets/img/evac-map1.png'
+import sample from './assets/img/evac-map-1.png'
 import map2 from './assets/img/evac-map2.png'
 import map3 from './assets/img/evac-map3.png'
 import { auto } from '@popperjs/core';
@@ -14,6 +18,7 @@ import UserNav from './user-navbar';
 import ScrollToTopButton from "./scrolltotop";
 import Bot from "./faqbot"
 import React, { useState, useEffect } from 'react';
+import { FaLocationDot } from "react-icons/fa6";
 
 
 function UserEvacuation() {
@@ -21,9 +26,13 @@ function UserEvacuation() {
     const [showBHall, setShowBHall] = useState(false);
     const [showCourt, setShowCourt] = useState(false);
     const [showPlayground, setShowPlayground] = useState(false);
+    const [showBHallCont, setShowBHallCont] = useState(false);
 
     const toggleBHall = () => {
         setShowBHall(!showBHall);
+    };
+    const toggleBHallCont = () => {
+        setShowBHallCont(!showBHallCont);
     };
 
     const toggleCourt = () => {
@@ -53,11 +62,19 @@ function UserEvacuation() {
                     {showBHall && (
                         <div className="popup-overlay">
                             <div className="popup-content w-100 h-100 d-flex flex-column justify-content-center align-content-center">
-                                <img
-                                    src={map1}
+                                {/* <img
+                                    src={sample}
                                     alt="Popup"
                                     className="popup-image w-75 h-75 m-auto mb-0"
-                                />
+                                /> */}
+                                <div className="popup-image image-1 w-75 h-75 m-auto mb-0">
+                                    <div className="bhall-content w-100 h-100 d-flex justify-content-center align-items-center">
+                                        <a className="location"><FaLocationDot className="loc-marker text-danger " />
+                                        <span><img src={bhall1} /></span>
+                                        <span><img src={bhall2} /></span>
+                                        <span><img src={bhall3} /></span></a>
+                                    </div>
+                                </div>
                                 <div className="w-50 h-auto m-auto mt-0" >
                                     <button className="btn btn-secondary w-50" onClick={toggleBHall}>Close</button>
                                     <a href="https://goo.gl/maps/poebPHS6bGWGfmWL7" target="_blank"><button className="btn btn-primary w-50">Get Directions</button></a>
@@ -113,6 +130,18 @@ function UserEvacuation() {
                             </div>
                         </div>
                     )}
+
+                    {showBHallCont && (
+                        <div className="popup-overlay">
+                            <div className="popup-content w-100 h-100 d-flex justify-content-center align-content-end">
+                                <span><img src={bhall1} /></span>
+                                <span><img src={bhall2} /></span>
+                                <span><img src={bhall3} /></span>
+                            </div>
+                        </div>
+                    )}
+
+
                 </div>
             </section>
 

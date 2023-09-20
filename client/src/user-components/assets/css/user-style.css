@@ -113,12 +113,39 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
 }
 
+.loc-marker {
+  height: 40px;
+  width: 40px;
+}
+
+.loc-marker:hover {
+  transform: scale(1.10);
+}
+
 .popup-image {
-  object-fit: contain;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-attachment: fixed;
+}
+
+.image-1 {
+  background-image:url('/src/user-components/assets/img/evac-map-1.png');
 }
 
 .evacuation {
   width: 18 rem;
+}
+
+.location span {
+  position: absolute;
+  
+  visibility: hidden;
+}
+
+.location:hover, .location:hover span {
+  visibility: visible ;
+  gap: 50px;
+  z-index: 99;
 }
 
 .evac-content-container {
@@ -244,20 +271,20 @@
 
 /* SERVICE SECTION */
 .service {
-  margin-top: 0px;
-  padding-top: 20px;
-  background-color: transparent;
-  width: 20%;
-  border-radius: 50px;
+  padding-top: 100px;
+  padding-bottom:50px ;
+  background-Repeat: 'no-repeat';
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/src/user-components/assets/img/bg.jpg');
   height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 
 .service.component__space {
-  width: 95%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -266,20 +293,18 @@
 }
 
 .col__3 {
-  max-width: 33.333333%;
-  width: 33.333333%;
   display: flex;
   padding: 10px;
   justify-content: center;
   flex-direction: column;
   margin-top: 10px;
-  align-items: stretch;
+  align-items: center;
 }
 
 h1.heading {
   margin-bottom: 0px;
   font-size: 40px;
-  color: #020881;
+  color: white;
   text-align: center;
   font-weight: 700;
   font-family: Poppins, sans-serif;
@@ -321,7 +346,7 @@ p.heading.p__color {
   font-weight: 400;
   margin-bottom: 23px;
   display: inline-flex;
-  color: #1d00f9;
+  color: white;
 }
 
 
@@ -467,8 +492,8 @@ h1.service__text {
 .scroll-to-top-button {
   display: none;
   position: fixed;
-  bottom: 95px;
-  right: 35px;
+  bottom: 35px;
+  left: 35px;
   z-index: 9999;
   background-color: #4287f5;
   color: #fff;

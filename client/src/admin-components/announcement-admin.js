@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import './assets/css/style.css';
-import { Outlet, Link , NavLink} from 'react-router-dom';
+import { Outlet, Link, NavLink } from 'react-router-dom';
 import { format } from 'date-fns';
 import Axios from 'axios';
 import logo from '../admin-components/assets/img/brgy.png';
-import { BiMenu, BiChevronDown,BiLogOut, BiCog } from 'react-icons/bi';
+import { BiMenu, BiChevronDown, BiLogOut, BiCog } from 'react-icons/bi';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import {
   BsPersonFill,
@@ -25,33 +25,33 @@ import {
 import { FaUserCircle } from "react-icons/fa";
 
 function AnnouncementAdmin() {
-//  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
-const [SelectedRowId, setSelectedRowId] = useState(null);
-const [editwhat, setEditwhat] = useState('');
-const [editdesc, setEditdesc] = useState('');
-const [editdate, setEditdate] = useState('');
-const [editwhere, setEditwhere] = useState('');
-const [editwho, setEditwho] = useState('');
-const [selectedRowData, setSelectedRowData] = useState(null);
-const [showEditForm, setShowEditForm] = useState(false); //EDIT FORM
-const [showForm, setShowForm] = useState(false); 
-const toggleForm = () => {setShowForm(!showForm);}; //SHOW ADD FORM 
-const handleEditDiscard = () => {setShowEditForm(false);}; // EDIT DISCARD FUNCTION
-const handleDiscard = () => {setShowForm(false);}; // DISCARD FUNCTION
+  //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
+  const [SelectedRowId, setSelectedRowId] = useState(null);
+  const [editwhat, setEditwhat] = useState('');
+  const [editdesc, setEditdesc] = useState('');
+  const [editdate, setEditdate] = useState('');
+  const [editwhere, setEditwhere] = useState('');
+  const [editwho, setEditwho] = useState('');
+  const [selectedRowData, setSelectedRowData] = useState(null);
+  const [showEditForm, setShowEditForm] = useState(false); //EDIT FORM
+  const [showForm, setShowForm] = useState(false);
+  const toggleForm = () => { setShowForm(!showForm); }; //SHOW ADD FORM 
+  const handleEditDiscard = () => { setShowEditForm(false); }; // EDIT DISCARD FUNCTION
+  const handleDiscard = () => { setShowForm(false); }; // DISCARD FUNCTION
 
 
-// ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
-const showEditFormHandler = (rowData) => {
-  setSelectedRowData(rowData);
-  setEditwhat(rowData.what);
-  setEditdesc(rowData.desc);
-  setEditdate(rowData.date);
-  setEditwhere(rowData.where);
-  setEditwho(rowData.who);
-  setSelectedRowId(rowData.id_announcement);
-  setShowEditForm(true);
-};
-    
+  // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
+  const showEditFormHandler = (rowData) => {
+    setSelectedRowData(rowData);
+    setEditwhat(rowData.what);
+    setEditdesc(rowData.desc);
+    setEditdate(rowData.date);
+    setEditwhere(rowData.where);
+    setEditwho(rowData.who);
+    setSelectedRowId(rowData.id_announcement);
+    setShowEditForm(true);
+  };
+
   // SIDEBAR - TOPBAR FUNCTIONS -----------------------------------------
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
   const handleSidebarCollapse = () => { setSidebarCollapsed(!isSidebarCollapsed); };
@@ -78,7 +78,7 @@ const showEditFormHandler = (rowData) => {
   const data = [
     {
       id: 1,
-      what: "hotdog",
+      what: "sample",
       description: "Description 1",
       when: "Date 1",
       where: "Location 1",
@@ -86,7 +86,7 @@ const showEditFormHandler = (rowData) => {
     },
     {
       id: 2,
-      what: "burger",
+      what: "sample",
       description: "Description 2",
       when: "Date 2",
       where: "Location 2",
@@ -425,8 +425,10 @@ const showEditFormHandler = (rowData) => {
             </div>
           </div>
         </div>
+
         {/* TABLE STARTS */}
         <main id="main" className="main">
+          <div className="pagetitle"><h1> Announcement  </h1> </div>
           <div className="table-container d-flex justify-content-center align-items-center">
             <div className="col-12 border rounded p-3 m-5">
               <div className="row p-2 d-flex justify-content-between">

@@ -1,10 +1,11 @@
 import './assets/css/user-style.css';
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import logo from '../user-components/assets/img/MANDALUYONG-Logo.png';
 import Bot from './faqbot.js';
 import { Link, NavLink, Route } from 'react-router-dom';
 import ScrollToTopButton from "./scrolltotop";
+import { BiChevronDown } from 'react-icons/bi';
 
 
 function UserNav() {
@@ -48,6 +49,54 @@ function UserNav() {
     };
   }, []);
 
+  let homeRef = useRef();
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!homeRef.current.contains(e.target)) {
+        setHomeSubmenuVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    }
+  });
+
+  let announceRef = useRef();
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!announceRef.current.contains(e.target)) {
+        setSubmenuVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    }
+  });
+
+  let profileRef = useRef();
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!profileRef.current.contains(e.target)) {
+        setProfileSubmenuVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    }
+  });
+
 
   const handleMenuClick = () => {
     setClick(!click);
@@ -87,19 +136,19 @@ function UserNav() {
                 />
                 <Link to="/./"> <span>BARANGAY HARAPIN ANG BUKAS</span> </Link>
               </li>
-              <li onClick={toggleHomeSubmenu} className="link">
-                Home
+              <li onClick={toggleHomeSubmenu} className="link" ref={homeRef}>
+                Home <BiChevronDown />
                 {HomesubmenuVisible && (
                   <ul className="Homesubmenu">
-                    <li className="link"> <NavLink className="link" to="/./" activeClassName="active"> Home </NavLink> </li>
-                    <a className="link" href='#officials' onClick={closeMenu}>Officials</a>
-                    <a className="link" href='#missionVision' onClick={closeMenu}>Mission Vision</a>
-                    <a className="link" href='#feedback' onClick={closeMenu}>Feedback</a>
+                    <li className="link"> <NavLink className="link" to="/./" activeClassName="active"> Home  </NavLink> </li>
+                    <li className="link"><a className="link" href='#officials' onClick={closeMenu}>Officials</a></li>
+                    <li className="link"><a className="link" href='#missionVision' onClick={closeMenu}>Mission Vision</a></li>
+                    <li className="link"><a className="link" href='#feedback' onClick={closeMenu}>Feedback</a></li>
                   </ul>
                 )}
               </li>
-              <li onClick={toggleSubmenu} className="link">
-                Announcement
+              <li onClick={toggleSubmenu} className="link" ref={announceRef}>
+                Announcement <BiChevronDown />
                 {submenuVisible && (
                   <ul className="submenu">
                     <li className="link"><NavLink className="link" to="/Announcement" activeClassName="active" style={{ fontSize: '18px' }}> General  </NavLink></li>
@@ -113,7 +162,7 @@ function UserNav() {
               <li className="link"> <NavLink className="link" to="/Evacuation" activeClassName="active"> Evacuation</NavLink> </li>
 
               {/* ---------------------------------------------  PROFILE SUBMENU ---------------------------------- */}
-              <li onClick={toggleProfileSubmenu} className="link">
+              <li onClick={toggleProfileSubmenu} className="link" ref={profileRef}>
                 <FaUserCircle className="user-icon" />
                 {ProfilesubmenuVisible && (
                   <ul className="Profilesubmenu">

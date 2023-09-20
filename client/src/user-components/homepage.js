@@ -7,8 +7,7 @@ import BrgyOfficials from "./brgy-officials"
 import MissionVision from "./mission-vision"
 import Footer from "./footer"
 import UserNav from './user-navbar';
-import ScrollToTopButton from "./scrolltotop";
-import Axios from 'axios';
+import ScrollToTopButton from "./scrolltotop"
 import bhall from './assets/img/Rooftop.jpg'
 import court from './assets/img/MagalonaCourt.jpg'
 import playground from './assets/img/BarangayPlayground.png'
@@ -61,31 +60,7 @@ const Homepage = () => {
     height: '50rem'
   }
 
-  // Database Feedback
-  const [date, setDate] = useState('');
-  const [feedback, setFeedback] = useState('');
-  const [inputValues, setInputValues] = useState({
-    residentsName: '',
-    Address: '',
-    reasonOfRequest: '',
-    issuedDate: '',
-  });
-
-  const submitFeedback = () => {
-    Axios.post('http://localhost:3001/api/insert/userfeedback', {
-      date: date,
-      feedback: feedback
-    })
-  };
-
-  const handleDiscard = () => {
-    setInputValues({
-      residentsName: '',
-      Address: '',
-      reasonOfRequest: '',
-      issuedDate: '',
-    });
-  };
+ 
   
 
   return (
@@ -150,41 +125,7 @@ const Homepage = () => {
       </div>
       <BrgyOfficials />
       <MissionVision />
-
-      <div className='feedback' id='feedback'>
-        <form onSubmit={submitFeedback}>
-          <div className=" p-5">
-            <h2 className="feedback-title text-center">Suggestions and Feedbacks</h2>
-            <div className="feedback-content w-100 d-flex flex-column justify-content-center">
-              <div className="form-group w-75  m-auto">
-                <label htmlFor="issuedDate">Issued Date:</label>
-                <input
-                  type="date"
-                  id="issuedDate"
-                  name="issuedDate"
-                  onChange={(e) => {
-                    setDate(e.target.value);
-                  }}
-                  className="form-control"
-                  required />
-              </div>
-              <div className="form-group  w-75  m-auto">
-                <label htmlFor="suggestion">Your Suggestion/Feedback:</label>
-                <textarea
-                  id="suggestion"
-                  name="suggestion"
-                  onChange={(e) => {
-                    setFeedback(e.target.value);
-                  }}
-                  className="form-control" rows="4" required  ></textarea> </div>
-              <div className="form-buttons">
-                <button type="submit" className="btn btn-primary">  Submit  </button>
-                <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
+      <ScrollToTopButton />
       <Footer />
       <Bot />
     </>

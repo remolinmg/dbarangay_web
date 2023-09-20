@@ -6,6 +6,7 @@ import { HiOutlineIdentification } from "react-icons/hi";
 import UserNav from './user-navbar';
 import Bot from "./faqbot"
 import axios from 'axios';
+import Footer from "./footer"
 
 
 
@@ -225,8 +226,8 @@ function UserService() {
   return (
     <body>
       <UserNav />
-      <div className="blue-box" style={{ background: '#003c7de7', height: '90px' }}></div>
-      <div className="service component__space" id="Services">
+      {/* <div className="blue-box" style={{ background: '#003c7de7', height: '90px' }}></div> */}
+      <div className="service container-fluid component__space" id="Services">
         <div className="heading"><h1 className="heading">OFFERED SERVICES </h1> </div>
         <div className="container">
           <div className="row">
@@ -274,20 +275,7 @@ function UserService() {
             </div>
           </div>
           {/* --------------------------------------------------- 2nd ROW ----------------------------------------------------  */}
-          {/* ------------------- FILE COMPLAINT / BLOTTER  --------------------------- */}
           <div className="row">
-            <div className="col-4 col__3" onClick={() => handleServiceClick('fileComplaint')}>
-              <div className="service__box pointer">
-                <div className="icon">
-                  <IoMdFiling size={32} />
-                </div>
-                <div className="service__meta">
-                  <h1 className="service__text">FILE COMPLAINT</h1>
-                  <p className="p service__text p__color">
-                    A barangay complaint is a formal statement made by a resident or group within a barangay to address a specific issue or concern within their community, seeking resolution or intervention from the barangay officials.</p>
-                </div>
-              </div>
-            </div>
             {/* ---------------------- INSTALLATION PERMIT  --------------------------- */}
             <div className="col-4 col__3" onClick={() => handleServiceClick('installation')}>
               <div className="service__box pointer">
@@ -418,6 +406,7 @@ function UserService() {
                       <label htmlFor="ownertype">Ownership type</label>
                       <select
                         id="ownertype"
+                        className="form-control"
                         onChange={(e) => setType(e.target.value)}
                         style={{ fontSize: '20px', marginBottom: '10px' }}
                       >
@@ -568,94 +557,6 @@ function UserService() {
           </div>
         )}
 
-        {/* FILE COMPLAINT & BLOTTER */}
-        {showPopup && currentService === 'fileComplaint' && (
-          <div className="popup-overlay">
-            <div className="popup-form">
-              <form onSubmit={handleSubmit}>
-                <div className="certificate">
-                  <h2 className="ifile-complaint-title">File Complaint/Blotter Form</h2>
-                  <div className="ifile-complaint-content">
-                    <div className="form-group">
-                      <label htmlFor="residentsName">Resident's Name:</label>
-                      <input
-                        type="text"
-                        id="residentsName"
-                        name="residentsName"
-                        value={inputValues.residentsName}
-                        onChange={handleInputChange}
-                        className="form-control"
-                        required /> </div>
-
-                    <div className="form-group">
-                      <label htmlFor="address">Address:</label>
-                      <input
-                        type="text"
-                        id="address"
-                        name="address"
-                        value={inputValues.address}
-                        onChange={handleInputChange}
-                        className="form-control"
-                        required />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="complaintDetails">Complaint Details:</label>
-                      <textarea
-                        id="complaintDetails"
-                        name="complaintDetails"
-                        value={inputValues.complaintDetails}
-                        onChange={handleInputChange}
-                        className="form-control"
-                        rows="4" required ></textarea>
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="incidentDate">Incident Date:</label>
-                      <input
-                        type="date"
-                        id="incidentDate"
-                        name="incidentDate"
-                        value={inputValues.incidentDate}
-                        onChange={handleInputChange}
-                        className="form-control"
-                        required />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="witnessName">Witness Name:</label>
-                      <input
-                        type="text"
-                        id="witnessName"
-                        name="witnessName"
-                        value={inputValues.witnessName}
-                        onChange={handleInputChange}
-                        className="form-control" />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="witnessStatement">Witness Statement:</label>
-                      <textarea
-                        id="witnessStatement"
-                        name="witnessStatement"
-                        value={inputValues.witnessStatement}
-                        onChange={handleInputChange}
-                        className="form-control"
-                        rows="4"></textarea>
-                    </div>
-                    <div className="form-buttons">
-                      <button type="submit" className="btn btn-primary">
-                        Submit
-                      </button>
-                      <button type="button" className="btn btn-secondary" onClick={handleDiscard}>
-                        Discard
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-
-
-
         {/* CONSTRUCTION PERMIT */}
         {showPopup && currentService === 'constructionPermit' && (
           <div className="popup-overlay">
@@ -722,6 +623,7 @@ function UserService() {
         )}
       </div>
       <Bot />
+      <Footer />
     </body >
     
 

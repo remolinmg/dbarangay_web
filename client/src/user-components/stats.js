@@ -51,10 +51,11 @@ const Stats = () => {
     backgroundColor: '#0060AD',
     padding: '40px',
     color: 'white',
+    height: '200px',
   };
   
   const headerStyle = {
-    fontSize: '28px',
+    fontSize: '25px',
     marginBottom: '20px',
     color: 'white',
   };
@@ -70,13 +71,13 @@ const Stats = () => {
   };
   
   const countStyle = {
-    fontSize: '36px',
+    fontSize: '25px',
     fontWeight: 'bold',
     color: 'white',
   };
   
   const landAreaStyle = {
-    fontSize: '24px',
+    fontSize: '25px',
     color: 'white',
   };
   
@@ -87,7 +88,7 @@ const Stats = () => {
   
 
   return (
-    <div className="container-fluid overflow-auto" style={containerStyle}>
+    <div className="container-fluid overflow-hidden" style={containerStyle}>
       <h2 style={headerStyle}>
         Harapin Ang Bukas is a barangay in the city of Mandaluyong,
         <span style={spanStyle}>National Capital Region (NCR), Philippines.</span>
