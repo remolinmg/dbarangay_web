@@ -580,7 +580,7 @@ function BpermitAdmin() {
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Request #</th>
-                                                    <th scope="col"> Business Owner</th>
+                                                    <th scope="col">Business Owner</th>
                                                     <th scope="col">Business Name </th>
                                                     <th scope="col">Business Address </th>
                                                     <th scope="col">Type of Business </th>

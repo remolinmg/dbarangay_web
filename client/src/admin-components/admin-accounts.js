@@ -43,9 +43,18 @@ function Adminaccounts() {
         setProfileSubmenuVisible(!ProfilesubmenuVisible);
     };
 
+    // SEARCH QUERY --------------------------------------------------------------
+    const [searchQuery, setSearchQuery] = useState(""); 
+
+    // Event handler for search input change -------------------------------------
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+        
+    };
+    
     return (
         <>
-             <div className="topbarsection">
+            <div className="topbarsection">
                 <div className="topnavbar d-flex justify-content-between align-items-center">
                     <div className="topnavleft">
                         <button className="collapse-button" onClick={handleSidebarCollapse}>
@@ -221,14 +230,17 @@ function Adminaccounts() {
                                     <div class="card-body">
                                         <div class="d-md-flex justify-content-between align-items-center">
                                             <h5 class="card-title">List of Admins</h5>
-                                            <form class="search-form d-flex align-items-center" method="POST" action="#">
-                                                <input type="text" name="query" placeholder="Search" title="Enter search keyword" />
-                                                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-                                            </form>
+                                            <div className="input-group w-25">
+                                                <input type="text" className="form-control" placeholder="Search"aria-label="Enter search keyword" name="query" 
+                                                value={searchQuery} onChange={handleSearchChange} />
+                                                <button className="btn btn-outline-secondary" type="button">
+                                                    <i className="bi bi-search"></i>
+                                                </button>
+                                            </div>
                                         </div>
 
                                         <table class="table overflow-x-hidden">
-                                        <thead>
+                                            <thead>
                                                 <tr>
                                                     <th scope="col">#</th>
                                                     <th scope="col">User</th>

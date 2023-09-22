@@ -25,45 +25,35 @@ import {
 import { FaUserCircle } from "react-icons/fa";
 
 function AnnouncementAdmin() {
-  //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
-  const [SelectedRowId, setSelectedRowId] = useState(null);
-  const [editwhat, setEditwhat] = useState('');
-  const [editdesc, setEditdesc] = useState('');
-  const [editdate, setEditdate] = useState('');
-  const [editwhere, setEditwhere] = useState('');
-  const [editwho, setEditwho] = useState('');
-  const [selectedRowData, setSelectedRowData] = useState(null);
-  const [showEditForm, setShowEditForm] = useState(false); //EDIT FORM
-  const [showForm, setShowForm] = useState(false);
-  const toggleForm = () => { setShowForm(!showForm); }; //SHOW ADD FORM 
-  const handleEditDiscard = () => { setShowEditForm(false); }; // EDIT DISCARD FUNCTION
-  const handleDiscard = () => { setShowForm(false); }; // DISCARD FUNCTION
-
-
-  // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
-  const showEditFormHandler = (rowData) => {
-    setSelectedRowData(rowData);
-    setEditwhat(rowData.what);
-    setEditdesc(rowData.desc);
-    setEditdate(rowData.date);
-    setEditwhere(rowData.where);
-    setEditwho(rowData.who);
-    setSelectedRowId(rowData.id_announcement);
-    setShowEditForm(true);
-  };
-
-  // SIDEBAR - TOPBAR FUNCTIONS -----------------------------------------
+  //  ------------------------------ SIDEBAR TOPBAR ------------------------------
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const handleSidebarCollapse = () => { setSidebarCollapsed(!isSidebarCollapsed); };
+
+  const handleSidebarCollapse = () => {
+    setSidebarCollapsed(!isSidebarCollapsed);
+  };
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const profileRef = useRef(null);
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
+
   const [ProfilesubmenuVisible, setProfileSubmenuVisible] = useState(false);
   const toggleProfileSubmenu = () => {
     setProfileSubmenuVisible(!ProfilesubmenuVisible);
   };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setProfileSubmenuVisible(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // NUMBER OF ROWS DISPLAYED -----------------------------------------------
   const [rowCount, setRowCount] = useState(10);
@@ -78,99 +68,43 @@ function AnnouncementAdmin() {
   const data = [
     {
       id: 1,
-      what: "sample",
-      description: "Description 1",
-      when: "Date 1",
-      where: "Location 1",
-      who: "User 1",
+      a_what_1: "Sample Event 1",
+      a_description_1: "Description of Event 1",
+      a_when_1: "2023-09-20",
+      a_where_1: "Location 1",
+      a_who_1: "Organizer 1",
     },
     {
       id: 2,
-      what: "sample",
-      description: "Description 2",
-      when: "Date 2",
-      where: "Location 2",
-      who: "User 2",
+      a_what_1: "Sample Event 2",
+      a_description_1: "Description of Event 2",
+      a_when_1: "2023-09-21",
+      a_where_1: "Location 2",
+      a_who_1: "Organizer 2",
     },
     {
       id: 3,
-      what: "Sample Data 3",
-      description: "Description 3",
-      when: "mamaya",
-      where: "Location 3",
-      who: "User 3",
+      a_what_1: "Sample Event 3",
+      a_description_1: "Description of Event 3",
+      a_when_1: "2023-09-22",
+      a_where_1: "Location 3",
+      a_who_1: "Organizer 3",
     },
     {
       id: 4,
-      what: "Sample Data 4",
-      description: "Description 4",
-      when: "Date 4",
-      where: "jan lang",
-      who: "User 4",
+      a_what_1: "Sample Event 4",
+      a_description_1: "Description of Event 4",
+      a_when_1: "2023-09-23",
+      a_where_1: "Location 4",
+      a_who_1: "Organizer 4",
     },
     {
       id: 5,
-      what: "Sample Data 5",
-      description: "Description 5",
-      when: "Date 5",
-      where: "Location 5",
-      who: "marc",
-    },
-    {
-      id: 6,
-      what: "Sample Data 6",
-      description: "tanginamo",
-      when: "Date 6",
-      where: "Location 6",
-      who: "User 6",
-    },
-    {
-      id: 7,
-      what: "Sample Data 7",
-      description: "Description 7",
-      when: "Date 7",
-      where: "Location 7",
-      who: "clarise",
-    },
-    {
-      id: 8,
-      what: "Sample Data 8",
-      description: "Description 8",
-      when: "Date 8",
-      where: "Location 8",
-      who: "User 8",
-    },
-    {
-      id: 9,
-      what: "Sample Data 9",
-      description: "Description 9",
-      when: "Date 9",
-      where: "Location 9",
-      who: "User 9",
-    },
-    {
-      id: 10,
-      what: "Sample Data 10",
-      description: "Description 10",
-      when: "Date 10",
-      where: "Location 10",
-      who: "User 10",
-    },
-    {
-      id: 11,
-      what: "Sample Data 11",
-      description: "Description 11",
-      when: "Date 11",
-      where: "Location 11",
-      who: "User 11",
-    },
-    {
-      id: 12,
-      what: "Sample Data 1",
-      description: "Description 12",
-      when: "Date 12",
-      where: "Location 12",
-      who: "User 12",
+      a_what_1: "Sample Event 5",
+      a_description_1: "Description of Event 5",
+      a_when_1: "2023-09-24",
+      a_where_1: "Location 5",
+      a_who_1: "Organizer 5",
     },
   ];
 
@@ -187,9 +121,16 @@ function AnnouncementAdmin() {
     setCurrentPage(1); // Reset current page to 1 when search query changes
   };
 
+  // Function to get the current page data using slice
+  const getCurrentPageData = () => {
+    const startIndex = (currentPage - 1) * rowCount;
+    const endIndex = startIndex + rowCount;
+    return filteredData.slice(startIndex, endIndex);
+  };
+
   // Function to go to the next page ------------------------------------------
   const nextPage = () => {
-    if (currentPage < Math.ceil(data.length / rowCount)) {
+    if (currentPage < Math.ceil(filteredData.length / rowCount)) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -213,14 +154,140 @@ function AnnouncementAdmin() {
     return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
   });
 
-  // CRUD ----------------------------------------------------------------------
+
+
+  // Forms --------------------------------
+
+  // DELETE--------------------------------------------
+  const deleteRow = (row) => { Axios.delete(`http://localhost:3001/api/delete/bpermit/${row}`); }
+
+  // Database
+  const [id, setId] = useState('');
+  const [b_owner, setOwner] = useState('');
+  const [b_name, setName] = useState('');
+  const [b_address, setAddress] = useState('');
+  const [type_business, setTypeBusiness] = useState('');
+  const [bPermitTbl, setBPermitTbl] = useState([])
+
+  // ADD FORM STATES
+  const [showForm, setShowForm] = useState(false);
+  const [What, setWhat] = useState(''); // Add this line
+  const [Description, setDescription] = useState(''); // Add this line
+  const [When, setWhen] = useState(''); // Add this line
+  const [Where, setWhere] = useState(''); // Add this line
+  const [Who, setWho] = useState(''); // Add this line
+
+  const toggleForm = () => {
+    setShowForm(!showForm);
+  };
+  const handleDiscard = () => {
+    setShowForm(false);
+  };
+  useEffect(() => {
+    Axios.get('http://localhost:3001/api/get/bpermit').then((response) => {
+      setBPermitTbl(response.data.map((item) => ({
+        id: item.id,
+        a_what_1: item.b_owner,
+        a_description_1: item.b_name,
+        a_when_1: item.b_address,
+        a_where_1: item.type_business,
+        a_who_1: item.status, // Assuming 'status' corresponds to 'Who' in your table
+      })));
+    });
+  }, []);
+
+  const submitReq = () => {
+    Axios.post('http://localhost:3001/api/insert/bpermit', {
+      b_owner: b_owner,
+      b_name: b_name,
+      b_address: b_address,
+      type_business: type_business,
+      status: "New", // Set the default status to "New" or use an appropriate default value
+    }).then((response) => {
+      // Assuming the response contains the new record's ID
+      const newId = response.data.id;
+      setBPermitTbl((prevData) => [
+        ...prevData,
+        {
+          id: newId,
+          a_what_1: b_owner,
+          a_description_1: b_name,
+          a_when_1: b_address,
+          a_where_1: type_business,
+          a_who_1: "New", // Set the default status to "New" or use an appropriate default value
+        },
+      ]);
+    });
+  };
+
+
+  // EDIT FORM STATES (ShowEditForm)
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [editWhat, setEditWhat] = useState(''); // Add this line
+  const [editDescription, setEditDescription] = useState(''); // Add this line
+  const [editWhen, setEditWhen] = useState(''); // Add this line
+  const [editWhere, setEditWhere] = useState(''); // Add this line
+  const [editWho, setEditWho] = useState(''); // Add this line
+  const [selectedRowData, setSelectedRowData] = useState(null);
+
+  const handleEditDiscard = () => {
+    setShowEditForm(false);
+  };
+
+  // Function to show the edit form with the default data of the selected row
+  const showEditFormHandler = (rowData) => {
+    setSelectedRowData(rowData);
+    setEditWhat(rowData.What); // Add this line
+    setEditDescription(rowData.Description); // Add this line
+    setEditWhen(rowData.When); // Add this line
+    setEditWhere(rowData.Where); // Add this line
+    setEditWho(rowData.Who); // Add this line
+    setShowEditForm(true);
+  };
+
+  const updateRowData = () => {
+    Axios.put(`http://localhost:3001/api/update/bpermit/${selectedRowData.id}`, {
+      a_what_1: editWhat,
+      a_description_1: editDescription,
+      a_when_1: editWhen,
+      a_where_1: editWhere,
+      a_who_1: editWho,
+    }).then((response) => {
+
+      const updatedTableData = bPermitTbl.map((rowData) => {
+        if (rowData.id === selectedRowData.id) {
+          return {
+            ...rowData,
+            a_what_1: editWhat,
+            a_description_1: editDescription,
+            a_when_1: editWhen,
+            a_where_1: editWhere,
+            a_who_1: editWho,
+          };
+        } else {
+          return rowData;
+        }
+      });
+
+      // Update the state with the new table data
+      setBPermitTbl(updatedTableData);
+
+      // Clear the selectedRowData and close the edit form
+      setSelectedRowData(null);
+      setShowEditForm(false);
+    });
+  };
+
   const handleEdit = (item) => {
-    console.log(`Editing item with id ${item.id}`);
+    // Implement your edit logic here using the 'item' data
+    console.log("Edit clicked:", item);
   };
 
   const handleDelete = (item) => {
-    console.log(`Deleting item with id ${item.id}`);
+    // Implement your delete logic here using the 'item' data
+    console.log("Delete clicked:", item);
   };
+
 
   return (
     <>
@@ -385,7 +452,7 @@ function AnnouncementAdmin() {
           </ul>
         </div>
       </div>
-      <div className={`container-documents vh-100 h-100 ${isSidebarCollapsed ? 'expanded' : ''}`}>
+      <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
             <div className="col-4">
@@ -425,77 +492,254 @@ function AnnouncementAdmin() {
             </div>
           </div>
         </div>
-
         {/* TABLE STARTS */}
         <main id="main" className="main">
           <div className="pagetitle"><h1> Announcement  </h1> </div>
-          <div className="table-container d-flex justify-content-center align-items-center">
-            <div className="col-12 border rounded p-3 m-5">
-              <div className="row p-2 d-flex justify-content-between">
-                <div className="col-4">
-                  <div className="table-pages">
-                    <nav aria-label="Page navigation example">
-                      <ul className="pagination">
-                        <li className="page-item">
-                          <a className="page-link" href="#" aria-label="Previous" onClick={prevPage}>
-                            <span aria-hidden="true">&laquo;</span>
-                          </a>
-                        </li>
-                        {Array.from({ length: Math.ceil(filteredData.length / rowCount) }, (_, i) => (
-                          <li className={`page-item ${i + 1 === currentPage ? 'active' : ''}`} key={i}>
-                            <a className="page-link" href="#" onClick={() => setCurrentPage(i + 1)}>
-                              {i + 1}
+          <section className="section">
+            <div className="row"></div>
+            <div className="table-container d-flex justify-content-center align-items-center">
+              <div className="col-12 border rounded p-3">
+                <div className="row p-2 d-flex justify-content-between">
+                  <div className="col-4">
+                    <div className="table-pages">
+                      <nav aria-label="Page navigation example">
+                        <ul className="pagination">
+                          <li className="page-item">
+                            <a className="page-link" href="#" aria-label="Previous" onClick={prevPage}>
+                              <span aria-hidden="true">&laquo;</span>
                             </a>
                           </li>
+                          {Array.from({ length: Math.ceil(filteredData.length / rowCount) }, (_, i) => (
+                            <li className={`page-item ${i + 1 === currentPage ? 'active' : ''}`} key={i}>
+                              <a className="page-link" href="#" onClick={() => setCurrentPage(i + 1)}>
+                                {i + 1}
+                              </a>
+                            </li>
+                          ))}
+                          <li className="page-item">
+                            <a className="page-link" href="#" aria-label="Next" onClick={nextPage}>
+                              <span aria-hidden="true">&raquo;</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                  </div>
+                  <div className="col-4 text-end ">
+                        <button className="btn btn-primary float-end" onClick={toggleForm}>Add</button>
+                      </div>
+                </div>
+                <div className="row">
+                  <div className="col">
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">What</th>
+                          <th scope="col">Description</th>
+                          <th scope="col">When</th>
+                          <th scope="col">Where</th>
+                          <th scope="col">Who</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {filteredData.slice(startIndex, endIndex).map((item) => (
+                          <tr key={item.id}>
+                            <th scope="row">{item.id}</th>
+                            <td>{item.a_what_1}</td>
+                            <td>{item.a_description_1}</td>
+                            <td>{item.a_when_1}</td>
+                            <td>{item.a_where_1}</td>
+                            <td>{item.a_who_1}</td>
+                            <td>
+                              <div className='gap-2 d-md-flex justify-content-start align-items-center'>
+                                <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(item)}>Edit</button>
+                                <form method='post' action=''>
+                                  <input type='hidden' name='id' value={item.id} />
+                                  <button
+                                    className="btn btn-outline-danger"
+                                    type="submit"
+                                    name="deleteRow"
+                                    onClick={() => { deleteRow(item.id); }}>Delete</button>
+                                </form>
+                              </div>
+                            </td>
+
+                          </tr>
                         ))}
-                        <li className="page-item">
-                          <a className="page-link" href="#" aria-label="Next" onClick={nextPage}>
-                            <span aria-hidden="true">&raquo;</span>
-                          </a>
-                        </li>
-                      </ul>
-                    </nav>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-                <div className="col-4 text-end ">
-                  <button className="btn btn-lg btn-primary">ADD</button>
-                </div>
               </div>
-              <div className="row">
-                <div className="col">
-                  <table className="table m-auto">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">What</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">When</th>
-                        <th scope="col">Where</th>
-                        <th scope="col">Who</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredData.slice(startIndex, endIndex).map((item) => (
-                        <tr key={item.id}>
-                          <th scope="row">{item.id}</th>
-                          <td>{item.what}</td>
-                          <td>{item.description}</td>
-                          <td>{item.when}</td>
-                          <td>{item.where}</td>
-                          <td>{item.who}</td>
-                          <td>
-                            <button className="btn btn-success btn-sm" onClick={() => handleEdit(item)}>Edit</button>
-                            <button className="btn btn-danger btn-sm" onClick={() => handleDelete(item)}>Delete</button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+              {/* ------------------------------------------------------------ ADD POP-UP FORMS  ------------------------------------------------------------*/}
+              {showForm && (
+                <div className="popup-overlay">
+                  <div className="popup-form">
+                    <form onSubmit={submitReq}>
+                      <div className="certificate">
+                        <h2 className="certificate-title">ADD RESIDENTS INFO</h2>
+                        <div className="certificate-content">
+                          <div className="form-group">
+                            <label htmlFor="a_what_1">What</label>
+                            <input
+                              type="text"
+                              id="a_what_1"
+                              name="a_what_1"
+                              onChange={(e) => { setWhat(e.target.value); }}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label htmlFor="a_description_1">Description</label>
+                            <input
+                              type="text"
+                              id="a_description_1"
+                              name="a_description_1"
+                              onChange={(e) => { setDescription(e.target.value); }}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label htmlFor="a_when_1">When</label>
+                            <input
+                              type="text"
+                              id="a_when_1"
+                              name="a_when_1"
+                              onChange={(e) => { setWhen(e.target.value); }}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label htmlFor="a_where_1">Where</label>
+                            <input
+                              type="text"
+                              id="a_where_1"
+                              name="a_where_1"
+                              onChange={(e) => { setWhere(e.target.value); }}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label htmlFor="a_who_1">Who</label>
+                            <input
+                              type="text"
+                              id="a_who_1"
+                              name="a_who_1"
+                              onChange={(e) => { setWho(e.target.value); }}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          <div className="form-buttons">
+                            <button type="submit" className="btn btn-primary">Submit</button>
+                            <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard</button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {/* ------------------------------------------------- EDIT FORM --------------------------------------------------------- */}
+              {showEditForm && selectedRowData && (
+                <div className="popup-overlay">
+                  <div className="popup-form">
+                    <form onSubmit={updateRowData}>
+                      <div className="certificate">
+                        <h2 className="certificate-title">EDIT RESIDENTS INFO</h2>
+                        <div className="certificate-content">
+                          <div className="form-group">
+                            <label htmlFor="a_what_1">What</label>
+                            <input
+                              type="text"
+                              id="a_what_1"
+                              name="a_what_1"
+                              value={editWhat}
+                              onChange={(e) => setEditWhat(e.target.value)}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label htmlFor="a_description_1">Description</label>
+                            <input
+                              type="text"
+                              id="a_description_1"
+                              name="a_description_1"
+                              value={editDescription}
+                              onChange={(e) => setEditDescription(e.target.value)}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label htmlFor="a_when_1">When</label>
+                            <input
+                              type="text"
+                              id="a_when_1"
+                              name="a_when_1"
+                              value={editWhen}
+                              onChange={(e) => setEditWhen(e.target.value)}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label htmlFor="a_where_1">Where</label>
+                            <input
+                              type="text"
+                              id="a_where_1"
+                              name="a_where_1"
+                              value={editWhere}
+                              onChange={(e) => setEditWhere(e.target.value)}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label htmlFor="a_who_1">Who</label>
+                            <input
+                              type="text"
+                              id="a_who_1"
+                              name="a_who_1"
+                              value={editWho}
+                              onChange={(e) => setEditWho(e.target.value)}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          <div className="form-buttons">
+                            <button type="submit" className="btn btn-primary" onClick={updateRowData}>Submit</button>
+                            <button type="button" className="btn btn-secondary" onClick={handleEditDiscard}>Discard</button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              )}
+
+
             </div>
-          </div>
+          </section>
         </main>
       </div >
     </>

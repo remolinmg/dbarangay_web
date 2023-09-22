@@ -77,8 +77,8 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant",
-      
+      b_picture: "",
+
     },
     {
       id: 2,
@@ -88,7 +88,7 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant"
+      b_picture: ""
     },
     {
       id: 3,
@@ -98,7 +98,7 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant"
+      b_picture: ""
     },
     {
       id: 4,
@@ -108,7 +108,7 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant"
+      b_picture: ""
     },
     {
       id: 5,
@@ -118,7 +118,7 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant"
+      b_picture: ""
     },
     {
       id: 6,
@@ -128,7 +128,7 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant"
+      b_picture: ""
     }, {
       id: 7,
       b_owner: "JERICHO",
@@ -137,7 +137,7 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant"
+      b_picture: ""
     },
     {
       id: 8,
@@ -147,7 +147,7 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant"
+      b_picture: ""
     },
     {
       id: 9,
@@ -157,8 +157,8 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant"
-    }, 
+      b_picture: ""
+    },
     {
       id: 10,
       b_owner: "JERICHO",
@@ -167,7 +167,7 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant"
+      b_picture: ""
     },
     {
       id: 11,
@@ -177,7 +177,7 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant"
+      b_picture: ""
     },
     {
       id: 12,
@@ -187,7 +187,7 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant"
+      b_picture: ""
     }, {
       id: 13,
       b_owner: "JERICHO",
@@ -196,7 +196,7 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant"
+      b_picture: ""
     },
     {
       id: 14,
@@ -206,7 +206,7 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant"
+      b_picture: ""
     },
     {
       id: 15,
@@ -216,7 +216,7 @@ function BpromotionAdmin() {
       b_hours: "JERICHO",
       type_business: "Doe's Restaurant",
       b_contact: "123 Main Street",
-      b_picture: "Restaurant"
+      b_picture: ""
     },
   ];
 
@@ -270,71 +270,57 @@ function BpromotionAdmin() {
 
   // Forms ----------------------------------------------
   const [showForm, setShowForm] = useState(false);
-  const toggleForm = () => { setShowForm(!showForm); }; //   SHOW FORMS 
-  const handleDiscard = () => { setShowForm(false); }; //   DISCARD FUNCTION
+  const toggleForm = () => { setShowForm(!showForm); }; // SHOW FORMS
+  const handleDiscard = () => { setShowForm(false); }; // DISCARD FUNCTION
 
-
-
-  //  DELETE  
+  // DELETE
   const deleteRow = (row) => { Axios.delete(`http://localhost:3001/api/delete/bpermit/${row}`); }
 
-  //------------------------------------------------ Database ----------------------------
+  // Database ----------------------------
   const [id, setId] = useState('');
   const [b_owner, setOwner] = useState('');
   const [b_name, setName] = useState('');
   const [b_address, setAddress] = useState('');
   const [b_hours, setHours] = useState('');
-  const [type_business, setTbusiness] = useState('');
+  const [type_business, setTypeBusiness] = useState('');
   const [b_contact, setContact] = useState('');
-  const [b_picture, setPicture] = useState('');
+  const [selectedPicture, setSelectedPicture] = useState(null); // Add this line for the selected picture
   const [bPermitTbl, setBPermitTbl] = useState([])
 
-  //-------------------------- ADD FUNCTION -----------------------------------
-
+  // ADD FUNCTION -----------------------------------
   useEffect(() => {
     Axios.get('http://localhost:3001/api/get/bpermit').then((response) => { setBPermitTbl(response.data); });
   }, [])
 
   const submitReq = () => {
-    Axios.post('http://localhost:3001/api/insert/bpermit', {
-      b_owner: b_owner,
-      b_name: b_name,
-      b_address: b_address,
-      b_hours: b_hours,
-      type_business: type_business,
-      b_contact: b_contact,
-      b_picture: b_picture,
-    })
+    const formData = new FormData();
+    formData.append("b_owner", b_owner);
+    formData.append("b_name", b_name);
+    formData.append("b_address", b_address);
+    formData.append("b_hours", b_hours);
+    formData.append("type_business", type_business);
+    formData.append("b_contact", b_contact);
+    formData.append("b_picture", selectedPicture); // Include the selected picture in the form data
 
-
-    setBPermitTbl([
-      ...bPermitTbl,
-      {
-        id: id,
-        b_owner: b_owner,
-        b_name: b_name,
-        b_address: b_address,
-        b_hours: b_hours,
-        type_business: type_business,
-        b_contact: b_contact,
-        b_picture: b_picture,
-      }
-    ]);
+    Axios.post('http://localhost:3001/api/insert/bpermit', formData)
+      .then((response) => {
+        // Rest of your code...
+      });
   };
-  //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
+
+  // EDIT FORM STATES (ShowForms) ------------------------------
   const [SelectedRowId, setSelectedRowId] = useState(null);
   const [editOwner, setEditOwner] = useState('');
   const [editName, setEditName] = useState('');
   const [editAddress, setEditAddress] = useState('');
   const [editTypeBusiness, setEditTypeBusiness] = useState('');
+  const [editHours, setEditHours] = useState('');
+  const [editContact, setEditContact] = useState('');
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const handleEditDiscard = () => { setShowEditForm(false); };
 
-
-  // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
-
-
+  // Function to show the edit form with the default data of the selected row
   const showEditFormHandler = (rowData) => {
     setSelectedRowData(rowData);
     setEditOwner(rowData.b_owner);
@@ -344,7 +330,14 @@ function BpromotionAdmin() {
     setSelectedRowId(rowData.idb_permit);
     setShowEditForm(true);
   };
+
   const updateRowData = () => {
+    const formData = new FormData();
+    formData.append("b_owner", editOwner);
+    formData.append("b_name", editName);
+    formData.append("b_address", editAddress);
+    formData.append("type_business", editTypeBusiness);
+    formData.append("b_picture", selectedPicture);
     Axios.put(`http://localhost:3001/api/update/bpermit/${selectedRowData.idb_permit}`, {
       b_owner: editOwner,
       b_name: editName,
@@ -642,7 +635,13 @@ function BpromotionAdmin() {
                             <td>{val.b_hours}</td>
                             <td>{val.type_business}</td>
                             <td>{val.b_contact}</td>
-                            <td>{val.b_picture}</td>
+                            <td>
+                              <img
+                                src={val.b_picture} // Use the 'b_picture' field as the image source
+                                alt=""
+                                className="business-picture"
+                              />
+                            </td>
                             <td>
                               <div className='gap-2 d-md-flex justify-content-start align-items-center'>
                                 <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(val)}> Edit</button>
@@ -659,12 +658,13 @@ function BpromotionAdmin() {
                           </tr>
                         })}
                       </tbody>
+
                     </table>
                   </div>
                 </div>
               </div>
               {/* ------------------------------------------------------------ ADD POP-UP FORMS  ------------------------------------------------------------*/}
-              {/* {showForm && (
+              {showForm && (
                 <div className="popup-overlay">
                   <div className="popup-form">
                     <form onSubmit={submitReq}>
@@ -678,112 +678,169 @@ function BpromotionAdmin() {
                               id="owner"
                               name="owner"
                               onChange={(e) => { setOwner(e.target.value); }}
-                              className="form-control" required />
+                              className="form-control"
+                              required
+                            />
                           </div>
 
                           <div className="form-group">
-                            <label htmlFor="bname"> Business Name </label>
+                            <label htmlFor="bname">Business Name</label>
                             <input
                               type="text"
                               id="bname"
                               name="bname"
                               onChange={(e) => { setName(e.target.value); }}
-                              className="form-control" required />
+                              className="form-control"
+                              required
+                            />
                           </div>
 
+                          {/* Add Business Hours */}
                           <div className="form-group">
-                            <label htmlFor="address">Business Address </label>
+                            <label htmlFor="bhours">Business Hours</label>
                             <input
                               type="text"
-                              id="address"
-                              name="address"
-                              onChange={(e) => { setAddress(e.target.value); }}
-                              className="form-control" required />
+                              id="bhours"
+                              name="bhours"
+                              onChange={(e) => { setHours(e.target.value); }}
+                              className="form-control"
+                              required
+                            />
                           </div>
 
+                          {/* Add Contact Number */}
                           <div className="form-group">
-                            <label htmlFor="type">Type of Business</label>
+                            <label htmlFor="bcontact">Contact Number</label>
                             <input
                               type="text"
-                              id="type"
-                              name="type"
-                              onChange={(e) => { setTypeBusiness(e.target.value); }}
-                              className="form-control" required />
+                              id="bcontact"
+                              name="bcontact"
+                              onChange={(e) => { setContact(e.target.value); }}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          {/* Add Business Picture */}
+                          <div className="form-group">
+                            <label htmlFor="picture">Business Picture</label>
+                            <input
+                              type="file"
+                              id="picture"
+                              name="picture"
+                              accept="image/*"
+                              onChange={(e) => setSelectedPicture(e.target.files[0])}
+                              className="form-control"
+                              required />
                           </div>
 
                           <div className="form-buttons">
-                            <button type="submit" className="btn btn-primary">Submit </button>
-                            <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
+                            <button type="submit" className="btn btn-primary">
+                              Submit
+                            </button>
+                            <button type="button" className="btn btn-secondary" onClick={handleDiscard}>
+                              Discard
+                            </button>
                           </div>
                         </div>
                       </div>
                     </form>
                   </div>
                 </div>
-              )} */}
+              )}
+
 
               {/* ------------------------------------------------- EDIT FORM --------------------------------------------------------- */}
-              {/* {showEditForm && selectedRowData && (
-                <div className='popup-overlay'>
-                  <div className='popup-form'>
+              {showEditForm && selectedRowData && (
+                <div className="popup-overlay">
+                  <div className="popup-form">
                     <form onSubmit={updateRowData}>
-                      <div className='certificate'>
-                        <h2 className='certificate-title'>EDIT RESIDENTS INFO</h2>
-                        <div className='certificate-content'>
-                          <div className='form-group'>
-                            <label htmlFor='owner'> Business Owner </label>
+                      <div className="certificate">
+                        <h2 className="certificate-title">EDIT RESIDENTS INFO</h2>
+                        <div className="certificate-content">
+                          <div className="form-group">
+                            <label htmlFor="owner">Business Owner</label>
                             <input
-                              type='text'
-                              id='owner'
-                              name='owner'
+                              type="text"
+                              id="owner"
+                              name="owner"
                               value={editOwner}
                               onChange={(e) => setEditOwner(e.target.value)}
-                              className='form-control' required />
+                              className="form-control"
+                              required
+                            />
                           </div>
 
-                          <div className='form-group'>
-                            <label htmlFor='bname'> Business Name </label>
+                          <div className="form-group">
+                            <label htmlFor="bname">Business Name</label>
                             <input
-                              type='text'
-                              id='bname'
-                              name='bname'
+                              type="text"
+                              id="bname"
+                              name="bname"
                               value={editName}
                               onChange={(e) => setEditName(e.target.value)}
-                              className='form-control' required />
+                              className="form-control"
+                              required
+                            />
                           </div>
 
-                          <div className='form-group'>
-                            <label htmlFor='address'>Business Address </label>
+                          {/* Add Business Hours */}
+                          <div className="form-group">
+                            <label htmlFor="bhours">Business Hours</label>
                             <input
-                              type='text'
-                              id='address'
-                              name='address'
-                              value={editAddress}
-                              onChange={(e) => setEditAddress(e.target.value)}
-                              className='form-control' required />
+                              type="text"
+                              id="bhours"
+                              name="bhours"
+                              value={editHours}
+                              onChange={(e) => setEditHours(e.target.value)}
+                              className="form-control"
+                              required
+                            />
                           </div>
 
-                          <div className='form-group'>
-                            <label htmlFor='type'>Type of Business</label>
+                          {/* Add Contact Number */}
+                          <div className="form-group">
+                            <label htmlFor="bcontact">Contact Number</label>
                             <input
-                              type='text'
-                              id='type'
-                              name='type'
-                              value={editTypeBusiness}
-                              onChange={(e) => setEditTypeBusiness(e.target.value)}
-                              className='form-control' required />
+                              type="text"
+                              id="bcontact"
+                              name="bcontact"
+                              value={editContact}
+                              onChange={(e) => setEditContact(e.target.value)}
+                              className="form-control"
+                              required
+                            />
                           </div>
 
-                          <div className='form-buttons'>
-                            <button type='submit' className='btn btn-primary' onClick={updateRowData}> Submit  </button>
-                            <button type='button' className='btn btn-secondary' onClick={handleEditDiscard}> Discard </button>
+                          {/* Add Business Picture */}
+                          <div className="form-group">
+                            <label htmlFor="picture">Business Picture</label>
+                            <input
+                              type="file"
+                              id="picture"
+                              name="picture"
+                              accept="image/*"
+                              onChange={(e) => setSelectedPicture(e.target.files[0])}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          <div className="form-buttons">
+                            <button type="submit" className="btn btn-primary">
+                              Submit
+                            </button>
+                            <button type="button" className="btn btn-secondary" onClick={handleEditDiscard}>
+                              Discard
+                            </button>
                           </div>
                         </div>
                       </div>
                     </form>
                   </div>
                 </div>
-              )} */}
+              )}
+
             </div>
           </section>
         </main>

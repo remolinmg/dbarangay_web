@@ -22,7 +22,7 @@ import Adminaccounts from "./admin-components/admin-accounts";
 import Admindetails from "./admin-components/admin-details";
 import BconstuctionAdmin from "./admin-components/d-barangay-construction"
 import Biddmin from "./admin-components/d-barangay-id"
-
+import ResidentsInactiveAdmin from "./admin-components/resident-inactive"
 
 
 import UserNav from "./user-components/user-navbar";
@@ -44,12 +44,18 @@ import UserProfile from "./user-components/user-profile";
 import ScrollToTopButton from "./user-components/scrolltotop";
 
 
+
+import Sample from "./admin-components/sample"
+
 function App() {
   return (
     <BrowserRouter>
       <div>
 
         <Routes>
+
+        <Route path="sample" element={<Sample />} />
+
           <Route path="admin" element={<Admin />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="d-barangay-certificate" element={<Bceritificate />} />
@@ -63,6 +69,7 @@ function App() {
           <Route path="emergency-admin" element={<EmergencyAdmin />} />
           <Route path="blotter-admin" element={<BlotterAdmin />} />
           <Route path="residents-admin" element={<ResidentsAdmin />} />
+          <Route path="resident-inactiveadmin" element={<ResidentsInactiveAdmin/>} />
           <Route path="b-permit-admin" element={<BpermitAdmin />} />
           <Route path="b-promotion-admin" element={<BpromotionAdmin />} />
           <Route path="b-officials-admin" element={<BofficialsAdmin />} />

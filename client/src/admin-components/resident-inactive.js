@@ -25,7 +25,7 @@ import { FaUserCircle } from "react-icons/fa";
 
 
 
-function ResidentsAdmin() {
+function ResidentsInactiveAdmin() {
   //  ------------------------------ SIDEBAR TOPBAR ------------------------------
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -403,15 +403,7 @@ function ResidentsAdmin() {
           <div className="toppart-table border row w-75 d-flex align-items-center">
             <div className="col-4">
               <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search"
-                  aria-label="Enter search keyword"
-                  name="query"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                />
+                <input type="text"  className="form-control" placeholder="Search" aria-label="Enter search keyword" name="query"value={searchQuery} onChange={handleSearchChange} />
                 <button className="btn btn-outline-secondary" type="button">
                   <i className="bi bi-search"></i>
                 </button>
@@ -441,7 +433,7 @@ function ResidentsAdmin() {
           </div>
         </div>
         <div class="pagetitle">
-          <h1> Residents Information  </h1>
+          <h1> Inactive Residents  </h1>
         </div>
 
 
@@ -700,4 +692,4 @@ function ResidentsAdmin() {
   );
 }
 
-export default ResidentsAdmin;
+export default ResidentsInactiveAdmin;
