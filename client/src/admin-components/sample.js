@@ -160,9 +160,13 @@ function BofficialsAdmin() {
 
 
   useEffect(() => {
-    Axios.get('http://localhost:3001/api/get/bpermit').then((response) => {
-      setBOfficialTable(response.data);
-    });
+    Axios.get('http://localhost:3001/api/get/bpermit')
+      .then((response) => {
+        setBOfficialTable(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
   }, []);
 
   const submitReq = () => {
@@ -268,167 +272,7 @@ function BofficialsAdmin() {
 
   return (
     <>
-      <div className="topbarsection">
-        <div className="topnavbar d-flex justify-content-between align-items-center">
-          <div className="topnavleft">
-            <button className="collapse-button" onClick={handleSidebarCollapse}>
-              <BiMenu />
-            </button>
-          </div>
-          <div className="topnavmid">
-            <h3>Barangay Harapin Ang Bukas</h3>
-          </div>
-          <div className="topnavright">
-            <div ref={profileRef}>
-              <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-              {ProfilesubmenuVisible && (
-                <div className="Profilesubmenuadmin">
-                  <div className="admininfo">
-                    <div className="rightprofile">
-                      <FaUserCircle className="adminprofile" />
-                    </div>
-                    <div className="leftprofile">
-                      <h5>CLARISE ANNELY</h5>
-                      <h5>clariseannely@gmail.com</h5>
-                    </div>
-                  </div>
-                  <div className="lowerprofile">
-                    <div className="button-profile1">
-                      <NavLink to="/admin-profile" activeClassName="active">
-                        <div href="#" className="profilebuttons">
-                          <BiCog className="profileicons" /> Settings
-                        </div>
-                      </NavLink>
-                    </div>
-                    <hr />
-                    <div className="button-profile1">
 
-                      <NavLink to="/admin" activeClassName="active">
-                        <div href="#" className="profilebuttons">
-                          <BiLogOut className="profileicons" /> Log out
-                        </div>
-                      </NavLink>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''} d-none d-md-block`}>
-        <div className="newsidebar">
-          <div className="text-center">
-            <Link className="navbar-brand" to="/dashboard">
-              <img className="tblImage w-50 h-100" src={logo} alt="" />
-            </Link>
-            <h6>Barangay Harapin Ang Bukas</h6>
-          </div>
-          <ul>
-
-            <li>
-              <Link to="/dashboard" className="nav-link ">
-                <AiOutlineDashboard className="sidebaricon " />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/announcement-admin" className="nav-link ">
-                <BsMegaphoneFill className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Announcement</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/emergency-admin" className="nav-link ">
-                <BsTelephoneFill className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Emergency</span>
-              </Link>
-            </li>
-            {/* <li className={`dropdown-sidebar ${isDropdownOpen ? 'open' : ''}`}> */}
-            <li className="dropdown-sidebar">
-              <Link to="" className="nav-link ">
-                <div className="barangaymodule">
-                  <span onClick={toggleDropdown}>
-                    <BsFillFileEarmarkFill className="sidebaricon" />
-                    <span className="sidebarlabel ms-1">
-                      Barangay Module <BiChevronDown />
-                    </span>
-                  </span>
-                </div>
-              </Link>
-              {/* <ul className="sidebar-submenu"> */}
-              <ul className={`sidebar-submenu w-100 ${isDropdownOpen ? 'open' : ''}`}>
-                {isDropdownOpen && (
-                  <>
-                    <li>
-                      <Link to="/b-officials-admin" className="nav-link ">
-                        <BsFillPersonBadgeFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Barangay Officials</span>
-
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/d-barangay-certificate" className="nav-lin">
-                        <BsFillFileEarmarkArrowDownFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Document Requests</span>
-
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/blotter-admin" className="nav-link ">
-                        <RiFolderWarningFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Blotter Records</span>
-
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/residents-admin" className="nav-link">
-                        <BsFillPeopleFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
-
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/b-permit-admin" className="nav-link">
-                        <BsEnvelopePaper className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Permit</span>
-
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/b-promotion-admin" className="nav-link">
-                        <BsBuildingFillUp className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Promotion</span>
-
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/feedbacks-admin" className="nav-link">
-                        <BsMailbox className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Feedbacks</span>
-
-                      </Link>
-                    </li>
-                  </>
-                )}
-              </ul>
-            </li>
-            <li className={`${isDropdownOpen ? 'hide' : ''}`}>
-              <Link to="/staff-logs-admin" className="nav-link">
-                <BsTerminal className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Staff Logs</span>
-              </Link>
-            </li>
-            <li className={`${isDropdownOpen ? 'hide' : ''}`}>
-              <Link to="/admin-accounts" className="nav-link">
-                <BsPersonFill className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Admin Accounts</span>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
       <div className={`bofficials-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
@@ -508,50 +352,53 @@ function BofficialsAdmin() {
                       </div>
                     </div>
 
-                    <table class="table caption-top">
+                    <table className="table caption-top">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
                           <th scope="col">Position</th>
                           <th scope="col">Name</th>
-                          <th scope="col">lastName</th>
                           <th scope="col">Contact</th>
                           <th scope="col">Address</th>
                           <th scope="col">Start of Term</th>
                           <th scope="col">End of Term</th>
                           <th scope="col">Option</th>
-
                         </tr>
                       </thead>
                       <tbody>
-                        {getCurrentPageData().map((val) => {
-                          const parsedStartTerm = parse(val.startTerm, 'yyyy-MM-dd', new Date());
-                          const parsedEndTerm = parse(val.endTerm, 'yyyy-MM-dd', new Date());
+                        {bOfficialTable.length === 0 ? (
+                          <tr>
+                            <td colSpan="8">Loading...</td>
+                          </tr>
+                        ) : (
+                          bOfficialTable.map((val) => {
+                            const parsedStartTerm = parse(val.startTerm, 'yyyy-MM-dd', new Date());
+                            const parsedEndTerm = parse(val.endTerm, 'yyyy-MM-dd', new Date());
 
-                          return (
-                            <tr key={val.id}>
-                              <th scope="row">{val.id}</th>
-                              <td>{val.position}</td>
-                              <td>{val.firstName}</td>
-                              <td>{val.lastName}</td>
-                              <td>{val.contact}</td>
-                              <td>{val.address}</td>
-                              <td>{format(parsedStartTerm, 'yyyy-MM-dd')}</td>
-                              <td>{format(parsedEndTerm, 'yyyy-MM-dd')}</td>
-                              <td>
-                                <div className='gap-2 d-md-flex justify-content-start align-items-center'>
-                                  <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(val)}>Edit</button>
-                                  <form method='post' action=''>
-                                    <input type='hidden' name='id' value="" />
-                                    <button className='btn btn-outline-danger' type='submit' name='deletePost'>Delete</button>
-                                  </form>
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        })}
+                            return (
+                              <tr key={val.id}>
+                                <th scope="row">{val.id}</th>
+                                <td>{val.position}</td>
+                                <td>{val.firstName}</td>
+                                <td>{val.lastName}</td>
+                                <td>{val.contact}</td>
+                                <td>{val.address}</td>
+                                <td>{format(parsedStartTerm, 'yyyy-MM-dd')}</td>
+                                <td>{format(parsedEndTerm, 'yyyy-MM-dd')}</td>
+                                <td>
+                                  <div className="gap-2 d-md-flex justify-content-start align-items-center">
+                                    <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(val)}>Edit</button>
+                                    <form method="post" action="">
+                                      <input type="hidden" name="id" value="" />
+                                      <button className="btn btn-outline-danger" type="submit" name="deletePost">Delete</button>
+                                    </form>
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })
+                        )}
                       </tbody>
-
                     </table>
                   </div>
                 </div>
@@ -560,7 +407,7 @@ function BofficialsAdmin() {
               {/* POP-UP FORMS */}
               {showForm && (
                 <div className="popup-overlay">
-                  <div className="popup-form mt-4">
+                  <div className="popup-form">
                     <form onSubmit={submitReq}>
                       <div className="certificate">
                         <h2 className="certificate-title">ADD OFFICALS INFO</h2>
@@ -646,6 +493,8 @@ function BofficialsAdmin() {
                               id="Start-Term"
                               name="Start-Term"
                               value={editstartTerm}
+
+
                               onChange={(e) => setEditstartTerm(e.target.value)}
                               className="form-control"
                               required
@@ -685,18 +534,15 @@ function BofficialsAdmin() {
                       <div className='certificate'>
                         <h2 className="certificate-title">EDIT OFFICIALS INFO</h2>
                         <div className="certificate-content">
+
                           <div className="form-group">
                             <label htmlFor="Position"> Position </label>
                             <input
                               type="text"
                               id="Position"
                               name="Position"
-                              value={editposition}
-                              onChange={(e) => setEditposition(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
+                              value={editposition} onChange={(e) => setEditposition(e.target.value)}
+                              className="form-control" required /></div>
 
                           <div className="form-group">
                             <label htmlFor="Name">  FIRST NAME </label>
@@ -704,25 +550,18 @@ function BofficialsAdmin() {
                               type="text"
                               id="Name"
                               name="Name"
-                              value={editfirstName}
-                              onChange={(e) => setEditfirstName(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
+                              value={editfirstName} onChange={(e) => setEditfirstName(e.target.value)}
+                              className="form-control" required /> </div>
+
 
                           <div className="form-group">
-                            <label htmlFor="LastName">  LAST NAME </label>
+                            <label htmlFor="Name">  LAST NAME </label>
                             <input
                               type="text"
-                              id="LastName"
-                              name="LastName"
-                              value={editlastName}
-                              onChange={(e) => setEditlastName(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
+                              id="Name"
+                              name="Name"
+                              value={editlastName} onChange={(e) => setEditlastName(e.target.value)}
+                              className="form-control" required /> </div>
 
                           <div className="form-group">
                             <label htmlFor="Contact">Contact </label>
@@ -730,12 +569,9 @@ function BofficialsAdmin() {
                               type="text"
                               id="Contact"
                               name="Contact"
-                              value={editcontact}
-                              onChange={(e) => setEditcontact(e.target.value)}
+                              value={editcontact} onChange={(e) => setEditcontact(e.target.value)}
                               className="form-control"
-                              required
-                            />
-                          </div>
+                              required /></div>
 
                           <div className="form-group">
                             <label htmlFor="Address">Address</label>
@@ -743,52 +579,47 @@ function BofficialsAdmin() {
                               type="text"
                               id="Address"
                               name="Address"
-                              value={editaddress}
-                              onChange={(e) => setEditaddress(e.target.value)}
+                              value={editaddress} onChange={(e) => setEditaddress(e.target.value)}
                               className="form-control"
-                              required
-                            />
-                          </div>
+                              required /></div>
 
                           <div className="form-group">
-                            <label htmlFor="EditImage">Edit Image</label>
+                            <label htmlFor="Image">Add Image</label>
                             <input
                               type="file"
-                              id="EditImage"
-                              name="EditImage"
-                              onChange={(e) => setEditImage(e.target.value)}
-                              className='form-control'
-                            />
+                              id="Image"
+                              name="Image"
+                              value={editImage} onChange={(e) => setEditImage(e.target.value)}
+                              className='form-control' required />
                           </div>
 
                           <div className='form-group'>
-                            <label htmlFor='EditStartTerm'>Start Term</label>
+                            <label htmlFor='Start-Term'>Start Term</label>
                             <input
                               type='date'
-                              id='EditStartTerm'
-                              name='EditStartTerm'
+                              id='Start-Term'
+                              name='Start-Term'
                               value={editstartTerm}
-                              onChange={(e) => setEditstartTerm(e.target.value)}
+                              onChange={setEditstartTerm}
                               className='form-control'
                               required
                             />
                           </div>
-
                           <div className='form-group'>
-                            <label htmlFor='EditEndTerm'>End Term</label>
+                            <label htmlFor='End-Term'>End Term</label>
                             <input
                               type='date'
-                              id='EditEndTerm'
-                              name='EditEndTerm'
+                              id='End-Term'
+                              name='End-Term'
                               value={editendTerm}
-                              onChange={(e) => setEditendTerm(e.target.value)}
+                              onChange={setEditendTerm}
                               className='form-control'
                               required
                             />
                           </div>
 
                           <div className="form-buttons">
-                            <button type='submit' className='btn btn-primary'> Submit </button>
+                            <button type='submit' className='btn btn-primary' onClick={updateRowData}> Submit  </button>
                             <button type="button" className="btn btn-secondary" onClick={handleEditDiscard}> Discard </button>
                           </div>
                         </div>
@@ -796,8 +627,8 @@ function BofficialsAdmin() {
                     </form>
                   </div>
                 </div>
-              )}
 
+              )}
             </div>
           </section>
         </main>

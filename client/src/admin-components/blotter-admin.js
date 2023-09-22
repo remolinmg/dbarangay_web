@@ -29,14 +29,12 @@ import { FaUserCircle } from "react-icons/fa";
 
 function BlotterAdmin() {
 
-  // ---------------------------------- SIDEBAR COLLAPSED  ----------------------------------
-
+  //  ------------------------------ SIDEBAR TOPBAR ------------------------------
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const handleSidebarCollapse = () => {
     setSidebarCollapsed(!isSidebarCollapsed);
   };
-
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const profileRef = useRef(null);
   const toggleDropdown = () => {
@@ -61,6 +59,276 @@ function BlotterAdmin() {
     };
   }, []);
 
+  // NUMBER OF ROWS DISPLAYED -----------------------------------------------
+  const [rowCount, setRowCount] = useState(10);
+
+  // PAGE NUMBER --------------------------------------------------------------
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // SEARCH QUERY --------------------------------------------------------------
+  const [searchQuery, setSearchQuery] = useState(""); // State for the search query
+
+  // SAMPLE DATA ---------------------------------------------------------------
+  const data = [
+    {
+      id: 1,
+      complaint_date: "2023-09-15",
+      complaint_type: "Noise Complaint",
+      incident_location: "123 Main Street",
+      complaint_details: "Loud music late at night",
+      c_fullname: "John Doe",
+      s_documents: "Evidence1.jpg",
+      status: "Pending",
+    },
+    {
+      id: 2,
+      complaint_date: "2023-09-14",
+      complaint_type: "Property Damage",
+      incident_location: "456 Elm Street",
+      complaint_details: "Vandalism reported",
+      c_fullname: "Jane Smith",
+      s_documents: "Evidence2.jpg",
+      status: "Resolved",
+    },
+    {
+      id: 3,
+      complaint_date: "2023-09-13",
+      complaint_type: "Theft",
+      incident_location: "789 Oak Avenue",
+      complaint_details: "Stolen bicycle",
+      c_fullname: "Mike Johnson",
+      s_documents: "Evidence3.jpg",
+      status: "Pending",
+    },
+    {
+      id: 4,
+      complaint_date: "2023-09-12",
+      complaint_type: "Noise Complaint",
+      incident_location: "101 Pine Street",
+      complaint_details: "Loud party next door",
+      c_fullname: "Sarah Lee",
+      s_documents: "Evidence4.jpg",
+      status: "Resolved",
+    },
+    {
+      id: 5,
+      complaint_date: "2023-09-11",
+      complaint_type: "Suspicious Activity",
+      incident_location: "222 Cedar Road",
+      complaint_details: "Unusual behavior reported",
+      c_fullname: "David Brown",
+      s_documents: "Evidence5.jpg",
+      status: "Pending",
+    },
+    {
+      id: 6,
+      complaint_date: "2023-09-10",
+      complaint_type: "Property Damage",
+      incident_location: "333 Maple Lane",
+      complaint_details: "Vandalism to a vehicle",
+      c_fullname: "Emily Davis",
+      s_documents: "Evidence6.jpg",
+      status: "Resolved",
+    },
+    {
+      id: 7,
+      complaint_date: "2023-09-09",
+      complaint_type: "Noise Complaint",
+      incident_location: "444 Birch Street",
+      complaint_details: "Loud music during the night",
+      c_fullname: "Chris Wilson",
+      s_documents: "Evidence7.jpg",
+      status: "Pending",
+    },
+    {
+      id: 8,
+      complaint_date: "2023-09-08",
+      complaint_type: "Theft",
+      incident_location: "555 Redwood Drive",
+      complaint_details: "Missing laptop",
+      c_fullname: "Olivia White",
+      s_documents: "Evidence8.jpg",
+      status: "Resolved",
+    },
+    {
+      id: 9,
+      complaint_date: "2023-09-07",
+      complaint_type: "Noise Complaint",
+      incident_location: "666 Willow Avenue",
+      complaint_details: "Loud party at a neighbor's house",
+      c_fullname: "Daniel Harris",
+      s_documents: "Evidence9.jpg",
+      status: "Pending",
+    },
+    {
+      id: 10,
+      complaint_date: "2023-09-06",
+      complaint_type: "Property Damage",
+      incident_location: "777 Elm Street",
+      complaint_details: "Graffiti on a building",
+      c_fullname: "Sophia Martinez",
+      s_documents: "Evidence10.jpg",
+      status: "Resolved",
+    },
+    {
+      id: 11,
+      complaint_date: "2023-09-05",
+      complaint_type: "Noise Complaint",
+      incident_location: "888 Oak Avenue",
+      complaint_details: "Loud music disturbance",
+      c_fullname: "Liam Anderson",
+      s_documents: "Evidence11.jpg",
+      status: "Pending",
+    },
+    {
+      id: 12,
+      complaint_date: "2023-09-04",
+      complaint_type: "Theft",
+      incident_location: "999 Pine Street",
+      complaint_details: "Stolen wallet",
+      c_fullname: "Ava Thomas",
+      s_documents: "Evidence12.jpg",
+      status: "Resolved",
+    },
+    {
+      id: 13,
+      complaint_date: "2023-09-03",
+      complaint_type: "Property Damage",
+      incident_location: "111 Cedar Road",
+      complaint_details: "Broken windows",
+      c_fullname: "Noah Rodriguez",
+      s_documents: "Evidence13.jpg",
+      status: "Pending",
+    },
+    {
+      id: 14,
+      complaint_date: "2023-09-02",
+      complaint_type: "Noise Complaint",
+      incident_location: "222 Maple Lane",
+      complaint_details: "Loud party disturbance",
+      c_fullname: "Emma Garcia",
+      s_documents: "Evidence14.jpg",
+      status: "Resolved",
+    },
+    {
+      id: 15,
+      complaint_date: "2023-09-01",
+      complaint_type: "Suspicious Activity",
+      incident_location: "333 Birch Street",
+      complaint_details: "Unusual behavior in the park",
+      c_fullname: "Mason Lewis",
+      s_documents: "Evidence15.jpg",
+      status: "Pending",
+    },
+    {
+      id: 16,
+      complaint_date: "2023-08-31",
+      complaint_type: "Property Damage",
+      incident_location: "444 Redwood Drive",
+      complaint_details: "Vandalism to public property",
+      c_fullname: "Olivia Clark",
+      s_documents: "Evidence16.jpg",
+      status: "Resolved",
+    },
+    {
+      id: 17,
+      complaint_date: "2023-08-30",
+      complaint_type: "Noise Complaint",
+      incident_location: "555 Willow Avenue",
+      complaint_details: "Loud music disturbance",
+      c_fullname: "James Turner",
+      s_documents: "Evidence17.jpg",
+      status: "Pending",
+    },
+    {
+      id: 18,
+      complaint_date: "2023-08-29",
+      complaint_type: "Theft",
+      incident_location: "666 Elm Street",
+      complaint_details: "Missing bicycle",
+      c_fullname: "Sophia Lewis",
+      s_documents: "Evidence18.jpg",
+      status: "Resolved",
+    },
+    {
+      id: 19,
+      complaint_date: "2023-08-28",
+      complaint_type: "Noise Complaint",
+      incident_location: "777 Oak Avenue",
+      complaint_details: "Loud party next door",
+      c_fullname: "Aiden Garcia",
+      s_documents: "Evidence19.jpg",
+      status: "Pending",
+    },
+    {
+      id: 20,
+      complaint_date: "2023-08-27",
+      complaint_type: "Property Damage",
+      incident_location: "888 Pine Street",
+      complaint_details: "Graffiti on a public building",
+      c_fullname: "Sophie Turner",
+      s_documents: "Evidence20.jpg",
+      status: "Resolved",
+    },
+    {
+      id: 21,
+      complaint_date: "2023-08-26",
+      complaint_type: "Noise Complaint",
+      incident_location: "999 Cedar Road",
+      complaint_details: "Loud music late at night",
+      c_fullname: "Ethan Wilson",
+      s_documents: "Evidence21.jpg",
+      status: "Pending",
+    },
+  ];
+  // Event handler for dropdown change ----------------------------------------
+  const handleRowCountChange = (e) => {
+    const selectedRowCount = parseInt(e.target.value);
+    setRowCount(selectedRowCount);
+    setCurrentPage(1); // Reset current page to 1 when row count changes
+  };
+
+  // Event handler for search input change -------------------------------------
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset current page to 1 when search query changes
+  };
+
+  // Function to get the current page data using slice
+  const getCurrentPageData = () => {
+    const startIndex = (currentPage - 1) * rowCount;
+    const endIndex = startIndex + rowCount;
+    return filteredData.slice(startIndex, endIndex);
+  };
+
+  // Function to go to the next page ------------------------------------------
+  const nextPage = () => {
+    if (currentPage < Math.ceil(filteredData.length / rowCount)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Function to go to the previous page --------------------------------------
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  // Calculate the starting and ending indices for the current page -------------
+  const startIndex = (currentPage - 1) * rowCount;
+  const endIndex = startIndex + rowCount;
+
+  // Function to filter data based on search query -----------------------------
+  const filteredData = data.filter((item) => {
+    const itemValues = Object.values(item).map((value) =>
+      value.toString().toLowerCase()
+    );
+    return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+  });
+
+
+
   //  ------------------------------ SHOW ADD FORM ---------------------------------
   const [showForm, setShowForm] = useState(false);
   const toggleForm = () => { setShowForm(!showForm); };
@@ -68,6 +336,17 @@ function BlotterAdmin() {
 
   //   DISCARD FUNCTION
   const handleDiscard = () => { setShowForm(false); };
+
+  const [complaint_date, setcomplaint_date] = useState('');
+  const [complaint_type, setcomplaint_type] = useState('');
+  const [incident_location, setincident_location] = useState('');
+  const [complaint_details, setcomplaint_details] = useState('');
+  const [c_fullname, setc_fullname] = useState('');
+  const [s_documents, sets_documents] = useState('');
+
+
+  const handleEditSubmit = () => { }
+
 
   //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
   const [SelectedRowId, setSelectedRowId] = useState(null);
@@ -97,6 +376,7 @@ function BlotterAdmin() {
     setSelectedRowId(rowData.id_blotter);
     setShowEditForm(true);
   };
+
 
   return (
     <>
@@ -263,43 +543,44 @@ function BlotterAdmin() {
       </div>
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
-          <div className="row w-75">
-            <div className="col-md-4 ">
-              <form className="input-group d-flex align-items-center">
-                <input type="text" className="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-btn" />
-                <div className="input-group-append">
-                  <button className="btn btn-primary mt-2" type="submit" id="search-btn">icon</button>
-                </div>
-              </form>
+          <div className="toppart-table border row w-75 d-flex align-items-center">
+            <div className="col-4">
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search"
+                  aria-label="Enter search keyword"
+                  name="query"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                />
+                <button className="btn btn-outline-secondary" type="button">
+                  <i className="bi bi-search"></i>
+                </button>
+              </div>
             </div>
-
-            <div className="col-md-4">
-              <div class="dropdown-center mt-2">
-                <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false"> Dropdown button</button>
-
-                <ul class="dropdown-menu">
-                  <Link to="/b-permit-admin">
-                    <li><a class="dropdown-item">Business Permit</a></li></Link>
-                  <Link to="/b-clearance-admin">
-                    <li><a class="dropdown-item">Business Clearance</a></li></Link>
-
+            <div className="col-4">
+              <div className="tabsz dropdown-center">
+                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
+                <ul className="dropdown-menu">
+                  <li><Link to="/announcement-admin">General</Link></li>
+                  <li><Link to="/livelihood-admin">Livelihood</Link></li>
                 </ul>
               </div>
             </div>
-            <div className="col-md-4">
-              <div className="mb-3">
-                <select className="form-control">
-                  <option value="5">5</option>
+            <div className="col-4">
+              <div className="dropdown-tablenumbers">
+                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
                   <option value="10">10</option>
                   <option value="20">20</option>
                   <option value="50">50</option>
+                  <option value="100">100</option>
                 </select>
               </div>
             </div>
           </div>
         </div>
-
-
         {/* -------------------------------------------------------------  TABLE -------------------------------------------------------------  */}
         <main id="main" class="main">
           <section class="section">
@@ -307,11 +588,33 @@ function BlotterAdmin() {
               <div class="col-lg-12">
                 <div class="card">
                   <div class="card-body">
-                    <div class="row p-2 d-flex justify-content-between">
-                      <div class="col-4">
-                        <div> <h1 className="search-container"><b />BLOTTER </h1></div>
+                    <div className="row p-2 d-flex justify-content-between">
+                      <div className="col-4">
+                        <div className="table-pages">
+                          <nav aria-label="Page navigation example">
+                            <ul className="pagination">
+                              <li className="page-item">
+                                <a className="page-link" href="#" aria-label="Previous" onClick={prevPage}>
+                                  <span aria-hidden="true">&laquo;</span>
+                                </a>
+                              </li>
+                              {Array.from({ length: Math.ceil(filteredData.length / rowCount) }, (_, i) => (
+                                <li className={`page-item ${i + 1 === currentPage ? 'active' : ''}`} key={i}>
+                                  <a className="page-link" href="#" onClick={() => setCurrentPage(i + 1)}>
+                                    {i + 1}
+                                  </a>
+                                </li>
+                              ))}
+                              <li className="page-item">
+                                <a className="page-link" href="#" aria-label="Next" onClick={nextPage}>
+                                  <span aria-hidden="true">&raquo;</span>
+                                </a>
+                              </li>
+                            </ul>
+                          </nav>
+                        </div>
                       </div>
-                      <div class="col-4 text-end ">
+                      <div className="col-4 text-end ">
                         <button className="btn btn-primary float-end" onClick={toggleForm}>Add</button>
                       </div>
                     </div>
@@ -319,240 +622,203 @@ function BlotterAdmin() {
                       <thead>
                         <tr>
                           <th scope="col">Blotter #</th>
-
-                          <th scope="col">DATE </th>
-                          <th scope="col"> COMPLAINT TYPE </th>
-                          <th scope="col"> INCIDENT LOC. </th>
-                          <th scope="col"> COMPLAINT DETAILS </th>
+                          <th scope="col">DATE</th>
+                          <th scope="col">COMPLAINT TYPE</th>
+                          <th scope="col">INCIDENT LOC.</th>
+                          <th scope="col">COMPLAINT DETAILS</th>
                           <th scope="col">COMPLAINANT Name</th>
-                          <th scope="col">SUPPORTING DOCUMENTS </th>
-                          <th scope="col">Status </th>
+                          <th scope="col">SUPPORTING DOCUMENTS</th>
+                          <th scope="col">Status</th>
                           <th scope="col">Actions</th>
                         </tr>
                       </thead>
-
                       <tbody>
-                        {/* {Blottertbl.map((val) => {
-                          return (
-                            <tr key={val.id_blotter}>
-                              <th scope="row">{val.id_blotter}</th>
-                              <td>{format(new Date(val.complaint_date), 'yyyy-MM-dd')}</td>
-                              <td>{val.complaint_type}</td>
-                              <td>{val.incident_location}</td>
-                              <td>{val.complaint_details}</td>
-                              <td>{val.c_fullname}</td>
-                              <td>{val.s_documents}</td>
-                              <td>
-
-                                <div className="mb-3">
-                                  <select
-                                    type="text"
-                                    id="Role"
-                                    name="Role"
-                                    className="form-control"
-                                  >
-                                    <option value="">New</option>
-                                    <option value="ongoing">Approved</option>
-                                    <option value="processed">Disapproved</option>
-                                  </select>
-                                </div>
-                              </td>
-
-                              <td>
-                                <div className='gap-2 d-md-flex justify-content-start align-items-center'>
-                                  <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    onClick={() => showEditFormHandler(val)}
-                                  >
-                                    Edit
-                                  </button>
-                                  <form method='post' action=''>
-                                    <input type='hidden' name='id' value="" />
-                                    <button
-                                      className="btn btn-outline-danger"
-                                      type="button"
-                                      name="deleteRow"
-                                    >
-                                      Delete
-                                    </button>
-                                  </form>
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        })} */}
+                        {getCurrentPageData().map((item) => (
+                          <tr key={item.id}>
+                            <td>{item.id}</td>
+                            <td>{item.complaint_date}</td>
+                            <td>{item.complaint_type}</td>
+                            <td>{item.incident_location}</td>
+                            <td>{item.complaint_details}</td>
+                            <td>{item.c_fullname}</td>
+                            <td>{item.s_documents}</td>
+                            <td>{item.status}</td>
+                            <td>
+                              <button className="btn btn-primary btn-sm" onClick={() => showEditFormHandler(item)}>Edit</button>
+                              <button className="btn btn-danger btn-sm">Delete</button>
+                            </td>
+                          </tr>
+                        ))}
                       </tbody>
 
                     </table>
                   </div>
                 </div>
               </div>
-              {/* ------------------------------------------------------------ ADD POP-UP FORMS  ------------------------------------------------------------*/}
-              {/* {showForm  && (
-   <div className="popup-overlay">
-    <div className="popup-form">
-    <form >
-         <div className="certificate">
-           <h2 className="certificate-title">ADD BLOTTER INFO</h2>
-             <div className="certificate-content">
+            </div>
+            {/* ADD POP-UP FORMS  */}
 
-             <div className="form-group">
-                <label htmlFor="owner">COMPLAINT Date </label>
-                   <input
-                       type="date"
-                       id="owner"
-                       name="owner" onChange={(e) => {setcomplaint_date(e.target.value); }}
-                       className="form-control" required /> </div>
+            {showForm && (
+              <div className="popup-overlay">
+                <div className="popup-form">
+                  <form >
+                    <div className="certificate">
+                      <h2 className="certificate-title">ADD BLOTTER INFO</h2>
+                      <div className="certificate-content">
 
-              <div className="form-group">
-                <label htmlFor="bname"> COMPLAINT TYPE </label>
-                   <input
-                     type="text"
-                     id="bname"
-                     name="bname"
-                     onChange={(e) => {setcomplaint_type(e.target.value); }}
-                     className="form-control"required /> </div>
+                        <div className="form-group">
+                          <label htmlFor="owner">COMPLAINT Date </label>
+                          <input
+                            type="date"
+                            id="owner"
+                            name="owner" onChange={(e) => { setcomplaint_date(e.target.value); }}
+                            className="form-control" required /> </div>
 
-              <div className="form-group">
-                <label htmlFor="address">INCIDENT LOCATION </label>
-                    <input
-                        type="text"
-                        id="address"
-                        name="address"
-                        onChange={(e) => { setincident_location(e.target.value); }}
-                        className="form-control" required /></div>
+                        <div className="form-group">
+                          <label htmlFor="bname"> COMPLAINT TYPE </label>
+                          <input
+                            type="text"
+                            id="bname"
+                            name="bname"
+                            onChange={(e) => { setcomplaint_type(e.target.value); }}
+                            className="form-control" required /> </div>
 
-              <div className="form-group">
-              <label htmlFor="type">COMPLAINT DETAILS </label>
-                <input
-                   type="text"
-                   id="type"
-                   name="type" onChange={(e) => {setcomplaint_details(e.target.value); }}
-                   className="form-control" required /></div>
-                         <div className="form-group">
-              <label htmlFor="type">COMPLAINANT FULL NAME </label>
-                <input
-                   type="text"
-                   id="type"
-                   name="type" onChange={(e) => {setc_fullname(e.target.value); }}
-                   className="form-control" required /></div>
+                        <div className="form-group">
+                          <label htmlFor="address">INCIDENT LOCATION </label>
+                          <input
+                            type="text"
+                            id="address"
+                            name="address"
+                            onChange={(e) => { setincident_location(e.target.value); }}
+                            className="form-control" required /></div>
 
-<div className="form-group">
-              <label htmlFor="type">SUPPORTING DOCUMENTS</label>
-                <input
-                   type="text"
-                   id="type"
-                   name="type" onChange={(e) => {sets_documents(e.target.value); }}
-                   className="form-control" required /></div>
+                        <div className="form-group">
+                          <label htmlFor="type">COMPLAINT DETAILS </label>
+                          <input
+                            type="text"
+                            id="type"
+                            name="type" onChange={(e) => { setcomplaint_details(e.target.value); }}
+                            className="form-control" required /></div>
+                        <div className="form-group">
+                          <label htmlFor="type">COMPLAINANT FULL NAME </label>
+                          <input
+                            type="text"
+                            id="type"
+                            name="type" onChange={(e) => { setc_fullname(e.target.value); }}
+                            className="form-control" required /></div>
+
+                        <div className="form-group">
+                          <label htmlFor="type">SUPPORTING DOCUMENTS</label>
+                          <input
+                            type="text"
+                            id="type"
+                            name="type" onChange={(e) => { sets_documents(e.target.value); }}
+                            className="form-control" required /></div>
 
 
 
-              <div className="form-buttons">
-                <button type="submit" className="btn btn-primary">Submit </button>
-                <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
-                            </div>
+                        <div className="form-buttons">
+                          <button type="submit" className="btn btn-primary">Submit </button>
+                          <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
                         </div>
+                      </div>
                     </div>
-                 </form>
-             </div>
-        </div>
-    )} */}
-
-
-
-
-
-              {/* ------------------------------------------------- EDIT FORM --------------------------------------------------------- */}
-              {/* {showEditForm && selectedRowData && (
-        <div className='popup-overlay'>
-          <div className='popup-form'>
-          <form>
-              <div className='certificate'>
-                <h2 className='certificate-title'>EDIT RESIDENTS INFO</h2>
-                <div className='certificate-content'>
-                  <div className='form-group'>
-                    <label htmlFor='owner'> COMPLAINT DATE </label>
-                    <input
-                      type='date'
-                      id='owner'
-                      name='owner'
-                      value={editcomplaint_date}
-                      onChange={(e) => setEditcomplaint_date(e.target.value)}
-                      className='form-control' required  />
-                  </div>
-
-                  <div className='form-group'>
-                    <label htmlFor='owner'> COMPLAINT TYPE </label>
-                    <input
-                      type='text'
-                      id='owner'
-                      name='owner'
-                      value={editcomplaintType}
-                      onChange={(e) => setEditcomplaint_type(e.target.value)}
-                      className='form-control' required  />
-                  </div>
-
-                  <div className='form-group'>
-                    <label htmlFor='owner'> INCIDENT LOCATION </label>
-                    <input
-                      type='text'
-                      id='owner'
-                      name='owner'
-                      value={editincidentLocation}
-                      onChange={(e) => setEditincident_location(e.target.value)}
-                      className='form-control' required  />
-                  </div>
-
-
-                  <div className='form-group'>
-                    <label htmlFor='bname'> complaint Details</label>
-                    <input
-                      type='text'
-                      id='bname'
-                      name='bname'
-                      value={editcomplaintDetails}
-                      onChange={(e) => setEditcomplaint_details(e.target.value)}
-                      className='form-control' required />
-                  </div>
-
-                  <div className='form-group'>
-                    <label htmlFor='address'>complainanant Fullname </label>
-                    <input
-                      type='text'
-                      id='address'
-                      name='address'
-                      value={editcomplainantFullname}
-                      onChange={(e) => setEditc_fullname(e.target.value)}
-                      className='form-control' required />
-                  </div>
-
-                  <div className='form-group'>
-                    <label htmlFor='type'>s_documents</label>
-                    <input
-                      type='text'
-                      id='type'
-                      name='type'
-                      value={editsupportingDocuments}
-                      onChange={(e) => setEdits_documents(e.target.value)}
-                      className='form-control' required  />
-                   </div>
-
-                    <div className='form-buttons'>
-                    <button type='submit' className='btn btn-primary' onClick=> Submit  </button>  
-                    <button type='button' className='btn btn-secondary' onClick={handleEditDiscard}> Discard </button>
-                  </div>
+                  </form>
                 </div>
               </div>
-            </form>
-          </div>
-        </div>
-     )} */}
-            </div>
-          </section>
-        </main>
-      </div>
+            )}
+            {/*
+             EDIT FORM */}
+
+            {showEditForm && selectedRowData && (
+              <div className='popup-overlay'>
+                <div className='popup-form'>
+                  <form>
+                    <div className='certificate'>
+                      <h2 className='certificate-title'>EDIT RESIDENTS INFO</h2>
+                      <div className='certificate-content'>
+                        <div className='form-group'>
+                          <label htmlFor='owner'>COMPLAINT DATE</label>
+                          <input
+                            type='date'
+                            id='owner'
+                            name='owner'
+                            value={editcomplaint_date}
+                            onChange={(e) => setEditcomplaint_date(e.target.value)}
+                            className='form-control' required />
+                        </div>
+
+                        <div className='form-group'>
+                          <label htmlFor='owner'>COMPLAINT TYPE</label>
+                          <input
+                            type='text'
+                            id='owner'
+                            name='owner'
+                            value={editcomplaintType}
+                            onChange={(e) => setEditcomplaint_type(e.target.value)}
+                            className='form-control' required />
+                        </div>
+
+                        <div className='form-group'>
+                          <label htmlFor='owner'>INCIDENT LOCATION</label>
+                          <input
+                            type='text'
+                            id='owner'
+                            name='owner'
+                            value={editincidentLocation}
+                            onChange={(e) => setEditincident_location(e.target.value)}
+                            className='form-control' required />
+                        </div>
+
+                        <div className='form-group'>
+                          <label htmlFor='bname'>COMPLAINT DETAILS</label>
+                          <input
+                            type='text'
+                            id='bname'
+                            name='bname'
+                            value={editcomplaintDetails}
+                            onChange={(e) => setEditcomplaint_details(e.target.value)}
+                            className='form-control' required />
+                        </div>
+
+                        <div className='form-group'>
+                          <label htmlFor='address'>COMPLAINANT FULL NAME</label>
+                          <input
+                            type='text'
+                            id='address'
+                            name='address'
+                            value={editcomplainantFullname}
+                            onChange={(e) => setEditc_fullname(e.target.value)}
+                            className='form-control' required />
+                        </div>
+
+                        <div className='form-group'>
+                          <label htmlFor='type'>SUPPORTING DOCUMENTS</label>
+                          <input
+                            type='text'
+                            id='type'
+                            name='type'
+                            value={editsupportingDocuments}
+                            onChange={(e) => setEdits_documents(e.target.value)}
+                            className='form-control' required />
+                        </div>
+
+                        <div className='form-buttons'>
+                          <button type='submit' className='btn btn-primary' onClick={handleEditSubmit}>Submit</button>
+                          <button type='button' className='btn btn-secondary' onClick={handleEditDiscard}>Discard</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
+
+          </section >
+        </main >
+
+      </div >
     </>
-  )
+  );
 }
 export default BlotterAdmin;
