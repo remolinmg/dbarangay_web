@@ -74,13 +74,23 @@ function UserService() {
   const [reasonOfRequest, setReasonOfRequest] = useState('');
   const [pickUpDate, setPickUpDate] = useState('');
   const [type, setType] = useState('');
+  const [modeOfPayment, setModeOfPayment] = useState('');
+  const [reference, setReference] = useState('');
 
   // gcash reference
-  const [isChecked, setIsChecked] = useState(false);
+  const [isGCashChecked, setIsGCashChecked] = useState(false);
+  const [isCOPChecked, setIsCOPChecked] = useState(false);
   const [gcashInputValues, setGcashInputValues] = useState([]);
 
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+  const handleCheckboxChangeGcash = () => {
+    setIsGCashChecked(!isGCashChecked);
+    setModeOfPayment('G-Cash');
+    setIsCOPChecked(false);
+  };
+  const handleCheckboxChangeCash = () => {
+    setIsCOPChecked(!isCOPChecked);
+    setModeOfPayment('Cash On Pick-up');
+    setIsGCashChecked(false);
   };
 
   const handleGcashInputChange = (index, value) => {
@@ -90,7 +100,7 @@ function UserService() {
   };
 
   const renderInputTextboxes = () => {
-    if (isChecked) {
+    if (isGCashChecked) {
       // return gcashInputValues.map((value, index) => (
       //   <input
       //     key={index}
@@ -109,12 +119,13 @@ function UserService() {
               id="gcashRefNo"
               name="gcashRef"
               className="form-control"
+              onChange={(e) => setReference(e.target.value)}
               required />
           </div>
         </div>
       )
     }
-    return null;
+    return (null);
   };
 
   //certificate connection
@@ -124,7 +135,7 @@ function UserService() {
     try {
 
       await axios.post("http://localhost:8000/barangaycertificate", {
-        residentName, address, reasonOfRequest, pickUpDate
+        residentName, address, reasonOfRequest, pickUpDate,modeOfPayment,reference
       })
         .then(res => {
           if (res.data == "exist") {
@@ -154,7 +165,7 @@ function UserService() {
     try {
 
       await axios.post("http://localhost:8000/businessclearance", {
-        businessName, address, residentName, type, reasonOfRequest, pickUpDate
+        businessName, address, residentName, type, reasonOfRequest, pickUpDate,modeOfPayment,reference
       })
         .then(res => {
           if (res.data == "exist") {
@@ -176,6 +187,36 @@ function UserService() {
 
     }
   }
+  //indigency connection
+  async function barangayIndigency(e) {
+    e.preventDefault();
+
+    try {
+
+      await axios.post("http://localhost:8000/barangayindigency", {
+        residentName, address, reasonOfRequest, pickUpDate,modeOfPayment,reference
+      })
+        .then(res => {
+          if (res.data == "exist") {
+            alert("You already sent the same request!");
+          }
+          else if (res.data == "notexist") {
+            setIsSubmitted(true);
+            setShowPopup(false);
+          }
+        })
+        .catch(e => {
+          alert("Failed!")
+          console.log(e);
+        })
+
+    }
+    catch (e) {
+      console.log(e);
+
+    }
+
+  }
   //barangayid
   async function barangayID(e) {
     e.preventDefault();
@@ -183,7 +224,7 @@ function UserService() {
     try {
 
       await axios.post("http://localhost:8000/barangayid", {
-        residentName, address, pickUpDate
+        residentName, address, pickUpDate,modeOfPayment,reference
       })
         .then(res => {
           if (res.data == "exist") {
@@ -212,7 +253,7 @@ function UserService() {
     try {
 
       await axios.post("http://localhost:8000/installation", {
-        residentName, address, reasonOfRequest, pickUpDate
+        residentName, address, reasonOfRequest, pickUpDate,modeOfPayment,reference
       })
         .then(res => {
           if (res.data == "exist") {
@@ -241,7 +282,7 @@ function UserService() {
     try {
 
       await axios.post("http://localhost:8000/construction", {
-        residentName, address, reasonOfRequest, pickUpDate
+        residentName, address, reasonOfRequest, pickUpDate,modeOfPayment,reference
       })
         .then(res => {
           if (res.data == "exist") {
@@ -404,12 +445,14 @@ function UserService() {
                         onChange={(e) => setPickUpDate(e.target.value)}
                         className="form-control" required /></div>
 
-                    <div className="form-group">
+                      <div className="form-group">
                       <label>Mode of Payment:</label>
                       <div>
                         <input
                           className="ms-1 me-1"
                           type="checkbox"
+                          checked={isCOPChecked}
+                          onChange={handleCheckboxChangeCash}
                         />
                         Cash on Pick-up
                       </div>
@@ -418,8 +461,9 @@ function UserService() {
                         <input
                           className="ms-1 me-1"
                           type="checkbox"
-                          checked={isChecked}
-                          onChange={handleCheckboxChange}
+                          checked={isGCashChecked}
+                          onChange={handleCheckboxChangeGcash}
+                          
                         />
                         GCash
                       </div>
@@ -486,7 +530,7 @@ function UserService() {
                         onChange={(e) => setType(e.target.value)}
                         style={{ fontSize: '20px', marginBottom: '10px' }}
                       >
-                        <option value="">Type of Ownership</option>
+                       <option value="????" ></option>
                         <option value="sole">Sole Proprietorship</option>
                         <option value="partnership">Partnership/Corporation</option>
                       </select>
@@ -518,6 +562,8 @@ function UserService() {
                         <input
                           className="ms-1 me-1"
                           type="checkbox"
+                          checked={isCOPChecked}
+                          onChange={handleCheckboxChangeCash}
                         />
                         Cash on Pick-up
                       </div>
@@ -526,8 +572,9 @@ function UserService() {
                         <input
                           className="ms-1 me-1"
                           type="checkbox"
-                          checked={isChecked}
-                          onChange={handleCheckboxChange}
+                          checked={isGCashChecked}
+                          onChange={handleCheckboxChangeGcash}
+                          
                         />
                         GCash
                       </div>
@@ -601,6 +648,8 @@ function UserService() {
                         <input
                           className="ms-1 me-1"
                           type="checkbox"
+                          checked={isCOPChecked}
+                          onChange={handleCheckboxChangeCash}
                         />
                         Cash on Pick-up
                       </div>
@@ -609,8 +658,9 @@ function UserService() {
                         <input
                           className="ms-1 me-1"
                           type="checkbox"
-                          checked={isChecked}
-                          onChange={handleCheckboxChange}
+                          checked={isGCashChecked}
+                          onChange={handleCheckboxChangeGcash}
+                          
                         />
                         GCash
                       </div>
@@ -673,6 +723,8 @@ function UserService() {
                         <input
                           className="ms-1 me-1"
                           type="checkbox"
+                          checked={isCOPChecked}
+                          onChange={handleCheckboxChangeCash}
                         />
                         Cash on Pick-up
                       </div>
@@ -681,8 +733,9 @@ function UserService() {
                         <input
                           className="ms-1 me-1"
                           type="checkbox"
-                          checked={isChecked}
-                          onChange={handleCheckboxChange}
+                          checked={isGCashChecked}
+                          onChange={handleCheckboxChangeGcash}
+                          
                         />
                         GCash
                       </div>
@@ -756,6 +809,8 @@ function UserService() {
                         <input
                           className="ms-1 me-1"
                           type="checkbox"
+                          checked={isCOPChecked}
+                          onChange={handleCheckboxChangeCash}
                         />
                         Cash on Pick-up
                       </div>
@@ -764,8 +819,9 @@ function UserService() {
                         <input
                           className="ms-1 me-1"
                           type="checkbox"
-                          checked={isChecked}
-                          onChange={handleCheckboxChange}
+                          checked={isGCashChecked}
+                          onChange={handleCheckboxChangeGcash}
+                          
                         />
                         GCash
                       </div>
@@ -838,6 +894,8 @@ function UserService() {
                         <input
                           className="ms-1 me-1"
                           type="checkbox"
+                          checked={isCOPChecked}
+                          onChange={handleCheckboxChangeCash}
                         />
                         Cash on Pick-up
                       </div>
@@ -846,8 +904,9 @@ function UserService() {
                         <input
                           className="ms-1 me-1"
                           type="checkbox"
-                          checked={isChecked}
-                          onChange={handleCheckboxChange}
+                          checked={isGCashChecked}
+                          onChange={handleCheckboxChangeGcash}
+                          
                         />
                         GCash
                       </div>
@@ -857,7 +916,7 @@ function UserService() {
 
                     <div className="form-buttons">
                       <button type="submit" className="btn btn-primary"
-                      // onClick={barangayIndigency}
+                       onClick={barangayIndigency}
                       >Submit </button>
                       <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
                     </div>

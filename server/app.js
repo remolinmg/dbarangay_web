@@ -193,18 +193,31 @@ const barangayCertificate=new mongoose.Schema({
   pickUpDate:{
       type:String,
       required:true
-  }
+  },
+  modeOfPayment:{
+    type:String,
+    required:true
+  },
+  reference:{
+    type:String
+  },
+  status:{
+    type:String,
+    default:'New'
+}
 });
 const userCertificate = mongoose.model("barangaycertificate",barangayCertificate);
 
 app.post("/barangaycertificate",async(req,res)=>{
-  const{residentName,address,reasonOfRequest,pickUpDate}=req.body=req.body
+  const{residentName,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
   const data = 
   {
     residentName:residentName,
     address:address,
     reasonOfRequest:reasonOfRequest,
-    pickUpDate:pickUpDate
+    pickUpDate:pickUpDate,
+    modeOfPayment:modeOfPayment,
+    reference:reference
     }
 
   try{
@@ -237,11 +250,11 @@ const businessClearance=new mongoose.Schema({
   residentName:{
     type:String,
     required:true
-},
-type:{
-  type:String,
-  required:true
-},
+  },
+  type:{
+    type:String,
+    required:true
+  },
   reasonOfRequest:{
       type:String,
       required:true
@@ -249,12 +262,23 @@ type:{
   pickUpDate:{
       type:String,
       required:true
-  }
+  },
+  modeOfPayment:{
+    type:String,
+    required:true
+  },
+  reference:{
+    type:String
+  },
+  status:{
+    type:String,
+    default:'New'
+}
 });
 const userBusinessClearance = mongoose.model("businessclearance",businessClearance);
 
 app.post("/businessclearance",async(req,res)=>{
-  const{businessName,address,residentName,type,reasonOfRequest,pickUpDate}=req.body=req.body
+  const{businessName,address,residentName,type,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
   const data = 
   {
     businessName:businessName,
@@ -262,7 +286,9 @@ app.post("/businessclearance",async(req,res)=>{
     residentName:residentName,
     type:type,
     reasonOfRequest:reasonOfRequest,
-    pickUpDate:pickUpDate
+    pickUpDate:pickUpDate,
+    modeOfPayment:modeOfPayment,
+    reference:reference
     }
 
   try{
@@ -280,7 +306,66 @@ app.post("/businessclearance",async(req,res)=>{
   }
 })
 //end of business clearance
+//Barangay Indigency
+const barangayIndigency=new mongoose.Schema({
+  residentName:{
+      type:String,
+      required:true
+  },
+  address:{
+      type:String,
+      required:true
+  },
+  reasonOfRequest:{
+      type:String,
+      required:true
+  },
+  pickUpDate:{
+      type:String,
+      required:true
+  },
+  modeOfPayment:{
+    type:String,
+    required:true
+  },
+  reference:{
+    type:String,
+  },
+  status:{
+    type:String,
+    default:'New'
+}
+});
+const userIndigency = mongoose.model("barangayindigency",barangayIndigency);
 
+app.post("/barangayindigency",async(req,res)=>{
+  const{residentName,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
+  const data = 
+  {
+    residentName:residentName,
+    address:address,
+    reasonOfRequest:reasonOfRequest,
+    pickUpDate:pickUpDate,
+    modeOfPayment:modeOfPayment,
+    reference:reference
+    }
+
+  try{
+    const check=await userIndigency.findOne({$and:[{residentName:residentName},{reasonOfRequest:reasonOfRequest},{pickUpDate:pickUpDate}]})
+    if(check){
+      res.json("exist")
+    }
+    else{
+      res.json("notexist")
+      await userIndigency.insertMany([data])
+    }
+  }
+  catch(e){
+    res.json("notexist")
+  }
+})
+
+//end of indigency
 //barangay id
 const barangayID=new mongoose.Schema({
   residentName:{
@@ -294,18 +379,31 @@ const barangayID=new mongoose.Schema({
   pickUpDate:{
       type:String,
       required:true
-  }
+  },
+  modeOfPayment:{
+    type:String,
+    required:true
+  },
+  reference:{
+    type:String,
+  },
+  status:{
+    type:String,
+    default:'New'
+}
 });
 const userBarangayID = mongoose.model("barangayid",barangayID);
 
 app.post("/barangayid",async(req,res)=>{
-  const{residentName,address,reasonOfRequest,pickUpDate}=req.body=req.body
+  const{residentName,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
   const data = 
   {
     residentName:residentName,
     address:address,
     reasonOfRequest:reasonOfRequest,
-    pickUpDate:pickUpDate
+    pickUpDate:pickUpDate,
+    modeOfPayment:modeOfPayment,
+    reference:reference
     }
 
   try{
@@ -341,18 +439,31 @@ const installation=new mongoose.Schema({
   pickUpDate:{
       type:String,
       required:true
-  }
+  },
+  modeOfPayment:{
+    type:String,
+    required:true
+  },
+  reference:{
+    type:String,
+  },
+  status:{
+    type:String,
+    default:'New'
+}
 });
 const userInstallation = mongoose.model("installation",installation);
 
 app.post("/installation",async(req,res)=>{
-  const{residentName,address,reasonOfRequest,pickUpDate}=req.body=req.body
+  const{residentName,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
   const data = 
   {
     residentName:residentName,
     address:address,
     reasonOfRequest:reasonOfRequest,
-    pickUpDate:pickUpDate
+    pickUpDate:pickUpDate,
+    modeOfPayment:modeOfPayment,
+    reference:reference
     }
 
   try{
@@ -388,18 +499,31 @@ const construction=new mongoose.Schema({
   pickUpDate:{
       type:String,
       required:true
-  }
+  },
+  modeOfPayment:{
+    type:String,
+    required:true
+  },
+  reference:{
+    type:String,
+  },
+  status:{
+    type:String,
+    default:'New'
+}
 });
 const userConstruction = mongoose.model("construction",construction);
 
 app.post("/construction",async(req,res)=>{
-  const{residentName,address,reasonOfRequest,pickUpDate}=req.body=req.body
+  const{residentName,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
   const data = 
   {
     residentName:residentName,
     address:address,
     reasonOfRequest:reasonOfRequest,
-    pickUpDate:pickUpDate
+    pickUpDate:pickUpDate,
+    modeOfPayment:modeOfPayment,
+    reference:reference
     }
 
   try{
@@ -418,6 +542,290 @@ app.post("/construction",async(req,res)=>{
 })
 
 //end of certificate
+
+//get services
+//get certificate
+app.get("/get/barangaycertificate", async (req, res) => {
+  try {
+    const data = await userCertificate.find();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+//end get certificate
+
+//get business clearance
+app.get("/get/businessclearance", async (req, res) => {
+  try {
+    const data = await userBusinessClearance.find();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+//end get business clearance
+//get indigency
+app.get("/get/barangayindigency", async (req, res) => {
+  try {
+    const data = await userIndigency.find();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+//end get indigency
+//get get barangayid
+app.get("/get/barangayid", async (req, res) => {
+  try {
+    const data = await userBarangayID.find();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+//end get barangayid
+
+//get get installation
+app.get("/get/installation", async (req, res) => {
+  try {
+    const data = await userInstallation.find();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+//end get installation
+
+//get construction
+app.get("/get/construction", async (req, res) => {
+  try {
+    const data = await userConstruction.find();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+//end get construction
+
+//DELETE FUNCTION
+//delete barangaycertificate
+app.delete(`/delete/barangaycertificate/:id`, async (req, res) => {
+  try {
+    const deletedDocument = await userCertificate.findByIdAndDelete(req.params.id);
+    if (!deletedDocument) {
+      return res.status(404).json({ message: 'Document not found' });
+    }
+    res.json({ message: 'Document deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+//end of delete barangaycertificate
+
+//delete businessclearance
+app.delete(`/delete/businessclearance/:id`, async (req, res) => {
+  try {
+    const deletedDocument = await userBusinessClearance.findByIdAndDelete(req.params.id);
+    if (!deletedDocument) {
+      return res.status(404).json({ message: 'Document not found' });
+    }
+    res.json({ message: 'Document deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+//end of delete businessclearance
+//delete barangayindigency
+app.delete(`/delete/barangayindigency/:id`, async (req, res) => {
+  try {
+    const deletedDocument = await userIndigency.findByIdAndDelete(req.params.id);
+    if (!deletedDocument) {
+      return res.status(404).json({ message: 'Document not found' });
+    }
+    res.json({ message: 'Document deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+//end of delete barangayindigency
+//delete barangayid
+app.delete(`/delete/barangayid/:id`, async (req, res) => {
+  try {
+    const deletedDocument = await userBarangayID.findByIdAndDelete(req.params.id);
+    if (!deletedDocument) {
+      return res.status(404).json({ message: 'Document not found' });
+    }
+    res.json({ message: 'Document deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+//end of delete barangayid
+
+//delete installation
+app.delete(`/delete/installation/:id`, async (req, res) => {
+  try {
+    const deletedDocument = await userInstallation.findByIdAndDelete(req.params.id);
+    if (!deletedDocument) {
+      return res.status(404).json({ message: 'Document not found' });
+    }
+    res.json({ message: 'Document deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+//end of delete installation
+
+//delete construction
+app.delete(`/delete/construction/:id`, async (req, res) => {
+  try {
+    const deletedDocument = await userConstruction.findByIdAndDelete(req.params.id);
+    if (!deletedDocument) {
+      return res.status(404).json({ message: 'Document not found' });
+    }
+    res.json({ message: 'Document deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+//end of delete construction
+//END DELETE FUNCTION
+
+//Edit data
+//Edit certificate
+app.put(`/update/barangaycertificate/:id`, async (req, res) => {
+  const id = req.params.id;
+  const updatedData= req.body;
+  try {
+    const updatedUserCertificate = await userCertificate.findByIdAndUpdate(
+      id,updatedData,{ new: true } 
+    );
+
+    if (!updatedUserCertificate) {
+      return res.status(404).json({ message: 'Request not found' });
+    }
+
+    res.status(200).json(updatedUserCertificate);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+//End of Edit certificate
+//Edit clearance
+app.put(`/update/businessclearance/:id`, async (req, res) => {
+  const id = req.params.id;
+  const updatedData= req.body;
+  try {
+    const updatedUserBusinessClearance = await userBusinessClearance.findByIdAndUpdate(
+      id,updatedData,{ new: true } 
+    );
+
+    if (!updatedUserBusinessClearance ) {
+      return res.status(404).json({ message: 'Request not found' });
+    }
+
+    res.status(200).json(updatedUserBusinessClearance );
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+//End of Edit clearance
+//Edit indigency
+app.put(`/update/barangayindigency/:id`, async (req, res) => {
+  const id = req.params.id;
+  const updatedData= req.body;
+  try {
+    const updatedUserIndigency = await userIndigency.findByIdAndUpdate(
+      id,updatedData,{ new: true } 
+    );
+
+    if (!updatedUserIndigency) {
+      return res.status(404).json({ message: 'Request not found' });
+    }
+
+    res.status(200).json(updatedUserIndigency);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+//End of Edit indigency
+//Edit barangayid
+app.put(`/update/barangayid/:id`, async (req, res) => {
+  const id = req.params.id;
+  const updatedData= req.body;
+  try {
+    const updatedUserBarangayID = await userBarangayID.findByIdAndUpdate(
+      id,updatedData,{ new: true } 
+    );
+
+    if (!updatedUserBarangayID ) {
+      return res.status(404).json({ message: 'Request not found' });
+    }
+
+    res.status(200).json(updatedUserBarangayID );
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+//End of Edit barangayid
+//Edit installation
+app.put(`/update/installation/:id`, async (req, res) => {
+  const id = req.params.id;
+  const updatedData= req.body;
+  try {
+    const updatedUserInstallation = await userInstallation.findByIdAndUpdate(
+      id,updatedData,{ new: true } 
+    );
+
+    if (!updatedUserInstallation ) {
+      return res.status(404).json({ message: 'Request not found' });
+    }
+
+    res.status(200).json(updatedUserInstallation );
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+//End of Edit installation
+//Edit construction
+app.put(`/update/construction/:id`, async (req, res) => {
+  const id = req.params.id;
+  const updatedData= req.body;
+  try {
+    const updatedUserConstruction = await userConstruction.findByIdAndUpdate(
+      id,updatedData,{ new: true } 
+    );
+
+    if (!updatedUserConstruction ) {
+      return res.status(404).json({ message: 'Request not found' });
+    }
+
+    res.status(200).json(updatedUserConstruction );
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+//End of Edit construction
+//End of Edit Data
 
 app.listen(8000,()=>{
   console.log("port connected");

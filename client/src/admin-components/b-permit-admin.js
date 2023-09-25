@@ -2,6 +2,7 @@
 import './assets/css/style.css';
 import { Link, NavLink, Route } from 'react-router-dom';
 import Axios from 'axios';
+import axios from 'axios';
 import React, { useState, useEffect, useRef } from "react";
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
@@ -67,126 +68,20 @@ function BpermitAdmin() {
     // SEARCH QUERY --------------------------------------------------------------
     const [searchQuery, setSearchQuery] = useState(""); // State for the search query
 
-    // SAMPLE DATA ---------------------------------------------------------------
-    const data = [
-        {
-            id: 1,
-            b_owner: "JERICHO",
-            b_name: "Doe's Restaurant",
-            b_address: "123 Main Street",
-            type_business: "Restaurant",
-            status: "New",
-        },
-        {
-            id: 2,
-            b_owner: "Jane Smith",
-            b_name: "Verb Pandesal",
-            b_address: "456 Oak Avenue",
-            type_business: "Retail",
-            status: "Approved",
-        },
-        {
-            id: 3,
-            b_owner: "Bob Johnson",
-            b_name: "Johnson's Hardware",
-            b_address: "123 di makita",
-            type_business: "Hardware Store",
-            status: "Disapproved",
-        },
-        {
-            id: 4,
-            b_owner: "John Doe",
-            b_name: "Doe's Restaurant",
-            b_address: "123 Main Street",
-            type_business: "Bakery",
-            status: "NEWEST AND LATEST",
-        },
-        {
-            id: 5,
-            b_owner: "Jane Smith",
-            b_name: "Smith's Boutique",
-            b_address: "456 Oak Avenue",
-            type_business: "Retail",
-            status: "Approved",
-        },
-        {
-            id: 6,
-            b_owner: "Bob Johnson",
-            b_name: "Johnson's Hardware",
-            b_address: "789 Elm Road",
-            type_business: "Hardware Store",
-            status: "Disapproved",
-        }, {
-            id: 7,
-            b_owner: "John Doe",
-            b_name: "Doe's Restaurant",
-            b_address: "123 Main Street",
-            type_business: "Restaurant",
-            status: "New",
-        },
-        {
-            id: 8,
-            b_owner: "Jane Smith",
-            b_name: "Smith's Boutique",
-            b_address: "456 Oak Avenue",
-            type_business: "Retail",
-            status: "Approved",
-        },
-        {
-            id: 9,
-            b_owner: "Bob Johnson",
-            b_name: "Johnson's Hardware",
-            b_address: "789 Elm Road",
-            type_business: "Hardware Store",
-            status: "Disapproved",
-        }, {
-            id: 10,
-            b_owner: "John Doe",
-            b_name: "Doe's Restaurant",
-            b_address: "123 Main Street",
-            type_business: "Restaurant",
-            status: "New",
-        },
-        {
-            id: 11,
-            b_owner: "Jane Smith",
-            b_name: "Smith's Boutique",
-            b_address: "456 Oak Avenue",
-            type_business: "Retail",
-            status: "Approved",
-        },
-        {
-            id: 12,
-            b_owner: "Bob Johnson",
-            b_name: "Johnson's Hardware",
-            b_address: "789 Elm Road",
-            type_business: "Hardware Store",
-            status: "Disapproved",
-        }, {
-            id: 13,
-            b_owner: "John Doe",
-            b_name: "Doe's Restaurant",
-            b_address: "123 Main Street",
-            type_business: "Restaurant",
-            status: "New",
-        },
-        {
-            id: 14,
-            b_owner: "Jane Smith",
-            b_name: "Smith's Boutique",
-            b_address: "456 Oak Avenue",
-            type_business: "Retail",
-            status: "Approved",
-        },
-        {
-            id: 15,
-            b_owner: "Bob Johnson",
-            b_name: "Johnson's Hardware",
-            b_address: "789 Elm Road",
-            type_business: "Hardware Store",
-            status: "Disapproved",
-        },
-    ];
+    // DATA ---------------------------------------------------------------
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        fetchData(); // Fetch initial data when the component mounts
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/get/businessclearance');
+            setData(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     // Event handler for dropdown change ----------------------------------------
     const handleRowCountChange = (e) => {
@@ -244,94 +139,139 @@ function BpermitAdmin() {
 
 
     //  DELETE  
-    const deleteRow = (row) => { Axios.delete(`http://localhost:3001/api/delete/bpermit/${row}`); }
+    const deleteRow = async (id) => {
+        try {
+            await axios.delete(`http://localhost:8000/delete/businessclearance/${id}`);
+            fetchData();
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     //------------------------------------------------ Database ----------------------------
-    const [id, setId] = useState('');
-    const [b_owner, setOwner] = useState('');
-    const [b_name, setName] = useState('');
-    const [b_address, setAddress] = useState('');
-    const [type_business, setTypeBusiness] = useState('');
-    const [bPermitTbl, setBPermitTbl] = useState([])
+    const [residentName, setResidentName] = useState('');
+    const [businessName, setBusinessName] = useState('');
+    const [address, setAddress] = useState('');
+    const [reasonOfRequest, setReasonOfRequest] = useState('');
+    const [pickUpDate, setPickUpDate] = useState('');
+    const [type, setType] = useState(''); const [modeOfPayment, setModeOfPayment] = useState('');
+    const [reference, setReference] = useState('');
+  
+    // gcash reference
+    const [isGCashChecked, setIsGCashChecked] = useState(false);
+    const [isCOPChecked, setIsCOPChecked] = useState(false);
+    const [gcashInputValues, setGcashInputValues] = useState([]);
+  
+    const handleCheckboxChangeGcash = () => {
+      setIsGCashChecked(!isGCashChecked);
+      setModeOfPayment('G-Cash');
+      setIsCOPChecked(false);
+    };
+    const handleCheckboxChangeCash = () => {
+      setIsCOPChecked(!isCOPChecked);
+      setModeOfPayment('Cash On Pick-up');
+      setIsGCashChecked(false);
+    };
+  
+    const renderInputTextboxes = () => {
+      if (isGCashChecked) {
+        return (
+          <div>
+            <div className="form-group">
+              <label htmlFor="gcashref">GCash Reference No.</label>
+              <input
+                type="text"
+                id="gcashRefNo"
+                name="gcashRef"
+                className="form-control"
+                onChange={(e) => setReference(e.target.value)}
+                required />
+            </div>
+          </div>
+        )
+      }
+      return (null);
+    };
 
     //-------------------------- ADD FUNCTION -----------------------------------
 
-    useEffect(() => {
-        Axios.get('http://localhost:3001/api/get/bpermit').then((response) => { setBPermitTbl(response.data); });
-    }, [])
+    async function businessClearance(e) {
+        e.preventDefault();
 
-    const submitReq = () => {
-        Axios.post('http://localhost:3001/api/insert/bpermit', {
-            b_owner: b_owner,
-            b_name: b_name,
-            b_address: b_address,
-            type_business: type_business,
-        })
+        try {
 
+            await axios.post("http://localhost:8000/businessclearance", {
+                businessName, address, residentName, type, reasonOfRequest, pickUpDate,modeOfPayment,reference
+            })
+                .then(res => {
+                    if (res.data == "exist") {
+                        alert("You already sent the same request!");
+                    }
+                    else if (res.data == "notexist") {
+                        setShowForm(false);
+                        fetchData();
+                    }
+                })
+                .catch(e => {
+                    alert("Failed!")
+                    console.log(e);
+                })
 
-        setBPermitTbl([
-            ...bPermitTbl,
-            {
-                id: id,
-                b_owner: b_owner,
-                b_name: b_name,
-                b_address: b_address,
-                type_business: type_business,
-            }
-        ]);
-    };
+        }
+        catch (e) {
+            console.log(e);
+
+        }
+    }
+
     //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
-    const [SelectedRowId, setSelectedRowId] = useState(null);
-    const [editOwner, setEditOwner] = useState('');
-    const [editName, setEditName] = useState('');
+    const [editBusinessName, setEditBusinessName] = useState('');
+    const [editType, setEditType] = useState('');
+    const [editResidentName, setEditResidentName] = useState('');
     const [editAddress, setEditAddress] = useState('');
-    const [editTypeBusiness, setEditTypeBusiness] = useState('');
+    const [editReasonOfRequest, setEditReasonOfRequest] = useState('');
+    const [editDate, setEditDate] = useState('');
+    const [editStatus, setEditStatus] = useState('');
     const [selectedRowData, setSelectedRowData] = useState(null);
     const [showEditForm, setShowEditForm] = useState(false);
     const handleEditDiscard = () => { setShowEditForm(false); };
 
-
     // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
-
-
     const showEditFormHandler = (rowData) => {
-        setSelectedRowData(rowData);
-        setEditOwner(rowData.b_owner);
-        setEditName(rowData.b_name);
-        setEditAddress(rowData.b_address);
-        setEditTypeBusiness(rowData.type_business);
-        setSelectedRowId(rowData.idb_permit);
+        setSelectedRowData(rowData._id);
+        setEditBusinessName(rowData.businessName)
+        setEditType(rowData.type)
+        setEditResidentName(rowData.residentName);
+        setEditAddress(rowData.address);
+        setEditReasonOfRequest(rowData.reasonOfRequest);
+        setEditDate(rowData.pickUpDate);
+        setEditStatus(rowData.status);
         setShowEditForm(true);
     };
-    const updateRowData = () => {
-        Axios.put(`http://localhost:3001/api/update/bpermit/${selectedRowData.idb_permit}`, {
-            b_owner: editOwner,
-            b_name: editName,
-            b_address: editAddress,
-            type_business: editTypeBusiness,
-        }).then((response) => {
+    const updateRowData = async (id) => {
+        try {
+            const updatedData = {
+                businessName: editBusinessName,
+                address: editAddress,
+                residentName: editResidentName,
+                type: editType,
+                reasonOfRequest: editReasonOfRequest,
+                pickUpDate: editDate,
+                status:editStatus,
+            };
 
-            const updatedTableData = bPermitTbl.map((rowData) => {
-                if (rowData.idb_permit === selectedRowData.idb_permit) {
-                    return {
-                        ...rowData,
-                        b_owner: editOwner,
-                        b_name: editName,
-                        b_address: editAddress,
-                        type_business: editTypeBusiness,
-                    };
-                } else {
-                    return rowData;
-                }
-            });
 
-            // Update the state with the new table data
-            setBPermitTbl(updatedTableData);
-
-            // Clear the selectedRowData and close the edit form
-            setSelectedRowData(null);
+            const response = await axios.put(
+                `http://localhost:8000/update/businessclearance/${selectedRowData}`,
+                updatedData
+            );
+            console.log(response.data);
+            fetchData();
             setShowEditForm(false);
-        });
+        } catch (error) {
+            console.error(error);
+            // Handle error, show an error message to the user
+        }
     };
 
 
@@ -540,7 +480,7 @@ function BpermitAdmin() {
                 </div>
                 {/* -------------------------------------------------------------  TABLE -------------------------------------------------------------  */}
                 <main id="main" className="main">
-                    <div className="pagetitle"><h1> Business Permit  </h1> </div>
+                    <div className="pagetitle"><h1> Business Clearance  </h1> </div>
                     <section className="section">
                         <div className="row">
                             <div className="col-lg-12">
@@ -580,10 +520,14 @@ function BpermitAdmin() {
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Request #</th>
-                                                    <th scope="col">Business Owner</th>
-                                                    <th scope="col">Business Name </th>
+                                                    <th scope="col">Business Name</th>
                                                     <th scope="col">Business Address </th>
-                                                    <th scope="col">Type of Business </th>
+                                                    <th scope="col">Business Owner </th>
+                                                    <th scope="col">Ownership Type </th>
+                                                    <th scope="col">Nature of Business </th>
+                                                    <th scope="col">Pick-up Date </th>
+                                                    <th scope="col">Payment</th>
+                          <th scope="col">Reference No.</th>
                                                     <th scope="col">Status </th>
                                                     <th scope="col">Actions</th>
                                                 </tr>
@@ -592,32 +536,25 @@ function BpermitAdmin() {
                                             <tbody>
                                                 {getCurrentPageData().map((val) => {
                                                     return <tr key={val.id}>
-                                                        <th scope="row">{val.id}</th>
-                                                        <td>{val.b_owner}</td>
-                                                        <td>{val.b_name}</td>
-                                                        <td>{val.b_address}</td>
-                                                        <td>{val.type_business}</td>
-                                                        <td>
-                                                            <div className="mb-3">
-                                                                <select type="text" id="Role" name="Role" className="form-control">
-                                                                    <option value="">New</option>
-                                                                    <option value="ongoing">Approved</option>
-                                                                    <option value="processed">Disapproved</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-
+                                                        <th scope="row">{val._id}</th>
+                                                        <td>{val.businessName}</td>
+                                                        <td>{val.address}</td>
+                                                        <td>{val.residentName}</td>
+                                                        <td>{val.type}</td>
+                                                        <td>{val.reasonOfRequest}</td>
+                                                        <td>{val.pickUpDate}</td>
+                                                        <td>{val.modeOfPayment}</td>
+                            <td>{val.reference}</td>
+                            <td>{val.status}</td>
                                                         <td>
                                                             <div className='gap-2 d-md-flex justify-content-start align-items-center'>
                                                                 <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(val)}> Edit</button>
-                                                                <form method='post' action=''>
-                                                                    <input type='hidden' name='id' value="" />
-                                                                    <button
-                                                                        className="btn btn-outline-danger"
-                                                                        type="submit"
-                                                                        name="deleteRow"
-                                                                        onClick={() => { deleteRow(val.b_owner); }}>Delete</button>
-                                                                </form>
+
+
+                                                                <button
+                                                                    className="btn btn-outline-danger"
+                                                                    onClick={() => { deleteRow(val._id); }}>Delete</button>
+
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -631,53 +568,102 @@ function BpermitAdmin() {
                             {showForm && (
                                 <div className="popup-overlay">
                                     <div className="popup-form">
-                                        <form onSubmit={submitReq}>
+                                        <form>
                                             <div className="certificate">
-                                                <h2 className="certificate-title">ADD RESIDENTS INFO</h2>
+                                                <h2 className="certificate-title">Business Clearance Request Form</h2>
                                                 <div className="certificate-content">
+
                                                     <div className="form-group">
-                                                        <label htmlFor="owner">Business Owner</label>
+                                                        <label htmlFor="businessPermitField1">Business Name:</label>
                                                         <input
                                                             type="text"
-                                                            id="owner"
-                                                            name="owner"
-                                                            onChange={(e) => { setOwner(e.target.value); }}
-                                                            className="form-control" required />
+                                                            id="businessPermitField1"
+                                                            name="businessPermitField1"
+                                                            onChange={(e) => setBusinessName(e.target.value)}
+                                                            className="form-control"
+                                                            required /></div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="Address"> Address</label>
+                                                        <input
+                                                            type="text"
+                                                            id="Address"
+                                                            name="Address"
+                                                            onChange={(e) => setAddress(e.target.value)}
+                                                            className="form-control"
+                                                            required /></div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="residentsName">Owner's Name:</label>
+                                                        <input
+                                                            type="text"
+                                                            id="residentName"
+                                                            name="residentName"
+                                                            onChange={(e) => setResidentName(e.target.value)}
+                                                            className="form-control"
+                                                            required /></div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="ownertype">Ownership type</label>
+                                                        <select
+                                                            id="ownertype"
+                                                            className="form-control"
+                                                            onChange={(e) => setType(e.target.value)}
+                                                            style={{ fontSize: '20px', marginBottom: '10px' }}
+                                                        >
+                                                            <option value="????" ></option>
+                                                            <option value="sole">Sole Proprietorship</option>
+                                                            <option value="partnership">Partnership/Corporation</option>
+                                                        </select>
                                                     </div>
 
                                                     <div className="form-group">
-                                                        <label htmlFor="bname"> Business Name </label>
+                                                        <label htmlFor="reasonOfRequest">Nature of Business</label>
                                                         <input
                                                             type="text"
-                                                            id="bname"
-                                                            name="bname"
-                                                            onChange={(e) => { setName(e.target.value); }}
-                                                            className="form-control" required />
-                                                    </div>
+                                                            id="reasonOfRequest"
+                                                            name="reasonOfRequest"
+                                                            onChange={(e) => setReasonOfRequest(e.target.value)}
+                                                            className="form-control"
+                                                            required /></div>
 
                                                     <div className="form-group">
-                                                        <label htmlFor="address">Business Address </label>
+                                                        <label htmlFor="issuedDate">Pick-up Date:</label>
                                                         <input
-                                                            type="text"
-                                                            id="address"
-                                                            name="address"
-                                                            onChange={(e) => { setAddress(e.target.value); }}
-                                                            className="form-control" required />
-                                                    </div>
+                                                            type="date"
+                                                            id="issuedDate"
+                                                            name="issuedDate"
+                                                            onChange={(e) => setPickUpDate(e.target.value)}
+                                                            className="form-control"
+                                                            required /> </div>
+                                                             <div className="form-group">
+                      <label>Mode of Payment:</label>
+                      <div>
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                          checked={isCOPChecked}
+                          onChange={handleCheckboxChangeCash}
+                        />
+                        Cash on Pick-up
+                      </div>
 
-                                                    <div className="form-group">
-                                                        <label htmlFor="type">Type of Business</label>
-                                                        <input
-                                                            type="text"
-                                                            id="type"
-                                                            name="type"
-                                                            onChange={(e) => { setTypeBusiness(e.target.value); }}
-                                                            className="form-control" required />
-                                                    </div>
+                      <div className="">
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                          checked={isGCashChecked}
+                          onChange={handleCheckboxChangeGcash}
+                          
+                        />
+                        GCash
+                      </div>
 
+                      {renderInputTextboxes()}
+                    </div>
                                                     <div className="form-buttons">
-                                                        <button type="submit" className="btn btn-primary">Submit </button>
-                                                        <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
+                                                        <button type="submit" className="btn btn-primary" onClick={businessClearance}>Submit</button>
+                                                        <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -692,27 +678,16 @@ function BpermitAdmin() {
                                     <div className='popup-form'>
                                         <form onSubmit={updateRowData}>
                                             <div className='certificate'>
-                                                <h2 className='certificate-title'>EDIT RESIDENTS INFO</h2>
+                                                <h2 className='certificate-title'>Business Clearance Request Form</h2>
                                                 <div className='certificate-content'>
-                                                    <div className='form-group'>
-                                                        <label htmlFor='owner'> Business Owner </label>
-                                                        <input
-                                                            type='text'
-                                                            id='owner'
-                                                            name='owner'
-                                                            value={editOwner}
-                                                            onChange={(e) => setEditOwner(e.target.value)}
-                                                            className='form-control' required />
-                                                    </div>
-
                                                     <div className='form-group'>
                                                         <label htmlFor='bname'> Business Name </label>
                                                         <input
                                                             type='text'
                                                             id='bname'
                                                             name='bname'
-                                                            value={editName}
-                                                            onChange={(e) => setEditName(e.target.value)}
+                                                            value={editBusinessName}
+                                                            onChange={(e) => setEditBusinessName(e.target.value)}
                                                             className='form-control' required />
                                                     </div>
 
@@ -728,16 +703,66 @@ function BpermitAdmin() {
                                                     </div>
 
                                                     <div className='form-group'>
-                                                        <label htmlFor='type'>Type of Business</label>
+                                                        <label htmlFor='owner'> Business Owner </label>
                                                         <input
                                                             type='text'
-                                                            id='type'
-                                                            name='type'
-                                                            value={editTypeBusiness}
-                                                            onChange={(e) => setEditTypeBusiness(e.target.value)}
+                                                            id='owner'
+                                                            name='owner'
+                                                            value={editResidentName}
+                                                            onChange={(e) => setEditResidentName(e.target.value)}
                                                             className='form-control' required />
                                                     </div>
-
+                                                    <div className="form-group">
+                                                        <label htmlFor="ownertype">Ownership type</label>
+                                                        <select
+                                                            id="ownertype"
+                                                            className="form-control"
+                                                            value={editType}
+                                                            onChange={(e) => setEditType(e.target.value)}
+                                                            style={{ fontSize: '20px', marginBottom: '10px' }}
+                                                        >
+                                                            <option value="????" ></option>
+                                                            <option value="sole">Sole Proprietorship</option>
+                                                            <option value="partnership">Partnership/Corporation</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="EditReason">Reason of Request</label>
+                                                        <input
+                                                            type="text"
+                                                            id="EditReason"
+                                                            name="EditReason"
+                                                            value={editReasonOfRequest}
+                                                            onChange={(e) => setEditReasonOfRequest(e.target.value)}
+                                                            className="form-control"
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="EditIssuedDate">Issued Date:</label>
+                                                        <input
+                                                            type="date"
+                                                            id="EditIssuedDate"
+                                                            name="EditIssuedDate"
+                                                            value={editDate}
+                                                            onChange={(e) => setEditDate(e.target.value)}
+                                                            className="form-control"
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                          <label htmlFor="status">Status</label>
+                            <select id="status" 
+                              className="form-control" 
+                              value={editStatus} 
+                              onChange={(e) => setEditStatus(e.target.value)} 
+                              style={{ fontSize: '20px', marginBottom: '10px' }} >
+                                <option value="New" >New</option>
+                                <option value="On Process">On Process</option>
+                                <option value="Processed">Processed</option>
+                                <option value="Declined">Declined</option>
+                            </select>
+                        </div>
                                                     <div className='form-buttons'>
                                                         <button type='submit' className='btn btn-primary' onClick={updateRowData}> Submit  </button>
                                                         <button type='button' className='btn btn-secondary' onClick={handleEditDiscard}> Discard </button>
