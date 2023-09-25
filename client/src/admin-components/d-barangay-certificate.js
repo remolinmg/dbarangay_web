@@ -2,11 +2,13 @@ import { Link, NavLink, Route } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from "react";
 import './assets/css/style.css';
 import Axios from 'axios';
+import axios from 'axios';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
 import { BiLogOut, BiCog } from "react-icons/bi";
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { format } from 'date-fns';
+
 
 import {
   BsPersonFill,
@@ -67,156 +69,20 @@ function BclearanceAdmin() {
   // SEARCH QUERY --------------------------------------------------------------
   const [searchQuery, setSearchQuery] = useState(""); // State for the search query
 
-  // SAMPLE DATA ---------------------------------------------------------------
-  const data = [
-    {
-      id: 1,
-      bc_l_name: "Doe",
-      bc_m_name: "John",
-      bc_f_name: "Jane",
-      bc_address: "123 Main Street",
-      bc_contact: "555-123-4567",
-      bc_r_request: "Sample Reason 1",
-      bc_d_request: "2023-09-16",
-    },
-    {
-      id: 2,
-      bc_l_name: "Smith",
-      bc_m_name: "Mary",
-      bc_f_name: "Robert",
-      bc_address: "456 Elm Street",
-      bc_contact: "555-987-6543",
-      bc_r_request: "Sample Reason 2",
-      bc_d_request: "2023-09-17",
-    },
-    {
-      id: 3,
-      bc_l_name: "Duco",
-      bc_m_name: "Dinosaur",
-      bc_f_name: "Clarise",
-      bc_address: "Restaurant",
-      bc_contact: "New",
-      bc_r_request: "secret",
-      bc_d_request: "kanina 2 mins ago"
-    },
-    {
-      id: 4,
-      bc_l_name: "Duco",
-      bc_m_name: "Dinosaur",
-      bc_f_name: "Clarise",
-      bc_address: "Restaurant",
-      bc_contact: "New",
-      bc_r_request: "secret",
-      bc_d_request: "kanina 2 mins ago"
-    },
-    {
-      id: 5,
-      bc_l_name: "Duco",
-      bc_m_name: "Dinosaur",
-      bc_f_name: "Clarise",
-      bc_address: "Restaurant",
-      bc_contact: "New",
-      bc_r_request: "secret",
-      bc_d_request: "kanina 2 mins ago"
-    },
-    {
-      id: 6,
-      bc_l_name: "Duco",
-      bc_m_name: "Dinosaur",
-      bc_f_name: "Clarise",
-      bc_address: "Restaurant",
-      bc_contact: "New",
-      bc_r_request: "secret",
-      bc_d_request: "kanina 2 mins ago"
-    }, {
-      id: 7,
-      bc_l_name: "Duco",
-      bc_m_name: "Dinosaur",
-      bc_f_name: "Clarise",
-      bc_address: "Restaurant",
-      bc_contact: "New",
-      bc_r_request: "secret",
-      bc_d_request: "kanina 2 mins ago"
-    },
-    {
-      id: 8,
-      bc_l_name: "Duco",
-      bc_m_name: "Dinosaur",
-      bc_f_name: "Clarise",
-      bc_address: "Restaurant",
-      bc_contact: "New",
-      bc_r_request: "secret",
-      bc_d_request: "kanina 2 mins ago"
-    },
-    {
-      id: 9,
-      bc_l_name: "Duco",
-      bc_m_name: "Dinosaur",
-      bc_f_name: "Clarise",
-      bc_address: "Restaurant",
-      bc_contact: "New",
-      bc_r_request: "secret",
-      bc_d_request: "kanina 2 mins ago"
-    }, {
-      id: 10,
-      bc_l_name: "Duco",
-      bc_m_name: "Dinosaur",
-      bc_f_name: "Clarise",
-      bc_address: "Restaurant",
-      bc_contact: "New",
-      bc_r_request: "secret",
-      bc_d_request: "kanina 2 mins ago"
-    },
-    {
-      id: 11,
-      bc_l_name: "Duco",
-      bc_m_name: "Dinosaur",
-      bc_f_name: "Clarise",
-      bc_address: "Restaurant",
-      bc_contact: "New",
-      bc_r_request: "secret",
-      bc_d_request: "kanina 2 mins ago"
-    },
-    {
-      id: 12,
-      bc_l_name: "Duco",
-      bc_m_name: "Dinosaur",
-      bc_f_name: "Clarise",
-      bc_address: "Restaurant",
-      bc_contact: "New",
-      bc_r_request: "secret",
-      bc_d_request: "kanina 2 mins ago"
-    }, {
-      id: 13,
-      bc_l_name: "Duco",
-      bc_m_name: "Dinosaur",
-      bc_f_name: "Clarise",
-      bc_address: "Restaurant",
-      bc_contact: "New",
-      bc_r_request: "secret",
-      bc_d_request: "kanina 2 mins ago"
-    },
-    {
-      id: 14,
-      bc_l_name: "Duco",
-      bc_m_name: "Dinosaur",
-      bc_f_name: "Clarise",
-      bc_address: "Restaurant",
-      bc_contact: "New",
-      bc_r_request: "secret",
-      bc_d_request: "kanina 2 mins ago"
-    },
-    {
-      id: 15,
-      bc_l_name: "Duco",
-      bc_m_name: "Dinosaur",
-      bc_f_name: "Clarise",
-      bc_address: "Restaurant",
-      bc_contact: "New",
-      bc_r_request: "secret",
-      bc_d_request: "kanina 2 mins ago"
-    },
-  ];
+  // DATA ---------------------------------------------------------------
+   const [ data,setData] = useState([]);
+  useEffect(() => {
+    fetchData(); // Fetch initial data when the component mounts
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/get/barangaycertificate');
+      setData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   // Event handler for dropdown change ----------------------------------------
   const handleRowCountChange = (e) => {
@@ -269,99 +135,134 @@ function BclearanceAdmin() {
   const handleDiscard = () => { setShowForm(false); }; //   DISCARD FUNCTION
 
   //  DELETE  
-  const deleteRow = (row) => { Axios.delete(`http://localhost:3001/api/delete/bpermit/${row}`); }
+  const deleteRow = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8000/delete/barangaycertificate/${id}`);
+      fetchData();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   //------------------------------------------------ Database ----------------------------
-  const [id, setId] = useState('');
-  const [bc_l_name, setLname] = useState('');
-  const [bc_m_name, setMname] = useState('');
-  const [bc_f_name, setFname] = useState('');
-  const [bc_address, setAddress] = useState('');
-  const [bc_contact, setContact] = useState('');
-  const [bc_r_request, setRrequest] = useState('');
-  const [bc_d_request, setDrequest] = useState('');
-  const [bPermitTbl, setBPermitTbl] = useState([])
+  const [residentName, setResidentName] = useState('');
+  const [address, setAddress] = useState('');
+  const [reasonOfRequest, setReasonOfRequest] = useState('');
+  const [pickUpDate, setPickUpDate] = useState('');
+  const [modeOfPayment, setModeOfPayment] = useState('');
+  const [reference, setReference] = useState('');
+
+  // gcash reference
+  const [isGCashChecked, setIsGCashChecked] = useState(false);
+  const [isCOPChecked, setIsCOPChecked] = useState(false);
+  const [gcashInputValues, setGcashInputValues] = useState([]);
+
+  const handleCheckboxChangeGcash = () => {
+    setIsGCashChecked(!isGCashChecked);
+    setModeOfPayment('G-Cash');
+    setIsCOPChecked(false);
+  };
+  const handleCheckboxChangeCash = () => {
+    setIsCOPChecked(!isCOPChecked);
+    setModeOfPayment('Cash On Pick-up');
+    setIsGCashChecked(false);
+  };
+
+  const renderInputTextboxes = () => {
+    if (isGCashChecked) {
+      return (
+        <div>
+          <div className="form-group">
+            <label htmlFor="gcashref">GCash Reference No.</label>
+            <input
+              type="text"
+              id="gcashRefNo"
+              name="gcashRef"
+              className="form-control"
+              onChange={(e) => setReference(e.target.value)}
+              required />
+          </div>
+        </div>
+      )
+    }
+    return (null);
+  };
 
   //-------------------------- ADD FUNCTION -----------------------------------
 
-  useEffect(() => {
-    Axios.get('http://localhost:3001/api/get/bpermit').then((response) => { setBPermitTbl(response.data); });
-  }, [])
-
-  const submitReq = () => {
-    Axios.post('http://localhost:3001/api/insert/bpermit', {
-      bc_l_name: bc_l_name,
-      bc_m_name: bc_m_name,
-      bc_f_name: bc_f_name,
-      bc_address: bc_address,
-      bc_contact: bc_contact,
-      bc_r_request: bc_r_request,
-      bc_d_request: bc_d_request,
-    })
-
-    setBPermitTbl([
-      ...bPermitTbl,
-      {
-        bc_l_name: bc_l_name,
-        bc_m_name: bc_m_name,
-        bc_f_name: bc_f_name,
-        bc_address: bc_address,
-        bc_contact: bc_contact,
-        bc_r_request: bc_r_request,
-        bc_d_request: bc_d_request,
-      }
-    ]);
-  };
+  async function barangayCertificate(e){
+    e.preventDefault();
+  
+    try{
+  
+        await axios.post("http://localhost:8000/barangaycertificate",{
+          residentName,address,reasonOfRequest,pickUpDate,modeOfPayment,reference
+        })  
+        .then(res=>{
+          if(res.data=="exist"){
+            alert("You already sent the same request!");
+          }
+          else if(res.data=="notexist"){
+            setShowForm(false);
+            fetchData();
+          }
+      })
+      .catch(e=>{
+          alert("Failed!")
+          console.log(e);
+      })
+  
+    }
+    catch(e){
+        console.log(e);
+  
+    }
+  
+  }
 
   //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
-  const [SelectedRowId, setSelectedRowId] = useState(null);
   const [editResidentName, setEditResidentName] = useState('');
-  const [editaddress, setEditAddress] = useState('');
-  const [editreason, setEditReason] = useState('');
-  const [editdate, setEditDate] = useState('');
+  const [editAddress, setEditAddress] = useState('');
+  const [editReasonOfRequest, setEditReasonOfRequest] = useState('');
+  const [editDate, setEditDate] = useState('');
+  const [editStatus, setEditStatus] = useState('');
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const handleEditDiscard = () => { setShowEditForm(false); };
 
   // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
   const showEditFormHandler = (rowData) => {
-    setSelectedRowData(rowData);
-    setEditResidentName(rowData.bc_l_name);
-    setEditAddress(rowData.bc_address);
-    setEditReason(rowData.bc_r_request);
-    setEditDate(rowData.bc_d_request);
-    setSelectedRowId(rowData.idb_permit);
+    setSelectedRowData(rowData._id);
+    setEditResidentName(rowData.residentName);
+    setEditAddress(rowData.address);
+    setEditReasonOfRequest(rowData.reasonOfRequest);
+    setEditDate(rowData.pickUpDate);
+    setEditStatus(rowData.status);
     setShowEditForm(true);
   };
-  const updateRowData = () => {
-    Axios.put(`http://localhost:3001/api/update/bpermit/${selectedRowData.idb_permit}`, {
-      bc_l_name: editResidentName,
-      bc_address: editaddress,
-      bc_r_request: editreason,
-      bc_d_request: editdate,
-    }).then((response) => {
+  const updateRowData = async (id) => {
+    try {
+      const updatedData = {
+        residentName:editResidentName,
+        address:editAddress,
+        reasonOfRequest:editReasonOfRequest,
+        pickUpDate:editDate,
+        status:editStatus,
+      };
 
-      const updatedTableData = bPermitTbl.map((rowData) => {
-        if (rowData.idb_permit === selectedRowData.idb_permit) {
-          return {
-            ...rowData,
-            bc_l_name: editResidentName,
-            bc_address: editaddress,
-            bc_r_request: editreason,
-            bc_d_request: editdate,
-          };
-        } else {
-          return rowData;
-        }
-      });
 
-      // Update the state with the new table data
-      setBPermitTbl(updatedTableData);
-
-      // Clear the selectedRowData and close the edit form
-      setSelectedRowData(null);
+      const response = await axios.put(
+        `http://localhost:8000/update/barangaycertificate/${selectedRowData}`,
+        updatedData
+      );
+      console.log(response.data);
+      fetchData();
       setShowEditForm(false);
-    });
+    } catch (error) {
+      console.error(error);
+      // Handle error, show an error message to the user
+    }
   };
 
   return (
@@ -624,7 +525,9 @@ function BclearanceAdmin() {
                           <th scope="col">Resident Name</th>
                           <th scope="col">Address</th>
                           <th scope="col">Reason</th>
-                          <th scope="col">Date</th>
+                          <th scope="col">Pick-up Date</th>
+                          <th scope="col">Payment</th>
+                          <th scope="col">Reference No.</th>
                           <th scope="col">Status</th>
                           <th scope="col">Action</th>
                         </tr>
@@ -632,12 +535,14 @@ function BclearanceAdmin() {
                       <tbody>
                         {getCurrentPageData().map((item, index) => (
                           <tr key={index}>
-                            <th scope="row">{item.id}</th>
-                            <td>{item.bc_l_name} {item.bc_m_name} {item.bc_f_name}</td>
-                            <td>{item.bc_address}</td>
-                            <td>{item.bc_r_request}</td>
-                            <td>{item.bc_d_request}</td>
-                            <td>Status Value</td>
+                            <th scope="row">{item._id}</th>
+                            <td>{item.residentName}</td>
+                            <td>{item.address}</td>
+                            <td>{item.reasonOfRequest}</td>
+                            <td>{item.pickUpDate}</td>
+                            <td>{item.modeOfPayment}</td>
+                            <td>{item.reference}</td>
+                            <td>{item.status}</td>
                             <td>
                               <button
                                 className="btn btn-primary btn-sm me-2"
@@ -647,7 +552,7 @@ function BclearanceAdmin() {
                               </button>
                               <button
                                 className="btn btn-danger btn-sm"
-                                onClick={() => deleteRow(item.id)}
+                                onClick={() => deleteRow(item._id)}
                               >
                                 Delete
                               </button>
@@ -665,9 +570,9 @@ function BclearanceAdmin() {
               {showForm && (
                 <div className="popup-overlay">
                   <div className="popup-form">
-                    <form onSubmit={submitReq}>
+                    <form >
                       <div className="certificate">
-                        <h2 className="certificate-title">ADD INSTALLATION </h2>
+                        <h2 className="certificate-title">ADD CERTIFICATE REQUEST</h2>
                         <div className="certificate-content">
                           <div className="form-group">
                             <label htmlFor="ResidentName">Resident Name</label>
@@ -676,7 +581,7 @@ function BclearanceAdmin() {
                               id="ResidentName"
                               name="ResidentName"
                               onChange={(e) => {
-                                setLname(e.target.value);
+                                setResidentName(e.target.value);
                               }}
                               className="form-control"
                               required
@@ -704,7 +609,7 @@ function BclearanceAdmin() {
                               id="Address"
                               name="Address"
                               onChange={(e) => {
-                                setRrequest(e.target.value);
+                                setReasonOfRequest(e.target.value);
                               }}
                               className="form-control"
                               required
@@ -712,26 +617,45 @@ function BclearanceAdmin() {
                           </div>
 
                           <div className="form-group">
-                            <label htmlFor="issuedDate">Issued Date:</label>
+                            <label htmlFor="issuedDate">Pick-up Date:</label>
                             <input
                               type="date"
                               id="issuedDate"
                               name="issuedDate"
                               onChange={(e) => {
-                                setDrequest(e.target.value);
+                                setPickUpDate(e.target.value);
                               }}
                               className="form-control"
                               required
                             />
                           </div>
-                        </div>
+                          <div className="form-group">
+                      <label>Mode of Payment:</label>
+                      <div>
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                          checked={isCOPChecked}
+                          onChange={handleCheckboxChangeCash}
+                        />
+                        Cash on Pick-up
+                      </div>
 
-                        <div className="form-group form-check">
-                          <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                          <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
-                        </div>
+                      <div className="">
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                          checked={isGCashChecked}
+                          onChange={handleCheckboxChangeGcash}
+                          
+                        />
+                        GCash
+                      </div>
 
-                        <button type="submit" className="btn btn-primary">Submit</button>
+                      {renderInputTextboxes()}
+                    </div>
+                        </div>
+                        <button type="submit" className="btn btn-primary" onClick={barangayCertificate}>Submit</button>
                         <button type="button" className="btn btn-danger" onClick={handleDiscard}>Discard</button>
                       </div>
                     </form>
@@ -746,7 +670,7 @@ function BclearanceAdmin() {
                 <div className="popup-form">
                   <form>
                     <div className="certificate">
-                      <h2 className="certificate-title">EDIT INSTALLATION</h2>
+                      <h2 className="certificate-title">EDIT CERTIFICATE REQUEST</h2>
                       <div className="certificate-content">
                         <div className="form-group">
                           <label htmlFor="EditResidentName">Resident Name</label>
@@ -767,7 +691,7 @@ function BclearanceAdmin() {
                             type="text"
                             id="EditAddress"
                             name="EditAddress"
-                            value={editaddress}
+                            value={editAddress}
                             onChange={(e) => setEditAddress(e.target.value)}
                             className="form-control"
                             required
@@ -780,32 +704,39 @@ function BclearanceAdmin() {
                             type="text"
                             id="EditReason"
                             name="EditReason"
-                            value={editreason}
-                            onChange={(e) => setEditReason(e.target.value)}
+                            value={editReasonOfRequest}
+                            onChange={(e) => setEditReasonOfRequest(e.target.value)}
                             className="form-control"
                             required
                           />
                         </div>
 
                         <div className="form-group">
-                          <label htmlFor="EditIssuedDate">Issued Date:</label>
+                          <label htmlFor="EditIssuedDate">Pick-up Date:</label>
                           <input
                             type="date"
                             id="EditIssuedDate"
                             name="EditIssuedDate"
-                            value={editdate}
+                            value={editDate}
                             onChange={(e) => setEditDate(e.target.value)}
                             className="form-control"
                             required
                           />
                         </div>
+                        <div className="form-group">
+                          <label htmlFor="status">Status</label>
+                            <select id="status" 
+                              className="form-control" 
+                              value={editStatus} 
+                              onChange={(e) => setEditStatus(e.target.value)} 
+                              style={{ fontSize: '20px', marginBottom: '10px' }} >
+                                <option value="New" >New</option>
+                                <option value="On Process">On Process</option>
+                                <option value="Processed">Processed</option>
+                                <option value="Declined">Declined</option>
+                            </select>
+                        </div>
                       </div>
-
-                      <div className="form-group form-check">
-                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                        <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
-                      </div>
-
                       <button type="button" className="btn btn-primary" onClick={updateRowData}>Save</button>
                       <button type="button" className="btn btn-danger" onClick={handleEditDiscard}>Discard</button>
                     </div>
