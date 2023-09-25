@@ -42,6 +42,22 @@ function UserEvacuation() {
     const togglePlayground = () => {
         setShowPlayground(!showPlayground);
     };
+
+    const [evacIsPressed, setEvacIsPressed] = useState(false);
+
+    const handleEvacIsPressed = () => {
+        setEvacIsPressed(!evacIsPressed);
+    }
+
+    const showEvacImages = () => {
+        if (evacIsPressed) {
+            return <div className="bhallCont">
+                <span><img src={bhall1} /></span>
+                <span><img src={bhall2} /></span>
+                <span><img src={bhall3} /></span>
+            </div>
+        }
+    }
     return (
         <> <UserNav />
 
@@ -69,11 +85,15 @@ function UserEvacuation() {
                                 /> */}
                                 <div className="popup-image image-1 w-75 h-75 m-auto mb-0">
                                     <div className="bhall-content w-100 h-100 d-flex justify-content-center align-items-center">
-                                        <a className="location"><FaLocationDot className="loc-marker text-danger " />
-                                        <span><img src={bhall1} /></span>
+                                        {/* <a className="location"> */}
+                                        <FaLocationDot className="loc-marker text-danger " onClick={handleEvacIsPressed} />
+                                        {/* <span><img src={bhall1} /></span>
                                         <span><img src={bhall2} /></span>
-                                        <span><img src={bhall3} /></span></a>
+                                        <span><img src={bhall3} /></span></a> */}
+
+
                                     </div>
+                                    {showEvacImages}
                                 </div>
                                 <div className="w-50 h-auto m-auto mt-0" >
                                     <button className="btn btn-secondary w-50" onClick={toggleBHall}>Close</button>
@@ -140,7 +160,6 @@ function UserEvacuation() {
                             </div>
                         </div>
                     )}
-
 
                 </div>
             </section>

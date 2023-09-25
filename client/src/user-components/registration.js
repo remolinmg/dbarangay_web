@@ -21,34 +21,75 @@ const RegistrationComponent = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  async function register(e){
+  async function register(e) {
     e.preventDefault();
 
-    try{
+    try {
 
-        await axios.post("http://localhost:8000/signup",{
-            firstName,middleName,lastName,gender,religion,civilStatus,employmentStatus,highestEducation,nationality,address,householdMember,dateOfBirth,phoneNumber,email,password
-        })  
-        .then(res=>{
-          if(res.data=="exist"){
+      await axios.post("http://localhost:8000/signup", {
+        firstName, middleName, lastName, gender, religion, civilStatus, employmentStatus, highestEducation, nationality, address, householdMember, dateOfBirth, phoneNumber, email, password
+      })
+        .then(res => {
+          if (res.data == "exist") {
             alert("User Already Exist!");
           }
-          else if(res.data=="notexist"){
-              navigate("/login");
+          else if (res.data == "notexist") {
+            navigate("/login");
           }
-      })
-      .catch(e=>{
+        })
+        .catch(e => {
           alert("Registration Failed!")
           console.log(e);
-      })
+        })
 
     }
-    catch(e){
-        console.log(e);
+    catch (e) {
+      console.log(e);
 
     }
 
-}
+  }
+
+
+  // const [isSelected, setIsSelected] = useState(false);
+  // const handleOptionSelect = () => {
+  //   setIsSelected(!isSelected);
+  // };
+
+  // const renderInputTextboxes = () => {
+  //   if (isSelected) {
+  //     return (
+  //       <div>
+  //         <div className="form-group">
+  //           <label htmlFor="companyName">GCash Reference No.</label>
+  //           <input
+  //             type="text"
+  //             id="companyName"
+  //             name="companyName"
+  //             className="form-control"
+  //             required />
+  //         </div>
+  //         <div className="form-group">
+  //           <label htmlFor="position">Position</label>
+  //           <input
+  //             type="text"
+  //             id="position"
+  //             name="position"
+  //             className="form-control"
+  //             required />
+  //         </div>
+  //       </div>
+  //     )
+  //   }
+  //   return null;
+  // };
+
+  const [showInputBoxes, setShowInputBoxes] = useState(false);
+  const handleOptionSelect = (e) => {
+    const selectedValue = e.target.value;
+    setShowInputBoxes(selectedValue === "employed");
+  };
+
 
   return (
     <div className="container-fluid main-reg">
@@ -58,12 +99,12 @@ const RegistrationComponent = () => {
             <form id="register">
 
               <h2 className="registration-heading"> REGISTRATION</h2>
-              <h3 className="heading">BASIC INFORMATION</h3>
 
               <div className="container form-container d-flex flex-column">
                 {/*--------------- BASIC INFORMATION --------------- */}
                 <div className="row justify-content-around">
-                  <div className="col-12 col-md-6 reg-row1 p-3">
+                  {/* FIRST COLUMN REGISTER PAGE */}
+                  <div className="col-12 col-md-4 reg-row1 p-3">
                     {/* FIRST NAME */}
                     <div className="form-group d-flex flex-column">
                       <label className="label" htmlFor="first-name">First Name</label>
@@ -76,9 +117,9 @@ const RegistrationComponent = () => {
                       />
                     </div>
 
-                    {/* MIDDLE NAME */}
+                    {/* MIDDLE INITIAL */}
                     <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="middle-name">Middle Name</label>
+                      <label className="label" htmlFor="middle-name">Middle Initial</label>
                       <input
                         type="text" className="input-field"
                         id="middle-name"
@@ -100,6 +141,130 @@ const RegistrationComponent = () => {
                       />
                     </div>
 
+                    {/* SUFFIX */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="last-name">Suffix</label>
+                      <input
+                        type="text" className="input-field"
+                        id="last-name"
+
+                        onChange={(e) => setLastName(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* House Number */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="address">House No. / Street</label>
+                      <input
+                        type="text" className="input-field"
+                        id="address"
+
+                        onChange={(e) => setAddress(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* Barangay */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="address">Barangay</label>
+                      <input
+                        type="text" className="input-field"
+                        id="address"
+
+                        onChange={(e) => setAddress(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* District */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="address">District</label>
+                      <input
+                        type="text" className="input-field"
+                        id="address"
+
+                        onChange={(e) => setAddress(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* City/Municipality */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="address">City/Municipality</label>
+                      <input
+                        type="text" className="input-field"
+                        id="address"
+
+                        onChange={(e) => setAddress(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* Province */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="address">Province</label>
+                      <input
+                        type="text" className="input-field"
+                        id="address"
+
+                        onChange={(e) => setAddress(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* SECOND COLUMN REGISTER PAGE */}
+                  <div className="col-12 col-md-4 reg-row2 p-3">
+
+                    {/* REgion */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="region">Region</label>
+                      <input
+                        type="text" className="input-field"
+                        id="region"
+
+                        onChange={(e) => setNationality(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* EMAIL ADDRESS*/}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="email">Email Address</label>
+                      <input
+                        type="email" className="input-field"
+                        id="email"
+
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* Phone Number */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="phoneNumber">Phone Number</label>
+                      <input
+                        type="tel" className="input-field"
+                        id="phoneNumber"
+
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* NATIONALITY */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="nationality">Nationality</label>
+                      <input
+                        type="text" className="input-field"
+                        id="nationality"
+
+                        onChange={(e) => setNationality(e.target.value)}
+                        required
+                      />
+                    </div>
+
                     {/* GENDER */}
                     <div className="form-group d-flex flex-column">
                       <label className="label" htmlFor="gender">Gender</label>
@@ -113,26 +278,6 @@ const RegistrationComponent = () => {
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="secret">Secret</option>
-                      </select>
-                    </div>
-
-                    {/* RELIGION */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="religion">Religion</label>
-                      <select
-                        id="religion"
-
-                        onChange={(e) => setReligion(e.target.value)}
-                        className="option" style={{ fontSize: '14px', marginBottom: '10px' }}
-                      >
-                        <option value="">Select Religion</option>
-                        <option value="catholic">Roman Catholic</option>
-                        <option value="inc">Iglesia ni Cristo</option>
-                        <option value="muslim">Muslim</option>
-                        <option value="islam">Islam</option>
-                        <option value="sda">Seventh Day Adventist</option>
-                        <option value="jw">Jehovah's Witness</option>
-                        <option value="others">Other religious affiliations</option>
                       </select>
                     </div>
 
@@ -153,75 +298,60 @@ const RegistrationComponent = () => {
                       </select>
                     </div>
 
-                    {/* NATIONALITY */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="nationality">Nationality</label>
-                      <input
-                        type="text" className="input-field"
-                        id="nationality"
-
-                        onChange={(e) => setNationality(e.target.value)}
-                        required
-                      />
-                    </div>
-
-                    {/* ADDRESS */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="address">Address</label>
-                      <input
-                        type="text" className="input-field"
-                        id="address"
-
-                        onChange={(e) => setAddress(e.target.value)}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="col-12 col-md-6 reg-row2 p-3">
-                    {/* Highest Educational Attaintment */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="H-Educational-A">Highest Education</label>
-                      <select
-                        id="h-educational-a"
-
-                        onChange={(e) => setHighestEducation(e.target.value)}
-                        className="option2" style={{ fontSize: '14px', marginBottom: '10px' }}
-                      >
-                        <option value="">Select Highest Educational Attaintment</option>
-                        <option value="undergrad">Undergraduate (Bachelor's Degree)</option>
-                        <option value="postgrad">Postgraduate (Master's Degree)</option>
-                        <option value="doctoral">Doctoral (PhD)</option>
-                      </select>
-                    </div>
-
                     {/* Employment Status */}
                     <div className="form-group d-flex flex-column">
                       <label className="label" htmlFor="employmentStatus"> Employment Status</label>
                       <select
                         id="employmentStatus"
-
-                        onChange={(e) => setEmploymentStatus(e.target.value)}
                         className="option2" style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Employment Status</option>
-                        <option value="worker">Worker</option>
-                        <option value="employee">Employee</option>
-                        <option value="self-employed">Self-Employed</option>
+                        <option value="employed" >Employed</option>
                         <option value="unemployed">Unemployed</option>
                       </select>
                     </div>
 
-
-                    {/* hOUSEHOLD MEMBER */}
+                    {/* {renderInputTextboxes} */}
+                    {showInputBoxes && (
+                      <div>
+                        <div className="form-group">
+                          <label htmlFor="companyName">GCash Reference No.</label>
+                          <input
+                            type="text"
+                            id="companyName"
+                            name="companyName"
+                            className="form-control"
+                            required
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label htmlFor="position">Position</label>
+                          <input
+                            type="text"
+                            id="position"
+                            name="position"
+                            className="form-control"
+                            required
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  {/* THIRD COLUMN REGISTER PAGE */}
+                  <div className="col-12 col-md-4 reg-row3 p-3">
+                    {/* Home Ownership */}
                     <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="householdMember">Household Member</label>
-                      <input
-                        type="text" className="input-field"
-                        id="householdMember"
+                      <label className="label" htmlFor="HomeOwnership">Home Ownership</label>
+                      <select
+                        id="HomeOwnership"
+                        onChange={(e) => setGender(e.target.value)}
+                        className="option" style={{ fontSize: '14px', marginBottom: '10px' }}
 
-                        onChange={(e) => setHouseholdMember(e.target.value)}
-                        required
-                      />
+                      >
+                        <option value="">Select Ownership</option>
+                        <option value="female">Owner</option>
+                        <option value="secret">Renting</option>
+                      </select>
                     </div>
 
                     {/* DATE OF BIRTH */}
@@ -236,30 +366,74 @@ const RegistrationComponent = () => {
                       />
                     </div>
 
-
-                    {/*--------------- CONTACT DETAILS --------------- */}
+                    {/* PLACE OF BIRTH */}
                     <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="phoneNumber">Phone Number</label>
+                      <label className="label" htmlFor="placeofbirth">Place of Birth</label>
                       <input
-                        type="tel" className="input-field"
-                        id="phoneNumber"
+                        type="text" className="input-field"
+                        id="placeofbirth"
 
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        onChange={(e) => setHouseholdMember(e.target.value)}
                         required
                       />
                     </div>
-                    {/* EMAIL ADDRESS*/}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="email">Email Address</label>
-                      <input
-                        type="email" className="input-field"
-                        id="email"
 
-                        onChange={(e) => setEmail(e.target.value)}
+                    {/* Age */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="Age">Age</label>
+                      <input
+                        type="text" className="input-field"
+                        id="Age"
+
+                        onChange={(e) => setHouseholdMember(e.target.value)}
                         required
                       />
                     </div>
-                    {/* 2ND NUMBER*/}
+
+                    {/* Educational Attaintment */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="H-Educational-A">Educational Attainment</label>
+                      <select
+                        id="h-educational-a"
+
+                        onChange={(e) => setHighestEducation(e.target.value)}
+                        className="option2" style={{ fontSize: '14px', marginBottom: '10px' }}
+                      >
+                        <option value="">Select Highest Educational Attaintment</option>
+                        <option value="undergrad">Undergraduate (Bachelor's Degree)</option>
+                        <option value="postgrad">Postgraduate (Master's Degree)</option>
+                        <option value="doctoral">Doctoral (PhD)</option>
+                      </select>
+                    </div>
+
+                    {/* Residence Class */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="residenceClass"> Residence Class</label>
+                      <select
+                        id="residenceClass"
+
+                        onChange={(e) => setEmploymentStatus(e.target.value)}
+                        className="option2" style={{ fontSize: '14px', marginBottom: '10px' }}
+                      >
+                        <option value="">Select Residence Class</option>
+                        <option value="worker">Person with Disability (PWD)</option>
+                        <option value="employee">Solo Parent</option>
+                        <option value="self-employed">Out of School Youth</option>
+                      </select>
+                    </div>
+
+                    {/*Picture*/}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="profile">Profile Picture</label>
+                      <input
+                        type="file" className="input-field ps-2 pe-2"
+                        id="profile" accept=".jpeg"
+
+                        // onChange={(e) => setPhoneNumber(e.target.value)}
+                        required
+                      />
+                    </div>
+                    {/*PASSWORD*/}
                     <div className="form-group d-flex flex-column">
                       <label className="label" htmlFor="password">Password</label>
                       <input
@@ -301,7 +475,12 @@ const RegistrationComponent = () => {
           </div>
         </div>
       </div>
+
+
+
     </div>
+
+
   );
 };
 
