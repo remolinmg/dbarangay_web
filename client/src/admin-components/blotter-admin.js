@@ -581,6 +581,9 @@ function BlotterAdmin() {
             </div>
           </div>
         </div>
+        <div class="pagetitle">
+          <h1> Blotter Table </h1>
+        </div>
         {/* -------------------------------------------------------------  TABLE -------------------------------------------------------------  */}
         <main id="main" class="main">
           <section class="section">
