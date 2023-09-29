@@ -3,23 +3,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const RegistrationComponent = () => {
-
-  const [firstName, setFirstName] = useState('');
-  const [middleName, setMiddleName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [gender, setGender] = useState('');
+  // missing part of registration???????????????????
   const [religion, setReligion] = useState('');
-  const [civilStatus, setCivilStatus] = useState('');
-  const [employmentStatus, setEmploymentStatus] = useState('');
-  const [highestEducation, setHighestEducation] = useState('');
-  const [nationality, setNationality] = useState('');
-  const [address, setAddress] = useState('');
-  const [householdMember, setHouseholdMember] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const [householdMember, sethouseholdMember] = useState('');
+  const [userProfile, setuserProfile] = useState('');
+
 
   async function register(e) {
     e.preventDefault();
@@ -27,7 +15,7 @@ const RegistrationComponent = () => {
     try {
 
       await axios.post("http://localhost:8000/signup", {
-        firstName, middleName, lastName, gender, religion, civilStatus, employmentStatus, highestEducation, nationality, address, householdMember, dateOfBirth, phoneNumber, email, password
+        firstName, middleName, lastName, gender, religion, region, civilStatus, employmentStatus, highestEducation, nationality, householdMember, dateOfBirth, phoneNumber, email, password
       })
         .then(res => {
           if (res.data == "exist") {
@@ -51,45 +39,332 @@ const RegistrationComponent = () => {
   }
 
 
-  // const [isSelected, setIsSelected] = useState(false);
-  // const handleOptionSelect = () => {
-  //   setIsSelected(!isSelected);
-  // };
-
-  // const renderInputTextboxes = () => {
-  //   if (isSelected) {
-  //     return (
-  //       <div>
-  //         <div className="form-group">
-  //           <label htmlFor="companyName">GCash Reference No.</label>
-  //           <input
-  //             type="text"
-  //             id="companyName"
-  //             name="companyName"
-  //             className="form-control"
-  //             required />
-  //         </div>
-  //         <div className="form-group">
-  //           <label htmlFor="position">Position</label>
-  //           <input
-  //             type="text"
-  //             id="position"
-  //             name="position"
-  //             className="form-control"
-  //             required />
-  //         </div>
-  //       </div>
-  //     )
-  //   }
-  //   return null;
-  // };
-
   const [showInputBoxes, setShowInputBoxes] = useState(false);
   const handleOptionSelect = (e) => {
     const selectedValue = e.target.value;
     setShowInputBoxes(selectedValue === "employed");
   };
 
+  const [firstName, setFirstName] = useState('');
+  const [middleName, setMiddleName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [houseNumber, setHouseNumber] = useState('');
+  const [barangay, setBarangay] = useState('');
+  const [district, setDistrict] = useState('');
+  const [cityMunicipality, setCityMunicipality] = useState('');
+  const [province, setProvince] = useState('');
+
+  const [email, setEmail] = useState('');
+  const [region, setRegion] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [nationality, setNationality] = useState('');
+  const [civilStatus, setCivilStatus] = useState('');
+  const [employmentStatus, setEmploymentStatus] = useState('');
+  const [gender, setGender] = useState('');
+
+  const [homeOwnership, setHomeOwnership] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [birthPlace, setBirthPlace] = useState('');
+  const [age, setAge] = useState('');
+  const [highestEducation, setHighestEducation] = useState('');
+  const [residenceClass, setresidenceClass] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const [firstNameValid, setFirstNameValid] = useState(true);
+  const [middleNameValid, setMiddleNameValid] = useState(true);
+  const [lastNameValid, setLastNameValid] = useState(true);
+  const [houseNumberValid, setHouseNumberValid] = useState(true);
+  const [barangayValid, setBarangayValid] = useState(true);
+  const [districtValid, setDistrictValid] = useState(true);
+  const [cityMunicipalityValid, setCityMunicipalityValid] = useState(true);
+  const [provinceValid, setProvinceValid] = useState(true);
+
+  const [emailValid, setEmailValid] = useState(true);
+  const [regionValid, setRegionValid] = useState(true);
+  const [phoneNumberValid, setPhoneNumberValid] = useState(true);
+  const [nationalityValid, setNationalityValid] = useState(true);
+  const [civilStatusValid, setCivilStatusValid] = useState(true);
+  const [employmentStatusValid, setEmploymentStatusValid] = useState(true);
+  const [genderValid, setGenderValid] = useState(true);
+
+
+  const [homeOwnershipValid, setHomeOwnershipValid] = useState(true);
+  const [dateOfBirthValid, setDateOfBirthValid] = useState(true);
+  const [birthPlaceValid, setBirthPlaceValid] = useState(true);
+  const [ageValid, setAgeValid] = useState(true);
+  const [highestEducationValid, setHighestEducationValid] = useState(true);
+  const [residenceClassValid, setResidenceClassValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true);
+  const [confirmPasswordValid, setConfirmPasswordValid] = useState(true);
+
+  const navigate = useNavigate();
+
+  async function register(e) {
+    e.preventDefault();
+
+    // Validate the first name
+    if (firstName.trim() === '') {
+      setFirstNameValid(false);
+      return;
+    }
+
+    // Validate the middle name
+    if (middleName.trim() === '') {
+      setMiddleNameValid(false);
+      return;
+    }
+
+    // Validate the last name
+    if (lastName.trim() === '') {
+      setLastNameValid(false);
+      return;
+    }
+
+    // Validate the House No. / Street
+    if (houseNumber.trim() === '') {
+      setHouseNumberValid(false);
+      return;
+    }
+
+    // Validate Barangay
+    if (barangay.trim() === '') {
+      setBarangayValid(false);
+      return;
+    }
+
+    // Validate District
+    if (district.trim() === '') {
+      setDistrictValid(false);
+      return;
+    }
+
+    // Validate City/Municipality
+    if (cityMunicipality.trim() === '') {
+      setCityMunicipalityValid(false);
+      return;
+    }
+
+    // Validate Province
+    if (province.trim() === '') {
+      setProvinceValid(false);
+      return;
+    }
+
+
+
+    if (region.trim() === '') {
+      setRegionValid(false);
+      return;
+    }
+    if (email.trim() === '') {
+      setEmailValid(false);
+      return;
+    }
+
+    if (phoneNumber.trim() === '') {
+      setPhoneNumberValid(false);
+      return;
+    }
+    if (nationality.trim() === '') {
+      setNationalityValid(false);
+      return;
+    }
+    if (gender.trim() === '') {
+      setGenderValid(false);
+      return;
+    }
+    if (civilStatus.trim() === '') {
+      setCivilStatusValid(false);
+      return;
+    }
+    if (employmentStatus.trim() === '') {
+      setEmploymentStatusValid(false);
+      return;
+    }
+
+
+    if (homeOwnership.trim() === '') {
+      setHomeOwnershipValid(false);
+      return;
+    }
+    if (dateOfBirth.trim() === '') {
+      setDateOfBirthValid(false);
+      return;
+    }
+
+    if (birthPlace.trim() === '') {
+      setBirthPlaceValid(false);
+      return;
+    }
+    if (age.trim() === '') {
+      setAgeValid(false);
+      return;
+    }
+    if (highestEducation.trim() === '') {
+      setHighestEducationValid(false);
+      return;
+    }
+    if (residenceClass.trim() === '') {
+      setResidenceClassValid(false);
+      return;
+    }
+    if (password.trim() === '') {
+      setPasswordValid(false);
+      return;
+    }
+    if (password !== confirmPassword) {
+      setConfirmPasswordValid(false);
+      return;
+    }
+
+
+    try {
+      // ... your registration code ...
+
+      navigate("/login");
+    } catch (e) {
+      console.error(e);
+      alert("Registration Failed!");
+    }
+  }
+
+  const handleFirstNameChange = (e) => {
+    const value = e.target.value;
+    setFirstName(value);
+    setFirstNameValid(value.trim() !== '');
+  };
+
+  const handleMiddleNameChange = (e) => {
+    const value = e.target.value;
+    setMiddleName(value);
+    setMiddleNameValid(value.trim() !== '');
+  };
+
+  const handleLastNameChange = (e) => {
+    const value = e.target.value;
+    setLastName(value);
+    setLastNameValid(value.trim() !== '');
+  };
+
+  const handleHouseNumberChange = (e) => {
+    const value = e.target.value;
+    setHouseNumber(value);
+    setHouseNumberValid(value.trim() !== '');
+  };
+
+  const handleBarangayChange = (e) => {
+    const value = e.target.value;
+    setBarangay(value);
+    setBarangayValid(value.trim() !== '');
+  };
+
+  const handleDistrictChange = (e) => {
+    const value = e.target.value;
+    setDistrict(value);
+    setDistrictValid(value.trim() !== '');
+  };
+
+  const handleCityMunicipalityChange = (e) => {
+    const value = e.target.value;
+    setCityMunicipality(value);
+    setCityMunicipalityValid(value.trim() !== '');
+  };
+
+  const handleProvinceChange = (e) => {
+    const value = e.target.value;
+    setProvince(value);
+    setProvinceValid(value.trim() !== '');
+  };
+
+
+
+  const handleRegionChange = (e) => {
+    const value = e.target.value;
+    setRegion(value);
+    setRegionValid(value.trim() !== '');
+  };
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setEmailValid(value.trim() !== '');
+  };
+  const handlePhoneNumberChange = (e) => {
+    const value = e.target.value;
+    setPhoneNumber(value);
+    setPhoneNumberValid(value.trim() !== '');
+  };
+  const handleNationalityChange = (e) => {
+    const value = e.target.value;
+    setNationality(value);
+    setNationalityValid(value.trim() !== '');
+  };
+  const handleGenderChange = (e) => {
+    const value = e.target.value;
+    setGender(value);
+    setGenderValid(value.trim() !== '');
+  };
+  const handleCivilStatusChange = (e) => {
+    const value = e.target.value;
+    setCivilStatus(value);
+    setCivilStatusValid(value.trim() !== '');
+  };
+  const handleEmploymentStatusChange = (e) => {
+    const value = e.target.value;
+    setEmploymentStatus(value);
+    setEmploymentStatusValid(value.trim() !== '');
+  };
+
+
+
+  const handleHomeOwnershipChange = (e) => {
+    const value = e.target.value;
+    setHomeOwnership(value);
+    setHomeOwnershipValid(value.trim() !== '');
+  };
+  const handleDateOfBirthChange = (e) => {
+    const value = e.target.value;
+    setDateOfBirth(value);
+    setDateOfBirthValid(value.trim() !== '');
+  };
+  const handleBirthPlaceChange = (e) => {
+    const value = e.target.value;
+    setBirthPlace(value);
+    setBirthPlaceValid(value.trim() !== '');
+  };
+  const handleAgeChange = (e) => {
+    const value = e.target.value;
+    setAge(value);
+    setAgeValid(value.trim() !== '');
+  };
+  const handleHighestEducationChange = (e) => {
+    const value = e.target.value;
+    setHighestEducation(value);
+    setHighestEducationValid(value.trim() !== '');
+  };
+  const handleResidenceClassChange = (e) => {
+    const value = e.target.value;
+    setresidenceClass(value);
+    setResidenceClassValid(value.trim() !== '');
+  };
+
+  //PASSWORD VALIDATION----------------------------------------------------
+  const isPasswordValid = (password) => {
+    const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    return passwordRegex.test(password);
+  };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    setPasswordValid(isPasswordValid(value));
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    const value = e.target.value;
+    setConfirmPassword(value);
+    setConfirmPasswordValid(value === password);
+  };
 
   return (
     <div className="container-fluid main-reg">
@@ -106,39 +381,57 @@ const RegistrationComponent = () => {
                   {/* FIRST COLUMN REGISTER PAGE */}
                   <div className="col-12 col-md-4 reg-row1 p-3">
                     {/* FIRST NAME */}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!firstNameValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="first-name">First Name</label>
                       <input
-                        type="text" className="input-field"
+                        type="text"
+                        className={`input-field form-control ${!firstNameValid ? 'is-invalid' : ''}`}
                         id="first-name"
-
-                        onChange={(e) => setFirstName(e.target.value)}
+                        value={firstName}
+                        onChange={handleFirstNameChange}
                         required
                       />
+                      {!firstNameValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> First name is required.
+                        </div>
+                      )}
                     </div>
 
-                    {/* MIDDLE INITIAL */}
-                    <div className="form-group d-flex flex-column">
+                    {/* MIDDLE NAME */}
+                    <div className={`form-group d-flex flex-column ${!middleNameValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="middle-name">Middle Initial</label>
                       <input
-                        type="text" className="input-field"
+                        type="text"
+                        className={`input-field form-control ${!middleNameValid ? 'is-invalid' : ''}`}
                         id="middle-name"
-
-                        onChange={(e) => setMiddleName(e.target.value)}
+                        value={middleName}
+                        onChange={handleMiddleNameChange}
                         required
                       />
+                      {!middleNameValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Middle name is required.
+                        </div>
+                      )}
                     </div>
 
                     {/* LAST NAME */}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!lastNameValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="last-name">Last Name</label>
                       <input
-                        type="text" className="input-field"
+                        type="text"
+                        className={`input-field form-control ${!lastNameValid ? 'is-invalid' : ''}`}
                         id="last-name"
-
-                        onChange={(e) => setLastName(e.target.value)}
+                        value={lastName}
+                        onChange={handleLastNameChange}
                         required
                       />
+                      {!lastNameValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Last name is required.
+                        </div>
+                      )}
                     </div>
 
                     {/* SUFFIX */}
@@ -148,69 +441,99 @@ const RegistrationComponent = () => {
                         type="text" className="input-field"
                         id="last-name"
 
-                        onChange={(e) => setLastName(e.target.value)}
+                        // onChange={(e) => setLastName(e.target.value)}
                         required
                       />
                     </div>
 
-                    {/* House Number */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="address">House No. / Street</label>
+                    {/* HOUSE NO. / STREET */}
+                    <div className={`form-group d-flex flex-column ${!houseNumberValid ? 'has-error' : ''}`}>
+                      <label className="label" htmlFor="house-no-street">House No. / Street</label>
                       <input
-                        type="text" className="input-field"
-                        id="address"
-
-                        onChange={(e) => setAddress(e.target.value)}
+                        type="text"
+                        className={`input-field form-control ${!houseNumberValid ? 'is-invalid' : ''}`}
+                        id="house-no-street"
+                        value={houseNumber}
+                        onChange={handleHouseNumberChange}
                         required
                       />
+                      {!houseNumberValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> House No. / Street is required.
+                        </div>
+                      )}
                     </div>
 
-                    {/* Barangay */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="address">Barangay</label>
+                    {/* BARANGAY */}
+                    <div className={`form-group d-flex flex-column ${!barangayValid ? 'has-error' : ''}`}>
+                      <label className="label" htmlFor="barangay">Barangay</label>
                       <input
-                        type="text" className="input-field"
-                        id="address"
-
-                        onChange={(e) => setAddress(e.target.value)}
+                        type="text"
+                        className={`input-field form-control ${!barangayValid ? 'is-invalid' : ''}`}
+                        id="barangay"
+                        value={barangay}
+                        onChange={handleBarangayChange}
                         required
                       />
+                      {!barangayValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Barangay is required.
+                        </div>
+                      )}
                     </div>
 
-                    {/* District */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="address">District</label>
+                    {/* DISTRICT */}
+                    <div className={`form-group d-flex flex-column ${!districtValid ? 'has-error' : ''}`}>
+                      <label className="label" htmlFor="district">District</label>
                       <input
-                        type="text" className="input-field"
-                        id="address"
-
-                        onChange={(e) => setAddress(e.target.value)}
+                        type="text"
+                        className={`input-field form-control ${!districtValid ? 'is-invalid' : ''}`}
+                        id="district"
+                        value={district}
+                        onChange={handleDistrictChange}
                         required
                       />
+                      {!districtValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> District is required.
+                        </div>
+                      )}
                     </div>
 
-                    {/* City/Municipality */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="address">City/Municipality</label>
+                    {/* CITY/MUNICIPALITY */}
+                    <div className={`form-group d-flex flex-column ${!cityMunicipalityValid ? 'has-error' : ''}`}>
+                      <label className="label" htmlFor="city-municipality">City/Municipality</label>
                       <input
-                        type="text" className="input-field"
-                        id="address"
-
-                        onChange={(e) => setAddress(e.target.value)}
+                        type="text"
+                        className={`input-field form-control ${!cityMunicipalityValid ? 'is-invalid' : ''}`}
+                        id="city-municipality"
+                        value={cityMunicipality}
+                        onChange={handleCityMunicipalityChange}
                         required
                       />
+                      {!cityMunicipalityValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> City/Municipality is required.
+                        </div>
+                      )}
                     </div>
 
-                    {/* Province */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="address">Province</label>
+                    {/* PROVINCE */}
+                    <div className={`form-group d-flex flex-column ${!provinceValid ? 'has-error' : ''}`}>
+                      <label className="label" htmlFor="province">Province</label>
                       <input
-                        type="text" className="input-field"
-                        id="address"
-
-                        onChange={(e) => setAddress(e.target.value)}
+                        type="text"
+                        className={`input-field form-control ${!provinceValid ? 'is-invalid' : ''}`}
+                        id="province"
+                        value={province}
+                        onChange={handleProvinceChange}
                         required
                       />
+                      {!provinceValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Province is required.
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -218,77 +541,103 @@ const RegistrationComponent = () => {
                   <div className="col-12 col-md-4 reg-row2 p-3">
 
                     {/* REgion */}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!regionValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="region">Region</label>
                       <input
-                        type="text" className="input-field"
+                        type="text" className={`input-field form-control ${!regionValid ? 'is-invalid' : ''}`}
                         id="region"
-
-                        onChange={(e) => setNationality(e.target.value)}
+                        value={region}
+                        onChange={handleRegionChange}
                         required
                       />
+                      {!regionValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Region is required.
+                        </div>
+                      )}
                     </div>
 
                     {/* EMAIL ADDRESS*/}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!emailValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="email">Email Address</label>
                       <input
-                        type="email" className="input-field"
+                        type="email" className={`input-field form-control ${!emailValid ? 'is-invalid' : ''}`}
                         id="email"
-
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        onChange={handleEmailChange}
                         required
                       />
+                      {!emailValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Enter a valid email address.
+                        </div>
+                      )}
                     </div>
 
                     {/* Phone Number */}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!phoneNumberValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="phoneNumber">Phone Number</label>
                       <input
-                        type="tel" className="input-field"
+                        type="tel" className={`input-field form-control ${!phoneNumberValid ? 'is-invalid' : ''}`}
                         id="phoneNumber"
-
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        value={phoneNumber}
+                        onChange={handlePhoneNumberChange}
                         required
                       />
+                      {!phoneNumberValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Enter a valid phone number.
+                        </div>
+                      )}
                     </div>
 
                     {/* NATIONALITY */}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!nationalityValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="nationality">Nationality</label>
                       <input
-                        type="text" className="input-field"
+                        type="text" className={`input-field form-control ${!nationalityValid ? 'is-invalid' : ''}`}
                         id="nationality"
-
-                        onChange={(e) => setNationality(e.target.value)}
+                        value={nationality}
+                        onChange={handleNationalityChange}
                         required
                       />
+                      {!nationalityValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Nationality is required.
+                        </div>
+                      )}
                     </div>
 
                     {/* GENDER */}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!genderValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="gender">Gender</label>
                       <select
                         id="gender"
-                        onChange={(e) => setGender(e.target.value)}
-                        className="option" style={{ fontSize: '14px', marginBottom: '10px' }}
-
+                        onChange={handleGenderChange}
+                        className={`option form-control ${!genderValid ? 'is-invalid' : ''}`}
+                        style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="secret">Secret</option>
                       </select>
+                      {!genderValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Select your gender.
+                        </div>
+                      )}
                     </div>
 
                     {/* CIVIL STATUS */}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!civilStatusValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="civilStatus">Civil Status</label>
                       <select
                         id="civilStatuss"
                         value={civilStatus}
-                        onChange={(e) => setCivilStatus(e.target.value)}
-                        className="option" style={{ fontSize: '14px', marginBottom: '10px' }}
+                        onChange={handleCivilStatusChange}
+                        className={`option form-control ${!civilStatusValid ? 'is-invalid' : ''}`}
+                        style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Civil Status</option>
                         <option value="single">Single</option>
@@ -296,19 +645,31 @@ const RegistrationComponent = () => {
                         <option value="divorced">Divorced</option>
                         <option value="separated">Separated</option>
                       </select>
+                      {!civilStatusValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Select your civil status.
+                        </div>
+                      )}
                     </div>
 
                     {/* Employment Status */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="employmentStatus"> Employment Status</label>
+                    <div className={`form-group d-flex flex-column ${!employmentStatusValid ? 'has-error' : ''}`}>
+                      <label className="label" htmlFor="employmentStatus">Employment Status</label>
                       <select
                         id="employmentStatus"
-                        className="option2" style={{ fontSize: '14px', marginBottom: '10px' }}
+                        onChange={handleEmploymentStatusChange}
+                        className={`option2 form-control ${!employmentStatusValid ? 'is-invalid' : ''}`}
+                        style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Employment Status</option>
-                        <option value="employed" >Employed</option>
+                        <option value="employed">Employed</option>
                         <option value="unemployed">Unemployed</option>
                       </select>
+                      {!employmentStatusValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Select your employment status.
+                        </div>
+                      )}
                     </div>
 
                     {/* {renderInputTextboxes} */}
@@ -340,114 +701,156 @@ const RegistrationComponent = () => {
                   {/* THIRD COLUMN REGISTER PAGE */}
                   <div className="col-12 col-md-4 reg-row3 p-3">
                     {/* Home Ownership */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="HomeOwnership">Home Ownership</label>
+                    <div className={`form-group d-flex flex-column ${!homeOwnershipValid ? 'has-error' : ''}`}>
+                      <label className="label" htmlFor="homeOwnership">Home Ownership</label>
                       <select
-                        id="HomeOwnership"
-                        onChange={(e) => setGender(e.target.value)}
-                        className="option" style={{ fontSize: '14px', marginBottom: '10px' }}
-
+                        id="homeOwnership"
+                        onChange={handleHomeOwnershipChange}
+                        className={`option form-control ${!homeOwnershipValid ? 'is-invalid' : ''}`}
+                        required
                       >
                         <option value="">Select Ownership</option>
-                        <option value="female">Owner</option>
-                        <option value="secret">Renting</option>
+                        <option value="owner">Owner</option>
+                        <option value="renting">Renting</option>
                       </select>
+                      {!homeOwnershipValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Home Ownership is required.
+                        </div>
+                      )}
                     </div>
 
                     {/* DATE OF BIRTH */}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!dateOfBirthValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="dateOfBirth">Date of Birth</label>
                       <input
-                        type="date" className="input-field"
+                        type="date" className={`input-field form-control ${!dateOfBirthValid ? 'is-invalid' : ''}`}
                         id="dateOfBirth"
-
-                        onChange={(e) => setDateOfBirth(e.target.value)}
+                        value={dateOfBirth}
+                        onChange={handleDateOfBirthChange}
                         required
                       />
+                      {!dateOfBirthValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Date of Birth is required.
+                        </div>
+                      )}
                     </div>
 
                     {/* PLACE OF BIRTH */}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!birthPlaceValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="placeofbirth">Place of Birth</label>
                       <input
-                        type="text" className="input-field"
+                        type="text" className={`input-field form-control ${!birthPlaceValid ? 'is-invalid' : ''}`}
                         id="placeofbirth"
-
-                        onChange={(e) => setHouseholdMember(e.target.value)}
+                        value={birthPlace}
+                        onChange={handleBirthPlaceChange}
                         required
                       />
+                      {!birthPlaceValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Place of Birth is required.
+                        </div>
+                      )}
                     </div>
 
                     {/* Age */}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!ageValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="Age">Age</label>
                       <input
-                        type="text" className="input-field"
+                        type="text" className={`input-field form-control ${!ageValid ? 'is-invalid' : ''}`}
                         id="Age"
-
-                        onChange={(e) => setHouseholdMember(e.target.value)}
+                        value={age}
+                        onChange={handleAgeChange}
                         required
                       />
+                      {!ageValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Age is required.
+                        </div>
+                      )}
                     </div>
 
-                    {/* Educational Attaintment */}
-                    <div className="form-group d-flex flex-column">
+                    {/* Educational Attainment */}
+                    <div className={`form-group d-flex flex-column ${!highestEducationValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="H-Educational-A">Educational Attainment</label>
                       <select
                         id="h-educational-a"
-
-                        onChange={(e) => setHighestEducation(e.target.value)}
-                        className="option2" style={{ fontSize: '14px', marginBottom: '10px' }}
+                        onChange={handleHighestEducationChange}
+                        className={`option2 form-control ${!highestEducationValid ? 'is-invalid' : ''}`}
+                        required
                       >
-                        <option value="">Select Highest Educational Attaintment</option>
+                        <option value="">Select Highest Educational Attainment</option>
                         <option value="undergrad">Undergraduate (Bachelor's Degree)</option>
                         <option value="postgrad">Postgraduate (Master's Degree)</option>
                         <option value="doctoral">Doctoral (PhD)</option>
                       </select>
+                      {!highestEducationValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Educational Attainment is required.
+                        </div>
+                      )}
                     </div>
 
                     {/* Residence Class */}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!residenceClassValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="residenceClass"> Residence Class</label>
                       <select
                         id="residenceClass"
-
-                        onChange={(e) => setEmploymentStatus(e.target.value)}
-                        className="option2" style={{ fontSize: '14px', marginBottom: '10px' }}
+                        onChange={handleResidenceClassChange}
+                        className={`option2 form-control ${!residenceClassValid ? 'is-invalid' : ''}`}
+                        required
                       >
                         <option value="">Select Residence Class</option>
-                        <option value="worker">Person with Disability (PWD)</option>
-                        <option value="employee">Solo Parent</option>
-                        <option value="self-employed">Out of School Youth</option>
+                        <option value="PWD">Person with Disability (PWD)</option>
+                        <option value="soloParent">Solo Parent</option>
+                        <option value="outOfSchoolYouth">Out of School Youth</option>
                       </select>
+                      {!residenceClassValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Residence Class is required.
+                        </div>
+                      )}
                     </div>
 
-                    {/*Picture*/}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="profile">Profile Picture</label>
+                    {/* Password */}
+                    <div className={`form-group d-flex flex-column ${!passwordValid ? 'has-error' : ''}`}>
+                      <label className="label" htmlFor="password">
+                        Password 
+                      </label>
                       <input
-                        type="file" className="input-field ps-2 pe-2"
-                        id="profile" accept=".jpeg"
-
-                        // onChange={(e) => setPhoneNumber(e.target.value)}
+                        type="password"
+                        className={`input-field form-control ${!passwordValid ? 'is-invalid' : ''}`}
+                        id="password"
+                        value={password}
+                        onChange={handlePasswordChange}
                         required
                       />
+                      {!passwordValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Password is Weak.
+                        </div>
+                      )}
                     </div>
-                    {/*PASSWORD*/}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="password">Password</label>
+
+                    {/* Confirm Password */}
+                    <div className={`form-group d-flex flex-column ${!confirmPasswordValid ? 'has-error' : ''}`}>
+                      <label className="label" htmlFor="cpassword">
+                        Confirm Password
+                      </label>
                       <input
-                        type="password" className="input-field"
-                        id="password"
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                    </div>
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="cpassword">Confirm Password</label>
-                      <input
-                        type="password" className="input-field"
+                        type="password"
+                        className={`input-field form-control ${!confirmPasswordValid ? 'is-invalid' : ''}`}
                         id="cpassword"
+                        value={confirmPassword}
+                        onChange={handleConfirmPasswordChange}
+                        required
                       />
+                      {!confirmPasswordValid && (
+                        <div className="invalid-feedback">
+                          <i className="bi bi-exclamation-triangle"></i> Passwords do not match.
+                        </div>
+                      )}
                     </div>
                   </div>
                   {/*------------------------------------------------------------------------------ */}
