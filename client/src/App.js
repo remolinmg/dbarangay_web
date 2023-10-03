@@ -23,7 +23,7 @@ import Admindetails from "./admin-components/admin-details";
 import BconstuctionAdmin from "./admin-components/d-barangay-construction"
 import Biddmin from "./admin-components/d-barangay-id"
 import ResidentsInactiveAdmin from "./admin-components/resident-inactive"
-
+import Residentsaccounts from "./admin-components/residents-accounts";
 
 import UserNav from "./user-components/user-navbar";
 import Announcement from "./user-components/user-announcement";
@@ -78,6 +78,7 @@ function App() {
           <Route path="admin-profile" element={<AdminProfile />} />
           <Route path="admin-accounts" element={<Adminaccounts />} />
           <Route path="admin-details" element={<Admindetails />} />
+          <Route path="residents-accounts" element={<Residentsaccounts />} />
 
 
           <Route path="login" element={<Login />} />

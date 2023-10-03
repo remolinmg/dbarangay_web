@@ -33,7 +33,7 @@ function Admindetails() {
       <div className="topbarsection">
         <div className="topnavbar d-flex justify-content-between align-items-center">
           <div className="topnavlef">
-            <Link to="/admin-accounts" className="nav-link">
+            <Link to="/admin-accounts" className="adminicon">
               <BsFillArrowLeftCircleFill className="return1" />
             </Link>
           </div>
