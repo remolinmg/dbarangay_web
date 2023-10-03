@@ -249,7 +249,7 @@ function Adminaccounts() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr onClick={() => { window.location.href = "/admin-details" }}>
+                                                <tr onClick={() => { window.location.href = "/residents-accounts" }}>
                                                     <th scope="row">1</th>
                                                     <td>Marc</td>
                                                     <td>B1-1286</td>

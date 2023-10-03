@@ -5,38 +5,81 @@ import { useNavigate } from 'react-router-dom';
 import { BiCheckCircle } from "react-icons/bi";
 
 const Login = () => {
+  const [status, setStatus] = useState('active');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [status, setStatus] = useState('active');
+  const [emailValid, setEmailValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true);
   const navigate = useNavigate();
 
-  async function login(e){
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setEmailValid(value.trim() !== '');
+  };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    setPasswordValid(value.trim() !== '');
+  };
+
+  async function login(e) {
     e.preventDefault();
 
-    try{
-        await axios.post("http://localhost:8000/login",{
-            email,password,status
+    if (!emailValid || !passwordValid) {
+      return; // Don't proceed with login if email or password is invalid
+    }
+
+    try {
+      await axios.post("http://localhost:8000/login", {
+        email,
+        password,
+        status: 'active'
+      })
+        .then(res => {
+          if (res.data === "exist") {
+            navigate("/");
+          } else if (res.data === "notexist") {
+            alert("Login Failed!");
+          }
         })
-        .then(res=>{
-            if(res.data=="exist"){
-              navigate("/")
-            }
-            else if(res.data=="notexist"){
-                alert("Login Failed!")
-            }
-        })
-        .catch(e=>{
+        .catch(e => {
+          alert("Login Failed!");
+          console.log(e);
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async function login(e) {
+    e.preventDefault();
+
+    try {
+      await axios.post("http://localhost:8000/login", {
+        email, password, status
+      })
+        .then(res => {
+          if (res.data == "exist") {
+            navigate("/")
+          }
+          else if (res.data == "notexist") {
             alert("Login Failed!")
-            console.log(e);
+          }
+        })
+        .catch(e => {
+          alert("Login Failed!")
+          console.log(e);
         })
 
     }
-    catch(e){
-        console.log(e);
+    catch (e) {
+      console.log(e);
 
     }
 
-}
+  }
 
   return (
     <div className="container-fluid main">
@@ -56,20 +99,46 @@ const Login = () => {
           <div className="login-container">
             <h2>LOGIN</h2>
             <form action="POST">
-            <input
-              type="text"
-              placeholder="Email"
-              onChange={(e) => { setEmail(e.target.value) }}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              onChange={(e) => { setPassword(e.target.value) }}
-            />
-            <button onClick={login}>Login</button>
-            <p className="register-link text-center text-dark">
-              New user? <a href="registration">Register here</a>
-            </p>
+              <div className={`form-group d-flex flex-column ${!emailValid ? 'has-error' : ''}`}>
+                <label className="label" htmlFor="email">Email Address</label>
+                <input
+                  type="email"
+                  className={`input-field form-control ${!emailValid ? 'is-invalid' : ''}`}
+                  id="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  required
+                />
+                {!emailValid && (
+                  <div className="invalid-feedback">
+                    <i className="bi bi-exclamation-triangle"></i> invalid Email address.
+                  </div>
+                )}
+              </div>
+
+              <div className={`form-group d-flex flex-column ${!passwordValid ? 'has-error' : ''}`}>
+                <label className="label" htmlFor="password">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  className={`input-field form-control ${!passwordValid ? 'is-invalid' : ''}`}
+                  id="password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  required
+                />
+                {!passwordValid && (
+                  <div className="invalid-feedback">
+                    <i className="bi bi-exclamation-triangle"></i> Invalid Wrong Password
+                  </div>
+                )}
+              </div>
+
+              <button onClick={login}>Login</button>
+              <p className="register-link text-center text-dark">
+                New user? <a href="registration">Register here</a>
+              </p>
             </form>
           </div>
         </div>
