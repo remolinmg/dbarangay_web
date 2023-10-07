@@ -480,7 +480,7 @@ function BpermitAdmin() {
                 </div>
                 {/* -------------------------------------------------------------  TABLE -------------------------------------------------------------  */}
                 <main id="main" className="main">
-                    <div className="pagetitle"><h1> Business Clearance  </h1> </div>
+                    <div className="pagetitle"><h1> Business Permit  </h1> </div>
                     <section className="section">
                         <div className="row">
                             <div className="col-lg-12">
