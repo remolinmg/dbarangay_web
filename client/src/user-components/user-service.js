@@ -12,66 +12,11 @@ import Footer from "./footer"
 
 function UserService() {
 
-  const [currentService, setCurrentService] = useState(null);
-  const [showPopup, setShowPopup] = useState(false);
-  const [inputValues, setInputValues] = useState({
-    residentName: '',
-    address: '',
-    reasonOfRequest: '',
-    issuedDate: '',
-  });
-
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setInputValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
-
-  const handleServiceClick = (service) => {
-    setCurrentService(service);
-    setShowPopup(true);
-  };
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', inputValues);
-    setInputValues({
-      residentsName: '',
-      Address: '',
-      reasonOfRequest: '',
-      issuedDate: '',
-    });
-    setIsSubmitted(true);
-    setShowPopup(false);
-  };
-
-  const handleDiscard = () => {
-    setInputValues({
-      residentsName: '',
-      Address: '',
-      reasonOfRequest: '',
-      issuedDate: '',
-    });
-    setShowPopup(false);
-  };
-
-  useEffect(() => {
-    if (isSubmitted) {
-      const timer = setTimeout(() => {
-        setIsSubmitted(false);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [isSubmitted]);
-
   const [residentName, setResidentName] = useState('');
   const [businessName, setBusinessName] = useState('');
   const [address, setAddress] = useState('');
   const [reasonOfRequest, setReasonOfRequest] = useState('');
+  const [natureofBusiness, setNatureofBusiness] = useState('');
   const [pickUpDate, setPickUpDate] = useState('');
   const [type, setType] = useState('');
   const [modeOfPayment, setModeOfPayment] = useState('');
@@ -81,6 +26,51 @@ function UserService() {
   const [isGCashChecked, setIsGCashChecked] = useState(false);
   const [isCOPChecked, setIsCOPChecked] = useState(false);
   const [gcashInputValues, setGcashInputValues] = useState([]);
+  const [currentService, setCurrentService] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [inputValues, setInputValues] = useState({
+  });
+
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+
+  const handleServiceClick = (service) => {
+    setCurrentService(service);
+    setShowPopup(true);
+  };
+
+  //Success pop up timer-----------------------
+  useEffect(() => {
+    if (isSubmitted) {
+      const timer = setTimeout(() => {
+        setIsSubmitted(false);
+        handleCheckboxChangeCash();
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSubmitted]);
+
+  // Discard --------------------------------
+  const handleDiscard = () => {
+    // Reset the state for business permit form fields
+    setBusinessName('');
+    setAddress('');
+    setResidentName('');
+    setType('');
+    setNatureofBusiness('');
+    setPickUpDate('');
+    setModeOfPayment('');
+    setReference('');
+    setIsGCashChecked(false);
+    setIsCOPChecked(false);
+
+    // Hide the popup
+    setShowPopup(false);
+  };
+
+
+  //MODE OF PAYMENT ----------------------------------------
 
   const handleCheckboxChangeGcash = () => {
     setIsGCashChecked(!isGCashChecked);
@@ -93,34 +83,21 @@ function UserService() {
     setIsGCashChecked(false);
   };
 
-  const handleGcashInputChange = (index, value) => {
-    const newInputValues = [...inputValues];
-    newInputValues[index] = value;
-    setGcashInputValues(newInputValues);
-  };
-
   const renderInputTextboxes = () => {
     if (isGCashChecked) {
-      // return gcashInputValues.map((value, index) => (
-      //   <input
-      //     key={index}
-      //     type="text"
-      //     value={value}
-      //     onChange={(e) => handleGcashInputChange(index, e.target.value)}
-      //     placeholder={`Input ${index + 1}`}
-      //   />
-      // ));
       return (
         <div>
           <div className="form-group">
-            <label htmlFor="gcashref">GCash Reference No.</label>
+            <label htmlFor="gcashref">GCash Reference No.:</label>
             <input
               type="text"
               id="gcashRefNo"
               name="gcashRef"
               className="form-control"
               onChange={(e) => setReference(e.target.value)}
-              required />
+              value={reference}
+              required
+            />
           </div>
         </div>
       )
@@ -128,50 +105,136 @@ function UserService() {
     return (null);
   };
 
-  //certificate connection
+  //barangay certificate connection & validation
+  const [validationErrors, setValidationErrors] = useState({});
   async function barangayCertificate(e) {
     e.preventDefault();
 
+    // Validation logic
+    let isValid = true;
+    const newValidationErrors = {};
+
+    if (!residentName) {
+      isValid = false;
+
+    }
+
+    if (!address) {
+      isValid = false;
+
+    }
+
+    if (!reasonOfRequest) {
+      isValid = false;
+
+    }
+
+    if (!pickUpDate) {
+      isValid = false;
+
+    }
+
+    if (!modeOfPayment) {
+      isValid = false;
+      newValidationErrors.modeOfPayment = 'Mode of payment is required.';
+    }
+
+    if (modeOfPayment === 'G-Cash' && !reference) {
+      isValid = false;
+
+    }
+
+    if (!isValid) {
+      setValidationErrors(newValidationErrors);
+      return; // Prevent form submission.
+    }
+
+    // If validation passes, proceed with the API request
     try {
+      const response = await axios.post("http://localhost:8000/barangaycertificate", {
+        residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
+      });
 
-      await axios.post("http://localhost:8000/barangaycertificate", {
-        residentName, address, reasonOfRequest, pickUpDate,modeOfPayment,reference
-      })
-        .then(res => {
-          if (res.data == "exist") {
-            alert("You already sent the same request!");
-          }
-          else if (res.data == "notexist") {
-            setIsSubmitted(true);
-            setShowPopup(false);
-          }
-        })
-        .catch(e => {
-          alert("Failed!")
-          console.log(e);
-        })
-
+      if (response.data === "exist") {
+        alert("You already sent the same request!");
+      } else if (response.data === "notexist") {
+        setIsSubmitted(true);
+        setShowPopup(false);
+      }
+    } catch (error) {
+      alert("Failed!");
+      console.error(error);
     }
-    catch (e) {
-      console.log(e);
-
-    }
-
   }
-  //business clearance connection
+
+  //business clearance connection & validation
+  const [businessValidationErrors, setBusinessValidationErrors] = useState({});
   async function businessClearance(e) {
     e.preventDefault();
 
-    try {
+    // Validation logic
+    let isValid = true;
+    const newValidationErrors = {};
 
+    if (!businessName) {
+      isValid = false;
+
+    }
+
+    if (!address) {
+      isValid = false;
+
+    }
+
+    if (!residentName) {
+      isValid = false;
+
+    }
+
+    if (!type) {
+      isValid = false;
+      newValidationErrors.type = 'Ownership type is required.';
+    }
+
+    if (type === '????') {
+      isValid = false;
+
+    }
+
+    if (!reasonOfRequest) {
+      isValid = false;
+
+    }
+
+    if (!pickUpDate) {
+      isValid = false;
+
+    }
+
+    if (!modeOfPayment) {
+      isValid = false;
+      newValidationErrors.modeOfPayment = 'Mode of payment is required.';
+    }
+
+    if (modeOfPayment === 'G-Cash' && !reference) {
+      isValid = false;
+
+    }
+
+    if (!isValid) {
+      setBusinessValidationErrors(newValidationErrors);
+      return; // Prevent form submission.
+    }
+
+    // If validation passes, proceed with the API request
+    try {
       await axios.post("http://localhost:8000/businessclearance", {
-        businessName, address, residentName, type, reasonOfRequest, pickUpDate,modeOfPayment,reference
+        businessName, address, residentName, type, reasonOfRequest, pickUpDate, modeOfPayment, reference
       })
         .then(res => {
-          if (res.data == "exist") {
+          if (res.data === "exist") {
             alert("You already sent the same request!");
-          }
-          else if (res.data == "notexist") {
+          } else if (res.data === "notexist") {
             setIsSubmitted(true);
             setShowPopup(false);
           }
@@ -179,81 +242,126 @@ function UserService() {
         .catch(e => {
           alert("Failed!")
           console.log(e);
-        })
-
-    }
-    catch (e) {
-      console.log(e);
-
+        });
+    } catch (error) {
+      alert("Failed!");
+      console.error(error);
     }
   }
-  //indigency connection
-  async function barangayIndigency(e) {
-    e.preventDefault();
 
-    try {
-
-      await axios.post("http://localhost:8000/barangayindigency", {
-        residentName, address, reasonOfRequest, pickUpDate,modeOfPayment,reference
-      })
-        .then(res => {
-          if (res.data == "exist") {
-            alert("You already sent the same request!");
-          }
-          else if (res.data == "notexist") {
-            setIsSubmitted(true);
-            setShowPopup(false);
-          }
-        })
-        .catch(e => {
-          alert("Failed!")
-          console.log(e);
-        })
-
-    }
-    catch (e) {
-      console.log(e);
-
-    }
-
-  }
-  //barangayid
+  //barangayid connection & validation
+  const [barangayIdValidationErrors, setBarangayIdValidationErrors] = useState({});
   async function barangayID(e) {
     e.preventDefault();
 
-    try {
+    // Validation logic
+    let isValid = true;
+    const newValidationErrors = {};
 
+    if (!residentName) {
+      isValid = false;
+      newValidationErrors.residentName = "Resident's Name is required.";
+    }
+
+    if (!address) {
+      isValid = false;
+      newValidationErrors.address = "Address is required.";
+    }
+
+    if (!pickUpDate) {
+      isValid = false;
+      newValidationErrors.pickUpDate = "Pick-up Date is required.";
+    }
+
+    if (!modeOfPayment) {
+      isValid = false;
+      newValidationErrors.modeOfPayment = "Mode of Payment is required.";
+    }
+
+    if (modeOfPayment === "G-Cash" && !reference) {
+      isValid = false;
+      newValidationErrors.reference = "GCash Reference No. is required.";
+    }
+
+    if (!isValid) {
+      setBarangayIdValidationErrors(newValidationErrors);
+      return; // Prevent form submission.
+    }
+
+    // If validation passes, proceed with the API request
+    try {
       await axios.post("http://localhost:8000/barangayid", {
-        residentName, address, pickUpDate,modeOfPayment,reference
+        residentName,
+        address,
+        pickUpDate,
+        modeOfPayment,
+        reference,
       })
-        .then(res => {
-          if (res.data == "exist") {
+        .then((res) => {
+          if (res.data === "exist") {
             alert("You already sent the same request!");
-          }
-          else if (res.data == "notexist") {
+          } else if (res.data === "notexist") {
             setIsSubmitted(true);
             setShowPopup(false);
           }
         })
-        .catch(e => {
-          alert("Failed!")
+        .catch((e) => {
+          alert("Failed!");
           console.log(e);
-        })
-
-    }
-    catch (e) {
-      console.log(e);
-
+        });
+    } catch (error) {
+      alert("Failed!");
+      console.error(error);
     }
   }
-  //installation
+
+  //installation connection & validation
+  const [installationValidationErrors, setInstallationValidationErrors] = useState({});
   async function installation(e) {
     e.preventDefault();
 
+    // Validation logic
+    let isValid = true;
+    const newValidationErrors = {};
+
+    if (!residentName) {
+      isValid = false;
+
+    }
+
+    if (!address) {
+      isValid = false;
+
+    }
+
+    if (!reasonOfRequest) {
+      isValid = false;
+
+    }
+
+    if (!pickUpDate) {
+      isValid = false;
+
+    }
+
+    if (!modeOfPayment) {
+      isValid = false;
+      newValidationErrors.modeOfPayment = 'Mode of payment is required.';
+    }
+
+    if (modeOfPayment === 'G-Cash' && !reference) {
+      isValid = false;
+      newValidationErrors.reference = 'GCash Reference No. is required for G-Cash payment.';
+    }
+
+    if (!isValid) {
+      setInstallationValidationErrors(newValidationErrors);
+      return; // Prevent form submission.
+    }
     try {
 
       await axios.post("http://localhost:8000/installation", {
-        residentName, address, reasonOfRequest, pickUpDate,modeOfPayment,reference
+        residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
       })
         .then(res => {
           if (res.data == "exist") {
@@ -275,14 +383,121 @@ function UserService() {
 
     }
   }
-  //construction
+  //construction connection & validation
+  const [constructionValidationErrors, setConstructionValidationErrors] = useState({});
   async function construction(e) {
     e.preventDefault();
+    // Validation logic
+    let isValid = true;
+    const newValidationErrors = {};
 
+    if (!residentName) {
+      isValid = false;
+      newValidationErrors.residentName = "Resident's Name is required.";
+    }
+
+    if (!address) {
+      isValid = false;
+      newValidationErrors.address = "Address is required.";
+    }
+
+    if (!reasonOfRequest) {
+      isValid = false;
+      newValidationErrors.reasonOfRequest = "Reason of Request is required.";
+    }
+
+    if (!pickUpDate) {
+      isValid = false;
+      newValidationErrors.pickUpDate = "Pick-up Date is required.";
+    }
+
+    if (!modeOfPayment) {
+      isValid = false;
+      newValidationErrors.modeOfPayment = "Mode of Payment is required.";
+    }
+
+    if (modeOfPayment === "GCash" && !reference) {
+      isValid = false;
+      newValidationErrors.reference = "GCash Reference No. is required.";
+    }
+
+    if (!isValid) {
+      setConstructionValidationErrors(newValidationErrors);
+      return; // Prevent form submission.
+    }
     try {
 
       await axios.post("http://localhost:8000/construction", {
-        residentName, address, reasonOfRequest, pickUpDate,modeOfPayment,reference
+        residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
+      })
+        .then(res => {
+          if (res.data == "exist") {
+            alert("You already sent the same request!");
+          }
+          else if (res.data == "notexist") {
+            setIsSubmitted(true);
+            setShowPopup(false);
+          }
+        })
+        .catch(e => {
+          alert("Failed!")
+          console.log(e);
+        })
+
+    }
+    catch (e) {
+      console.log(e);
+
+    }
+
+  }
+
+  //indigency connection & validation
+  const [barangayIndigencyValidationErrors, setBarangayIndigencyValidationErrors] = useState({});
+  async function barangayIndigency(e) {
+    e.preventDefault();
+    // Validation logic
+    let isValid = true;
+    const newValidationErrors = {};
+
+    if (!residentName) {
+      isValid = false;
+      newValidationErrors.residentName = "Resident's Name is required.";
+    }
+
+    if (!address) {
+      isValid = false;
+      newValidationErrors.address = "Address is required.";
+    }
+
+    if (!reasonOfRequest) {
+      isValid = false;
+      newValidationErrors.reasonOfRequest = "Reason of Request is required.";
+    }
+
+    if (!pickUpDate) {
+      isValid = false;
+      newValidationErrors.pickUpDate = "Pick-up Date is required.";
+    }
+
+    if (!modeOfPayment) {
+      isValid = false;
+      newValidationErrors.modeOfPayment = "Mode of Payment is required.";
+    }
+
+    if (modeOfPayment === "GCash" && !reference) {
+      isValid = false;
+      newValidationErrors.reference = "GCash Reference No. is required.";
+    }
+
+    if (!isValid) {
+      setBarangayIndigencyValidationErrors(newValidationErrors);
+      return; // Prevent form submission.
+    }
+    try {
+
+      await axios.post("http://localhost:8000/barangayindigency", {
+        residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
       })
         .then(res => {
           if (res.data == "exist") {
@@ -402,7 +617,7 @@ function UserService() {
         {showPopup && currentService === 'barangayClearance' && (
           <div className="popup-overlay">
             <div className="popup-form">
-              <form >
+              <form onSubmit={barangayCertificate}>
                 <div className="certificate">
                   <h2 className="certificate-title">Certificate Request Form</h2>
                   <div className="certificate-content">
@@ -414,17 +629,20 @@ function UserService() {
                         name="residentName"
                         onChange={(e) => setResidentName(e.target.value)}
                         className="form-control"
-                        required /></div>
-
+                        required // Use the required attribute
+                      />
+                    </div>
                     <div className="form-group">
-                      <label htmlFor="Address"> Address</label>
+                      <label htmlFor="Address">Address:</label>
                       <input
                         type="text"
                         id="address"
                         name="address"
                         onChange={(e) => setAddress(e.target.value)}
                         className="form-control"
-                        required /> </div>
+                        required // Use the required attribute
+                      />
+                    </div>
 
                     <div className="form-group">
                       <label htmlFor="reasonOfRequest">Reason Of Request</label>
@@ -434,7 +652,9 @@ function UserService() {
                         name="reasonOfRequest"
                         onChange={(e) => setReasonOfRequest(e.target.value)}
                         className="form-control"
-                        required /></div>
+                        required // Use the required attribute
+                      />
+                    </div>
 
                     <div className="form-group">
                       <label htmlFor="pickUpDate">Pick-up Date:</label>
@@ -443,9 +663,11 @@ function UserService() {
                         id="pickUpDate"
                         name="pickUpDate"
                         onChange={(e) => setPickUpDate(e.target.value)}
-                        className="form-control" required /></div>
-
-                      <div className="form-group">
+                        className="form-control"
+                        required // Use the required attribute
+                      />
+                    </div>
+                    <div className="form-group">
                       <label>Mode of Payment:</label>
                       <div>
                         <input
@@ -463,17 +685,16 @@ function UserService() {
                           type="checkbox"
                           checked={isGCashChecked}
                           onChange={handleCheckboxChangeGcash}
-                          
                         />
                         GCash
                       </div>
-
-                      {renderInputTextboxes()}
+                      <div className="error-message">{validationErrors.modeOfPayment || ' '}</div>
                     </div>
+                    {renderInputTextboxes()}
 
                     <div className="form-buttons">
-                      <button type="submit" className="btn btn-primary" onClick={barangayCertificate}>Submit </button>
-                      <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
+                      <button type="submit" className="btn btn-primary">Submit</button>
+                      <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard</button>
                     </div>
                   </div>
                 </div>
@@ -482,16 +703,14 @@ function UserService() {
           </div>
         )}
 
-
         {/* BUSINESS PERMIT */}
         {showPopup && currentService === 'businessPermit' && (
           <div className="popup-overlay">
             <div className="popup-form">
-              <form>
+              <form onSubmit={businessClearance}>
                 <div className="certificate">
                   <h2 className="certificate-title">Business Clearance Request Form</h2>
                   <div className="certificate-content">
-
                     <div className="form-group">
                       <label htmlFor="businessPermitField1">Business Name:</label>
                       <input
@@ -500,17 +719,23 @@ function UserService() {
                         name="businessPermitField1"
                         onChange={(e) => setBusinessName(e.target.value)}
                         className="form-control"
-                        required /></div>
+                        required
+                      />
+                      <div className="error-message">{businessValidationErrors.businessName || ' '}</div>
+                    </div>
 
                     <div className="form-group">
-                      <label htmlFor="Address"> Address</label>
+                      <label htmlFor="Address"> Address:</label>
                       <input
                         type="text"
                         id="Address"
                         name="Address"
                         onChange={(e) => setAddress(e.target.value)}
                         className="form-control"
-                        required /></div>
+                        required
+                      />
+                      <div className="error-message">{businessValidationErrors.address || ' '}</div>
+                    </div>
 
                     <div className="form-group">
                       <label htmlFor="residentsName">Owner's Name:</label>
@@ -520,21 +745,28 @@ function UserService() {
                         name="residentName"
                         onChange={(e) => setResidentName(e.target.value)}
                         className="form-control"
-                        required /></div>
+                        required
+                      />
+                      <div className="error-message">{businessValidationErrors.residentName || ' '}</div>
+                    </div>
 
                     <div className="form-group">
-                      <label htmlFor="ownertype">Ownership type</label>
+                      <label htmlFor="ownertype">Ownership type:</label>
                       <select
                         id="ownertype"
                         className="form-control"
                         onChange={(e) => setType(e.target.value)}
+                        value={type}
                         style={{ fontSize: '20px', marginBottom: '10px' }}
+                        required
                       >
-                       <option value="????" ></option>
+                        <option value="????" ></option>
                         <option value="sole">Sole Proprietorship</option>
                         <option value="partnership">Partnership/Corporation</option>
                       </select>
+                      <div className="error-message">{businessValidationErrors.type || ' '}</div>
                     </div>
+
 
                     <div className="form-group">
                       <label htmlFor="reasonOfRequest">Nature of Business</label>
@@ -544,7 +776,10 @@ function UserService() {
                         name="reasonOfRequest"
                         onChange={(e) => setReasonOfRequest(e.target.value)}
                         className="form-control"
-                        required /></div>
+                        required
+                      />
+                      <div className="error-message">{businessValidationErrors.reasonOfRequest || ' '}</div>
+                    </div>
 
                     <div className="form-group">
                       <label htmlFor="issuedDate">Pick-up Date:</label>
@@ -554,7 +789,10 @@ function UserService() {
                         name="issuedDate"
                         onChange={(e) => setPickUpDate(e.target.value)}
                         className="form-control"
-                        required /> </div>
+                        required
+                      />
+                      <div className="error-message">{businessValidationErrors.pickUpDate || ' '}</div>
+                    </div>
 
                     <div className="form-group">
                       <label>Mode of Payment:</label>
@@ -574,16 +812,102 @@ function UserService() {
                           type="checkbox"
                           checked={isGCashChecked}
                           onChange={handleCheckboxChangeGcash}
-                          
                         />
                         GCash
                       </div>
-
-                      {renderInputTextboxes()}
+                      <div className="error-message">{businessValidationErrors.modeOfPayment || ' '}</div>
                     </div>
+                    {renderInputTextboxes()}
 
                     <div className="form-buttons">
-                      <button type="submit" className="btn btn-primary" onClick={businessClearance}>Submit</button>
+                      <button type="submit" className="btn btn-primary">Submit</button>
+                      <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* BARANGAY ID */}
+        {showPopup && currentService === 'barangayID' && (
+          <div className="popup-overlay">
+            <div className="popup-form">
+              <form onSubmit={barangayID}>
+                <div className="certificate">
+                  <h2 className="barangay-id-title">Barangay ID Request Form</h2>
+                  <div className="barangay-id-content certificate-content">
+                    <div className="form-group">
+                      <label htmlFor="residentsName">Resident's Name:</label>
+                      <input
+                        type="text"
+                        id="residentsName"
+                        name="residentsName"
+                        onChange={(e) => setResidentName(e.target.value)}
+                        className="form-control"
+                        required
+                      />
+                      <div className="error-message">
+                        {barangayIdValidationErrors.residentName || ' '}
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="address">Address:</label>
+                      <input
+                        type="text"
+                        id="address"
+                        name="address"
+                        onChange={(e) => setAddress(e.target.value)}
+                        className="form-control"
+                        required
+                      />
+                      <div className="error-message">
+                        {barangayIdValidationErrors.address || ' '}
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="issueddate">Pick-up Date:</label>
+                      <input
+                        type="date"
+                        id="issueddate"
+                        name="issueddate"
+                        onChange={(e) => setPickUpDate(e.target.value)}
+                        className="form-control"
+                        required
+                      />
+                      <div className="error-message">
+                        {barangayIdValidationErrors.pickUpDate || ' '}
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Mode of Payment:</label>
+                      <div>
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                          checked={isCOPChecked}
+                          onChange={handleCheckboxChangeCash}
+                        />
+                        Cash on Pick-up
+                      </div>
+
+                      <div className="">
+                        <input
+                          className="ms-1 me-1"
+                          type="checkbox"
+                          checked={isGCashChecked}
+                          onChange={handleCheckboxChangeGcash}
+                        />
+                        GCash
+                      </div>
+                      <div className="error-message">{barangayIdValidationErrors.modeOfPayment || ' '}</div>
+                    </div>
+                    {renderInputTextboxes()}
+
+                    <div className="form-buttons">
+                      <button type="submit" className="btn btn-primary">Submit</button>
                       <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard</button>
                     </div>
                   </div>
@@ -597,51 +921,74 @@ function UserService() {
         {showPopup && currentService === 'installation' && (
           <div className="popup-overlay">
             <div className="popup-form">
-              <form>
+              <form onSubmit={installation}>
                 <div className="certificate">
                   <h2 className="installation-permit-title">Installation Permit Form</h2>
                   <div className="installation-permit-content certificate-content">
                     <div className="form-group">
-                      <label htmlFor="applicantName">Resident's Name</label>
+                      <label htmlFor="applicantName">Resident's Name:</label>
                       <input
                         type="text"
                         id="applicantName"
                         name="applicantName"
                         onChange={(e) => setResidentName(e.target.value)}
-                        className="form-control"
-                        required />
+                        className={`form-control ${installationValidationErrors.residentName ? 'is-invalid' : ''}`}
+                        required
+                      />
+                      {installationValidationErrors.residentName && (
+                        <div className="invalid-feedback">
+                          {installationValidationErrors.residentName}
+                        </div>
+                      )}
                     </div>
                     <div className="form-group">
-                      <label htmlFor="installationAddress">Address</label>
+                      <label htmlFor="installationAddress">Address:</label>
                       <input
                         type="text"
                         id="installationAddress"
                         name="installationAddress"
                         onChange={(e) => setAddress(e.target.value)}
-                        className="form-control"
-                        required />
+                        className={`form-control ${installationValidationErrors.address ? 'is-invalid' : ''}`}
+                        required
+                      />
+                      {installationValidationErrors.address && (
+                        <div className="invalid-feedback">
+                          {installationValidationErrors.address}
+                        </div>
+                      )}
                     </div>
                     <div className="form-group">
-                      <label htmlFor="installationType">Reason of Request</label>
+                      <label htmlFor="installationType">Reason of Request:</label>
                       <input
                         type="text"
                         id="installationType"
                         name="installationType"
                         onChange={(e) => setReasonOfRequest(e.target.value)}
-                        className="form-control"
-                        required />
+                        className={`form-control ${installationValidationErrors.reasonOfRequest ? 'is-invalid' : ''}`}
+                        required
+                      />
+                      {installationValidationErrors.reasonOfRequest && (
+                        <div className="invalid-feedback">
+                          {installationValidationErrors.reasonOfRequest}
+                        </div>
+                      )}
                     </div>
                     <div className="form-group">
-                      <label htmlFor="installationDate">Pick-up Date</label>
+                      <label htmlFor="installationDate">Pick-up Date:</label>
                       <input
                         type="date"
                         id="pickUpDate"
                         name="pickUpDate"
                         onChange={(e) => setPickUpDate(e.target.value)}
-                        className="form-control"
-                        required />
+                        className={`form-control ${installationValidationErrors.pickUpDate ? 'is-invalid' : ''}`}
+                        required
+                      />
+                      {installationValidationErrors.pickUpDate && (
+                        <div className="invalid-feedback">
+                          {installationValidationErrors.pickUpDate}
+                        </div>
+                      )}
                     </div>
-
                     <div className="form-group">
                       <label>Mode of Payment:</label>
                       <div>
@@ -660,92 +1007,15 @@ function UserService() {
                           type="checkbox"
                           checked={isGCashChecked}
                           onChange={handleCheckboxChangeGcash}
-                          
                         />
                         GCash
                       </div>
-
-                      {renderInputTextboxes()}
+                      <div className="error-message">{installationValidationErrors.modeOfPayment || ' '}</div>
                     </div>
-
+                    {renderInputTextboxes()}
                     <div className="form-buttons">
-                      <button type="submit" className="btn btn-primary" onClick={installation}> Submit </button>
-                      <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-
-        {/* BARANGAY ID */}
-        {showPopup && currentService === 'barangayID' && (
-          <div className="popup-overlay">
-            <div className="popup-form">
-              <form>
-                <div className="certificate">
-                  <h2 className="barangay-id-title">Barangay ID Request Form</h2>
-                  <div className="barangay-id-content certificate-content">
-                    <div className="form-group">
-                      <label htmlFor="residentsName">Resident's Name:</label>
-                      <input
-                        type="text"
-                        id="residentsName"
-                        name="residentsName"
-                        onChange={(e) => setResidentName(e.target.value)}
-                        className="form-control" required />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="address">Address:</label>
-                      <input
-                        type="text"
-                        id="address"
-                        name="address"
-                        onChange={(e) => setAddress(e.target.value)}
-                        className="form-control"
-                        required />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="issueddate">Pick-up Date:</label>
-                      <input
-                        type="date"
-                        id="issueddate"
-                        name="issueddate"
-                        onChange={(e) => setPickUpDate(e.target.value)}
-                        className="form-control"
-                        required />
-                    </div>
-
-                    <div className="form-group">
-                      <label>Mode of Payment:</label>
-                      <div>
-                        <input
-                          className="ms-1 me-1"
-                          type="checkbox"
-                          checked={isCOPChecked}
-                          onChange={handleCheckboxChangeCash}
-                        />
-                        Cash on Pick-up
-                      </div>
-
-                      <div className="">
-                        <input
-                          className="ms-1 me-1"
-                          type="checkbox"
-                          checked={isGCashChecked}
-                          onChange={handleCheckboxChangeGcash}
-                          
-                        />
-                        GCash
-                      </div>
-
-                      {renderInputTextboxes()}
-                    </div>
-
-                    <div className="form-buttons">
-                      <button type="submit" className="btn btn-primary" onClick={barangayID}> Submit </button>
-                      <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
+                      <button type="submit" className="btn btn-primary">Submit</button>
+                      <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard</button>
                     </div>
                   </div>
                 </div>
@@ -758,7 +1028,7 @@ function UserService() {
         {showPopup && currentService === 'constructionPermit' && (
           <div className="popup-overlay">
             <div className="popup-form">
-              <form>
+              <form onSubmit={construction}>
                 <div className="certificate">
                   <h2 className="certificate-title">Construction Permit Request Form</h2>
                   <div className="certificate-content">
@@ -769,18 +1039,30 @@ function UserService() {
                         id="residentsName"
                         name="residentsName"
                         onChange={(e) => setResidentName(e.target.value)}
-                        className="form-control"
-                        required />
+                        className={`form-control ${constructionValidationErrors.residentName ? 'is-invalid' : ''}`}
+                        required
+                      />
+                      {constructionValidationErrors.residentName && (
+                        <div className="invalid-feedback">
+                          {constructionValidationErrors.residentName}
+                        </div>
+                      )}
                     </div>
                     <div className="form-group">
-                      <label htmlFor="Address"> Address</label>
+                      <label htmlFor="Address">Address</label>
                       <input
                         type="text"
                         id="Address"
                         name="Address"
                         onChange={(e) => setAddress(e.target.value)}
-                        className="form-control"
-                        required />
+                        className={`form-control ${constructionValidationErrors.address ? 'is-invalid' : ''}`}
+                        required
+                      />
+                      {constructionValidationErrors.address && (
+                        <div className="invalid-feedback">
+                          {constructionValidationErrors.address}
+                        </div>
+                      )}
                     </div>
                     <div className="form-group">
                       <label htmlFor="reasonOfRequest">Reason Of Request</label>
@@ -789,9 +1071,15 @@ function UserService() {
                         id="reasonOfRequest"
                         name="reasonOfRequest"
                         onChange={(e) => setReasonOfRequest(e.target.value)}
-                        className="form-control"
-                        required /></div>
-
+                        className={`form-control ${constructionValidationErrors.reasonOfRequest ? 'is-invalid' : ''}`}
+                        required
+                      />
+                      {constructionValidationErrors.reasonOfRequest && (
+                        <div className="invalid-feedback">
+                          {constructionValidationErrors.reasonOfRequest}
+                        </div>
+                      )}
+                    </div>
                     <div className="form-group">
                       <label htmlFor="issuedDate">Pick-up Date:</label>
                       <input
@@ -799,10 +1087,15 @@ function UserService() {
                         id="issuedDate"
                         name="issuedDate"
                         onChange={(e) => setPickUpDate(e.target.value)}
-                        className="form-control"
-                        required />
+                        className={`form-control ${constructionValidationErrors.pickUpDate ? 'is-invalid' : ''}`}
+                        required
+                      />
+                      {constructionValidationErrors.pickUpDate && (
+                        <div className="invalid-feedback">
+                          {constructionValidationErrors.pickUpDate}
+                        </div>
+                      )}
                     </div>
-
                     <div className="form-group">
                       <label>Mode of Payment:</label>
                       <div>
@@ -821,17 +1114,15 @@ function UserService() {
                           type="checkbox"
                           checked={isGCashChecked}
                           onChange={handleCheckboxChangeGcash}
-                          
                         />
                         GCash
                       </div>
-
-                      {renderInputTextboxes()}
+                      <div className="error-message">{constructionValidationErrors.modeOfPayment || ' '}</div>
                     </div>
-
+                    {renderInputTextboxes()}
                     <div className="form-buttons">
-                      <button type="submit" className="btn btn-primary" onClick={construction}> Submit </button>
-                      <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard </button>
+                      <button type="submit" className="btn btn-primary">Submit</button>
+                      <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard</button>
                     </div>
                   </div>
                 </div>
@@ -844,39 +1135,48 @@ function UserService() {
         {showPopup && currentService === 'barangayIndigency' && (
           <div className="popup-overlay">
             <div className="popup-form">
-              <form >
+              <form onSubmit={barangayIndigency}>
                 <div className="certificate">
                   <h2 className="certificate-title">Indigency Request Form</h2>
                   <div className="certificate-content">
                     <div className="form-group">
-                      <label htmlFor="residentsName">Residents Name:</label>
+                      <label htmlFor="residentName">Resident's Name:</label>
                       <input
                         type="text"
                         id="residentName"
                         name="residentName"
                         onChange={(e) => setResidentName(e.target.value)}
-                        className="form-control"
-                        required /></div>
+                        className={`form-control ${barangayIndigencyValidationErrors.residentName ? 'is-invalid' : ''}`}
+                        required
+                      />
+                      <div className="error-message">{barangayIndigencyValidationErrors.residentName || ' '}</div>
+                    </div>
 
                     <div className="form-group">
-                      <label htmlFor="Address"> Address</label>
+                      <label htmlFor="address">Address:</label>
                       <input
                         type="text"
                         id="address"
                         name="address"
                         onChange={(e) => setAddress(e.target.value)}
-                        className="form-control"
-                        required /> </div>
+                        className={`form-control ${barangayIndigencyValidationErrors.address ? 'is-invalid' : ''}`}
+                        required
+                      />
+                      <div className="error-message">{barangayIndigencyValidationErrors.address || ' '}</div>
+                    </div>
 
                     <div className="form-group">
-                      <label htmlFor="reasonOfRequest">Reason Of Request</label>
+                      <label htmlFor="reasonOfRequest">Reason Of Request:</label>
                       <input
                         type="text"
                         id="reasonOfRequest"
                         name="reasonOfRequest"
                         onChange={(e) => setReasonOfRequest(e.target.value)}
-                        className="form-control"
-                        required /></div>
+                        className={`form-control ${barangayIndigencyValidationErrors.reasonOfRequest ? 'is-invalid' : ''}`}
+                        required
+                      />
+                      <div className="error-message">{barangayIndigencyValidationErrors.reasonOfRequest || ' '}</div>
+                    </div>
 
                     <div className="form-group">
                       <label htmlFor="pickUpDate">Pick-up Date:</label>
@@ -885,7 +1185,10 @@ function UserService() {
                         id="pickUpDate"
                         name="pickUpDate"
                         onChange={(e) => setPickUpDate(e.target.value)}
-                        className="form-control" required />
+                        className={`form-control ${barangayIndigencyValidationErrors.pickUpDate ? 'is-invalid' : ''}`}
+                        required
+                      />
+                      <div className="error-message">{barangayIndigencyValidationErrors.pickUpDate || ' '}</div>
                     </div>
 
                     <div className="form-group">
@@ -906,19 +1209,17 @@ function UserService() {
                           type="checkbox"
                           checked={isGCashChecked}
                           onChange={handleCheckboxChangeGcash}
-                          
                         />
                         GCash
                       </div>
-
-                      {renderInputTextboxes()}
+                      <div className="error-message">{barangayIndigencyValidationErrors.modeOfPayment || ' '}</div>
                     </div>
 
+                    {renderInputTextboxes()}
+
                     <div className="form-buttons">
-                      <button type="submit" className="btn btn-primary"
-                       onClick={barangayIndigency}
-                      >Submit </button>
-                      <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
+                      <button type="submit" className="btn btn-primary">Submit</button>
+                      <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard</button>
                     </div>
                   </div>
                 </div>
@@ -926,6 +1227,7 @@ function UserService() {
             </div>
           </div>
         )}
+
 
         {isSubmitted && (
           <div className="success-message">

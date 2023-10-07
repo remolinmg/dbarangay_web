@@ -535,14 +535,14 @@ function BclearanceAdmin() {
                       <tbody>
                         {getCurrentPageData().map((item, index) => (
                           <tr key={index}>
-                            <th scope="row">{item._id}</th>
-                            <td>{item.residentName}</td>
-                            <td>{item.address}</td>
-                            <td>{item.reasonOfRequest}</td>
-                            <td>{item.pickUpDate}</td>
-                            <td>{item.modeOfPayment}</td>
-                            <td>{item.reference}</td>
-                            <td>{item.status}</td>
+                            <th className="tablefont" scope="row">{item._id}</th>
+                            <td className="tablefont">{item.residentName}</td>
+                            <td className="tablefont">{item.address}</td>
+                            <td className="small-text">{item.reasonOfRequest}</td>
+                            <td className="small-text">{item.pickUpDate}</td>
+                            <td className="small-text">{item.modeOfPayment}</td>
+                            <td className="small-text">{item.reference}</td>
+                            <td className="small-text">{item.status}</td>
                             <td>
                               <button
                                 className="btn btn-primary btn-sm me-2"

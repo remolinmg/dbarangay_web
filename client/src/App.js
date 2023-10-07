@@ -46,7 +46,7 @@ import ScrollToTopButton from "./user-components/scrolltotop";
 
 
 import Sample from "./admin-components/sample"
-
+import Usersample from "./user-components/usersample";
 function App() {
   return (
     <BrowserRouter>
@@ -55,6 +55,7 @@ function App() {
         <Routes>
 
         <Route path="sample" element={<Sample />} />
+        <Route path="usersample" element={<Usersample />} />
 
           <Route path="admin" element={<Admin />} />
           <Route path="dashboard" element={<Dashboard />} />

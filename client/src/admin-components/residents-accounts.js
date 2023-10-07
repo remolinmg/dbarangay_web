@@ -456,13 +456,13 @@ function Residentsaccounts() {
                         <div id="content2" className={`view_request content ${activeContent === 2 ? 'active' : ''}`}>
                             <h1>Request</h1>
 
-                            <table className="table table-striped">
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Middle Name</th>
+                                        <th scope="col">LAST NAME</th>
+                                        <th scope="col">FIRST NAME</th>
+                                        <th scope="col">MIDDLE NAME</th>
                                     </tr>
                                 </thead>
                                 <tbody>

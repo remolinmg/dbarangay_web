@@ -27,8 +27,17 @@ const Login = () => {
   async function login(e) {
     e.preventDefault();
 
+    // Check if email and password are empty
+    if (email.trim() === '') {
+      setEmailValid(false);
+    }
+    if (password.trim() === '') {
+      setPasswordValid(false);
+    }
+
+    // Don't proceed with login if email or password is invalid
     if (!emailValid || !passwordValid) {
-      return; // Don't proceed with login if email or password is invalid
+      return;
     }
 
     try {
@@ -53,34 +62,6 @@ const Login = () => {
     }
   }
 
-  async function login(e) {
-    e.preventDefault();
-
-    try {
-      await axios.post("http://localhost:8000/login", {
-        email, password, status
-      })
-        .then(res => {
-          if (res.data == "exist") {
-            navigate("/")
-          }
-          else if (res.data == "notexist") {
-            alert("Login Failed!")
-          }
-        })
-        .catch(e => {
-          alert("Login Failed!")
-          console.log(e);
-        })
-
-    }
-    catch (e) {
-      console.log(e);
-
-    }
-
-  }
-
   return (
     <div className="container-fluid main">
       <div className="row">
@@ -98,7 +79,7 @@ const Login = () => {
         <div className="col-12 col-md-4 right-side">
           <div className="login-container">
             <h2>LOGIN</h2>
-            <form action="POST">
+            <form>
               <div className={`form-group d-flex flex-column ${!emailValid ? 'has-error' : ''}`}>
                 <label className="label" htmlFor="email">Email Address</label>
                 <input
@@ -107,11 +88,10 @@ const Login = () => {
                   id="email"
                   value={email}
                   onChange={handleEmailChange}
-                  required
                 />
                 {!emailValid && (
                   <div className="invalid-feedback">
-                    <i className="bi bi-exclamation-triangle"></i> invalid Email address.
+                    <i className="bi bi-exclamation-triangle"></i> Input Email address.
                   </div>
                 )}
               </div>
@@ -126,11 +106,10 @@ const Login = () => {
                   id="password"
                   value={password}
                   onChange={handlePasswordChange}
-                  required
                 />
                 {!passwordValid && (
                   <div className="invalid-feedback">
-                    <i className="bi bi-exclamation-triangle"></i> Invalid Wrong Password
+                    <i className="bi bi-exclamation-triangle"></i> Input a Password
                   </div>
                 )}
               </div>
@@ -146,5 +125,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;
