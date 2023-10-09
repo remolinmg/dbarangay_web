@@ -34,9 +34,9 @@ function UserNav() {
     setSubmenuVisible(submenuVisible === false ? true : false);
   };
 
-  const toggleHomeSubmenu = () => {
-    setHomeSubmenuVisible(!HomesubmenuVisible);
-  };
+  // const toggleHomeSubmenu = () => {
+  //   setHomeSubmenuVisible(!HomesubmenuVisible);
+  // };
 
   const toggleProfileSubmenu = () => {
     setProfileSubmenuVisible(!ProfilesubmenuVisible);
@@ -49,21 +49,21 @@ function UserNav() {
     };
   }, []);
 
-  let homeRef = useRef();
+  // let homeRef = useRef();
 
-  useEffect(() => {
-    let handler = (e) => {
-      if (!homeRef.current.contains(e.target)) {
-        setHomeSubmenuVisible(false);
-      }
-    };
+  // useEffect(() => {
+  //   let handler = (e) => {
+  //     if (!homeRef.current.contains(e.target)) {
+  //       setHomeSubmenuVisible(false);
+  //     }
+  //   };
 
-    document.addEventListener("mousedown", handler);
+  //   document.addEventListener("mousedown", handler);
 
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    }
-  });
+  //   return () => {
+  //     document.removeEventListener("mousedown", handler);
+  //   }
+  // });
 
   let announceRef = useRef();
 
@@ -136,17 +136,7 @@ function UserNav() {
                 />
                 <Link to="/./"> <span>BARANGAY HARAPIN ANG BUKAS</span> </Link>
               </li>
-              <li onClick={toggleHomeSubmenu} className="link" ref={homeRef}>
-                Home <BiChevronDown />
-                {HomesubmenuVisible && (
-                  <ul className="Homesubmenu">
-                    <li className="link"> <NavLink className="link" to="/./" activeClassName="active"> Home  </NavLink> </li>
-                    <li className="link"><a className="link" href='#officials' onClick={closeMenu}>Officials</a></li>
-                    <li className="link"><a className="link" href='#missionVision' onClick={closeMenu}>Mission Vision</a></li>
-                    <li className="link"><a className="link" href='#feedback' onClick={closeMenu}>Feedback</a></li>
-                  </ul>
-                )}
-              </li>
+              <li className="link"> <NavLink className="link" to="/./" activeClassName="active"> Home  </NavLink> </li>
               <li onClick={toggleSubmenu} className="link" ref={announceRef}>
                 Announcement <BiChevronDown />
                 {submenuVisible && (
@@ -171,31 +161,6 @@ function UserNav() {
                     </li>
                     <li>
                       <h5>CLARISE ANNELY</h5>
-                    </li>
-                    <li>
-                      <h6>Summary of Request</h6>
-                    </li>
-                    <li>
-                      <div className="request-summary">
-                        <div className="column">
-                          <p>Date</p>
-                          <p>May 10, 2023</p>
-                          <p>May 2, 2023</p>
-                          <p>April 26, 2023</p>
-                        </div>
-                        <div className="column">
-                          <p>Document</p>
-                          <p>Barangay Clearance</p>
-                          <p>Barangay Permit</p>
-                          <p>Barangay ID</p>
-                        </div>
-                        <div className="column">
-                          <p>Status</p>
-                          <p className="sample-status">Requested</p>
-                          <p className="sample-status-denied">Denied</p>
-                          <p className="sample-status-claimed">Claimed</p>
-                        </div>
-                      </div>
                     </li>
                     <li>
                       <NavLink className="link" to="/UserProfile" activeClassName="active">

@@ -3,9 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const RegistrationComponent = () => {
-  // missing part of registration???????????????????
-  const [religion, setReligion] = useState('');
-  const [householdMember, sethouseholdMember] = useState('');
+
   const [userProfile, setuserProfile] = useState('');
 
 
@@ -15,7 +13,7 @@ const RegistrationComponent = () => {
     try {
 
       await axios.post("http://localhost:8000/signup", {
-        firstName, middleName, lastName, gender, religion, region, civilStatus, employmentStatus, highestEducation, nationality, householdMember, dateOfBirth, phoneNumber, email, password
+        firstName, middleName, lastName, gender, region, civilStatus, employmentStatus, highestEducation, nationality, dateOfBirth, phoneNumber, email, password
       })
         .then(res => {
           if (res.data == "exist") {
@@ -220,7 +218,6 @@ const RegistrationComponent = () => {
 
 
     try {
-      // ... your registration code ...
 
       navigate("/login");
     } catch (e) {
@@ -366,6 +363,57 @@ const RegistrationComponent = () => {
     setConfirmPasswordValid(value === password);
   };
 
+
+  // employment status
+  const [isEmployedChecked, setIsEmployedChecked] = useState(false);
+  const [isUnemployedChecked, setIsUnemployedChecked] = useState(false);
+  const [gcashInputValues, setGcashInputValues] = useState([]);
+
+  const handleCheckboxChangeEmployed = () => {
+    setIsEmployedChecked(!isEmployedChecked);
+    setEmploymentStatus('Employed');
+    setIsUnemployedChecked(false);
+  };
+  const handleCheckboxChangeUnemployed = () => {
+    setIsUnemployedChecked(!isUnemployedChecked);
+    setEmploymentStatus('Unemployed');
+    setIsEmployedChecked(false);
+  };
+
+  const renderInputTextboxes = () => {
+    if (isEmployedChecked) {
+      return (
+        <>
+          <div className={`form-group d-flex flex-column ${!lastNameValid ? 'has-error' : ''}`} style={{ marginTop: '-5px' }}>
+            <label className="label" htmlFor="company-name">Company Name</label>
+            <input
+              type="text"
+              className={`input-field form-control ${!lastNameValid ? 'is-invalid' : ''}`}
+              id="company-name"
+              // value={lastName}
+              // onChange={handleLastNameChange}
+              required
+            />
+          </div>
+          <div className={`form-group d-flex flex-column ${!lastNameValid ? 'has-error' : ''}`}>
+            <label className="label" htmlFor="position">Position</label>
+            <input
+              type="text"
+              className={`input-field form-control ${!lastNameValid ? 'is-invalid' : ''}`}
+              id="position"
+              // value={lastName}
+              // onChange={handleLastNameChange}
+              required
+            />
+          </div>
+        </>
+
+      )
+    }
+    return (null);
+  };
+
+
   return (
     <div className="container-fluid main-reg">
       <div className="row">
@@ -391,11 +439,6 @@ const RegistrationComponent = () => {
                         onChange={handleFirstNameChange}
                         required
                       />
-                      {!firstNameValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> First name is required.
-                        </div>
-                      )}
                     </div>
 
                     {/* MIDDLE NAME */}
@@ -409,11 +452,6 @@ const RegistrationComponent = () => {
                         onChange={handleMiddleNameChange}
                         required
                       />
-                      {!middleNameValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Middle name is required.
-                        </div>
-                      )}
                     </div>
 
                     {/* LAST NAME */}
@@ -427,11 +465,6 @@ const RegistrationComponent = () => {
                         onChange={handleLastNameChange}
                         required
                       />
-                      {!lastNameValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Last name is required.
-                        </div>
-                      )}
                     </div>
 
                     {/* SUFFIX */}
@@ -457,11 +490,6 @@ const RegistrationComponent = () => {
                         onChange={handleHouseNumberChange}
                         required
                       />
-                      {!houseNumberValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> House No. / Street is required.
-                        </div>
-                      )}
                     </div>
 
                     {/* BARANGAY */}
@@ -475,11 +503,6 @@ const RegistrationComponent = () => {
                         onChange={handleBarangayChange}
                         required
                       />
-                      {!barangayValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Barangay is required.
-                        </div>
-                      )}
                     </div>
 
                     {/* DISTRICT */}
@@ -493,11 +516,6 @@ const RegistrationComponent = () => {
                         onChange={handleDistrictChange}
                         required
                       />
-                      {!districtValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> District is required.
-                        </div>
-                      )}
                     </div>
 
                     {/* CITY/MUNICIPALITY */}
@@ -511,11 +529,6 @@ const RegistrationComponent = () => {
                         onChange={handleCityMunicipalityChange}
                         required
                       />
-                      {!cityMunicipalityValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> City/Municipality is required.
-                        </div>
-                      )}
                     </div>
 
                     {/* PROVINCE */}
@@ -529,11 +542,6 @@ const RegistrationComponent = () => {
                         onChange={handleProvinceChange}
                         required
                       />
-                      {!provinceValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Province is required.
-                        </div>
-                      )}
                     </div>
                   </div>
 
@@ -550,11 +558,6 @@ const RegistrationComponent = () => {
                         onChange={handleRegionChange}
                         required
                       />
-                      {!regionValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Region is required.
-                        </div>
-                      )}
                     </div>
 
                     {/* EMAIL ADDRESS*/}
@@ -567,11 +570,6 @@ const RegistrationComponent = () => {
                         onChange={handleEmailChange}
                         required
                       />
-                      {!emailValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Enter a valid email address.
-                        </div>
-                      )}
                     </div>
 
                     {/* Phone Number */}
@@ -584,11 +582,6 @@ const RegistrationComponent = () => {
                         onChange={handlePhoneNumberChange}
                         required
                       />
-                      {!phoneNumberValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Enter a valid phone number.
-                        </div>
-                      )}
                     </div>
 
                     {/* NATIONALITY */}
@@ -601,11 +594,6 @@ const RegistrationComponent = () => {
                         onChange={handleNationalityChange}
                         required
                       />
-                      {!nationalityValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Nationality is required.
-                        </div>
-                      )}
                     </div>
 
                     {/* GENDER */}
@@ -620,13 +608,7 @@ const RegistrationComponent = () => {
                         <option value="">Select Gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
-                        <option value="secret">Secret</option>
                       </select>
-                      {!genderValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Select your gender.
-                        </div>
-                      )}
                     </div>
 
                     {/* CIVIL STATUS */}
@@ -642,62 +624,40 @@ const RegistrationComponent = () => {
                         <option value="">Select Civil Status</option>
                         <option value="single">Single</option>
                         <option value="married">Married</option>
-                        <option value="divorced">Divorced</option>
+                        <option value="widow">Widow/er</option>
                         <option value="separated">Separated</option>
                       </select>
-                      {!civilStatusValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Select your civil status.
-                        </div>
-                      )}
                     </div>
 
                     {/* Employment Status */}
                     <div className={`form-group d-flex flex-column ${!employmentStatusValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="employmentStatus">Employment Status</label>
-                      <select
-                        id="employmentStatus"
-                        onChange={handleEmploymentStatusChange}
-                        className={`option2 form-control ${!employmentStatusValid ? 'is-invalid' : ''}`}
-                        style={{ fontSize: '14px', marginBottom: '10px' }}
-                      >
-                        <option value="">Select Employment Status</option>
-                        <option value="employed">Employed</option>
-                        <option value="unemployed">Unemployed</option>
-                      </select>
-                      {!employmentStatusValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Select your employment status.
+                      <div className="d-flex flex-row p-0 m-0">
+                        <div className="form-group d-flex flex-row ms-1 me-1">
+                          <input
+                            className="ms-1 me-1"
+                            type="checkbox"
+                            checked={isEmployedChecked}
+                            onChange={handleCheckboxChangeEmployed}
+                          />
+                          <p className="pt-1">Employed</p>
                         </div>
-                      )}
-                    </div>
 
-                    {/* {renderInputTextboxes} */}
-                    {showInputBoxes && (
-                      <div>
-                        <div className="form-group">
-                          <label htmlFor="companyName">GCash Reference No.</label>
+                        <div className="form-group d-flex flex-row ms-1 me-1">
                           <input
-                            type="text"
-                            id="companyName"
-                            name="companyName"
-                            className="form-control"
-                            required
+                            className="ms-1 me-1"
+                            type="checkbox"
+                            checked={isUnemployedChecked}
+                            onChange={handleCheckboxChangeUnemployed}
                           />
-                        </div>
-                        <div className="form-group">
-                          <label htmlFor="position">Position</label>
-                          <input
-                            type="text"
-                            id="position"
-                            name="position"
-                            className="form-control"
-                            required
-                          />
+                          <p className="pt-1">Unemployed</p>
                         </div>
                       </div>
-                    )}
+
+                      {renderInputTextboxes()}
+                    </div>
                   </div>
+
                   {/* THIRD COLUMN REGISTER PAGE */}
                   <div className="col-12 col-md-4 reg-row3 p-3">
                     {/* Home Ownership */}
@@ -708,16 +668,12 @@ const RegistrationComponent = () => {
                         onChange={handleHomeOwnershipChange}
                         className={`option form-control ${!homeOwnershipValid ? 'is-invalid' : ''}`}
                         required
+                        style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Ownership</option>
                         <option value="owner">Owner</option>
                         <option value="renting">Renting</option>
                       </select>
-                      {!homeOwnershipValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Home Ownership is required.
-                        </div>
-                      )}
                     </div>
 
                     {/* DATE OF BIRTH */}
@@ -730,11 +686,6 @@ const RegistrationComponent = () => {
                         onChange={handleDateOfBirthChange}
                         required
                       />
-                      {!dateOfBirthValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Date of Birth is required.
-                        </div>
-                      )}
                     </div>
 
                     {/* PLACE OF BIRTH */}
@@ -747,11 +698,6 @@ const RegistrationComponent = () => {
                         onChange={handleBirthPlaceChange}
                         required
                       />
-                      {!birthPlaceValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Place of Birth is required.
-                        </div>
-                      )}
                     </div>
 
                     {/* Age */}
@@ -764,11 +710,6 @@ const RegistrationComponent = () => {
                         onChange={handleAgeChange}
                         required
                       />
-                      {!ageValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Age is required.
-                        </div>
-                      )}
                     </div>
 
                     {/* Educational Attainment */}
@@ -779,17 +720,13 @@ const RegistrationComponent = () => {
                         onChange={handleHighestEducationChange}
                         className={`option2 form-control ${!highestEducationValid ? 'is-invalid' : ''}`}
                         required
+                        style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Highest Educational Attainment</option>
                         <option value="undergrad">Undergraduate (Bachelor's Degree)</option>
                         <option value="postgrad">Postgraduate (Master's Degree)</option>
                         <option value="doctoral">Doctoral (PhD)</option>
                       </select>
-                      {!highestEducationValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Educational Attainment is required.
-                        </div>
-                      )}
                     </div>
 
                     {/* Residence Class */}
@@ -800,23 +737,35 @@ const RegistrationComponent = () => {
                         onChange={handleResidenceClassChange}
                         className={`option2 form-control ${!residenceClassValid ? 'is-invalid' : ''}`}
                         required
+                        style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Residence Class</option>
                         <option value="PWD">Person with Disability (PWD)</option>
                         <option value="soloParent">Solo Parent</option>
                         <option value="outOfSchoolYouth">Out of School Youth</option>
                       </select>
-                      {!residenceClassValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Residence Class is required.
-                        </div>
-                      )}
+                    </div>
+
+                    {/* Residence Class */}
+                    <div className={`form-group d-flex flex-column ${!residenceClassValid ? 'has-error' : ''}`}>
+                      <label className="label" htmlFor="residenceClass">Voter's Registration</label>
+                      <select
+                        id="residenceClass"
+                        onChange={handleResidenceClassChange}
+                        className={`option2 form-control ${!residenceClassValid ? 'is-invalid' : ''}`}
+                        required
+                        style={{ fontSize: '14px', marginBottom: '10px' }}
+                      >
+                        <option value="">Select Voter's Registration</option>
+                        <option value="registeredvoter">Registered</option>
+                        <option value="unregisteredvoter">Not Registered</option>
+                      </select>
                     </div>
 
                     {/* Password */}
                     <div className={`form-group d-flex flex-column ${!passwordValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="password">
-                        Password 
+                        Password
                       </label>
                       <input
                         type="password"
@@ -826,11 +775,6 @@ const RegistrationComponent = () => {
                         onChange={handlePasswordChange}
                         required
                       />
-                      {!passwordValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Password is Weak.
-                        </div>
-                      )}
                     </div>
 
                     {/* Confirm Password */}
@@ -846,11 +790,6 @@ const RegistrationComponent = () => {
                         onChange={handleConfirmPasswordChange}
                         required
                       />
-                      {!confirmPasswordValid && (
-                        <div className="invalid-feedback">
-                          <i className="bi bi-exclamation-triangle"></i> Passwords do not match.
-                        </div>
-                      )}
                     </div>
                   </div>
                   {/*------------------------------------------------------------------------------ */}
@@ -878,9 +817,6 @@ const RegistrationComponent = () => {
           </div>
         </div>
       </div>
-
-
-
     </div>
 
 

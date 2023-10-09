@@ -84,7 +84,7 @@ const Login = () => {
                 <label className="label" htmlFor="email">Email Address</label>
                 <input
                   type="email"
-                  className={`input-field form-control ${!emailValid ? 'is-invalid' : ''}`}
+                  className={`input-field form-control w-100 ${!emailValid ? 'is-invalid' : ''}`}
                   id="email"
                   value={email}
                   onChange={handleEmailChange}
@@ -102,7 +102,7 @@ const Login = () => {
                 </label>
                 <input
                   type="password"
-                  className={`input-field form-control ${!passwordValid ? 'is-invalid' : ''}`}
+                  className={`input-field form-control w-100 ${!passwordValid ? 'is-invalid' : ''}`}
                   id="password"
                   value={password}
                   onChange={handlePasswordChange}
