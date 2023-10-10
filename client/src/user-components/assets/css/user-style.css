@@ -1306,6 +1306,8 @@ li {
 
 .reg-desc {
   font-family: 'Poppins', sans-serif;
+  height: 80%;
+  overflow-y: scroll;
 }
 .reg-p {
   font-size: 12px;

@@ -585,130 +585,6 @@ const RegistrationComponent = () => {
                   <div className="col-12 col-md-4 reg-row2 p-3">
 
                     {/* REgion */}
-                    <div className={`form-group d-flex flex-column ${!regionValid ? 'has-error' : ''}`}>
-                      <label className="label" htmlFor="region">Region</label>
-                      <input
-                        type="text" className={`input-field form-control ${!regionValid ? 'is-invalid' : ''}`}
-                        id="region"
-                        value={region}
-                        onChange={handleRegionChange}
-                        required
-                      />
-                    </div>
-
-                    {/* EMAIL ADDRESS*/}
-                    <div className={`form-group d-flex flex-column ${!emailValid ? 'has-error' : ''}`}>
-                      <label className="label" htmlFor="email">Email Address</label>
-                      <input
-                        type="email" className={`input-field form-control ${!emailValid ? 'is-invalid' : ''}`}
-                        id="email"
-                        value={email}
-                        onChange={handleEmailChange}
-                        required
-                      />
-                    </div>
-
-                    {/* Phone Number */}
-                    <div className={`form-group d-flex flex-column ${!phoneNumberValid ? 'has-error' : ''}`}>
-                      <label className="label" htmlFor="phoneNumber">Phone Number</label>
-                      <input
-                        type="tel" className={`input-field form-control ${!phoneNumberValid ? 'is-invalid' : ''}`}
-                        id="phoneNumber"
-                        value={phoneNumber}
-                        onChange={handlePhoneNumberChange}
-                        required
-                      />
-                    </div>
-
-                    {/* NATIONALITY */}
-                    <div className={`form-group d-flex flex-column ${!nationalityValid ? 'has-error' : ''}`}>
-                      <label className="label" htmlFor="nationality">Nationality</label>
-                      <input
-                        type="text" className={`input-field form-control ${!nationalityValid ? 'is-invalid' : ''}`}
-                        id="nationality"
-                        value={nationality}
-                        onChange={handleNationalityChange}
-                        required
-                      />
-                    </div>
-
-                    {/* SUFFIX */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="last-name">Suffix</label>
-                      <input
-                        type="text" className="input-field"
-                        id="last-name"
-
-                        // onChange={(e) => setLastName(e.target.value)}
-                        required
-                      />
-                    </div>
-
-                    {/* House Number */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="address">House No. / Street</label>
-                      <input
-                        type="text" className="input-field"
-                        id="address"
-
-                        
-                        required
-                      />
-                    </div>
-
-                    {/* Barangay */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="address">Barangay</label>
-                      <input
-                        type="text" className="input-field"
-                        id="address"
-
-                        // onChange={(e) => setAddress(e.target.value)}
-                        required
-                      />
-                    </div>
-
-                    {/* District */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="address">District</label>
-                      <input
-                        type="text" className="input-field"
-                        id="address"
-
-                        // onChange={(e) => setAddress(e.target.value)}
-                        required
-                      />
-                    </div>
-
-                    {/* City/Municipality */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="address">City/Municipality</label>
-                      <input
-                        type="text" className="input-field"
-                        id="address"
-
-                        // onChange={(e) => setAddress(e.target.value)}
-                        required
-                      />
-                    </div>
-
-                    {/* Province */}
-                    <div className="form-group d-flex flex-column">
-                      <label className="label" htmlFor="address">Province</label>
-                      <input
-                        type="text" className="input-field"
-                        id="address"
-
-                        // onChange={(e) => setAddress(e.target.value)}
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  {/* SECOND COLUMN REGISTER PAGE */}
-                  <div className="col-12 col-md-4 reg-row2 p-3">
-
-                    {/* REgion */}
                     <div className="form-group d-flex flex-column">
                       <label className="label" htmlFor="region">Region</label>
                       <input
@@ -976,8 +852,9 @@ const RegistrationComponent = () => {
             <p className="reg-p"><b>Data Retention: </b> Your personal data will be retained for as long as necessary to fulfill the purposes for which it was collected, or as required by applicable laws and regulations. We will delete your data when it is no longer needed.</p>
             <p className="reg-p"><b>User Rights: </b>  You have the right to access, correct, delete, or export your personal data stored on our app. If you have any such requests or inquiries, please contact us through the provided channels.</p>
             <p className="reg-p"><b>Consent Mechanism: </b> By registering on the BARANGAY HARAPIN ANG BUKAS App, you give your informed consent for the collection and use of your personal information as outlined in this statement.n</p>
-            <p className="reg-p"><b>User Rights: </b>  You have the right to access, correct, delete, or export your personal data stored on our app. If you have any such requests or inquiries, please contact us through the provided channels.</p>
-            <p className="reg-p"><b>User Rights: </b>  You have the right to access, correct, delete, or export your personal data stored on our app. If you have any such requests or inquiries, please contact us through the provided channels.</p>
+            <p className="reg-p"><b>Data Breach Response: </b>  In the unlikely event of a data breach, we have a comprehensive data breach response plan in place. We will promptly notify affected individuals and relevant authorities as required by law.</p>
+            <p className="reg-p"><b>Third-Party Vendors: </b>  We may use third-party services to enhance the functionality of our app. Rest assured, any third-party service providers we engage with are carefully selected and vetted for their commitment to data protection and privacy compliance.</p>
+            <p className="reg-p"><b>Updates and Amendments: </b>  We will regularly review and update this Privacy Compliance Statement to stay in compliance with changing privacy laws and best practices. Any significant changes will be communicated to you through the app.</p>
           </div>
         </div>
       </div>
