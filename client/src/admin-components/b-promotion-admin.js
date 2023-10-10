@@ -68,20 +68,20 @@ function BpromotionAdmin() {
   // SEARCH QUERY --------------------------------------------------------------
   const [searchQuery, setSearchQuery] = useState(""); // State for the search query
 
-    // DATA ---------------------------------------------------------------
-    const [ data,setData] = useState([]);
-    useEffect(() => {
-      fetchData(); // Fetch initial data when the component mounts
-    }, []);
-  
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/get/promotebusiness');
-        setData(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  // DATA ---------------------------------------------------------------
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetchData(); // Fetch initial data when the component mounts
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/get/promotebusiness');
+      setData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   // Event handler for dropdown change ----------------------------------------
   const handleRowCountChange = (e) => {
     const selectedRowCount = parseInt(e.target.value);
@@ -145,37 +145,37 @@ function BpromotionAdmin() {
     }
   };
 
-   //------------------------------------------------ Database ----------------------------
-   const [residentName, setResidentName] = useState('');
-   const [businessName, setBusinessName] = useState('');
-   const [address, setAddress] = useState('');
-   const [hours, setHours] = useState('');
-   const [contact, setContact] = useState('');
-   const [category, setCategory] = useState(''); 
-   const [file,setFile] = useState();
-    //-------------------------- ADD FUNCTION -----------------------------------
+  //------------------------------------------------ Database ----------------------------
+  const [residentName, setResidentName] = useState('');
+  const [businessName, setBusinessName] = useState('');
+  const [address, setAddress] = useState('');
+  const [hours, setHours] = useState('');
+  const [contact, setContact] = useState('');
+  const [category, setCategory] = useState('');
+  const [file, setFile] = useState();
+  //-------------------------- ADD FUNCTION -----------------------------------
 
-    const promoteBusiness = () =>{
-      const formData = new FormData();
-      formData.append('businessName', businessName);
-      formData.append('address', address);
-      formData.append('hours', hours);
-      formData.append('contact', contact);
-      formData.append('category', category);
-      formData.append('residentName', residentName);
-      formData.append('file', file);
-      axios.post('http://localhost:8000/promotebusiness', formData) .then(res=>{
-        if(res.data=="Error saving data to MongoDB"){
-          alert("Business Already Exist!");
-        }
-        else if(res.data=="File and text data saved to MongoDB"){
-        }
+  const promoteBusiness = () => {
+    const formData = new FormData();
+    formData.append('businessName', businessName);
+    formData.append('address', address);
+    formData.append('hours', hours);
+    formData.append('contact', contact);
+    formData.append('category', category);
+    formData.append('residentName', residentName);
+    formData.append('file', file);
+    axios.post('http://localhost:8000/promotebusiness', formData).then(res => {
+      if (res.data == "Error saving data to MongoDB") {
+        alert("Business Already Exist!");
+      }
+      else if (res.data == "File and text data saved to MongoDB") {
+      }
     })
-      .catch(er => console.log(er))    
-    };
+      .catch(er => console.log(er))
+  };
 
   // EDIT FORM STATES (ShowForms) ------------------------------
-  
+
   const [editResidentName, setEditResidentName] = useState('');
   const [editBusinessName, setEditBusinessName] = useState('');
   const [editAddress, setEditAddress] = useState('');
@@ -274,13 +274,12 @@ function BpromotionAdmin() {
 
         </div>
       </div>
-      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''} d-none d-md-block`}>
+      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">
           <div className="text-center">
             <Link className="navbar-brand" to="/dashboard">
-              <img className="tblImage w-50 h-100" src={logo} alt="" />
+              <img className="tblImage w-50" src={logo} alt="" />
             </Link>
-            <h6>Barangay Harapin Ang Bukas</h6>
           </div>
           <ul>
 
@@ -315,7 +314,7 @@ function BpromotionAdmin() {
                 </div>
               </Link>
               {/* <ul className="sidebar-submenu"> */}
-              <ul className={`sidebar-submenu w-100 ${isDropdownOpen ? 'open' : ''}`}>
+              <ul className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? 'open' : ''}`}>
                 {isDropdownOpen && (
                   <>
                     <li>
@@ -343,13 +342,6 @@ function BpromotionAdmin() {
                       <Link to="/residents-admin" className="nav-link">
                         <BsFillPeopleFill className="sidebaricon" />
                         <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
-
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/b-permit-admin" className="nav-link">
-                        <BsEnvelopePaper className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Permit</span>
 
                       </Link>
                     </li>
@@ -389,7 +381,7 @@ function BpromotionAdmin() {
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
-            <div className="col-4">
+            <div className="col-6">
               <div className="input-group">
                 <input
                   type="text"
@@ -405,16 +397,7 @@ function BpromotionAdmin() {
                 </button>
               </div>
             </div>
-            <div className="col-4">
-              <div className="tabsz dropdown-center">
-                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
-                <ul className="dropdown-menu">
-                  <li><Link to="/announcement-admin">General</Link></li>
-                  <li><Link to="/livelihood-admin">Livelihood</Link></li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-4">
+            <div className="col-6">
               <div className="dropdown-tablenumbers">
                 <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
                   <option value="10">10</option>
@@ -491,7 +474,7 @@ function BpromotionAdmin() {
                             <td>{val.residentName}</td>
                             <td>
                               <img
-                              style ={{width:"100px",height: "100px"}}
+                                style={{ width: "100px", height: "100px" }}
                                 src={require(`../../../server/uploads/promotebusiness/${val.filename}`)}
                                 alt=""
                                 className="business-picture"
@@ -532,7 +515,7 @@ function BpromotionAdmin() {
                               type="text"
                               id="businessName"
                               name="businessName"
-                              onChange={(e) =>setBusinessName(e.target.value) }
+                              onChange={(e) => setBusinessName(e.target.value)}
                               className="form-control"
                               required
                             />
@@ -550,16 +533,16 @@ function BpromotionAdmin() {
                             />
                           </div>
 
-                          
 
-                         
+
+
                           <div className="form-group">
                             <label htmlFor="bhours">Business Hours</label>
                             <input
                               type="text"
                               id="hours"
                               name="hours"
-                              onChange={(e) =>  setHours(e.target.value)}
+                              onChange={(e) => setHours(e.target.value)}
                               className="form-control"
                               required
                             />
@@ -571,13 +554,13 @@ function BpromotionAdmin() {
                               type="text"
                               id="category"
                               name="category"
-                              onChange={(e) =>  setCategory(e.target.value)}
+                              onChange={(e) => setCategory(e.target.value)}
                               className="form-control"
                               required
                             />
                           </div>
 
-                          
+
                           <div className="form-group">
                             <label htmlFor="bcontact">Contact Number</label>
                             <input
@@ -612,7 +595,7 @@ function BpromotionAdmin() {
                               accept="image/*"
                               onChange={(e) => setFile(e.target.files[0])}
                               className="form-control"
-                               />
+                            />
                           </div>
 
                           <div className="form-buttons">
@@ -665,7 +648,7 @@ function BpromotionAdmin() {
                             />
                           </div>
 
-                          
+
                           {/* Add Business Hours */}
                           <div className="form-group">
                             <label htmlFor="bhours">Business Hours</label>

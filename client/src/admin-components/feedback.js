@@ -65,20 +65,20 @@ function FeedbackAdmin() {
     // SEARCH QUERY --------------------------------------------------------------
     const [searchQuery, setSearchQuery] = useState(""); // State for the search query
 
-   // DATA ---------------------------------------------------------------
-  const [ data,setData] = useState([]);
-  useEffect(() => {
-    fetchData(); // Fetch initial data when the component mounts
-  }, []);
+    // DATA ---------------------------------------------------------------
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        fetchData(); // Fetch initial data when the component mounts
+    }, []);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/get/feedback');
-      setData(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/get/feedback');
+            setData(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     // Event handler for dropdown change ----------------------------------------
     const handleRowCountChange = (e) => {
@@ -188,13 +188,12 @@ function FeedbackAdmin() {
 
                 </div>
             </div>
-            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''} d-none d-md-block`}>
+            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
                 <div className="newsidebar">
                     <div className="text-center">
                         <Link className="navbar-brand" to="/dashboard">
-                            <img className="tblImage w-50 h-100" src={logo} alt="" />
+                            <img className="tblImage w-50" src={logo} alt="" />
                         </Link>
-                        <h6>Barangay Harapin Ang Bukas</h6>
                     </div>
                     <ul>
 
@@ -229,7 +228,7 @@ function FeedbackAdmin() {
                                 </div>
                             </Link>
                             {/* <ul className="sidebar-submenu"> */}
-                            <ul className={`sidebar-submenu w-100 ${isDropdownOpen ? 'open' : ''}`}>
+                            <ul className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? 'open' : ''}`}>
                                 {isDropdownOpen && (
                                     <>
                                         <li>
@@ -257,13 +256,6 @@ function FeedbackAdmin() {
                                             <Link to="/residents-admin" className="nav-link">
                                                 <BsFillPeopleFill className="sidebaricon" />
                                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
-
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/b-permit-admin" className="nav-link">
-                                                <BsEnvelopePaper className="sidebaricon" />
-                                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Permit</span>
 
                                             </Link>
                                         </li>
@@ -371,7 +363,7 @@ function FeedbackAdmin() {
                                             </div>
 
                                         </div>
-                                        <table className ="table w-100 flex-column">
+                                        <table className="table w-100 flex-column">
 
                                             <thead>
                                                 <tr>
@@ -413,7 +405,7 @@ function FeedbackAdmin() {
                                                     </tr>
                                                 ))} */}
 
-                                                    {filteredData.map((val) => (
+                                                {filteredData.map((val) => (
                                                     <tr key={val._id}>
                                                         <th scope="row">{val._id}</th>
                                                         <td>{val.date}</td>

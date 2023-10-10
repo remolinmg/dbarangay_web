@@ -285,13 +285,12 @@ function ResidentsAdmin() {
 
         </div>
       </div>
-      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''} d-none d-md-block`}>
+      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">
           <div className="text-center">
             <Link className="navbar-brand" to="/dashboard">
-              <img className="tblImage w-50 h-100" src={logo} alt="" />
+              <img className="tblImage w-50" src={logo} alt="" />
             </Link>
-            <h6>Barangay Harapin Ang Bukas</h6>
           </div>
           <ul>
 
@@ -326,7 +325,7 @@ function ResidentsAdmin() {
                 </div>
               </Link>
               {/* <ul className="sidebar-submenu"> */}
-              <ul className={`sidebar-submenu w-100 ${isDropdownOpen ? 'open' : ''}`}>
+              <ul className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? 'open' : ''}`}>
                 {isDropdownOpen && (
                   <>
                     <li>
@@ -354,13 +353,6 @@ function ResidentsAdmin() {
                       <Link to="/residents-admin" className="nav-link">
                         <BsFillPeopleFill className="sidebaricon" />
                         <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
-
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/b-permit-admin" className="nav-link">
-                        <BsEnvelopePaper className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Permit</span>
 
                       </Link>
                     </li>
@@ -419,12 +411,12 @@ function ResidentsAdmin() {
             </div>
             <div className="col-4">
               <div className="tabsz dropdown-center">
-                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
-                <ul class="dropdown-menu">
+                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button>
+                <ul className="dropdown-menu dropdown-topcategory">
                   <Link to="/residents-admin">
-                    <li><a class="dropdown-item">Active Residents</a></li></Link>
+                    <li><a class="dropdown-item" className="dropdown-item text-center">Active Residents</a></li></Link>
                   <Link to="/resident-inactiveadmin">
-                    <li><a class="dropdown-item">Inactive Residents</a></li></Link>
+                    <li><a class="dropdown-item" className="dropdown-item text-center">Inactive Residents</a></li></Link>
                 </ul>
               </div>
             </div>

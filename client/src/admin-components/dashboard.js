@@ -314,13 +314,6 @@ function Dashboard() {
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link to="/b-permit-admin" className="nav-link">
-                                                <BsEnvelopePaper className="sidebaricon" />
-                                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Permit</span>
-
-                                            </Link>
-                                        </li>
-                                        <li>
                                             <Link to="/b-promotion-admin" className="nav-link">
                                                 <BsBuildingFillUp className="sidebaricon" />
                                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Promotion</span>

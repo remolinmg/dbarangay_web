@@ -40,15 +40,15 @@ function StafflogsAdmin() {
         setProfileSubmenuVisible(!ProfilesubmenuVisible);
     };
 
-        // SEARCH QUERY --------------------------------------------------------------
-        const [searchQuery, setSearchQuery] = useState(""); 
+    // SEARCH QUERY --------------------------------------------------------------
+    const [searchQuery, setSearchQuery] = useState("");
 
-        // Event handler for search input change -------------------------------------
-        const handleSearchChange = (e) => {
-            setSearchQuery(e.target.value);
-            
-        };
-        
+    // Event handler for search input change -------------------------------------
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+
+    };
+
     return (
         <>
             <div className="topbarsection">
@@ -100,13 +100,12 @@ function StafflogsAdmin() {
 
                 </div>
             </div>
-            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''} d-none d-md-block`}>
+            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
                 <div className="newsidebar">
                     <div className="text-center">
                         <Link className="navbar-brand" to="/dashboard">
-                            <img className="tblImage w-50 h-100" src={logo} alt="" />
+                            <img className="tblImage w-50" src={logo} alt="" />
                         </Link>
-                        <h6>Barangay Harapin Ang Bukas</h6>
                     </div>
                     <ul>
 
@@ -141,7 +140,7 @@ function StafflogsAdmin() {
                                 </div>
                             </Link>
                             {/* <ul className="sidebar-submenu"> */}
-                            <ul className={`sidebar-submenu w-100 ${isDropdownOpen ? 'open' : ''}`}>
+                            <ul className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? 'open' : ''}`}>
                                 {isDropdownOpen && (
                                     <>
                                         <li>
@@ -169,13 +168,6 @@ function StafflogsAdmin() {
                                             <Link to="/residents-admin" className="nav-link">
                                                 <BsFillPeopleFill className="sidebaricon" />
                                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
-
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/b-permit-admin" className="nav-link">
-                                                <BsEnvelopePaper className="sidebaricon" />
-                                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Permit</span>
 
                                             </Link>
                                         </li>
@@ -228,8 +220,8 @@ function StafflogsAdmin() {
                                         <div class="d-md-flex justify-content-between align-items-center">
                                             <h5 class="card-title">Staff Movement</h5>
                                             <div className="input-group w-25">
-                                                <input type="text" className="form-control" placeholder="Search"aria-label="Enter search keyword" name="query" 
-                                                value={searchQuery} onChange={handleSearchChange} />
+                                                <input type="text" className="form-control" placeholder="Search" aria-label="Enter search keyword" name="query"
+                                                    value={searchQuery} onChange={handleSearchChange} />
                                                 <button className="btn btn-outline-secondary" type="button">
                                                     <i className="bi bi-search"></i>
                                                 </button>

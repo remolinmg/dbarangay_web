@@ -64,20 +64,20 @@ function BofficialsAdmin() {
   // SEARCH QUERY --------------------------------------------------------------
   const [searchQuery, setSearchQuery] = useState(""); // State for the search query
 
-   // DATA ---------------------------------------------------------------
-   const [ data,setData] = useState([]);
-   useEffect(() => {
-     fetchData(); // Fetch initial data when the component mounts
-   }, []);
- 
-   const fetchData = async () => {
-     try {
-       const response = await axios.get('http://localhost:8000/get/official');
-       setData(response.data);
-     } catch (error) {
-       console.error(error);
-     }
-   };
+  // DATA ---------------------------------------------------------------
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetchData(); // Fetch initial data when the component mounts
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/get/official');
+      setData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 
   // Event handler for dropdown change ----------------------------------------
@@ -131,15 +131,15 @@ function BofficialsAdmin() {
   const toggleForm = () => { setShowForm(!showForm); }; //   SHOW FORMS 
   const handleDiscard = () => { setShowForm(false); }; //   DISCARD FUNCTION
 
-//  DELETE  
-const deleteRow = async (id) => {
-  try {
-    await axios.delete(`http://localhost:8000/delete/official/${id}`);
-    fetchData();
-  } catch (error) {
-    console.error(error);
-  }
-};
+  //  DELETE  
+  const deleteRow = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8000/delete/official/${id}`);
+      fetchData();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   // Database
   const [id, setId] = useState('');
@@ -153,7 +153,7 @@ const deleteRow = async (id) => {
   const [startTerm, setStartTerm] = useState('');
   const [endTerm, setEndTerm] = useState('');
 
-  const official = () =>{
+  const official = () => {
     const formData = new FormData();
     formData.append('position', position);
     formData.append('firstName', firstName);
@@ -164,14 +164,14 @@ const deleteRow = async (id) => {
     formData.append('file', file);
     formData.append('startTerm', startTerm);
     formData.append('endTerm', endTerm);
-    axios.post('http://localhost:8000/official', formData) .then(res=>{
-      if(res.data=="Error saving data to MongoDB"){
+    axios.post('http://localhost:8000/official', formData).then(res => {
+      if (res.data == "Error saving data to MongoDB") {
         alert("Barangay Official Already Exist!");
       }
-      else if(res.data=="File and text data saved to MongoDB"){
+      else if (res.data == "File and text data saved to MongoDB") {
       }
-  })
-    .catch(er => console.log(er))    
+    })
+      .catch(er => console.log(er))
   };
 
 
@@ -285,13 +285,12 @@ const deleteRow = async (id) => {
 
         </div>
       </div>
-      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''} d-none d-md-block`}>
+      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">
           <div className="text-center">
             <Link className="navbar-brand" to="/dashboard">
-              <img className="tblImage w-50 h-100" src={logo} alt="" />
+              <img className="tblImage w-50" src={logo} alt="" />
             </Link>
-            <h6>Barangay Harapin Ang Bukas</h6>
           </div>
           <ul>
 
@@ -326,7 +325,7 @@ const deleteRow = async (id) => {
                 </div>
               </Link>
               {/* <ul className="sidebar-submenu"> */}
-              <ul className={`sidebar-submenu w-100 ${isDropdownOpen ? 'open' : ''}`}>
+              <ul className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? 'open' : ''}`}>
                 {isDropdownOpen && (
                   <>
                     <li>
@@ -354,13 +353,6 @@ const deleteRow = async (id) => {
                       <Link to="/residents-admin" className="nav-link">
                         <BsFillPeopleFill className="sidebaricon" />
                         <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
-
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/b-permit-admin" className="nav-link">
-                        <BsEnvelopePaper className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Permit</span>
 
                       </Link>
                     </li>
@@ -400,20 +392,20 @@ const deleteRow = async (id) => {
       <div className={`bofficials-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-50 d-flex align-items-center">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search"
-                  aria-label="Enter search keyword"
-                  name="query"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                />
-                <button className="btn btn-outline-secondary" type="button">
-                  <i className="bi bi-search"></i>
-                </button>
-              </div>
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search"
+                aria-label="Enter search keyword"
+                name="query"
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+              <button className="btn btn-outline-secondary" type="button">
+                <i className="bi bi-search"></i>
+              </button>
+            </div>
           </div>
         </div>
         {/* TABLE STARTS */}
@@ -474,7 +466,7 @@ const deleteRow = async (id) => {
                       </thead>
                       <tbody>
                         {getCurrentPageData().map((val) => {
-                          
+
 
                           return (
                             <tr key={val._id}>
@@ -486,21 +478,21 @@ const deleteRow = async (id) => {
                               <td>{val.contact}</td>
                               <td>{val.address}</td>
                               <td>
-                              <img
-                              style ={{width:"100px",height: "100px"}}
-                                src={require(`../../../server/uploads/official/${val.filename}`)}
-                                alt=""
-                                className="business-picture"
-                              />
-                            </td>
+                                <img
+                                  style={{ width: "100px", height: "100px" }}
+                                  src={require(`../../../server/uploads/official/${val.filename}`)}
+                                  alt=""
+                                  className="business-picture"
+                                />
+                              </td>
                               <td>{val.startTerm}</td>
                               <td>{val.endTerm}</td>
                               <td>
                                 <div className='gap-2 d-md-flex justify-content-start align-items-center'>
                                   <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(val)}>Edit</button>
-                                  <form  action=''>
+                                  <form action=''>
                                     <input type='hidden' name='id' value="" />
-                                    <button className='btn btn-outline-danger' name='deletePost'onClick={() => { deleteRow(val._id); }}>Delete</button>
+                                    <button className='btn btn-outline-danger' name='deletePost' onClick={() => { deleteRow(val._id); }}>Delete</button>
                                   </form>
                                 </div>
                               </td>
@@ -547,7 +539,7 @@ const deleteRow = async (id) => {
                               className="form-control"
                               required /> </div>
 
-                            <div className="form-group">
+                          <div className="form-group">
                             <label htmlFor="name"> MIDDLE NAME </label>
                             <input
                               type="text"

@@ -69,7 +69,7 @@ function BlotterAdmin() {
   const [searchQuery, setSearchQuery] = useState(""); // State for the search query
 
   // DATA ---------------------------------------------------------------
-  const [ data,setData] = useState([]);
+  const [data, setData] = useState([]);
   useEffect(() => {
     fetchData(); // Fetch initial data when the component mounts
   }, []);
@@ -130,33 +130,33 @@ function BlotterAdmin() {
 
 
 
- // Forms ----------------------------------------------
- const [showForm, setShowForm] = useState(false);
- const toggleForm = () => { setShowForm(!showForm); }; // SHOW FORMS
- const handleDiscard = () => { setShowForm(false); }; // DISCARD FUNCTION
+  // Forms ----------------------------------------------
+  const [showForm, setShowForm] = useState(false);
+  const toggleForm = () => { setShowForm(!showForm); }; // SHOW FORMS
+  const handleDiscard = () => { setShowForm(false); }; // DISCARD FUNCTION
 
 
-//  DELETE  
-const deleteRow = async (id) => {
-  try {
-    await axios.delete(`http://localhost:8000/delete/blotter/${id}`);
-    fetchData();
-  } catch (error) {
-    console.error(error);
-  }
-};
+  //  DELETE  
+  const deleteRow = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8000/delete/blotter/${id}`);
+      fetchData();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
- //------------------------------------------------ Database ----------------------------
- const [date, setDate] = useState('');
- const [complainant, setComplainant] = useState('');
- const [defendant, setDefendant] = useState('');
- const [type, setType] = useState('');
- const [address, setAddress] = useState('');
- const [status, setStatus] = useState(''); 
- const [file,setFile] = useState();
+  //------------------------------------------------ Database ----------------------------
+  const [date, setDate] = useState('');
+  const [complainant, setComplainant] = useState('');
+  const [defendant, setDefendant] = useState('');
+  const [type, setType] = useState('');
+  const [address, setAddress] = useState('');
+  const [status, setStatus] = useState('');
+  const [file, setFile] = useState();
   //-------------------------- ADD FUNCTION -----------------------------------
 
-  const blotter = () =>{
+  const blotter = () => {
     const formData = new FormData();
     formData.append('date', date);
     formData.append('complainant', complainant);
@@ -165,62 +165,62 @@ const deleteRow = async (id) => {
     formData.append('address', address);
     formData.append('status', status);
     formData.append('file', file);
-    axios.post('http://localhost:8000/blotter', formData) .then(res=>{
-      if(res.data=="Error saving data to MongoDB"){
+    axios.post('http://localhost:8000/blotter', formData).then(res => {
+      if (res.data == "Error saving data to MongoDB") {
         alert("Blotter Already Exist!");
       }
-      else if(res.data=="File and text data saved to MongoDB"){
+      else if (res.data == "File and text data saved to MongoDB") {
       }
-  })
-    .catch(er => console.log(er))    
+    })
+      .catch(er => console.log(er))
   };
 
-// EDIT FORM STATES (ShowForms) ------------------------------
+  // EDIT FORM STATES (ShowForms) ------------------------------
 
-const [editDate, setEditDate] = useState('');
-const [editComplainant, setEditComplainant] = useState('');
-const [editDefendant, setEditDefendant] = useState('');
-const [editType, setEditType] = useState('');
-const [editAddress, setEditAddress] = useState('');
-const [editStatus, setEditStatus] = useState('');
-const [editFile, setEditFile] = useState('');
-const [selectedRowData, setSelectedRowData] = useState(null);
-const [showEditForm, setShowEditForm] = useState(false);
-const handleEditDiscard = () => { setShowEditForm(false); };
+  const [editDate, setEditDate] = useState('');
+  const [editComplainant, setEditComplainant] = useState('');
+  const [editDefendant, setEditDefendant] = useState('');
+  const [editType, setEditType] = useState('');
+  const [editAddress, setEditAddress] = useState('');
+  const [editStatus, setEditStatus] = useState('');
+  const [editFile, setEditFile] = useState('');
+  const [selectedRowData, setSelectedRowData] = useState(null);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const handleEditDiscard = () => { setShowEditForm(false); };
 
-// Function to show the edit form with the default data of the selected row
-const showEditFormHandler = (rowData) => {
-  setSelectedRowData(rowData._id);
-  setEditDate(rowData.date);
-  setEditComplainant(rowData.complainant);
-  setEditDefendant(rowData.defendant);
-  setEditType(rowData.type);
-  setEditAddress(rowData.address);
-  setEditStatus(rowData.status);
-  setShowEditForm(true);
-};
+  // Function to show the edit form with the default data of the selected row
+  const showEditFormHandler = (rowData) => {
+    setSelectedRowData(rowData._id);
+    setEditDate(rowData.date);
+    setEditComplainant(rowData.complainant);
+    setEditDefendant(rowData.defendant);
+    setEditType(rowData.type);
+    setEditAddress(rowData.address);
+    setEditStatus(rowData.status);
+    setShowEditForm(true);
+  };
 
-const updateRowData = async () => {
-  try {
-    const formData = new FormData();
-    formData.append('date', editDate);
-    formData.append('complainant', editComplainant);
-    formData.append('defendant', editDefendant);
-    formData.append('type', editType);
-    formData.append('address', editAddress);
-    formData.append('status', editStatus);
-    formData.append('file', editFile);
-    const response = await axios.put(
-      `http://localhost:8000/update/blotter/${selectedRowData}`,
-      formData
-    );
-    console.log(response.data);
-    fetchData();
-    setShowEditForm(false);
-  } catch (error) {
-    console.error(error);
-  }
-};
+  const updateRowData = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('date', editDate);
+      formData.append('complainant', editComplainant);
+      formData.append('defendant', editDefendant);
+      formData.append('type', editType);
+      formData.append('address', editAddress);
+      formData.append('status', editStatus);
+      formData.append('file', editFile);
+      const response = await axios.put(
+        `http://localhost:8000/update/blotter/${selectedRowData}`,
+        formData
+      );
+      console.log(response.data);
+      fetchData();
+      setShowEditForm(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -273,13 +273,12 @@ const updateRowData = async () => {
 
         </div>
       </div>
-      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''} d-none d-md-block`}>
+      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">
           <div className="text-center">
             <Link className="navbar-brand" to="/dashboard">
-              <img className="tblImage w-50 h-100" src={logo} alt="" />
+              <img className="tblImage w-50" src={logo} alt="" />
             </Link>
-            <h6>Barangay Harapin Ang Bukas</h6>
           </div>
           <ul>
 
@@ -314,7 +313,7 @@ const updateRowData = async () => {
                 </div>
               </Link>
               {/* <ul className="sidebar-submenu"> */}
-              <ul className={`sidebar-submenu w-100 ${isDropdownOpen ? 'open' : ''}`}>
+              <ul className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? 'open' : ''}`}>
                 {isDropdownOpen && (
                   <>
                     <li>
@@ -342,13 +341,6 @@ const updateRowData = async () => {
                       <Link to="/residents-admin" className="nav-link">
                         <BsFillPeopleFill className="sidebaricon" />
                         <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
-
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/b-permit-admin" className="nav-link">
-                        <BsEnvelopePaper className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Permit</span>
 
                       </Link>
                     </li>
@@ -406,10 +398,10 @@ const updateRowData = async () => {
             </div>
             <div className="col-4">
               <div className="tabsz dropdown-center">
-                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
-                <ul className="dropdown-menu">
-                  <li><Link to="/announcement-admin">General</Link></li>
-                  <li><Link to="/livelihood-admin">Livelihood</Link></li>
+                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button>
+                <ul className="dropdown-menu dropdown-topcategory">
+                  <li><Link to="/announcement-admin" className="dropdown-item text-center">Blotter</Link></li>
+                  <li><Link to="/livelihood-admin" className="dropdown-item text-center">Complaints</Link></li>
                 </ul>
               </div>
             </div>
@@ -489,11 +481,11 @@ const updateRowData = async () => {
                             <td>{item.type}</td>
                             <td>{item.address}</td>
                             <td><img
-                              style ={{width:"100px",height: "100px"}}
-                                src={require(`../../../server/uploads/blotter/${item.filename}`)}
-                                alt=""
-                                className="business-picture"
-                              /></td>
+                              style={{ width: "100px", height: "100px" }}
+                              src={require(`../../../server/uploads/blotter/${item.filename}`)}
+                              alt=""
+                              className="business-picture"
+                            /></td>
                             <td>{item.status}</td>
                             <td>
                               <button className="btn btn-primary btn-sm" onClick={() => showEditFormHandler(item)}>Edit</button>
@@ -526,7 +518,7 @@ const updateRowData = async () => {
                             name="date" onChange={(e) => { setDate(e.target.value); }}
                             className="form-control" required /> </div>
 
-                          <div className="form-group">
+                        <div className="form-group">
                           <label htmlFor="complainant">COMPLAINANT </label>
                           <input
                             type="text"
@@ -534,7 +526,7 @@ const updateRowData = async () => {
                             name="complainant" onChange={(e) => { setComplainant(e.target.value); }}
                             className="form-control" required /></div>
 
-                          <div className="form-group">
+                        <div className="form-group">
                           <label htmlFor="defendant">DEFENDANT</label>
                           <input
                             type="text"
@@ -569,20 +561,20 @@ const updateRowData = async () => {
                             className="form-control" required /></div>
 
                         <div className="form-group">
-                        <label htmlFor="status">STATUS</label>
+                          <label htmlFor="status">STATUS</label>
                           <select
                             id="status"
                             className="form-control"
                             onChange={(e) => { setStatus(e.target.value); }}
                             style={{ fontSize: '20px', marginBottom: '10px' }}
                           >
-                              <option value="????" ></option>
-                              <option value="pending">PENDING</option>
-                              <option value="processed">PROCESSED</option>
+                            <option value="????" ></option>
+                            <option value="pending">PENDING</option>
+                            <option value="processed">PROCESSED</option>
                           </select>
                         </div>
                         <div className="form-buttons">
-                          <button type="submit" className="btn btn-primary"onClick={blotter}>Submit </button>
+                          <button type="submit" className="btn btn-primary" onClick={blotter}>Submit </button>
                           <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
                         </div>
                       </div>
@@ -601,7 +593,7 @@ const updateRowData = async () => {
                     <div className='certificate'>
                       <h2 className='certificate-title'>EDIT RESIDENTS INFO</h2>
                       <div className='certificate-content'>
-                      <div className="form-group">
+                        <div className="form-group">
                           <label htmlFor="date">COMPLAINT Date </label>
                           <input
                             type="date"
@@ -610,7 +602,7 @@ const updateRowData = async () => {
                             name="date" onChange={(e) => { setEditDate(e.target.value); }}
                             className="form-control" required /> </div>
 
-                          <div className="form-group">
+                        <div className="form-group">
                           <label htmlFor="complainant">COMPLAINANT </label>
                           <input
                             type="text"
@@ -619,7 +611,7 @@ const updateRowData = async () => {
                             name="complainant" onChange={(e) => { setEditComplainant(e.target.value); }}
                             className="form-control" required /></div>
 
-                          <div className="form-group">
+                        <div className="form-group">
                           <label htmlFor="defendant">DEFENDANT</label>
                           <input
                             type="text"
@@ -654,18 +646,18 @@ const updateRowData = async () => {
                             type="file"
                             id="file"
                             name="file" onChange={(e) => setEditFile(e.target.files[0])}
-                            className="form-control"/></div>
+                            className="form-control" /></div>
                         <div className="form-group">
-                        <label htmlFor="status">STATUS</label>
+                          <label htmlFor="status">STATUS</label>
                           <select
                             id="status"
                             className="form-control"
                             value={editStatus}
                             style={{ fontSize: '20px', marginBottom: '10px' }}
                           >
-                              <option value="????" ></option>
-                              <option value="pending">PENDING</option>
-                              <option value="processed">PROCESSED</option>
+                            <option value="????" ></option>
+                            <option value="pending">PENDING</option>
+                            <option value="processed">PROCESSED</option>
                           </select>
                         </div>
                         <div className='form-buttons'>
