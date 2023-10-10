@@ -7,20 +7,20 @@ import { BiMenu, BiChevronDown } from 'react-icons/bi';
 import { BiLogOut, BiCog } from "react-icons/bi";
 import { AiOutlineDashboard } from 'react-icons/ai';
 import {
-    BsPersonFill,
-    BsMegaphoneFill,
-    BsTelephoneFill,
-    BsTerminal,
-    BsFillFileEarmarkFill,
-    BsFillPersonBadgeFill,
-    BsFillFileEarmarkArrowDownFill,
-    BsFillPeopleFill,
-    BsEnvelopePaper,
-    BsBuildingFillUp,
-    BsMailbox
+  BsPersonFill,
+  BsMegaphoneFill,
+  BsTelephoneFill,
+  BsTerminal,
+  BsFillFileEarmarkFill,
+  BsFillPersonBadgeFill,
+  BsFillFileEarmarkArrowDownFill,
+  BsFillPeopleFill,
+  BsEnvelopePaper,
+  BsBuildingFillUp,
+  BsMailbox
 } from "react-icons/bs";
 import {
-    RiFolderWarningFill,
+  RiFolderWarningFill,
 } from "react-icons/ri";
 import 'bootstrap/dist/css/bootstrap.css';
 import { FaUserCircle } from "react-icons/fa";
@@ -67,7 +67,7 @@ function Bindigency() {
   const [searchQuery, setSearchQuery] = useState(""); // State for the search query
 
   // DATA ---------------------------------------------------------------
-  const [ data,setData] = useState([]);
+  const [data, setData] = useState([]);
   useEffect(() => {
     fetchData(); // Fetch initial data when the component mounts
   }, []);
@@ -187,34 +187,34 @@ function Bindigency() {
   };
   //-------------------------- ADD FUNCTION -----------------------------------
 
-  async function barangayIndigency(e){
+  async function barangayIndigency(e) {
     e.preventDefault();
-  
-    try{
-  
-        await axios.post("http://localhost:8000/barangayindigency",{
-          residentName,address,reasonOfRequest,pickUpDate,modeOfPayment,reference
-        })  
-        .then(res=>{
-          if(res.data=="exist"){
+
+    try {
+
+      await axios.post("http://localhost:8000/barangayindigency", {
+        residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
+      })
+        .then(res => {
+          if (res.data == "exist") {
             alert("You already sent the same request!");
           }
-          else if(res.data=="notexist"){
+          else if (res.data == "notexist") {
             setShowForm(false);
             fetchData();
           }
-      })
-      .catch(e=>{
+        })
+        .catch(e => {
           alert("Failed!")
           console.log(e);
-      })
-  
+        })
+
     }
-    catch(e){
-        console.log(e);
-  
+    catch (e) {
+      console.log(e);
+
     }
-  
+
   }
 
   //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
@@ -240,11 +240,11 @@ function Bindigency() {
   const updateRowData = async (id) => {
     try {
       const updatedData = {
-        residentName:editResidentName,
-        address:editAddress,
-        reasonOfRequest:editReasonOfRequest,
-        pickUpDate:editDate,
-        status:editStatus,
+        residentName: editResidentName,
+        address: editAddress,
+        reasonOfRequest: editReasonOfRequest,
+        pickUpDate: editDate,
+        status: editStatus,
       };
 
 
@@ -311,13 +311,12 @@ function Bindigency() {
 
         </div>
       </div>
-      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''} d-none d-md-block`}>
+      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">
           <div className="text-center">
             <Link className="navbar-brand" to="/dashboard">
-              <img className="tblImage w-50 h-100" src={logo} alt="" />
+              <img className="tblImage w-50" src={logo} alt="" />
             </Link>
-            <h6>Barangay Harapin Ang Bukas</h6>
           </div>
           <ul>
 
@@ -352,7 +351,7 @@ function Bindigency() {
                 </div>
               </Link>
               {/* <ul className="sidebar-submenu"> */}
-              <ul className={`sidebar-submenu w-100 ${isDropdownOpen ? 'open' : ''}`}>
+              <ul className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? 'open' : ''}`}>
                 {isDropdownOpen && (
                   <>
                     <li>
@@ -380,13 +379,6 @@ function Bindigency() {
                       <Link to="/residents-admin" className="nav-link">
                         <BsFillPeopleFill className="sidebaricon" />
                         <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
-
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/b-permit-admin" className="nav-link">
-                        <BsEnvelopePaper className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Permit</span>
 
                       </Link>
                     </li>
@@ -444,18 +436,18 @@ function Bindigency() {
             </div>
             <div className="col-4">
               <div className="tabsz dropdown-center">
-                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
-                <ul class="dropdown-menu">
-                  <Link to="/d-barangay-certificate">
-                    <li><a class="dropdown-item">Barangay Certificate</a></li></Link>
-                  <Link to="/d-barangay-indigency">
-                    <li><a class="dropdown-item">Barangay Indigency</a></li></Link>
-                  <Link to="/d-barangay-installation">
-                    <li><a class="dropdown-item">Installation Permit</a></li></Link>
-                    <Link to="/d-barangay-construction">
-                    <li><a class="dropdown-item"> construction Permit</a></li></Link>
-                  <Link to="/d-barangay-id">
-                    <li><a class="dropdown-item"> Barangay ID</a></li></Link>
+                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Services Category</button>
+                <ul class="dropdown-menu dropdown-topcategory">
+                  <Link to="/d-barangay-certificate" className="nav-link">
+                    <li><a class="dropdown-item" className="dropdown-item text-center">Barangay Certificate</a></li></Link>
+                  <Link to="/b-permit-admin" className="nav-link">
+                    <li><a class="dropdown-item" className="dropdown-item text-center">Business Permit</a></li></Link>
+                  <Link to="/d-barangay-id" className="nav-link">
+                    <li><a class="dropdown-item" className="dropdown-item text-center"> Barangay ID</a></li></Link>
+                  <Link to="/d-barangay-installation" className="nav-link">
+                    <li><a class="dropdown-item" className="dropdown-item text-center">Installation Permit</a></li></Link>
+                  <Link to="/d-barangay-construction" className="nav-link">
+                    <li><a class="dropdown-item" className="dropdown-item text-center"> construction Permit</a></li></Link>
                 </ul>
               </div>
             </div>
@@ -625,30 +617,30 @@ function Bindigency() {
                             />
                           </div>
                           <div className="form-group">
-                      <label>Mode of Payment:</label>
-                      <div>
-                        <input
-                          className="ms-1 me-1"
-                          type="checkbox"
-                          checked={isCOPChecked}
-                          onChange={handleCheckboxChangeCash}
-                        />
-                        Cash on Pick-up
-                      </div>
+                            <label>Mode of Payment:</label>
+                            <div>
+                              <input
+                                className="ms-1 me-1"
+                                type="checkbox"
+                                checked={isCOPChecked}
+                                onChange={handleCheckboxChangeCash}
+                              />
+                              Cash on Pick-up
+                            </div>
 
-                      <div className="">
-                        <input
-                          className="ms-1 me-1"
-                          type="checkbox"
-                          checked={isGCashChecked}
-                          onChange={handleCheckboxChangeGcash}
-                          
-                        />
-                        GCash
-                      </div>
+                            <div className="">
+                              <input
+                                className="ms-1 me-1"
+                                type="checkbox"
+                                checked={isGCashChecked}
+                                onChange={handleCheckboxChangeGcash}
 
-                      {renderInputTextboxes()}
-                    </div>
+                              />
+                              GCash
+                            </div>
+
+                            {renderInputTextboxes()}
+                          </div>
                         </div>
                         <button type="submit" className="btn btn-primary" onClick={barangayIndigency}>Submit</button>
                         <button type="button" className="btn btn-danger" onClick={handleDiscard}>Discard</button>
@@ -720,16 +712,16 @@ function Bindigency() {
                         </div>
                         <div className="form-group">
                           <label htmlFor="status">Status</label>
-                            <select id="status" 
-                              className="form-control" 
-                              value={editStatus} 
-                              onChange={(e) => setEditStatus(e.target.value)} 
-                              style={{ fontSize: '20px', marginBottom: '10px' }} >
-                                <option value="New" >New</option>
-                                <option value="On Process">On Process</option>
-                                <option value="Processed">Processed</option>
-                                <option value="Declined">Declined</option>
-                            </select>
+                          <select id="status"
+                            className="form-control"
+                            value={editStatus}
+                            onChange={(e) => setEditStatus(e.target.value)}
+                            style={{ fontSize: '20px', marginBottom: '10px' }} >
+                            <option value="New" >New</option>
+                            <option value="On Process">On Process</option>
+                            <option value="Processed">Processed</option>
+                            <option value="Declined">Declined</option>
+                          </select>
                         </div>
                       </div>
 

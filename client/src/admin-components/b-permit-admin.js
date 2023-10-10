@@ -155,41 +155,41 @@ function BpermitAdmin() {
     const [pickUpDate, setPickUpDate] = useState('');
     const [type, setType] = useState(''); const [modeOfPayment, setModeOfPayment] = useState('');
     const [reference, setReference] = useState('');
-  
+
     // gcash reference
     const [isGCashChecked, setIsGCashChecked] = useState(false);
     const [isCOPChecked, setIsCOPChecked] = useState(false);
     const [gcashInputValues, setGcashInputValues] = useState([]);
-  
+
     const handleCheckboxChangeGcash = () => {
-      setIsGCashChecked(!isGCashChecked);
-      setModeOfPayment('G-Cash');
-      setIsCOPChecked(false);
+        setIsGCashChecked(!isGCashChecked);
+        setModeOfPayment('G-Cash');
+        setIsCOPChecked(false);
     };
     const handleCheckboxChangeCash = () => {
-      setIsCOPChecked(!isCOPChecked);
-      setModeOfPayment('Cash On Pick-up');
-      setIsGCashChecked(false);
+        setIsCOPChecked(!isCOPChecked);
+        setModeOfPayment('Cash On Pick-up');
+        setIsGCashChecked(false);
     };
-  
+
     const renderInputTextboxes = () => {
-      if (isGCashChecked) {
-        return (
-          <div>
-            <div className="form-group">
-              <label htmlFor="gcashref">GCash Reference No.</label>
-              <input
-                type="text"
-                id="gcashRefNo"
-                name="gcashRef"
-                className="form-control"
-                onChange={(e) => setReference(e.target.value)}
-                required />
-            </div>
-          </div>
-        )
-      }
-      return (null);
+        if (isGCashChecked) {
+            return (
+                <div>
+                    <div className="form-group">
+                        <label htmlFor="gcashref">GCash Reference No.</label>
+                        <input
+                            type="text"
+                            id="gcashRefNo"
+                            name="gcashRef"
+                            className="form-control"
+                            onChange={(e) => setReference(e.target.value)}
+                            required />
+                    </div>
+                </div>
+            )
+        }
+        return (null);
     };
 
     //-------------------------- ADD FUNCTION -----------------------------------
@@ -200,7 +200,7 @@ function BpermitAdmin() {
         try {
 
             await axios.post("http://localhost:8000/businessclearance", {
-                businessName, address, residentName, type, reasonOfRequest, pickUpDate,modeOfPayment,reference
+                businessName, address, residentName, type, reasonOfRequest, pickUpDate, modeOfPayment, reference
             })
                 .then(res => {
                     if (res.data == "exist") {
@@ -256,7 +256,7 @@ function BpermitAdmin() {
                 type: editType,
                 reasonOfRequest: editReasonOfRequest,
                 pickUpDate: editDate,
-                status:editStatus,
+                status: editStatus,
             };
 
 
@@ -325,13 +325,12 @@ function BpermitAdmin() {
 
                 </div>
             </div>
-            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''} d-none d-md-block`}>
+            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
                 <div className="newsidebar">
                     <div className="text-center">
                         <Link className="navbar-brand" to="/dashboard">
-                            <img className="tblImage w-50 h-100" src={logo} alt="" />
+                            <img className="tblImage w-50" src={logo} alt="" />
                         </Link>
-                        <h6>Barangay Harapin Ang Bukas</h6>
                     </div>
                     <ul>
 
@@ -366,7 +365,7 @@ function BpermitAdmin() {
                                 </div>
                             </Link>
                             {/* <ul className="sidebar-submenu"> */}
-                            <ul className={`sidebar-submenu w-100 ${isDropdownOpen ? 'open' : ''}`}>
+                            <ul className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? 'open' : ''}`}>
                                 {isDropdownOpen && (
                                     <>
                                         <li>
@@ -394,13 +393,6 @@ function BpermitAdmin() {
                                             <Link to="/residents-admin" className="nav-link">
                                                 <BsFillPeopleFill className="sidebaricon" />
                                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
-
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/b-permit-admin" className="nav-link">
-                                                <BsEnvelopePaper className="sidebaricon" />
-                                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Permit</span>
 
                                             </Link>
                                         </li>
@@ -458,10 +450,18 @@ function BpermitAdmin() {
                         </div>
                         <div className="col-4">
                             <div className="tabsz dropdown-center">
-                                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
-                                <ul className="dropdown-menu">
-                                    <li><Link to="/announcement-admin">General</Link></li>
-                                    <li><Link to="/livelihood-admin">Livelihood</Link></li>
+                                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Services Category</button>
+                                <ul class="dropdown-menu dropdown-topcategory">
+                                    <Link to="/d-barangay-certificate" className="nav-link">
+                                        <li><a class="dropdown-item" className="dropdown-item text-center">Barangay Certificate</a></li></Link>
+                                    <Link to="/d-barangay-id" className="nav-link">
+                                        <li><a class="dropdown-item" className="dropdown-item text-center"> Barangay ID</a></li></Link>
+                                    <Link to="/d-barangay-installation" className="nav-link">
+                                        <li><a class="dropdown-item" className="dropdown-item text-center">Installation Permit</a></li></Link>
+                                    <Link to="/d-barangay-construction" className="nav-link">
+                                        <li><a class="dropdown-item" className="dropdown-item text-center"> construction Permit</a></li></Link>
+                                    <Link to="/d-barangay-indigency" className="nav-link">
+                                        <li><a class="dropdown-item" className="dropdown-item text-center">Barangay Indigency</a></li></Link>
                                 </ul>
                             </div>
                         </div>
@@ -526,7 +526,7 @@ function BpermitAdmin() {
                                                     <th scope="col">Nature of Business </th>
                                                     <th scope="col">Pick-up Date </th>
                                                     <th scope="col">Payment</th>
-                          <th scope="col">Reference No.</th>
+                                                    <th scope="col">Reference No.</th>
                                                     <th scope="col">Status </th>
                                                     <th scope="col">Actions</th>
                                                 </tr>
@@ -543,8 +543,8 @@ function BpermitAdmin() {
                                                         <td>{val.reasonOfRequest}</td>
                                                         <td>{val.pickUpDate}</td>
                                                         <td>{val.modeOfPayment}</td>
-                            <td>{val.reference}</td>
-                            <td>{val.status}</td>
+                                                        <td>{val.reference}</td>
+                                                        <td>{val.status}</td>
                                                         <td>
                                                             <div className='gap-2 d-md-flex justify-content-start align-items-center'>
                                                                 <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(val)}> Edit</button>
@@ -635,31 +635,31 @@ function BpermitAdmin() {
                                                             onChange={(e) => setPickUpDate(e.target.value)}
                                                             className="form-control"
                                                             required /> </div>
-                                                             <div className="form-group">
-                      <label>Mode of Payment:</label>
-                      <div>
-                        <input
-                          className="ms-1 me-1"
-                          type="checkbox"
-                          checked={isCOPChecked}
-                          onChange={handleCheckboxChangeCash}
-                        />
-                        Cash on Pick-up
-                      </div>
+                                                    <div className="form-group">
+                                                        <label>Mode of Payment:</label>
+                                                        <div>
+                                                            <input
+                                                                className="ms-1 me-1"
+                                                                type="checkbox"
+                                                                checked={isCOPChecked}
+                                                                onChange={handleCheckboxChangeCash}
+                                                            />
+                                                            Cash on Pick-up
+                                                        </div>
 
-                      <div className="">
-                        <input
-                          className="ms-1 me-1"
-                          type="checkbox"
-                          checked={isGCashChecked}
-                          onChange={handleCheckboxChangeGcash}
-                          
-                        />
-                        GCash
-                      </div>
+                                                        <div className="">
+                                                            <input
+                                                                className="ms-1 me-1"
+                                                                type="checkbox"
+                                                                checked={isGCashChecked}
+                                                                onChange={handleCheckboxChangeGcash}
 
-                      {renderInputTextboxes()}
-                    </div>
+                                                            />
+                                                            GCash
+                                                        </div>
+
+                                                        {renderInputTextboxes()}
+                                                    </div>
                                                     <div className="form-buttons">
                                                         <button type="submit" className="btn btn-primary" onClick={businessClearance}>Submit</button>
                                                         <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard</button>
@@ -750,18 +750,18 @@ function BpermitAdmin() {
                                                         />
                                                     </div>
                                                     <div className="form-group">
-                          <label htmlFor="status">Status</label>
-                            <select id="status" 
-                              className="form-control" 
-                              value={editStatus} 
-                              onChange={(e) => setEditStatus(e.target.value)} 
-                              style={{ fontSize: '20px', marginBottom: '10px' }} >
-                                <option value="New" >New</option>
-                                <option value="On Process">On Process</option>
-                                <option value="Processed">Processed</option>
-                                <option value="Declined">Declined</option>
-                            </select>
-                        </div>
+                                                        <label htmlFor="status">Status</label>
+                                                        <select id="status"
+                                                            className="form-control"
+                                                            value={editStatus}
+                                                            onChange={(e) => setEditStatus(e.target.value)}
+                                                            style={{ fontSize: '20px', marginBottom: '10px' }} >
+                                                            <option value="New" >New</option>
+                                                            <option value="On Process">On Process</option>
+                                                            <option value="Processed">Processed</option>
+                                                            <option value="Declined">Declined</option>
+                                                        </select>
+                                                    </div>
                                                     <div className='form-buttons'>
                                                         <button type='submit' className='btn btn-primary' onClick={updateRowData}> Submit  </button>
                                                         <button type='button' className='btn btn-secondary' onClick={handleEditDiscard}> Discard </button>

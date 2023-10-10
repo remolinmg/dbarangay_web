@@ -524,6 +524,7 @@
     border: 2px solid #333;
     object-fit: cover;
 }
+
 .file-input {
     display: none;
 }

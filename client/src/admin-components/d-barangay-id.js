@@ -68,20 +68,20 @@ function Biddmin() {
     // SEARCH QUERY --------------------------------------------------------------
     const [searchQuery, setSearchQuery] = useState(""); // State for the search query
 
-     // DATA ---------------------------------------------------------------
-     const [ data,setData] = useState([]);
-  useEffect(() => {
-    fetchData(); // Fetch initial data when the component mounts
-  }, []);
+    // DATA ---------------------------------------------------------------
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        fetchData(); // Fetch initial data when the component mounts
+    }, []);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/get/barangayid');
-      setData(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/get/barangayid');
+            setData(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     // Event handler for dropdown change ----------------------------------------
     const handleRowCountChange = (e) => {
@@ -136,128 +136,128 @@ function Biddmin() {
     //  DELETE  
     const deleteRow = async (id) => {
         try {
-          await axios.delete(`http://localhost:8000/delete/barangayid/${id}`);
-          fetchData();
+            await axios.delete(`http://localhost:8000/delete/barangayid/${id}`);
+            fetchData();
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
-      };
+    };
 
     //------------------------------------------------ Database ----------------------------
-  const [residentName, setResidentName] = useState('');
-  const [address, setAddress] = useState('');
-  const [reasonOfRequest, setReasonOfRequest] = useState('');
-  const [pickUpDate, setPickUpDate] = useState('');
-  const [modeOfPayment, setModeOfPayment] = useState('');
-  const [reference, setReference] = useState('');
+    const [residentName, setResidentName] = useState('');
+    const [address, setAddress] = useState('');
+    const [reasonOfRequest, setReasonOfRequest] = useState('');
+    const [pickUpDate, setPickUpDate] = useState('');
+    const [modeOfPayment, setModeOfPayment] = useState('');
+    const [reference, setReference] = useState('');
 
-  // gcash reference
-  const [isGCashChecked, setIsGCashChecked] = useState(false);
-  const [isCOPChecked, setIsCOPChecked] = useState(false);
-  const [gcashInputValues, setGcashInputValues] = useState([]);
+    // gcash reference
+    const [isGCashChecked, setIsGCashChecked] = useState(false);
+    const [isCOPChecked, setIsCOPChecked] = useState(false);
+    const [gcashInputValues, setGcashInputValues] = useState([]);
 
-  const handleCheckboxChangeGcash = () => {
-    setIsGCashChecked(!isGCashChecked);
-    setModeOfPayment('G-Cash');
-    setIsCOPChecked(false);
-  };
-  const handleCheckboxChangeCash = () => {
-    setIsCOPChecked(!isCOPChecked);
-    setModeOfPayment('Cash On Pick-up');
-    setIsGCashChecked(false);
-  };
+    const handleCheckboxChangeGcash = () => {
+        setIsGCashChecked(!isGCashChecked);
+        setModeOfPayment('G-Cash');
+        setIsCOPChecked(false);
+    };
+    const handleCheckboxChangeCash = () => {
+        setIsCOPChecked(!isCOPChecked);
+        setModeOfPayment('Cash On Pick-up');
+        setIsGCashChecked(false);
+    };
 
-  const renderInputTextboxes = () => {
-    if (isGCashChecked) {
-      return (
-        <div>
-          <div className="form-group">
-            <label htmlFor="gcashref">GCash Reference No.</label>
-            <input
-              type="text"
-              id="gcashRefNo"
-              name="gcashRef"
-              className="form-control"
-              onChange={(e) => setReference(e.target.value)}
-              required />
-          </div>
-        </div>
-      )
+    const renderInputTextboxes = () => {
+        if (isGCashChecked) {
+            return (
+                <div>
+                    <div className="form-group">
+                        <label htmlFor="gcashref">GCash Reference No.</label>
+                        <input
+                            type="text"
+                            id="gcashRefNo"
+                            name="gcashRef"
+                            className="form-control"
+                            onChange={(e) => setReference(e.target.value)}
+                            required />
+                    </div>
+                </div>
+            )
+        }
+        return (null);
+    };
+    //-------------------------- ADD FUNCTION -----------------------------------
+
+    async function barangayID(e) {
+        e.preventDefault();
+
+        try {
+
+            await axios.post("http://localhost:8000/barangayid", {
+                residentName, address, pickUpDate, modeOfPayment, reference
+            })
+                .then(res => {
+                    if (res.data == "exist") {
+                        alert("You already sent the same request!");
+                    }
+                    else if (res.data == "notexist") {
+                        setShowForm(false);
+                        fetchData();
+                    }
+                })
+                .catch(e => {
+                    alert("Failed!")
+                    console.log(e);
+                })
+
+        }
+        catch (e) {
+            console.log(e);
+
+        }
+
     }
-    return (null);
-  };
-  //-------------------------- ADD FUNCTION -----------------------------------
 
-  async function barangayID(e){
-    e.preventDefault();
-  
-    try{
-  
-        await axios.post("http://localhost:8000/barangayid",{
-          residentName,address,pickUpDate,modeOfPayment,reference
-        })  
-        .then(res=>{
-          if(res.data=="exist"){
-            alert("You already sent the same request!");
-          }
-          else if(res.data=="notexist"){
-            setShowForm(false);
+    //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
+    const [editResidentName, setEditResidentName] = useState('');
+    const [editAddress, setEditAddress] = useState('');
+    const [editDate, setEditDate] = useState('');
+    const [editStatus, setEditStatus] = useState('');
+    const [selectedRowData, setSelectedRowData] = useState(null);
+    const [showEditForm, setShowEditForm] = useState(false);
+    const handleEditDiscard = () => { setShowEditForm(false); };
+
+    // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
+    const showEditFormHandler = (rowData) => {
+        setSelectedRowData(rowData._id);
+        setEditResidentName(rowData.residentName);
+        setEditAddress(rowData.address);
+        setEditDate(rowData.pickUpDate);
+        setEditStatus(rowData.status);
+        setShowEditForm(true);
+    };
+    const updateRowData = async (id) => {
+        try {
+            const updatedData = {
+                residentName: editResidentName,
+                address: editAddress,
+                pickUpDate: editDate,
+                status: editStatus,
+            };
+
+
+            const response = await axios.put(
+                `http://localhost:8000/update/barangayid/${selectedRowData}`,
+                updatedData
+            );
+            console.log(response.data);
             fetchData();
-          }
-      })
-      .catch(e=>{
-          alert("Failed!")
-          console.log(e);
-      })
-  
-    }
-    catch(e){
-        console.log(e);
-  
-    }
-  
-  }
-
-  //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
-  const [editResidentName, setEditResidentName] = useState('');
-  const [editAddress, setEditAddress] = useState('');
-  const [editDate, setEditDate] = useState('');
-  const [editStatus, setEditStatus] = useState('');
-  const [selectedRowData, setSelectedRowData] = useState(null);
-  const [showEditForm, setShowEditForm] = useState(false);
-  const handleEditDiscard = () => { setShowEditForm(false); };
-
-  // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
-  const showEditFormHandler = (rowData) => {
-    setSelectedRowData(rowData._id);
-    setEditResidentName(rowData.residentName);
-    setEditAddress(rowData.address);
-    setEditDate(rowData.pickUpDate);
-    setEditStatus(rowData.status);
-    setShowEditForm(true);
-  };
-  const updateRowData = async (id) => {
-    try {
-      const updatedData = {
-        residentName:editResidentName,
-        address:editAddress,
-        pickUpDate:editDate,
-        status:editStatus,
-      };
-
-
-      const response = await axios.put(
-        `http://localhost:8000/update/barangayid/${selectedRowData}`,
-        updatedData
-      );
-      console.log(response.data);
-      fetchData();
-      setShowEditForm(false);
-    } catch (error) {
-      console.error(error);
-      // Handle error, show an error message to the user
-    }
-  };
+            setShowEditForm(false);
+        } catch (error) {
+            console.error(error);
+            // Handle error, show an error message to the user
+        }
+    };
     return (
         <>
             <div className="topbarsection">
@@ -309,13 +309,12 @@ function Biddmin() {
 
                 </div>
             </div>
-            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''} d-none d-md-block`}>
+            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
                 <div className="newsidebar">
                     <div className="text-center">
                         <Link className="navbar-brand" to="/dashboard">
-                            <img className="tblImage w-50 h-100" src={logo} alt="" />
+                            <img className="tblImage w-50" src={logo} alt="" />
                         </Link>
-                        <h6>Barangay Harapin Ang Bukas</h6>
                     </div>
                     <ul>
 
@@ -350,7 +349,7 @@ function Biddmin() {
                                 </div>
                             </Link>
                             {/* <ul className="sidebar-submenu"> */}
-                            <ul className={`sidebar-submenu w-100 ${isDropdownOpen ? 'open' : ''}`}>
+                            <ul className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? 'open' : ''}`}>
                                 {isDropdownOpen && (
                                     <>
                                         <li>
@@ -378,13 +377,6 @@ function Biddmin() {
                                             <Link to="/residents-admin" className="nav-link">
                                                 <BsFillPeopleFill className="sidebaricon" />
                                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
-
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/b-permit-admin" className="nav-link">
-                                                <BsEnvelopePaper className="sidebaricon" />
-                                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Permit</span>
 
                                             </Link>
                                         </li>
@@ -442,18 +434,18 @@ function Biddmin() {
                         </div>
                         <div className="col-4">
                             <div className="tabsz dropdown-center">
-                                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
-                                <ul class="dropdown-menu">
-                                    <Link to="/d-barangay-certificate">
-                                        <li><a class="dropdown-item">Barangay Certificate</a></li></Link>
-                                    <Link to="/d-barangay-indigency">
-                                        <li><a class="dropdown-item">Barangay Indigency</a></li></Link>
-                                    <Link to="/d-barangay-installation">
-                                        <li><a class="dropdown-item">Installation Permit</a></li></Link>
-                                    <Link to="/d-barangay-construction">
-                                        <li><a class="dropdown-item"> construction Permit</a></li></Link>
-                                    <Link to="/d-barangay-id">
-                                        <li><a class="dropdown-item"> Barangay ID</a></li></Link>
+                                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Services Category</button>
+                                <ul class="dropdown-menu dropdown-topcategory">
+                                    <Link to="/d-barangay-certificate" className="nav-link">
+                                        <li><a class="dropdown-item" className="dropdown-item text-center">Barangay Certificate</a></li></Link>
+                                    <Link to="/b-permit-admin" className="nav-link">
+                                        <li><a class="dropdown-item" className="dropdown-item text-center">Business Permit</a></li></Link>
+                                    <Link to="/d-barangay-installation" className="nav-link">
+                                        <li><a class="dropdown-item" className="dropdown-item text-center">Installation Permit</a></li></Link>
+                                    <Link to="/d-barangay-construction" className="nav-link">
+                                        <li><a class="dropdown-item" className="dropdown-item text-center"> construction Permit</a></li></Link>
+                                    <Link to="/d-barangay-indigency" className="nav-link">
+                                        <li><a class="dropdown-item" className="dropdown-item text-center">Barangay Indigency</a></li></Link>
                                 </ul>
                             </div>
                         </div>
@@ -522,7 +514,7 @@ function Biddmin() {
                                                     <th scope="col">Reference No.</th>
                                                     <th scope="col">Status</th>
                                                     <th scope="col">Action</th>
-                          
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -533,8 +525,8 @@ function Biddmin() {
                                                         <td>{item.address}</td>
                                                         <td>{item.pickUpDate}</td>
                                                         <td>{item.modeOfPayment}</td>
-                            <td>{item.reference}</td>
-                            <td>{item.status}</td>
+                                                        <td>{item.reference}</td>
+                                                        <td>{item.status}</td>
                                                         <td>
                                                             <button
                                                                 className="btn btn-primary btn-sm me-2"
@@ -608,33 +600,33 @@ function Biddmin() {
                                                         />
                                                     </div>
                                                     <div className="form-group">
-                      <label>Mode of Payment:</label>
-                      <div>
-                        <input
-                          className="ms-1 me-1"
-                          type="checkbox"
-                          checked={isCOPChecked}
-                          onChange={handleCheckboxChangeCash}
-                        />
-                        Cash on Pick-up
-                      </div>
+                                                        <label>Mode of Payment:</label>
+                                                        <div>
+                                                            <input
+                                                                className="ms-1 me-1"
+                                                                type="checkbox"
+                                                                checked={isCOPChecked}
+                                                                onChange={handleCheckboxChangeCash}
+                                                            />
+                                                            Cash on Pick-up
+                                                        </div>
 
-                      <div className="">
-                        <input
-                          className="ms-1 me-1"
-                          type="checkbox"
-                          checked={isGCashChecked}
-                          onChange={handleCheckboxChangeGcash}
-                          
-                        />
-                        GCash
-                      </div>
+                                                        <div className="">
+                                                            <input
+                                                                className="ms-1 me-1"
+                                                                type="checkbox"
+                                                                checked={isGCashChecked}
+                                                                onChange={handleCheckboxChangeGcash}
 
-                      {renderInputTextboxes()}
-                    </div>
+                                                            />
+                                                            GCash
+                                                        </div>
+
+                                                        {renderInputTextboxes()}
+                                                    </div>
                                                 </div>
 
-                                                <button type="submit" className="btn btn-primary"onClick={barangayID}>Submit</button>
+                                                <button type="submit" className="btn btn-primary" onClick={barangayID}>Submit</button>
                                                 <button type="button" className="btn btn-danger" onClick={handleDiscard}>Discard</button>
                                             </div>
                                         </form>
@@ -691,18 +683,18 @@ function Biddmin() {
                                                     />
                                                 </div>
                                                 <div className="form-group">
-                          <label htmlFor="status">Status</label>
-                            <select id="status" 
-                              className="form-control" 
-                              value={editStatus} 
-                              onChange={(e) => setEditStatus(e.target.value)} 
-                              style={{ fontSize: '20px', marginBottom: '10px' }} >
-                                <option value="New" >New</option>
-                                <option value="On Process">On Process</option>
-                                <option value="Processed">Processed</option>
-                                <option value="Declined">Declined</option>
-                            </select>
-                        </div>
+                                                    <label htmlFor="status">Status</label>
+                                                    <select id="status"
+                                                        className="form-control"
+                                                        value={editStatus}
+                                                        onChange={(e) => setEditStatus(e.target.value)}
+                                                        style={{ fontSize: '20px', marginBottom: '10px' }} >
+                                                        <option value="New" >New</option>
+                                                        <option value="On Process">On Process</option>
+                                                        <option value="Processed">Processed</option>
+                                                        <option value="Declined">Declined</option>
+                                                    </select>
+                                                </div>
                                             </div>
 
                                             <button type="button" className="btn btn-primary" onClick={updateRowData}>Save</button>
