@@ -277,6 +277,11 @@
   transition: all 0.5s ease;
 }
 
+.dropdown-topcategory {
+  text-align: center;
+  width: 100%;
+}
+
 /* ANNOUNCMENT END */
 
 

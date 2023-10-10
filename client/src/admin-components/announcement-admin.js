@@ -473,10 +473,10 @@ function AnnouncementAdmin() {
             </div>
             <div className="col-4">
               <div className="tabsz dropdown-center">
-                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
-                <ul className="dropdown-menu">
-                  <li><Link to="/announcement-admin">General</Link></li>
-                  <li><Link to="/livelihood-admin">Livelihood</Link></li>
+                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button>
+                <ul className="dropdown-menu dropdown-topcategory">
+                  <li><Link to="/announcement-admin" className=" dropdown-item text-center">General</Link></li>
+                  <li><Link to="/livelihood-admin" className=" dropdown-item text-center">Livelihood</Link></li>
                 </ul>
               </div>
             </div>

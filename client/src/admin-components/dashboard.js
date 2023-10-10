@@ -242,13 +242,12 @@ function Dashboard() {
 
                 </div>
             </div>
-            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''} d-none d-md-block`}>
+            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
                 <div className="newsidebar">
                     <div className="text-center">
                         <Link className="navbar-brand" to="/dashboard">
-                            <img className="tblImage w-50 h-100" src={logo} alt="" />
+                            <img className="tblImage w-50" src={logo} alt="" />
                         </Link>
-                        <h6>Barangay Harapin Ang Bukas</h6>
                     </div>
                     <ul>
 
@@ -283,7 +282,7 @@ function Dashboard() {
                                 </div>
                             </Link>
                             {/* <ul className="sidebar-submenu"> */}
-                            <ul className={`sidebar-submenu w-100 ${isDropdownOpen ? 'open' : ''}`}>
+                            <ul className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? 'open' : ''}`}>
                                 {isDropdownOpen && (
                                     <>
                                         <li>

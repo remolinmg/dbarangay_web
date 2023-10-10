@@ -743,10 +743,11 @@ const RegistrationComponent = () => {
                         <option value="PWD">Person with Disability (PWD)</option>
                         <option value="soloParent">Solo Parent</option>
                         <option value="outOfSchoolYouth">Out of School Youth</option>
+                        <option value="student">Student</option>
                       </select>
                     </div>
 
-                    {/* Residence Class */}
+                    {/* Voters Registration */}
                     <div className={`form-group d-flex flex-column ${!residenceClassValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="residenceClass">Voter's Registration</label>
                       <select
@@ -809,11 +810,14 @@ const RegistrationComponent = () => {
             <h3>Disclaimer:</h3>
             <p className="reg-p">This website (or organization) takes your privacy seriously. Any information collected through this platform will be treated with the utmost confidentiality and care. We are committed to ensuring that your personal information is kept secure and used only for the purposes of verification, as stated in our Privacy Policy.</p>
             <h5>Privacy Assurance:</h5>
-            <p className="reg-p"><b>1. Non-Public Sharing: </b> We do not share your collected information publicly or with any third parties, unless required by law or for verification purposes explicitly agreed upon.</p>
-            <p className="reg-p"><b>2. Verification: </b> The information collected may be used exclusively for identity verification, authentication, or internal processes that ensure the security and integrity of our services.</p>
-            <p className="reg-p"><b>3. Data Security: </b> Your data will be stored securely, employing industry-standard security measures and protocols to protect it from unauthorized access, disclosure, or alteration.</p>
-            <p className="reg-p"><b>4. Consent: </b> By using our services, you consent to the collection, storage, and use of your information for the specified purposes as outlined in our Privacy Policy.</p>
-            <p className="reg-p"><b>5. Transparency: </b>  Our Privacy Policy provides detailed information on how your data is handled, including the types of data collected, the purposes for which it is used, and your rights regarding your personal information.</p>
+            <p className="reg-p"><b>Data Collection: </b> When you register on the Barangay Harapin ang Bukas App, we collect certain personal information to facilitate your access and usage of our services. This includes, but is not limited to, your name, address, contact information, and other relevant details required for registration.</p>
+            <p className="reg-p"><b>Data Usage: </b> We use the information you provide during registration solely for the purpose of enabling you to access and use the features and services offered by the app. Your data will not be used for any other purpose without your explicit consent.</p>
+            <p className="reg-p"><b>Data Security: </b> We implement robust security measures to protect your personal information from unauthorized access, disclosure, alteration, or destruction. These measures include data encryption, access controls, and regular security assessments.</p>
+            <p className="reg-p"><b>Data Retention: </b> Your personal data will be retained for as long as necessary to fulfill the purposes for which it was collected, or as required by applicable laws and regulations. We will delete your data when it is no longer needed.</p>
+            <p className="reg-p"><b>User Rights: </b>  You have the right to access, correct, delete, or export your personal data stored on our app. If you have any such requests or inquiries, please contact us through the provided channels.</p>
+            <p className="reg-p"><b>Consent Mechanism: </b> By registering on the BARANGAY HARAPIN ANG BUKAS App, you give your informed consent for the collection and use of your personal information as outlined in this statement.n</p>
+            <p className="reg-p"><b>User Rights: </b>  You have the right to access, correct, delete, or export your personal data stored on our app. If you have any such requests or inquiries, please contact us through the provided channels.</p>
+            <p className="reg-p"><b>User Rights: </b>  You have the right to access, correct, delete, or export your personal data stored on our app. If you have any such requests or inquiries, please contact us through the provided channels.</p>
           </div>
         </div>
       </div>
