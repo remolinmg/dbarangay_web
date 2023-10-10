@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import './assets/css/style.css';
-import Axios from 'axios';
+import axios from 'axios';
 import { Outlet, Link, NavLink } from 'react-router-dom';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
 import { BiLogOut, BiCog } from "react-icons/bi";
 import { AiOutlineDashboard } from 'react-icons/ai';
+
 import {
   BsPersonFill,
   BsMegaphoneFill,
@@ -67,159 +68,20 @@ function BpromotionAdmin() {
   // SEARCH QUERY --------------------------------------------------------------
   const [searchQuery, setSearchQuery] = useState(""); // State for the search query
 
-  // SAMPLE DATA ---------------------------------------------------------------
-  const data = [
-    {
-      id: 1,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: "",
-
-    },
-    {
-      id: 2,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: ""
-    },
-    {
-      id: 3,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: ""
-    },
-    {
-      id: 4,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: ""
-    },
-    {
-      id: 5,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: ""
-    },
-    {
-      id: 6,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: ""
-    }, {
-      id: 7,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: ""
-    },
-    {
-      id: 8,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: ""
-    },
-    {
-      id: 9,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: ""
-    },
-    {
-      id: 10,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: ""
-    },
-    {
-      id: 11,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: ""
-    },
-    {
-      id: 12,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: ""
-    }, {
-      id: 13,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: ""
-    },
-    {
-      id: 14,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: ""
-    },
-    {
-      id: 15,
-      b_owner: "JERICHO",
-      b_name: "Doe's Restaurant",
-      b_address: "123 Main Street",
-      b_hours: "JERICHO",
-      type_business: "Doe's Restaurant",
-      b_contact: "123 Main Street",
-      b_picture: ""
-    },
-  ];
-
+    // DATA ---------------------------------------------------------------
+    const [ data,setData] = useState([]);
+    useEffect(() => {
+      fetchData(); // Fetch initial data when the component mounts
+    }, []);
+  
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/get/promotebusiness');
+        setData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
   // Event handler for dropdown change ----------------------------------------
   const handleRowCountChange = (e) => {
     const selectedRowCount = parseInt(e.target.value);
@@ -273,101 +135,93 @@ function BpromotionAdmin() {
   const toggleForm = () => { setShowForm(!showForm); }; // SHOW FORMS
   const handleDiscard = () => { setShowForm(false); }; // DISCARD FUNCTION
 
-  // DELETE
-  const deleteRow = (row) => { Axios.delete(`http://localhost:3001/api/delete/bpermit/${row}`); }
-
-  // Database ----------------------------
-  const [id, setId] = useState('');
-  const [b_owner, setOwner] = useState('');
-  const [b_name, setName] = useState('');
-  const [b_address, setAddress] = useState('');
-  const [b_hours, setHours] = useState('');
-  const [type_business, setTypeBusiness] = useState('');
-  const [b_contact, setContact] = useState('');
-  const [selectedPicture, setSelectedPicture] = useState(null); // Add this line for the selected picture
-  const [bPermitTbl, setBPermitTbl] = useState([])
-
-  // ADD FUNCTION -----------------------------------
-  useEffect(() => {
-    Axios.get('http://localhost:3001/api/get/bpermit').then((response) => { setBPermitTbl(response.data); });
-  }, [])
-
-  const submitReq = () => {
-    const formData = new FormData();
-    formData.append("b_owner", b_owner);
-    formData.append("b_name", b_name);
-    formData.append("b_address", b_address);
-    formData.append("b_hours", b_hours);
-    formData.append("type_business", type_business);
-    formData.append("b_contact", b_contact);
-    formData.append("b_picture", selectedPicture); // Include the selected picture in the form data
-
-    Axios.post('http://localhost:3001/api/insert/bpermit', formData)
-      .then((response) => {
-        // Rest of your code...
-      });
+  //  DELETE  
+  const deleteRow = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8000/delete/promotebusiness/${id}`);
+      fetchData();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+   //------------------------------------------------ Database ----------------------------
+   const [residentName, setResidentName] = useState('');
+   const [businessName, setBusinessName] = useState('');
+   const [address, setAddress] = useState('');
+   const [hours, setHours] = useState('');
+   const [contact, setContact] = useState('');
+   const [category, setCategory] = useState(''); 
+   const [file,setFile] = useState();
+    //-------------------------- ADD FUNCTION -----------------------------------
+
+    const promoteBusiness = () =>{
+      const formData = new FormData();
+      formData.append('businessName', businessName);
+      formData.append('address', address);
+      formData.append('hours', hours);
+      formData.append('contact', contact);
+      formData.append('category', category);
+      formData.append('residentName', residentName);
+      formData.append('file', file);
+      axios.post('http://localhost:8000/promotebusiness', formData) .then(res=>{
+        if(res.data=="Error saving data to MongoDB"){
+          alert("Business Already Exist!");
+        }
+        else if(res.data=="File and text data saved to MongoDB"){
+        }
+    })
+      .catch(er => console.log(er))    
+    };
+
   // EDIT FORM STATES (ShowForms) ------------------------------
-  const [SelectedRowId, setSelectedRowId] = useState(null);
-  const [editOwner, setEditOwner] = useState('');
-  const [editName, setEditName] = useState('');
+  
+  const [editResidentName, setEditResidentName] = useState('');
+  const [editBusinessName, setEditBusinessName] = useState('');
   const [editAddress, setEditAddress] = useState('');
-  const [editTypeBusiness, setEditTypeBusiness] = useState('');
+  const [editCategory, setEditCategory] = useState('');
   const [editHours, setEditHours] = useState('');
   const [editContact, setEditContact] = useState('');
+  const [editFile, setEditFile] = useState('');
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const handleEditDiscard = () => { setShowEditForm(false); };
 
   // Function to show the edit form with the default data of the selected row
   const showEditFormHandler = (rowData) => {
-    setSelectedRowData(rowData);
-    setEditOwner(rowData.b_owner);
-    setEditName(rowData.b_name);
-    setEditAddress(rowData.b_address);
-    setEditTypeBusiness(rowData.type_business);
-    setSelectedRowId(rowData.idb_permit);
+    setSelectedRowData(rowData._id);
+    setEditResidentName(rowData.residentName);
+    setEditBusinessName(rowData.businessName);
+    setEditAddress(rowData.address);
+    setEditCategory(rowData.category);
+
+    setEditHours(rowData.hours);
+    setEditContact(rowData.contact);
     setShowEditForm(true);
   };
 
-  const updateRowData = () => {
-    const formData = new FormData();
-    formData.append("b_owner", editOwner);
-    formData.append("b_name", editName);
-    formData.append("b_address", editAddress);
-    formData.append("type_business", editTypeBusiness);
-    formData.append("b_picture", selectedPicture);
-    Axios.put(`http://localhost:3001/api/update/bpermit/${selectedRowData.idb_permit}`, {
-      b_owner: editOwner,
-      b_name: editName,
-      b_address: editAddress,
-      type_business: editTypeBusiness,
-    }).then((response) => {
+  const updateRowData = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('residentName', editResidentName);
+      formData.append('businessName', editBusinessName);
+      formData.append('address', editAddress);
+      formData.append('category', editCategory);
+      formData.append('file', editFile);
+      formData.append('hours', editHours);
+      formData.append('contact', editContact);
 
-      const updatedTableData = bPermitTbl.map((rowData) => {
-        if (rowData.idb_permit === selectedRowData.idb_permit) {
-          return {
-            ...rowData,
-            b_owner: editOwner,
-            b_name: editName,
-            b_address: editAddress,
-            type_business: editTypeBusiness,
-          };
-        } else {
-          return rowData;
-        }
-      });
-
-      // Update the state with the new table data
-      setBPermitTbl(updatedTableData);
-
-      // Clear the selectedRowData and close the edit form
-      setSelectedRowData(null);
+      const response = await axios.put(
+        `http://localhost:8000/update/promotebusiness/${selectedRowData}`,
+        formData
+      );
+      console.log(response.data);
+      fetchData();
       setShowEditForm(false);
-    });
+    } catch (error) {
+      console.error(error);
+    }
   };
-
 
   return (
     <>
@@ -614,12 +468,12 @@ function BpromotionAdmin() {
                       <thead>
                         <tr>
                           <th scope="col">#</th>
-                          <th scope="col">Business Owner</th>
                           <th scope="col">Business Name </th>
                           <th scope="col">Business Address </th>
                           <th scope="col">Business Hours </th>
-                          <th scope="col">Type of Business </th>
+                          <th scope="col">Category</th>
                           <th scope="col">Contact Number </th>
+                          <th scope="col">Business Owner</th>
                           <th scope="col">Business Picture </th>
                           <th scope="col">Actions</th>
                         </tr>
@@ -627,17 +481,18 @@ function BpromotionAdmin() {
 
                       <tbody>
                         {getCurrentPageData().map((val) => {
-                          return <tr key={val.id}>
-                            <th scope="row">{val.id}</th>
-                            <td>{val.b_owner}</td>
-                            <td>{val.b_name}</td>
-                            <td>{val.b_address}</td>
-                            <td>{val.b_hours}</td>
-                            <td>{val.type_business}</td>
-                            <td>{val.b_contact}</td>
+                          return <tr key={val._id}>
+                            <th scope="row">{val._id}</th>
+                            <td>{val.businessName}</td>
+                            <td>{val.address}</td>
+                            <td>{val.hours}</td>
+                            <td>{val.category}</td>
+                            <td>{val.contact}</td>
+                            <td>{val.residentName}</td>
                             <td>
                               <img
-                                src={val.b_picture} // Use the 'b_picture' field as the image source
+                              style ={{width:"100px",height: "100px"}}
+                                src={require(`../../../server/uploads/promotebusiness/${val.filename}`)}
                                 alt=""
                                 className="business-picture"
                               />
@@ -645,13 +500,13 @@ function BpromotionAdmin() {
                             <td>
                               <div className='gap-2 d-md-flex justify-content-start align-items-center'>
                                 <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(val)}> Edit</button>
-                                <form method='post' action=''>
+                                <form >
                                   <input type='hidden' name='id' value="" />
                                   <button
                                     className="btn btn-outline-danger"
                                     type="submit"
                                     name="deleteRow"
-                                    onClick={() => { deleteRow(val.b_owner); }}>Delete</button>
+                                    onClick={() => { deleteRow(val._id); }}>Delete</button>
                                 </form>
                               </div>
                             </td>
@@ -667,55 +522,81 @@ function BpromotionAdmin() {
               {showForm && (
                 <div className="popup-overlay">
                   <div className="popup-form">
-                    <form onSubmit={submitReq}>
+                    <form>
                       <div className="certificate">
-                        <h2 className="certificate-title">ADD RESIDENTS INFO</h2>
+                        <h2 className="certificate-title">ADD BUSINESS INFORMATION</h2>
                         <div className="certificate-content">
-                          <div className="form-group">
-                            <label htmlFor="owner">Business Owner</label>
-                            <input
-                              type="text"
-                              id="owner"
-                              name="owner"
-                              onChange={(e) => { setOwner(e.target.value); }}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
                           <div className="form-group">
                             <label htmlFor="bname">Business Name</label>
                             <input
                               type="text"
-                              id="bname"
-                              name="bname"
-                              onChange={(e) => { setName(e.target.value); }}
+                              id="businessName"
+                              name="businessName"
+                              onChange={(e) =>setBusinessName(e.target.value) }
                               className="form-control"
                               required
                             />
                           </div>
 
-                          {/* Add Business Hours */}
+                          <div className="form-group">
+                            <label htmlFor="address">Business Address</label>
+                            <input
+                              type="text"
+                              id="address"
+                              name="address"
+                              onChange={(e) => setAddress(e.target.value)}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          
+
+                         
                           <div className="form-group">
                             <label htmlFor="bhours">Business Hours</label>
                             <input
                               type="text"
-                              id="bhours"
-                              name="bhours"
-                              onChange={(e) => { setHours(e.target.value); }}
+                              id="hours"
+                              name="hours"
+                              onChange={(e) =>  setHours(e.target.value)}
                               className="form-control"
                               required
                             />
                           </div>
 
-                          {/* Add Contact Number */}
+                          <div className="form-group">
+                            <label htmlFor="owner">Business Category</label>
+                            <input
+                              type="text"
+                              id="category"
+                              name="category"
+                              onChange={(e) =>  setCategory(e.target.value)}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          
                           <div className="form-group">
                             <label htmlFor="bcontact">Contact Number</label>
                             <input
                               type="text"
-                              id="bcontact"
-                              name="bcontact"
-                              onChange={(e) => { setContact(e.target.value); }}
+                              id="contact"
+                              name="contact"
+                              onChange={(e) => setContact(e.target.value)}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label htmlFor="owner">Business Owner</label>
+                            <input
+                              type="text"
+                              id="residentName"
+                              name="residentName"
+                              onChange={(e) => setResidentName(e.target.value)}
                               className="form-control"
                               required
                             />
@@ -726,16 +607,16 @@ function BpromotionAdmin() {
                             <label htmlFor="picture">Business Picture</label>
                             <input
                               type="file"
-                              id="picture"
-                              name="picture"
+                              id="file"
+                              name="file"
                               accept="image/*"
-                              onChange={(e) => setSelectedPicture(e.target.files[0])}
+                              onChange={(e) => setFile(e.target.files[0])}
                               className="form-control"
-                              required />
+                               />
                           </div>
 
                           <div className="form-buttons">
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className="btn btn-primary" onClick={promoteBusiness}>
                               Submit
                             </button>
                             <button type="button" className="btn btn-secondary" onClick={handleDiscard}>
@@ -754,36 +635,37 @@ function BpromotionAdmin() {
               {showEditForm && selectedRowData && (
                 <div className="popup-overlay">
                   <div className="popup-form">
-                    <form onSubmit={updateRowData}>
+                    <form>
                       <div className="certificate">
-                        <h2 className="certificate-title">EDIT RESIDENTS INFO</h2>
+                        <h2 className="certificate-title">EDIT BUSINESS INFORMATION</h2>
                         <div className="certificate-content">
-                          <div className="form-group">
-                            <label htmlFor="owner">Business Owner</label>
-                            <input
-                              type="text"
-                              id="owner"
-                              name="owner"
-                              value={editOwner}
-                              onChange={(e) => setEditOwner(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
                           <div className="form-group">
                             <label htmlFor="bname">Business Name</label>
                             <input
                               type="text"
                               id="bname"
                               name="bname"
-                              value={editName}
-                              onChange={(e) => setEditName(e.target.value)}
+                              value={editBusinessName}
+                              onChange={(e) => setEditBusinessName(e.target.value)}
                               className="form-control"
                               required
                             />
                           </div>
 
+                          <div className="form-group">
+                            <label htmlFor="bhours">Address</label>
+                            <input
+                              type="text"
+                              id="address"
+                              name="address"
+                              value={editAddress}
+                              onChange={(e) => setEditAddress(e.target.value)}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          
                           {/* Add Business Hours */}
                           <div className="form-group">
                             <label htmlFor="bhours">Business Hours</label>
@@ -793,6 +675,19 @@ function BpromotionAdmin() {
                               name="bhours"
                               value={editHours}
                               onChange={(e) => setEditHours(e.target.value)}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label htmlFor="category">Business Category</label>
+                            <input
+                              type="text"
+                              id="category"
+                              name="category"
+                              value={editCategory}
+                              onChange={(e) => setEditCategory(e.target.value)}
                               className="form-control"
                               required
                             />
@@ -812,22 +707,35 @@ function BpromotionAdmin() {
                             />
                           </div>
 
+                          <div className="form-group">
+                            <label htmlFor="owner">Business Owner</label>
+                            <input
+                              type="text"
+                              id="owner"
+                              name="owner"
+                              value={editResidentName}
+                              onChange={(e) => setEditResidentName(e.target.value)}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
                           {/* Add Business Picture */}
                           <div className="form-group">
-                            <label htmlFor="picture">Business Picture</label>
+                            <label htmlFor="file">Business Picture</label>
                             <input
                               type="file"
-                              id="picture"
-                              name="picture"
+                              id="file"
+                              name="file"
                               accept="image/*"
-                              onChange={(e) => setSelectedPicture(e.target.files[0])}
+                              onChange={(e) => setEditFile(e.target.files[0])}
                               className="form-control"
                               required
                             />
                           </div>
 
                           <div className="form-buttons">
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className="btn btn-primary" onClick={updateRowData}>
                               Submit
                             </button>
                             <button type="button" className="btn btn-secondary" onClick={handleEditDiscard}>

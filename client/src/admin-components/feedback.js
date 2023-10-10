@@ -4,7 +4,7 @@ import { Outlet, Link, NavLink } from 'react-router-dom';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown, BiLogOut, BiCog } from 'react-icons/bi';
 import { AiOutlineDashboard } from 'react-icons/ai';
-import Axios from 'axios';
+import axios from 'axios';
 import {
     BsPersonFill,
     BsMegaphoneFill,
@@ -65,17 +65,20 @@ function FeedbackAdmin() {
     // SEARCH QUERY --------------------------------------------------------------
     const [searchQuery, setSearchQuery] = useState(""); // State for the search query
 
-    // SAMPLE DATA ---------------------------------------------------------------
-    const data = [
-        {
-            id: 1, fdate: '2023-09-19',
-            ffeedback: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-        },
-        {
-            id: 2, fdate: '2023-09-20',
-            ffeedback: 'Sample Feedback 2'
-        },
-    ];
+   // DATA ---------------------------------------------------------------
+  const [ data,setData] = useState([]);
+  useEffect(() => {
+    fetchData(); // Fetch initial data when the component mounts
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/get/feedback');
+      setData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
     // Event handler for dropdown change ----------------------------------------
     const handleRowCountChange = (e) => {
@@ -378,7 +381,7 @@ function FeedbackAdmin() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {filteredData.map((val) => (
+                                                {/* {filteredData.map((val) => (
                                                     <tr key={val.id}>
                                                         <th scope="row">{val.id}</th>
                                                         <td>{val.fdate}</td>
@@ -407,6 +410,14 @@ function FeedbackAdmin() {
                                                                 </>
                                                             )}
                                                         </td>
+                                                    </tr>
+                                                ))} */}
+
+                                                    {filteredData.map((val) => (
+                                                    <tr key={val._id}>
+                                                        <th scope="row">{val._id}</th>
+                                                        <td>{val.date}</td>
+                                                        <td >{val.feedback}</td>
                                                     </tr>
                                                 ))}
                                             </tbody>

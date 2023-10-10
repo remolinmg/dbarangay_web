@@ -20,7 +20,6 @@ import Bot from "./faqbot"
 import React, { useState, useEffect } from 'react';
 import { FaLocationDot } from "react-icons/fa6";
 
-
 function UserEvacuation() {
 
     const [showBHall, setShowBHall] = useState(false);
@@ -325,7 +324,6 @@ function UserEvacuation() {
             <Footer />
             <Bot />
         </>
-
     );
 }
 

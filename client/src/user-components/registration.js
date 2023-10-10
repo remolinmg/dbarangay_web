@@ -414,6 +414,42 @@ const RegistrationComponent = () => {
   };
 
 
+  // const [isSelected, setIsSelected] = useState(false);
+  // const handleOptionSelect = () => {
+  //   setIsSelected(!isSelected);
+  // };
+
+  // const renderInputTextboxes = () => {
+  //   if (isSelected) {
+  //     return (
+  //       <div>
+  //         <div className="form-group">
+  //           <label htmlFor="companyName">GCash Reference No.</label>
+  //           <input
+  //             type="text"
+  //             id="companyName"
+  //             name="companyName"
+  //             className="form-control"
+  //             required />
+  //         </div>
+  //         <div className="form-group">
+  //           <label htmlFor="position">Position</label>
+  //           <input
+  //             type="text"
+  //             id="position"
+  //             name="position"
+  //             className="form-control"
+  //             required />
+  //         </div>
+  //       </div>
+  //     )
+  //   }
+  //   return null;
+  // };
+
+
+
+
   return (
     <div className="container-fluid main-reg">
       <div className="row">
@@ -592,6 +628,130 @@ const RegistrationComponent = () => {
                         id="nationality"
                         value={nationality}
                         onChange={handleNationalityChange}
+                        required
+                      />
+                    </div>
+
+                    {/* SUFFIX */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="last-name">Suffix</label>
+                      <input
+                        type="text" className="input-field"
+                        id="last-name"
+
+                        // onChange={(e) => setLastName(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* House Number */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="address">House No. / Street</label>
+                      <input
+                        type="text" className="input-field"
+                        id="address"
+
+                        
+                        required
+                      />
+                    </div>
+
+                    {/* Barangay */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="address">Barangay</label>
+                      <input
+                        type="text" className="input-field"
+                        id="address"
+
+                        // onChange={(e) => setAddress(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* District */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="address">District</label>
+                      <input
+                        type="text" className="input-field"
+                        id="address"
+
+                        // onChange={(e) => setAddress(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* City/Municipality */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="address">City/Municipality</label>
+                      <input
+                        type="text" className="input-field"
+                        id="address"
+
+                        // onChange={(e) => setAddress(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* Province */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="address">Province</label>
+                      <input
+                        type="text" className="input-field"
+                        id="address"
+
+                        // onChange={(e) => setAddress(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* SECOND COLUMN REGISTER PAGE */}
+                  <div className="col-12 col-md-4 reg-row2 p-3">
+
+                    {/* REgion */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="region">Region</label>
+                      <input
+                        type="text" className="input-field"
+                        id="region"
+
+                        onChange={(e) => setRegion(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* EMAIL ADDRESS*/}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="email">Email Address</label>
+                      <input
+                        type="email" className="input-field"
+                        id="email"
+
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* Phone Number */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="phoneNumber">Phone Number</label>
+                      <input
+                        type="tel" className="input-field"
+                        id="phoneNumber"
+
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* NATIONALITY */}
+                    <div className="form-group d-flex flex-column">
+                      <label className="label" htmlFor="nationality">Nationality</label>
+                      <input
+                        type="text" className="input-field"
+                        id="nationality"
+
+                        onChange={(e) => setNationality(e.target.value)}
                         required
                       />
                     </div>
@@ -821,6 +981,9 @@ const RegistrationComponent = () => {
           </div>
         </div>
       </div>
+
+
+
     </div>
 
 
