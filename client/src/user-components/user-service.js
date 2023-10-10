@@ -12,6 +12,34 @@ import Footer from "./footer"
 
 function UserService() {
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted:', inputValues);
+    setInputValues({
+      residentsName: '',
+      Address: '',
+      reasonOfRequest: '',
+      issuedDate: '',
+    });
+    setIsSubmitted(true);
+    setShowPopup(false);
+  };
+
+
+
+  useEffect(() => {
+    if (isSubmitted) {
+      const timer = setTimeout(() => {
+        setIsSubmitted(false);
+        handleCheckboxChangeCash();
+        setIsGCashChecked(false);
+        setIsCOPChecked(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSubmitted]);
+
   const [residentName, setResidentName] = useState('');
   const [businessName, setBusinessName] = useState('');
   const [address, setAddress] = useState('');
@@ -25,16 +53,10 @@ function UserService() {
   // gcash reference
   const [isGCashChecked, setIsGCashChecked] = useState(false);
   const [isCOPChecked, setIsCOPChecked] = useState(false);
-  const [gcashInputValues, setGcashInputValues] = useState([]);
   const [currentService, setCurrentService] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [inputValues, setInputValues] = useState({
   });
-
-
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-
   const handleServiceClick = (service) => {
     setCurrentService(service);
     setShowPopup(true);
@@ -95,7 +117,6 @@ function UserService() {
               name="gcashRef"
               className="form-control"
               onChange={(e) => setReference(e.target.value)}
-              value={reference}
               required
             />
           </div>
@@ -160,6 +181,8 @@ function UserService() {
       } else if (response.data === "notexist") {
         setIsSubmitted(true);
         setShowPopup(false);
+        setIsGCashChecked(false);
+        setIsCOPChecked(false);
       }
     } catch (error) {
       alert("Failed!");
@@ -237,6 +260,8 @@ function UserService() {
           } else if (res.data === "notexist") {
             setIsSubmitted(true);
             setShowPopup(false);
+            setIsGCashChecked(false);
+            setIsCOPChecked(false);
           }
         })
         .catch(e => {
@@ -370,6 +395,8 @@ function UserService() {
           else if (res.data == "notexist") {
             setIsSubmitted(true);
             setShowPopup(false);
+            setIsGCashChecked(false);
+            setIsCOPChecked(false);
           }
         })
         .catch(e => {
@@ -437,6 +464,8 @@ function UserService() {
           else if (res.data == "notexist") {
             setIsSubmitted(true);
             setShowPopup(false);
+            setIsGCashChecked(false);
+            setIsCOPChecked(false);
           }
         })
         .catch(e => {
@@ -506,6 +535,8 @@ function UserService() {
           else if (res.data == "notexist") {
             setIsSubmitted(true);
             setShowPopup(false);
+            setIsGCashChecked(false);
+            setIsCOPChecked(false);
           }
         })
         .catch(e => {

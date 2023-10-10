@@ -5,7 +5,7 @@ import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown, BiLogOut, BiCog } from 'react-icons/bi';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { RiFolderWarningFill, } from "react-icons/ri";
-import Axios from 'axios';
+import axios from 'axios';
 import { parse, format } from 'date-fns';
 import { FaUserCircle } from "react-icons/fa";
 import {
@@ -64,32 +64,20 @@ function BofficialsAdmin() {
   // SEARCH QUERY --------------------------------------------------------------
   const [searchQuery, setSearchQuery] = useState(""); // State for the search query
 
-  // SAMPLE DATA ---------------------------------------------------------------
-  const data = [
-    {
-      id: 1,
-      position: "Mayor",
-      firstName: "John",
-      lastName: "Doe",
-      contact: "123-456-7890",
-      address: "123 Main St",
-      Image: "mayor.jpg",
-      startTerm: "2023-01-01",
-      endTerm: "2023-12-31",
-    },
-    {
-      id: 2,
-      position: "Councilor",
-      firstName: "Jane",
-      lastName: "Smith",
-      contact: "987-654-3210",
-      address: "456 Elm St",
-      Image: "councilor.jpg",
-      startTerm: "2023-01-01",
-      endTerm: "2023-12-31",
-    },
-    // Add more sample data as needed
-  ];
+   // DATA ---------------------------------------------------------------
+   const [ data,setData] = useState([]);
+   useEffect(() => {
+     fetchData(); // Fetch initial data when the component mounts
+   }, []);
+ 
+   const fetchData = async () => {
+     try {
+       const response = await axios.get('http://localhost:8000/get/official');
+       setData(response.data);
+     } catch (error) {
+       console.error(error);
+     }
+   };
 
 
   // Event handler for dropdown change ----------------------------------------
@@ -143,68 +131,62 @@ function BofficialsAdmin() {
   const toggleForm = () => { setShowForm(!showForm); }; //   SHOW FORMS 
   const handleDiscard = () => { setShowForm(false); }; //   DISCARD FUNCTION
 
-  //  DELETE  
-  const deleteRow = (row) => { Axios.delete(`http://localhost:3001/api/delete/bpermit/${row}`); }
+//  DELETE  
+const deleteRow = async (id) => {
+  try {
+    await axios.delete(`http://localhost:8000/delete/official/${id}`);
+    fetchData();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   // Database
   const [id, setId] = useState('');
-  const [position, setposition] = useState('');
-  const [firstName, setfirstName] = useState('');
-  const [lastName, setlastName] = useState('');
-  const [contact, setcontact] = useState('');
-  const [address, setaddress] = useState('');
-  const [Image, setimage] = useState('');
-  const [startTerm, setstartTerm] = useState('');
+  const [position, setPosition] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [middleName, setMiddleName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [contact, setContact] = useState('');
+  const [address, setAddress] = useState('');
+  const [file, setFile] = useState('');
+  const [startTerm, setStartTerm] = useState('');
   const [endTerm, setEndTerm] = useState('');
-  const [bOfficialTable, setBOfficialTable] = useState([]); // Define bOfficialTable
 
-
-  useEffect(() => {
-    Axios.get('http://localhost:3001/api/get/bpermit').then((response) => {
-      setBOfficialTable(response.data);
-    });
-  }, []);
-
-  const submitReq = () => {
-    Axios.post('http://localhost:3001/api/insert/bpermit', {
-      position: position,
-      firstName: firstName,
-      lastName: lastName,
-      contact: contact,
-      address: address,
-      Image: Image,
-      startTerm: startTerm,
-      endTerm: endTerm,
-    })
-    setBOfficialTable([
-      ...bOfficialTable,
-      {
-        id: id,
-        position: position,
-        firstName: firstName,
-        lastName: lastName,
-        contact: contact,
-        address: address,
-        Image: Image,
-        startTerm: startTerm,
-        endTerm: endTerm,
-      },
-    ]);
+  const official = () =>{
+    const formData = new FormData();
+    formData.append('position', position);
+    formData.append('firstName', firstName);
+    formData.append('middleName', middleName);
+    formData.append('lastName', lastName);
+    formData.append('contact', contact);
+    formData.append('address', address);
+    formData.append('file', file);
+    formData.append('startTerm', startTerm);
+    formData.append('endTerm', endTerm);
+    axios.post('http://localhost:8000/official', formData) .then(res=>{
+      if(res.data=="Error saving data to MongoDB"){
+        alert("Barangay Official Already Exist!");
+      }
+      else if(res.data=="File and text data saved to MongoDB"){
+      }
+  })
+    .catch(er => console.log(er))    
   };
 
 
   //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
-  const [SelectedRowId, setSelectedRowId] = useState(null);
-  const [editposition, setEditposition] = useState('');
-  const [editfirstName, setEditfirstName] = useState('');
-  const [editlastName, setEditlastName] = useState('');
-  const [editcontact, setEditcontact] = useState('');
-  const [editaddress, setEditaddress] = useState('');
-  const [editImage, setEditImage] = useState('');
+  const [editPosition, setEditPosition] = useState('');
+  const [editFirstName, setEditFirstName] = useState('');
+  const [editMiddleName, setEditMiddleName] = useState('');
+  const [editLastName, setEditLastName] = useState('');
+  const [editContact, setEditContact] = useState('');
+  const [editAddress, setEditAddress] = useState('');
+  const [editFile, setEditFile] = useState('');
 
   const [selectedRowData, setSelectedRowData] = useState(null);
-  const [editstartTerm, setEditstartTerm] = useState(format(new Date(), 'yyyy-MM-dd'));
-  const [editendTerm, setEditendTerm] = useState(format(new Date(), 'yyyy-MM-dd'));
+  const [editStartTerm, setEditStartTerm] = useState(format(new Date(), 'yyyy-MM-dd'));
+  const [editEndTerm, setEditEndTerm] = useState(format(new Date(), 'yyyy-MM-dd'));
 
   const [showEditForm, setShowEditForm] = useState(false);
   // EDIT DISCARD FUNCTION
@@ -212,56 +194,42 @@ function BofficialsAdmin() {
 
   // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
   const showEditFormHandler = (rowData) => {
-    setSelectedRowData(rowData);
-    setEditposition(rowData.position);
-    setEditfirstName(rowData.firstName);
-    setEditlastName(rowData.lastName);
-    setEditcontact(rowData.contact);
-    setEditaddress(rowData.address);
-    setEditImage(rowData.Image);
-    setEditstartTerm(rowData.starTerm);
-    setEditendTerm(rowData.endTerm);
-
-    setSelectedRowId(rowData.id);
+    setSelectedRowData(rowData._id);
+    setEditPosition(rowData.position);
+    setEditFirstName(rowData.firstName);
+    setEditMiddleName(rowData.middleName);
+    setEditLastName(rowData.lastName);
+    setEditContact(rowData.contact);
+    setEditAddress(rowData.address);
+    setEditFile(rowData.file);
+    setEditStartTerm(rowData.startTerm);
+    setEditEndTerm(rowData.endTerm);
     setShowEditForm(true);
   };
 
 
-  const updateRowData = () => {
-    Axios.put(`http://localhost:3001/api/update/bpermit/${selectedRowData.id}`, {
-      position: editposition,
-      firstName: editfirstName,
-      lastName: editlastName,
-      contact: editcontact,
-      address: editaddress,
-      Image: editImage,
-      startTerm: editstartTerm,
-      endTerm: editendTerm,
-    }).then((response) => {
-      const updatedTableData = bOfficialTable.map((rowData) => {
-        if (rowData.id === selectedRowData.id) {
-          return {
-            ...rowData,
-            position: editposition,
-            firstName: editfirstName,
-            lastName: editlastName,
-            contact: editcontact,
-            address: editaddress,
-            Image: editImage,
-            startTerm: editstartTerm,
-            endTerm: editendTerm,
-          };
-        } else {
-          return rowData;
-        }
-      });
-      // Update the state with the new table data
-      setBOfficialTable(updatedTableData);
-
-      // Clear the selectedRowData and close the edit form
-      setSelectedRowData(null);
+  const updateRowData = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('position', editPosition);
+      formData.append('firstName', editFirstName);
+      formData.append('middleName', editMiddleName);
+      formData.append('lastName', editLastName);
+      formData.append('contact', editContact);
+      formData.append('address', editAddress);
+      formData.append('file', editFile);
+      formData.append('startTerm', editStartTerm);
+      formData.append('endTerm', editEndTerm);
+      const response = await axios.put(
+        `http://localhost:8000/update/official/${selectedRowData}`,
+        formData
+      );
+      console.log(response.data);
+      fetchData();
       setShowEditForm(false);
-    });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
 
@@ -431,8 +399,7 @@ function BofficialsAdmin() {
       </div>
       <div className={`bofficials-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
-          <div className="toppart-table border row w-75 d-flex align-items-center">
-            <div className="col-4">
+          <div className="toppart-table border row w-50 d-flex align-items-center">
               <div className="input-group">
                 <input
                   type="text"
@@ -447,31 +414,11 @@ function BofficialsAdmin() {
                   <i className="bi bi-search"></i>
                 </button>
               </div>
-            </div>
-            <div className="col-4">
-              <div className="tabsz dropdown-center">
-                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
-                <ul className="dropdown-menu">
-                  <li><Link to="/announcement-admin">General</Link></li>
-                  <li><Link to="/livelihood-admin">Livelihood</Link></li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-4">
-              <div className="dropdown-tablenumbers">
-                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                </select>
-              </div>
-            </div>
           </div>
         </div>
         {/* TABLE STARTS */}
         <main id="main" className="main">
-          <div className="pagetitle"><h1> Business Permit  </h1> </div>
+          <div className="pagetitle"><h1> Barangay Officials </h1> </div>
           <section className="section">
             <div className="row">
               <div className="col-lg-12">
@@ -513,10 +460,12 @@ function BofficialsAdmin() {
                         <tr>
                           <th scope="col">#</th>
                           <th scope="col">Position</th>
-                          <th scope="col">Name</th>
-                          <th scope="col">lastName</th>
+                          <th scope="col">First Name</th>
+                          <th scope="col">Middle Name</th>
+                          <th scope="col">Last Name</th>
                           <th scope="col">Contact</th>
                           <th scope="col">Address</th>
+                          <th scope="col">Image</th>
                           <th scope="col">Start of Term</th>
                           <th scope="col">End of Term</th>
                           <th scope="col">Option</th>
@@ -525,25 +474,33 @@ function BofficialsAdmin() {
                       </thead>
                       <tbody>
                         {getCurrentPageData().map((val) => {
-                          const parsedStartTerm = parse(val.startTerm, 'yyyy-MM-dd', new Date());
-                          const parsedEndTerm = parse(val.endTerm, 'yyyy-MM-dd', new Date());
+                          
 
                           return (
-                            <tr key={val.id}>
-                              <th scope="row">{val.id}</th>
+                            <tr key={val._id}>
+                              <th scope="row">{val._id}</th>
                               <td>{val.position}</td>
                               <td>{val.firstName}</td>
+                              <td>{val.middleName}</td>
                               <td>{val.lastName}</td>
                               <td>{val.contact}</td>
                               <td>{val.address}</td>
-                              <td>{format(parsedStartTerm, 'yyyy-MM-dd')}</td>
-                              <td>{format(parsedEndTerm, 'yyyy-MM-dd')}</td>
+                              <td>
+                              <img
+                              style ={{width:"100px",height: "100px"}}
+                                src={require(`../../../server/uploads/official/${val.filename}`)}
+                                alt=""
+                                className="business-picture"
+                              />
+                            </td>
+                              <td>{val.startTerm}</td>
+                              <td>{val.endTerm}</td>
                               <td>
                                 <div className='gap-2 d-md-flex justify-content-start align-items-center'>
                                   <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(val)}>Edit</button>
-                                  <form method='post' action=''>
+                                  <form  action=''>
                                     <input type='hidden' name='id' value="" />
-                                    <button className='btn btn-outline-danger' type='submit' name='deletePost'>Delete</button>
+                                    <button className='btn btn-outline-danger' name='deletePost'onClick={() => { deleteRow(val._id); }}>Delete</button>
                                   </form>
                                 </div>
                               </td>
@@ -561,7 +518,7 @@ function BofficialsAdmin() {
               {showForm && (
                 <div className="popup-overlay">
                   <div className="popup-form mt-4">
-                    <form onSubmit={submitReq}>
+                    <form>
                       <div className="certificate">
                         <h2 className="certificate-title">ADD OFFICALS INFO</h2>
                         <div className="certificate-content">
@@ -573,7 +530,7 @@ function BofficialsAdmin() {
                               id="Position"
                               name="Position"
                               onChange={(e) => {
-                                setposition(e.target.value);
+                                setPosition(e.target.value);
                               }}
                               className="form-control"
                               required /></div>
@@ -585,7 +542,19 @@ function BofficialsAdmin() {
                               id="name"
                               name="name"
                               onChange={(e) => {
-                                setfirstName(e.target.value);
+                                setFirstName(e.target.value);
+                              }}
+                              className="form-control"
+                              required /> </div>
+
+                            <div className="form-group">
+                            <label htmlFor="name"> MIDDLE NAME </label>
+                            <input
+                              type="text"
+                              id="name"
+                              name="name"
+                              onChange={(e) => {
+                                setMiddleName(e.target.value);
                               }}
                               className="form-control"
                               required /> </div>
@@ -597,7 +566,7 @@ function BofficialsAdmin() {
                               id="name"
                               name="name"
                               onChange={(e) => {
-                                setlastName(e.target.value);
+                                setLastName(e.target.value);
                               }}
                               className="form-control"
                               required /> </div>
@@ -610,7 +579,7 @@ function BofficialsAdmin() {
                               id="Contact"
                               name="Contact"
                               onChange={(e) => {
-                                setcontact(e.target.value);
+                                setContact(e.target.value);
                               }}
                               className="form-control"
                               required /></div>
@@ -622,19 +591,20 @@ function BofficialsAdmin() {
                               id="Address"
                               name="Address"
                               onChange={(e) => {
-                                setaddress(e.target.value);
+                                setAddress(e.target.value);
                               }}
                               className="form-control"
                               required /></div>
 
                           <div className="form-group">
-                            <label htmlFor="Image">ADD IMAGE </label>
+                            <label htmlFor="file">IMAGE </label>
                             <input
                               type="file"
-                              id="Image"
-                              name="Image"
+                              id="file"
+                              name="file"
+                              accept="image/*"
                               onChange={(e) => {
-                                setimage(e.target.value);
+                                setFile((e.target.files[0]));
                               }}
                               className="form-control"
                               required /></div>
@@ -645,8 +615,7 @@ function BofficialsAdmin() {
                               type="date"
                               id="Start-Term"
                               name="Start-Term"
-                              value={editstartTerm}
-                              onChange={(e) => setEditstartTerm(e.target.value)}
+                              onChange={(e) => setStartTerm(e.target.value)}
                               className="form-control"
                               required
                             /></div>
@@ -659,14 +628,12 @@ function BofficialsAdmin() {
                               type="date"
                               id="End-Term"
                               name="End-Term"
-                              value={editendTerm}
-
-                              onChange={(e) => setEditendTerm(e.target.value)}
+                              onChange={(e) => setEndTerm(e.target.value)}
                               className="form-control"
                               required /></div>
 
                           <div className="form-buttons">
-                            <button type="submit" className="btn btn-primary">Submit </button>
+                            <button type="submit" className="btn btn-primary" onClick={official}>Submit </button>
                             <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
                           </div>
                         </div>
@@ -691,21 +658,34 @@ function BofficialsAdmin() {
                               type="text"
                               id="Position"
                               name="Position"
-                              value={editposition}
-                              onChange={(e) => setEditposition(e.target.value)}
+                              value={editPosition}
+                              onChange={(e) => setEditPosition(e.target.value)}
                               className="form-control"
                               required
                             />
                           </div>
 
                           <div className="form-group">
-                            <label htmlFor="Name">  FIRST NAME </label>
+                            <label htmlFor="fname">  FIRST NAME </label>
                             <input
                               type="text"
-                              id="Name"
-                              name="Name"
-                              value={editfirstName}
-                              onChange={(e) => setEditfirstName(e.target.value)}
+                              id="fname"
+                              name="fname"
+                              value={editFirstName}
+                              onChange={(e) => setEditFirstName(e.target.value)}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label htmlFor="Mname">  MIDDLE NAME </label>
+                            <input
+                              type="text"
+                              id="Mname"
+                              name="Mname"
+                              value={editMiddleName}
+                              onChange={(e) => setEditMiddleName(e.target.value)}
                               className="form-control"
                               required
                             />
@@ -717,8 +697,8 @@ function BofficialsAdmin() {
                               type="text"
                               id="LastName"
                               name="LastName"
-                              value={editlastName}
-                              onChange={(e) => setEditlastName(e.target.value)}
+                              value={editLastName}
+                              onChange={(e) => setEditLastName(e.target.value)}
                               className="form-control"
                               required
                             />
@@ -730,8 +710,8 @@ function BofficialsAdmin() {
                               type="text"
                               id="Contact"
                               name="Contact"
-                              value={editcontact}
-                              onChange={(e) => setEditcontact(e.target.value)}
+                              value={editContact}
+                              onChange={(e) => setEditContact(e.target.value)}
                               className="form-control"
                               required
                             />
@@ -743,20 +723,21 @@ function BofficialsAdmin() {
                               type="text"
                               id="Address"
                               name="Address"
-                              value={editaddress}
-                              onChange={(e) => setEditaddress(e.target.value)}
+                              value={editAddress}
+                              onChange={(e) => setEditAddress(e.target.value)}
                               className="form-control"
                               required
                             />
                           </div>
 
                           <div className="form-group">
-                            <label htmlFor="EditImage">Edit Image</label>
+                            <label htmlFor="file">Edit Image</label>
                             <input
                               type="file"
-                              id="EditImage"
-                              name="EditImage"
-                              onChange={(e) => setEditImage(e.target.value)}
+                              id="file"
+                              name="file"
+                              accept="image/*"
+                              onChange={(e) => setEditFile(e.target.files[0])}
                               className='form-control'
                             />
                           </div>
@@ -767,8 +748,8 @@ function BofficialsAdmin() {
                               type='date'
                               id='EditStartTerm'
                               name='EditStartTerm'
-                              value={editstartTerm}
-                              onChange={(e) => setEditstartTerm(e.target.value)}
+                              value={editStartTerm}
+                              onChange={(e) => setEditStartTerm(e.target.value)}
                               className='form-control'
                               required
                             />
@@ -780,8 +761,8 @@ function BofficialsAdmin() {
                               type='date'
                               id='EditEndTerm'
                               name='EditEndTerm'
-                              value={editendTerm}
-                              onChange={(e) => setEditendTerm(e.target.value)}
+                              value={editEndTerm}
+                              onChange={(e) => setEditEndTerm(e.target.value)}
                               className='form-control'
                               required
                             />

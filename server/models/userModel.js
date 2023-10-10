@@ -1,0 +1,75 @@
+const mongoose = require('mongoose');
+
+const userRegistrationSchema = new mongoose.Schema({
+  firstName:{
+    type:String,
+    required:true
+},
+middleName:{
+    type:String,
+    required:true
+},
+lastName:{
+    type:String,
+    required:true
+},
+gender:{
+    type:String,
+    required:true
+},
+religion:{
+    type:String,
+    required:true
+},
+civilStatus:{
+    type:String,
+    required:true
+},
+employmentStatus:{
+    type:String,
+    required:true
+},
+highestEducation:{
+    type:String,
+    required:true
+},
+nationality:{
+    type:String,
+    required:true
+},
+address:{
+    type:String,
+    required:true
+},
+householdMember:{
+    type:String,
+    required:true
+},
+dateOfBirth:{
+    type:String,
+    required:true
+},
+phoneNumber:{
+    type:String,
+    required:true
+},
+email:{
+    type:String,
+    required:true
+},
+password:{
+    type:String,
+    required:true
+},
+type:{
+    type:String,
+    default:'resident'
+},
+status:{
+    type:String,
+    default:'active'
+}
+});
+
+const User = mongoose.model("User", userRegistrationSchema);
+module.exports = User;

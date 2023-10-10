@@ -1,7 +1,6 @@
 
 import './assets/css/style.css';
 import { Link, NavLink, Route } from 'react-router-dom';
-import Axios from 'axios';
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from "react";
 import logo from '../admin-components/assets/img/brgy.png';

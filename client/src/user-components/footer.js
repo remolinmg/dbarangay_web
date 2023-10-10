@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect} from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 import {
   FaTwitter,
   FaFacebook,
@@ -18,28 +18,39 @@ const Footer = () => {
   // Database Feedback
   const [date, setDate] = useState('');
   const [feedback, setFeedback] = useState('');
-  const [inputValues, setInputValues] = useState({
-    residentsName: '',
-    Address: '',
-    reasonOfRequest: '',
-    issuedDate: '',
-  });
 
-  const submitFeedback = () => {
-    Axios.post('http://localhost:3001/api/insert/userfeedback', {
-      date: date,
-      feedback: feedback
-    })
-  };
 
-  const handleDiscard = () => {
-    setInputValues({
-      residentsName: '',
-      Address: '',
-      reasonOfRequest: '',
-      issuedDate: '',
-    });
-  };
+  async function submitFeedback(e) {
+    e.preventDefault();
+
+    try {
+
+      await axios.post("http://localhost:8000/feedback", {
+        date,feedback
+      })
+        .then(res => {
+          if (res.data == "exist") {
+            alert("You already sent the same feedback");
+          }
+          else if (res.data == "notexist") {
+            setDate(null);
+            setFeedback(null);
+          }
+        })
+        .catch(e => {
+          alert("Failed!")
+          console.log(e);
+        })
+
+    }
+    catch (e) {
+      console.log(e);
+
+    }
+  }
+
+
+
 
   return (
 
@@ -82,7 +93,6 @@ const Footer = () => {
                           className="form-control" rows="4" required  ></textarea> </div>
                       <div className="form-buttons">
                         <button type="submit" className="btn btn-primary">  Submit  </button>
-                        <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
                       </div>
                     </div>
                   </div>

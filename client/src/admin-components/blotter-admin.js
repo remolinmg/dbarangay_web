@@ -1,5 +1,5 @@
 import './assets/css/style.css';
-import Axios from 'axios';
+import axios from 'axios';
 import React, { useState, useEffect, useRef } from "react";
 import { Outlet, Link, NavLink } from 'react-router-dom';
 import logo from '../admin-components/assets/img/brgy.png';
@@ -68,219 +68,20 @@ function BlotterAdmin() {
   // SEARCH QUERY --------------------------------------------------------------
   const [searchQuery, setSearchQuery] = useState(""); // State for the search query
 
-  // SAMPLE DATA ---------------------------------------------------------------
-  const data = [
-    {
-      id: 1,
-      complaint_date: "2023-09-15",
-      complaint_type: "Noise Complaint",
-      incident_location: "123 Main Street",
-      complaint_details: "Loud music late at night",
-      c_fullname: "John Doe",
-      s_documents: "Evidence1.jpg",
-      status: "Pending",
-    },
-    {
-      id: 2,
-      complaint_date: "2023-09-14",
-      complaint_type: "Property Damage",
-      incident_location: "456 Elm Street",
-      complaint_details: "Vandalism reported",
-      c_fullname: "Jane Smith",
-      s_documents: "Evidence2.jpg",
-      status: "Resolved",
-    },
-    {
-      id: 3,
-      complaint_date: "2023-09-13",
-      complaint_type: "Theft",
-      incident_location: "789 Oak Avenue",
-      complaint_details: "Stolen bicycle",
-      c_fullname: "Mike Johnson",
-      s_documents: "Evidence3.jpg",
-      status: "Pending",
-    },
-    {
-      id: 4,
-      complaint_date: "2023-09-12",
-      complaint_type: "Noise Complaint",
-      incident_location: "101 Pine Street",
-      complaint_details: "Loud party next door",
-      c_fullname: "Sarah Lee",
-      s_documents: "Evidence4.jpg",
-      status: "Resolved",
-    },
-    {
-      id: 5,
-      complaint_date: "2023-09-11",
-      complaint_type: "Suspicious Activity",
-      incident_location: "222 Cedar Road",
-      complaint_details: "Unusual behavior reported",
-      c_fullname: "David Brown",
-      s_documents: "Evidence5.jpg",
-      status: "Pending",
-    },
-    {
-      id: 6,
-      complaint_date: "2023-09-10",
-      complaint_type: "Property Damage",
-      incident_location: "333 Maple Lane",
-      complaint_details: "Vandalism to a vehicle",
-      c_fullname: "Emily Davis",
-      s_documents: "Evidence6.jpg",
-      status: "Resolved",
-    },
-    {
-      id: 7,
-      complaint_date: "2023-09-09",
-      complaint_type: "Noise Complaint",
-      incident_location: "444 Birch Street",
-      complaint_details: "Loud music during the night",
-      c_fullname: "Chris Wilson",
-      s_documents: "Evidence7.jpg",
-      status: "Pending",
-    },
-    {
-      id: 8,
-      complaint_date: "2023-09-08",
-      complaint_type: "Theft",
-      incident_location: "555 Redwood Drive",
-      complaint_details: "Missing laptop",
-      c_fullname: "Olivia White",
-      s_documents: "Evidence8.jpg",
-      status: "Resolved",
-    },
-    {
-      id: 9,
-      complaint_date: "2023-09-07",
-      complaint_type: "Noise Complaint",
-      incident_location: "666 Willow Avenue",
-      complaint_details: "Loud party at a neighbor's house",
-      c_fullname: "Daniel Harris",
-      s_documents: "Evidence9.jpg",
-      status: "Pending",
-    },
-    {
-      id: 10,
-      complaint_date: "2023-09-06",
-      complaint_type: "Property Damage",
-      incident_location: "777 Elm Street",
-      complaint_details: "Graffiti on a building",
-      c_fullname: "Sophia Martinez",
-      s_documents: "Evidence10.jpg",
-      status: "Resolved",
-    },
-    {
-      id: 11,
-      complaint_date: "2023-09-05",
-      complaint_type: "Noise Complaint",
-      incident_location: "888 Oak Avenue",
-      complaint_details: "Loud music disturbance",
-      c_fullname: "Liam Anderson",
-      s_documents: "Evidence11.jpg",
-      status: "Pending",
-    },
-    {
-      id: 12,
-      complaint_date: "2023-09-04",
-      complaint_type: "Theft",
-      incident_location: "999 Pine Street",
-      complaint_details: "Stolen wallet",
-      c_fullname: "Ava Thomas",
-      s_documents: "Evidence12.jpg",
-      status: "Resolved",
-    },
-    {
-      id: 13,
-      complaint_date: "2023-09-03",
-      complaint_type: "Property Damage",
-      incident_location: "111 Cedar Road",
-      complaint_details: "Broken windows",
-      c_fullname: "Noah Rodriguez",
-      s_documents: "Evidence13.jpg",
-      status: "Pending",
-    },
-    {
-      id: 14,
-      complaint_date: "2023-09-02",
-      complaint_type: "Noise Complaint",
-      incident_location: "222 Maple Lane",
-      complaint_details: "Loud party disturbance",
-      c_fullname: "Emma Garcia",
-      s_documents: "Evidence14.jpg",
-      status: "Resolved",
-    },
-    {
-      id: 15,
-      complaint_date: "2023-09-01",
-      complaint_type: "Suspicious Activity",
-      incident_location: "333 Birch Street",
-      complaint_details: "Unusual behavior in the park",
-      c_fullname: "Mason Lewis",
-      s_documents: "Evidence15.jpg",
-      status: "Pending",
-    },
-    {
-      id: 16,
-      complaint_date: "2023-08-31",
-      complaint_type: "Property Damage",
-      incident_location: "444 Redwood Drive",
-      complaint_details: "Vandalism to public property",
-      c_fullname: "Olivia Clark",
-      s_documents: "Evidence16.jpg",
-      status: "Resolved",
-    },
-    {
-      id: 17,
-      complaint_date: "2023-08-30",
-      complaint_type: "Noise Complaint",
-      incident_location: "555 Willow Avenue",
-      complaint_details: "Loud music disturbance",
-      c_fullname: "James Turner",
-      s_documents: "Evidence17.jpg",
-      status: "Pending",
-    },
-    {
-      id: 18,
-      complaint_date: "2023-08-29",
-      complaint_type: "Theft",
-      incident_location: "666 Elm Street",
-      complaint_details: "Missing bicycle",
-      c_fullname: "Sophia Lewis",
-      s_documents: "Evidence18.jpg",
-      status: "Resolved",
-    },
-    {
-      id: 19,
-      complaint_date: "2023-08-28",
-      complaint_type: "Noise Complaint",
-      incident_location: "777 Oak Avenue",
-      complaint_details: "Loud party next door",
-      c_fullname: "Aiden Garcia",
-      s_documents: "Evidence19.jpg",
-      status: "Pending",
-    },
-    {
-      id: 20,
-      complaint_date: "2023-08-27",
-      complaint_type: "Property Damage",
-      incident_location: "888 Pine Street",
-      complaint_details: "Graffiti on a public building",
-      c_fullname: "Sophie Turner",
-      s_documents: "Evidence20.jpg",
-      status: "Resolved",
-    },
-    {
-      id: 21,
-      complaint_date: "2023-08-26",
-      complaint_type: "Noise Complaint",
-      incident_location: "999 Cedar Road",
-      complaint_details: "Loud music late at night",
-      c_fullname: "Ethan Wilson",
-      s_documents: "Evidence21.jpg",
-      status: "Pending",
-    },
-  ];
+  // DATA ---------------------------------------------------------------
+  const [ data,setData] = useState([]);
+  useEffect(() => {
+    fetchData(); // Fetch initial data when the component mounts
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/get/blotter');
+      setData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   // Event handler for dropdown change ----------------------------------------
   const handleRowCountChange = (e) => {
     const selectedRowCount = parseInt(e.target.value);
@@ -329,54 +130,97 @@ function BlotterAdmin() {
 
 
 
-  //  ------------------------------ SHOW ADD FORM ---------------------------------
-  const [showForm, setShowForm] = useState(false);
-  const toggleForm = () => { setShowForm(!showForm); };
+ // Forms ----------------------------------------------
+ const [showForm, setShowForm] = useState(false);
+ const toggleForm = () => { setShowForm(!showForm); }; // SHOW FORMS
+ const handleDiscard = () => { setShowForm(false); }; // DISCARD FUNCTION
 
 
-  //   DISCARD FUNCTION
-  const handleDiscard = () => { setShowForm(false); };
+//  DELETE  
+const deleteRow = async (id) => {
+  try {
+    await axios.delete(`http://localhost:8000/delete/blotter/${id}`);
+    fetchData();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-  const [complaint_date, setcomplaint_date] = useState('');
-  const [complaint_type, setcomplaint_type] = useState('');
-  const [incident_location, setincident_location] = useState('');
-  const [complaint_details, setcomplaint_details] = useState('');
-  const [c_fullname, setc_fullname] = useState('');
-  const [s_documents, sets_documents] = useState('');
+ //------------------------------------------------ Database ----------------------------
+ const [date, setDate] = useState('');
+ const [complainant, setComplainant] = useState('');
+ const [defendant, setDefendant] = useState('');
+ const [type, setType] = useState('');
+ const [address, setAddress] = useState('');
+ const [status, setStatus] = useState(''); 
+ const [file,setFile] = useState();
+  //-------------------------- ADD FUNCTION -----------------------------------
 
-
-  const handleEditSubmit = () => { }
-
-
-  //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
-  const [SelectedRowId, setSelectedRowId] = useState(null);
-
-  const [editcomplaint_date, setEditcomplaint_date] = useState('');
-  const [editcomplaintType, setEditcomplaint_type] = useState('');
-  const [editincidentLocation, setEditincident_location] = useState('');
-  const [editcomplaintDetails, setEditcomplaint_details] = useState('');
-  const [editcomplainantFullname, setEditc_fullname] = useState('');
-  const [editsupportingDocuments, setEdits_documents] = useState('');
-
-  const [selectedRowData, setSelectedRowData] = useState(null);
-  const [showEditForm, setShowEditForm] = useState(false);
-  const handleEditDiscard = () => { setShowEditForm(false); };
-
-
-  // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
-
-  const showEditFormHandler = (rowData) => {
-    setSelectedRowData(rowData);
-    setEditcomplaint_date(rowData.complaint_date);
-    setEditcomplaint_type(rowData.complaint_type);
-    setEditincident_location(rowData.incident_location);
-    setEditcomplaint_details(rowData.complaint_details);
-    setEditc_fullname(rowData.c_fullname);
-    setEdits_documents(rowData.s_documents);
-    setSelectedRowId(rowData.id_blotter);
-    setShowEditForm(true);
+  const blotter = () =>{
+    const formData = new FormData();
+    formData.append('date', date);
+    formData.append('complainant', complainant);
+    formData.append('defendant', defendant);
+    formData.append('type', type);
+    formData.append('address', address);
+    formData.append('status', status);
+    formData.append('file', file);
+    axios.post('http://localhost:8000/blotter', formData) .then(res=>{
+      if(res.data=="Error saving data to MongoDB"){
+        alert("Blotter Already Exist!");
+      }
+      else if(res.data=="File and text data saved to MongoDB"){
+      }
+  })
+    .catch(er => console.log(er))    
   };
 
+// EDIT FORM STATES (ShowForms) ------------------------------
+
+const [editDate, setEditDate] = useState('');
+const [editComplainant, setEditComplainant] = useState('');
+const [editDefendant, setEditDefendant] = useState('');
+const [editType, setEditType] = useState('');
+const [editAddress, setEditAddress] = useState('');
+const [editStatus, setEditStatus] = useState('');
+const [editFile, setEditFile] = useState('');
+const [selectedRowData, setSelectedRowData] = useState(null);
+const [showEditForm, setShowEditForm] = useState(false);
+const handleEditDiscard = () => { setShowEditForm(false); };
+
+// Function to show the edit form with the default data of the selected row
+const showEditFormHandler = (rowData) => {
+  setSelectedRowData(rowData._id);
+  setEditDate(rowData.date);
+  setEditComplainant(rowData.complainant);
+  setEditDefendant(rowData.defendant);
+  setEditType(rowData.type);
+  setEditAddress(rowData.address);
+  setEditStatus(rowData.status);
+  setShowEditForm(true);
+};
+
+const updateRowData = async () => {
+  try {
+    const formData = new FormData();
+    formData.append('date', editDate);
+    formData.append('complainant', editComplainant);
+    formData.append('defendant', editDefendant);
+    formData.append('type', editType);
+    formData.append('address', editAddress);
+    formData.append('status', editStatus);
+    formData.append('file', editFile);
+    const response = await axios.put(
+      `http://localhost:8000/update/blotter/${selectedRowData}`,
+      formData
+    );
+    console.log(response.data);
+    fetchData();
+    setShowEditForm(false);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   return (
     <>
@@ -626,29 +470,34 @@ function BlotterAdmin() {
                         <tr>
                           <th scope="col">Blotter #</th>
                           <th scope="col">DATE</th>
+                          <th scope="col">COMPLAINANT</th>
+                          <th scope="col">DEFENDANT</th>
                           <th scope="col">COMPLAINT TYPE</th>
-                          <th scope="col">INCIDENT LOC.</th>
-                          <th scope="col">COMPLAINT DETAILS</th>
-                          <th scope="col">COMPLAINANT Name</th>
-                          <th scope="col">SUPPORTING DOCUMENTS</th>
+                          <th scope="col">INCIDENT ADDRESS</th>
+                          <th scope="col">DOCUMENTATION</th>
                           <th scope="col">Status</th>
                           <th scope="col">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
                         {getCurrentPageData().map((item) => (
-                          <tr key={item.id}>
-                            <td>{item.id}</td>
-                            <td>{item.complaint_date}</td>
-                            <td>{item.complaint_type}</td>
-                            <td>{item.incident_location}</td>
-                            <td>{item.complaint_details}</td>
-                            <td>{item.c_fullname}</td>
-                            <td>{item.s_documents}</td>
+                          <tr key={item._id}>
+                            <td>{item._id}</td>
+                            <td>{item.date}</td>
+                            <td>{item.complainant}</td>
+                            <td>{item.defendant}</td>
+                            <td>{item.type}</td>
+                            <td>{item.address}</td>
+                            <td><img
+                              style ={{width:"100px",height: "100px"}}
+                                src={require(`../../../server/uploads/blotter/${item.filename}`)}
+                                alt=""
+                                className="business-picture"
+                              /></td>
                             <td>{item.status}</td>
                             <td>
                               <button className="btn btn-primary btn-sm" onClick={() => showEditFormHandler(item)}>Edit</button>
-                              <button className="btn btn-danger btn-sm">Delete</button>
+                              <button className="btn btn-danger btn-sm" onClick={() => { deleteRow(item._id); }}>Delete</button>
                             </td>
                           </tr>
                         ))}
@@ -670,58 +519,70 @@ function BlotterAdmin() {
                       <div className="certificate-content">
 
                         <div className="form-group">
-                          <label htmlFor="owner">COMPLAINT Date </label>
+                          <label htmlFor="date">COMPLAINT Date </label>
                           <input
                             type="date"
-                            id="owner"
-                            name="owner" onChange={(e) => { setcomplaint_date(e.target.value); }}
+                            id="date"
+                            name="date" onChange={(e) => { setDate(e.target.value); }}
                             className="form-control" required /> </div>
 
-                        <div className="form-group">
-                          <label htmlFor="bname"> COMPLAINT TYPE </label>
+                          <div className="form-group">
+                          <label htmlFor="complainant">COMPLAINANT </label>
                           <input
                             type="text"
-                            id="bname"
-                            name="bname"
-                            onChange={(e) => { setcomplaint_type(e.target.value); }}
+                            id="complainant"
+                            name="complainant" onChange={(e) => { setComplainant(e.target.value); }}
+                            className="form-control" required /></div>
+
+                          <div className="form-group">
+                          <label htmlFor="defendant">DEFENDANT</label>
+                          <input
+                            type="text"
+                            id="defendant"
+                            name="defendant" onChange={(e) => { setDefendant(e.target.value); }}
+                            className="form-control" required /></div>
+
+                        <div className="form-group">
+                          <label htmlFor="type"> COMPLAINT TYPE </label>
+                          <input
+                            type="text"
+                            id="type"
+                            name="type"
+                            onChange={(e) => { setType(e.target.value); }}
                             className="form-control" required /> </div>
 
                         <div className="form-group">
-                          <label htmlFor="address">INCIDENT LOCATION </label>
+                          <label htmlFor="address">INCIDENT ADDRESS </label>
                           <input
                             type="text"
                             id="address"
                             name="address"
-                            onChange={(e) => { setincident_location(e.target.value); }}
+                            onChange={(e) => { setAddress(e.target.value); }}
                             className="form-control" required /></div>
 
                         <div className="form-group">
-                          <label htmlFor="type">COMPLAINT DETAILS </label>
+                          <label htmlFor="file">DOCUMENTATION</label>
                           <input
-                            type="text"
-                            id="type"
-                            name="type" onChange={(e) => { setcomplaint_details(e.target.value); }}
-                            className="form-control" required /></div>
-                        <div className="form-group">
-                          <label htmlFor="type">COMPLAINANT FULL NAME </label>
-                          <input
-                            type="text"
-                            id="type"
-                            name="type" onChange={(e) => { setc_fullname(e.target.value); }}
+                            type="file"
+                            id="file"
+                            name="file" onChange={(e) => setFile(e.target.files[0])}
                             className="form-control" required /></div>
 
                         <div className="form-group">
-                          <label htmlFor="type">SUPPORTING DOCUMENTS</label>
-                          <input
-                            type="text"
-                            id="type"
-                            name="type" onChange={(e) => { sets_documents(e.target.value); }}
-                            className="form-control" required /></div>
-
-
-
+                        <label htmlFor="status">STATUS</label>
+                          <select
+                            id="status"
+                            className="form-control"
+                            onChange={(e) => { setStatus(e.target.value); }}
+                            style={{ fontSize: '20px', marginBottom: '10px' }}
+                          >
+                              <option value="????" ></option>
+                              <option value="pending">PENDING</option>
+                              <option value="processed">PROCESSED</option>
+                          </select>
+                        </div>
                         <div className="form-buttons">
-                          <button type="submit" className="btn btn-primary">Submit </button>
+                          <button type="submit" className="btn btn-primary"onClick={blotter}>Submit </button>
                           <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
                         </div>
                       </div>
@@ -740,74 +601,75 @@ function BlotterAdmin() {
                     <div className='certificate'>
                       <h2 className='certificate-title'>EDIT RESIDENTS INFO</h2>
                       <div className='certificate-content'>
-                        <div className='form-group'>
-                          <label htmlFor='owner'>COMPLAINT DATE</label>
+                      <div className="form-group">
+                          <label htmlFor="date">COMPLAINT Date </label>
                           <input
-                            type='date'
-                            id='owner'
-                            name='owner'
-                            value={editcomplaint_date}
-                            onChange={(e) => setEditcomplaint_date(e.target.value)}
-                            className='form-control' required />
-                        </div>
+                            type="date"
+                            id="date"
+                            value={editDate}
+                            name="date" onChange={(e) => { setEditDate(e.target.value); }}
+                            className="form-control" required /> </div>
 
-                        <div className='form-group'>
-                          <label htmlFor='owner'>COMPLAINT TYPE</label>
+                          <div className="form-group">
+                          <label htmlFor="complainant">COMPLAINANT </label>
                           <input
-                            type='text'
-                            id='owner'
-                            name='owner'
-                            value={editcomplaintType}
-                            onChange={(e) => setEditcomplaint_type(e.target.value)}
-                            className='form-control' required />
-                        </div>
+                            type="text"
+                            id="complainant"
+                            value={editComplainant}
+                            name="complainant" onChange={(e) => { setEditComplainant(e.target.value); }}
+                            className="form-control" required /></div>
 
-                        <div className='form-group'>
-                          <label htmlFor='owner'>INCIDENT LOCATION</label>
+                          <div className="form-group">
+                          <label htmlFor="defendant">DEFENDANT</label>
                           <input
-                            type='text'
-                            id='owner'
-                            name='owner'
-                            value={editincidentLocation}
-                            onChange={(e) => setEditincident_location(e.target.value)}
-                            className='form-control' required />
-                        </div>
+                            type="text"
+                            id="defendant"
+                            value={editDefendant}
+                            name="defendant" onChange={(e) => { setEditDefendant(e.target.value); }}
+                            className="form-control" required /></div>
 
-                        <div className='form-group'>
-                          <label htmlFor='bname'>COMPLAINT DETAILS</label>
+                        <div className="form-group">
+                          <label htmlFor="type"> COMPLAINT TYPE </label>
                           <input
-                            type='text'
-                            id='bname'
-                            name='bname'
-                            value={editcomplaintDetails}
-                            onChange={(e) => setEditcomplaint_details(e.target.value)}
-                            className='form-control' required />
-                        </div>
+                            type="text"
+                            id="type"
+                            name="type"
+                            value={editType}
+                            onChange={(e) => { setEditType(e.target.value); }}
+                            className="form-control" required /> </div>
 
-                        <div className='form-group'>
-                          <label htmlFor='address'>COMPLAINANT FULL NAME</label>
+                        <div className="form-group">
+                          <label htmlFor="address">INCIDENT ADDRESS </label>
                           <input
-                            type='text'
-                            id='address'
-                            name='address'
-                            value={editcomplainantFullname}
-                            onChange={(e) => setEditc_fullname(e.target.value)}
-                            className='form-control' required />
-                        </div>
+                            type="text"
+                            id="address"
+                            name="address"
+                            value={editAddress}
+                            onChange={(e) => { setEditAddress(e.target.value); }}
+                            className="form-control" required /></div>
 
-                        <div className='form-group'>
-                          <label htmlFor='type'>SUPPORTING DOCUMENTS</label>
+                        <div className="form-group">
+                          <label htmlFor="file">DOCUMENTATION</label>
                           <input
-                            type='text'
-                            id='type'
-                            name='type'
-                            value={editsupportingDocuments}
-                            onChange={(e) => setEdits_documents(e.target.value)}
-                            className='form-control' required />
+                            type="file"
+                            id="file"
+                            name="file" onChange={(e) => setEditFile(e.target.files[0])}
+                            className="form-control"/></div>
+                        <div className="form-group">
+                        <label htmlFor="status">STATUS</label>
+                          <select
+                            id="status"
+                            className="form-control"
+                            value={editStatus}
+                            style={{ fontSize: '20px', marginBottom: '10px' }}
+                          >
+                              <option value="????" ></option>
+                              <option value="pending">PENDING</option>
+                              <option value="processed">PROCESSED</option>
+                          </select>
                         </div>
-
                         <div className='form-buttons'>
-                          <button type='submit' className='btn btn-primary' onClick={handleEditSubmit}>Submit</button>
+                          <button type='submit' className='btn btn-primary' onClick={updateRowData}>Submit</button>
                           <button type='button' className='btn btn-secondary' onClick={handleEditDiscard}>Discard</button>
                         </div>
                       </div>
