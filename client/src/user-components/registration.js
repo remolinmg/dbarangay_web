@@ -402,7 +402,7 @@ const RegistrationComponent = () => {
     setresidenceClass(value);
     setResidenceClassValid(value.trim() !== '');
   };
-
+  
   const handleVoterRegistrationChange = (e) => {
     const value = e.target.value;
     setVoterRegistration(value);
