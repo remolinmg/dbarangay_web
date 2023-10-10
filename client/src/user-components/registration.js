@@ -57,8 +57,10 @@ const RegistrationComponent = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [nationality, setNationality] = useState('');
   const [civilStatus, setCivilStatus] = useState('');
-  const [employmentStatus, setEmploymentStatus] = useState('');
   const [gender, setGender] = useState('');
+  const [employmentStatus, setEmploymentStatus] = useState('');
+  const [position, setPosition] = useState('');
+  const [companyName, setCompanyName] = useState('');
 
   const [homeOwnership, setHomeOwnership] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
@@ -66,6 +68,7 @@ const RegistrationComponent = () => {
   const [age, setAge] = useState('');
   const [highestEducation, setHighestEducation] = useState('');
   const [residenceClass, setresidenceClass] = useState('');
+  const [voterRegistration, setVoterRegistration] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -83,9 +86,10 @@ const RegistrationComponent = () => {
   const [phoneNumberValid, setPhoneNumberValid] = useState(true);
   const [nationalityValid, setNationalityValid] = useState(true);
   const [civilStatusValid, setCivilStatusValid] = useState(true);
-  const [employmentStatusValid, setEmploymentStatusValid] = useState(true);
   const [genderValid, setGenderValid] = useState(true);
-
+  const [employmentStatusValid, setEmploymentStatusValid] = useState(true);
+  const [positionValid, setPositionValid] = useState(true);
+  const [companyNameValid, setCompanyNameValid] = useState(true);
 
   const [homeOwnershipValid, setHomeOwnershipValid] = useState(true);
   const [dateOfBirthValid, setDateOfBirthValid] = useState(true);
@@ -93,8 +97,10 @@ const RegistrationComponent = () => {
   const [ageValid, setAgeValid] = useState(true);
   const [highestEducationValid, setHighestEducationValid] = useState(true);
   const [residenceClassValid, setResidenceClassValid] = useState(true);
+  const [voterRegistrationValid, setVoterRegistrationValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
   const [confirmPasswordValid, setConfirmPasswordValid] = useState(true);
+
 
   const navigate = useNavigate();
 
@@ -182,6 +188,9 @@ const RegistrationComponent = () => {
     }
 
 
+
+
+
     if (homeOwnership.trim() === '') {
       setHomeOwnershipValid(false);
       return;
@@ -205,6 +214,10 @@ const RegistrationComponent = () => {
     }
     if (residenceClass.trim() === '') {
       setResidenceClassValid(false);
+      return;
+    }
+    if (voterRegistration.trim() === '') {
+      setVoterRegistrationValid(false);
       return;
     }
     if (password.trim() === '') {
@@ -306,11 +319,56 @@ const RegistrationComponent = () => {
     setCivilStatus(value);
     setCivilStatusValid(value.trim() !== '');
   };
+
+  const isCompanyNameValid = (value) => {
+    return value.trim() !== '';
+  };
+
+  // Validation function for Position (You can customize the validation logic)
+  const isPositionValid = (value) => {
+    return value.trim() !== '';
+  };
+
+  // Validation function for Employment Status
+  const isEmploymentStatusValid = (value) => {
+    return value.trim() !== '';
+  };
+
+  // Change handler for Company Name
+  const handleCompanyNameChange = (e) => {
+    const value = e.target.value;
+    setCompanyName(value);
+    setCompanyNameValid(isCompanyNameValid(value));
+  };
+
+  // Change handler for Position
+  const handlePositionChange = (e) => {
+    const value = e.target.value;
+    setPosition(value);
+    setPositionValid(isPositionValid(value));
+  };
+
+  // Change handler for Employment Status
   const handleEmploymentStatusChange = (e) => {
     const value = e.target.value;
     setEmploymentStatus(value);
-    setEmploymentStatusValid(value.trim() !== '');
+
+    // Validate the employment status
+    const isValid = value.trim() !== '';
+    setEmploymentStatusValid(isValid);
+
+    // If not "Unemployed," proceed with other validations
+    if (value !== "Unemployed") {
+      const isPositionValid = position.trim() !== ''; // Example validation for position
+      setPositionValid(isPositionValid);
+      const isCompanyNameValid = companyName.trim() !== ''; // Example validation for company name
+      setCompanyNameValid(isCompanyNameValid);
+    } else {
+      setPositionValid(true);
+      setCompanyNameValid(true);
+    }
   };
+
 
 
 
@@ -345,6 +403,15 @@ const RegistrationComponent = () => {
     setResidenceClassValid(value.trim() !== '');
   };
 
+  const handleVoterRegistrationChange = (e) => {
+    const value = e.target.value;
+    setVoterRegistration(value);
+    const isValid = value.trim() !== '';
+    setVoterRegistrationValid(isValid);
+  };
+
+
+
   //PASSWORD VALIDATION----------------------------------------------------
   const isPasswordValid = (password) => {
     const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
@@ -363,89 +430,6 @@ const RegistrationComponent = () => {
     setConfirmPasswordValid(value === password);
   };
 
-
-  // employment status
-  const [isEmployedChecked, setIsEmployedChecked] = useState(false);
-  const [isUnemployedChecked, setIsUnemployedChecked] = useState(false);
-  const [gcashInputValues, setGcashInputValues] = useState([]);
-
-  const handleCheckboxChangeEmployed = () => {
-    setIsEmployedChecked(!isEmployedChecked);
-    setEmploymentStatus('Employed');
-    setIsUnemployedChecked(false);
-  };
-  const handleCheckboxChangeUnemployed = () => {
-    setIsUnemployedChecked(!isUnemployedChecked);
-    setEmploymentStatus('Unemployed');
-    setIsEmployedChecked(false);
-  };
-
-  const renderInputTextboxes = () => {
-    if (isEmployedChecked) {
-      return (
-        <>
-          <div className={`form-group d-flex flex-column ${!lastNameValid ? 'has-error' : ''}`} style={{ marginTop: '-5px' }}>
-            <label className="label" htmlFor="company-name">Company Name</label>
-            <input
-              type="text"
-              className={`input-field form-control ${!lastNameValid ? 'is-invalid' : ''}`}
-              id="company-name"
-              // value={lastName}
-              // onChange={handleLastNameChange}
-              required
-            />
-          </div>
-          <div className={`form-group d-flex flex-column ${!lastNameValid ? 'has-error' : ''}`}>
-            <label className="label" htmlFor="position">Position</label>
-            <input
-              type="text"
-              className={`input-field form-control ${!lastNameValid ? 'is-invalid' : ''}`}
-              id="position"
-              // value={lastName}
-              // onChange={handleLastNameChange}
-              required
-            />
-          </div>
-        </>
-
-      )
-    }
-    return (null);
-  };
-
-
-  // const [isSelected, setIsSelected] = useState(false);
-  // const handleOptionSelect = () => {
-  //   setIsSelected(!isSelected);
-  // };
-
-  // const renderInputTextboxes = () => {
-  //   if (isSelected) {
-  //     return (
-  //       <div>
-  //         <div className="form-group">
-  //           <label htmlFor="companyName">GCash Reference No.</label>
-  //           <input
-  //             type="text"
-  //             id="companyName"
-  //             name="companyName"
-  //             className="form-control"
-  //             required />
-  //         </div>
-  //         <div className="form-group">
-  //           <label htmlFor="position">Position</label>
-  //           <input
-  //             type="text"
-  //             id="position"
-  //             name="position"
-  //             className="form-control"
-  //             required />
-  //         </div>
-  //       </div>
-  //     )
-  //   }
-  //   return null;
-  // };
 
 
 
@@ -585,49 +569,49 @@ const RegistrationComponent = () => {
                   <div className="col-12 col-md-4 reg-row2 p-3">
 
                     {/* REgion */}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!regionValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="region">Region</label>
                       <input
-                        type="text" className="input-field"
+                        type="text" className={`input-field form-control ${!regionValid ? 'is-invalid' : ''}`}
                         id="region"
-
-                        onChange={(e) => setRegion(e.target.value)}
+                        value={region}
+                        onChange={handleRegionChange}
                         required
                       />
                     </div>
 
                     {/* EMAIL ADDRESS*/}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!emailValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="email">Email Address</label>
                       <input
-                        type="email" className="input-field"
+                        type="email" className={`input-field form-control ${!emailValid ? 'is-invalid' : ''}`}
                         id="email"
-
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        onChange={handleEmailChange}
                         required
                       />
                     </div>
 
                     {/* Phone Number */}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!phoneNumberValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="phoneNumber">Phone Number</label>
                       <input
-                        type="tel" className="input-field"
+                        type="tel" className={`input-field form-control ${!phoneNumberValid ? 'is-invalid' : ''}`}
                         id="phoneNumber"
-
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        value={phoneNumber}
+                        onChange={handlePhoneNumberChange}
                         required
                       />
                     </div>
 
                     {/* NATIONALITY */}
-                    <div className="form-group d-flex flex-column">
+                    <div className={`form-group d-flex flex-column ${!nationalityValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="nationality">Nationality</label>
                       <input
-                        type="text" className="input-field"
+                        type="text" className={`input-field form-control ${!nationalityValid ? 'is-invalid' : ''}`}
                         id="nationality"
-
-                        onChange={(e) => setNationality(e.target.value)}
+                        value={nationality}
+                        onChange={handleNationalityChange}
                         required
                       />
                     </div>
@@ -664,34 +648,54 @@ const RegistrationComponent = () => {
                         <option value="separated">Separated</option>
                       </select>
                     </div>
-
-                    {/* Employment Status */}
+                    {/* EMPLOYMENT STATUS */}
                     <div className={`form-group d-flex flex-column ${!employmentStatusValid ? 'has-error' : ''}`}>
-                      <label className="label" htmlFor="employmentStatus">Employment Status</label>
-                      <div className="d-flex flex-row p-0 m-0">
-                        <div className="form-group d-flex flex-row ms-1 me-1">
-                          <input
-                            className="ms-1 me-1"
-                            type="checkbox"
-                            checked={isEmployedChecked}
-                            onChange={handleCheckboxChangeEmployed}
-                          />
-                          <p className="pt-1">Employed</p>
-                        </div>
-
-                        <div className="form-group d-flex flex-row ms-1 me-1">
-                          <input
-                            className="ms-1 me-1"
-                            type="checkbox"
-                            checked={isUnemployedChecked}
-                            onChange={handleCheckboxChangeUnemployed}
-                          />
-                          <p className="pt-1">Unemployed</p>
-                        </div>
-                      </div>
-
-                      {renderInputTextboxes()}
+                      <label className="label" htmlFor="employmentStatus">
+                        Employment Status
+                      </label>
+                      <select
+                        id="employmentStatus"
+                        onChange={handleEmploymentStatusChange}
+                        className={`input-field form-control ${!employmentStatusValid ? 'is-invalid' : ''}`}
+                        value={employmentStatus}
+                        required
+                      >
+                        <option value="">Select Employment Status</option>
+                        <option value="Employed">Employed</option>
+                        <option value="Unemployed">Unemployed</option>
+                      </select>
                     </div>
+
+                    {employmentStatus === 'Employed' && (
+                      <>
+                        <div className={`form-group d-flex flex-column ${!companyNameValid ? 'has-error' : ''}`}>
+                          <label className="label" htmlFor="companyName">
+                            Company Name
+                          </label>
+                          <input
+                            type="text"
+                            className={`input-field form-control ${!companyNameValid ? 'is-invalid' : ''}`}
+                            id="companyName"
+                            value={companyName}
+                            onChange={handleCompanyNameChange}
+                            required
+                          />
+                        </div>
+                        <div className={`form-group d-flex flex-column ${!positionValid ? 'has-error' : ''}`}>
+                          <label className="label" htmlFor="position">
+                            Position
+                          </label>
+                          <input
+                            type="text"
+                            className={`input-field form-control ${!positionValid ? 'is-invalid' : ''}`}
+                            id="position"
+                            value={position}
+                            onChange={handlePositionChange}
+                            required
+                          />
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   {/* THIRD COLUMN REGISTER PAGE */}
@@ -783,13 +787,14 @@ const RegistrationComponent = () => {
                       </select>
                     </div>
 
-                    {/* Voters Registration */}
-                    <div className={`form-group d-flex flex-column ${!residenceClassValid ? 'has-error' : ''}`}>
-                      <label className="label" htmlFor="residenceClass">Voter's Registration</label>
+
+                    {/* Voter's Registration */}
+                    <div className={`form-group d-flex flex-column ${!voterRegistrationValid ? 'has-error' : ''}`}>
+                      <label className="label" htmlFor="voterRegistration">Voter's Registration</label>
                       <select
-                        id="residenceClass"
-                        onChange={handleResidenceClassChange}
-                        className={`option2 form-control ${!residenceClassValid ? 'is-invalid' : ''}`}
+                        id="voterRegistration"
+                        onChange={handleVoterRegistrationChange}
+                        className={`option2 form-control ${!voterRegistrationValid ? 'is-invalid' : ''}`}
                         required
                         style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
@@ -798,6 +803,7 @@ const RegistrationComponent = () => {
                         <option value="unregisteredvoter">Not Registered</option>
                       </select>
                     </div>
+
 
                     {/* Password */}
                     <div className={`form-group d-flex flex-column ${!passwordValid ? 'has-error' : ''}`}>
@@ -852,15 +858,11 @@ const RegistrationComponent = () => {
             <p className="reg-p"><b>Data Retention: </b> Your personal data will be retained for as long as necessary to fulfill the purposes for which it was collected, or as required by applicable laws and regulations. We will delete your data when it is no longer needed.</p>
             <p className="reg-p"><b>User Rights: </b>  You have the right to access, correct, delete, or export your personal data stored on our app. If you have any such requests or inquiries, please contact us through the provided channels.</p>
             <p className="reg-p"><b>Consent Mechanism: </b> By registering on the BARANGAY HARAPIN ANG BUKAS App, you give your informed consent for the collection and use of your personal information as outlined in this statement.n</p>
-            <p className="reg-p"><b>Data Breach Response: </b>  In the unlikely event of a data breach, we have a comprehensive data breach response plan in place. We will promptly notify affected individuals and relevant authorities as required by law.</p>
-            <p className="reg-p"><b>Third-Party Vendors: </b>  We may use third-party services to enhance the functionality of our app. Rest assured, any third-party service providers we engage with are carefully selected and vetted for their commitment to data protection and privacy compliance.</p>
-            <p className="reg-p"><b>Updates and Amendments: </b>  We will regularly review and update this Privacy Compliance Statement to stay in compliance with changing privacy laws and best practices. Any significant changes will be communicated to you through the app.</p>
+            <p className="reg-p"><b>User Rights: </b>  You have the right to access, correct, delete, or export your personal data stored on our app. If you have any such requests or inquiries, please contact us through the provided channels.</p>
+            <p className="reg-p"><b>User Rights: </b>  You have the right to access, correct, delete, or export your personal data stored on our app. If you have any such requests or inquiries, please contact us through the provided channels.</p>
           </div>
         </div>
       </div>
-
-
-
     </div>
 
 
