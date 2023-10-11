@@ -4,39 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 const RegistrationComponent = () => {
 
-  const [userProfile, setuserProfile] = useState('');
-
-
-  async function register(e) {
-    e.preventDefault();
-
-    try {
-
-      await axios.post("http://localhost:8000/signup", {
-        firstName, middleName, lastName, gender, region, civilStatus, employmentStatus, highestEducation, nationality, dateOfBirth, phoneNumber, email, password
-      })
-        .then(res => {
-          if (res.data == "exist") {
-            alert("User Already Exist!");
-          }
-          else if (res.data == "notexist") {
-            navigate("/login");
-          }
-        })
-        .catch(e => {
-          alert("Registration Failed!")
-          console.log(e);
-        })
-
-    }
-    catch (e) {
-      console.log(e);
-
-    }
-
-  }
-
-
   const [showInputBoxes, setShowInputBoxes] = useState(false);
   const handleOptionSelect = (e) => {
     const selectedValue = e.target.value;
@@ -46,6 +13,7 @@ const RegistrationComponent = () => {
   const [firstName, setFirstName] = useState('');
   const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [suffix, setSuffix] = useState('');
   const [houseNumber, setHouseNumber] = useState('');
   const [barangay, setBarangay] = useState('');
   const [district, setDistrict] = useState('');
@@ -57,7 +25,7 @@ const RegistrationComponent = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [nationality, setNationality] = useState('');
   const [civilStatus, setCivilStatus] = useState('');
-  const [gender, setGender] = useState('');
+  const [sex, setSex] = useState('');
   const [employmentStatus, setEmploymentStatus] = useState('');
   const [position, setPosition] = useState('');
   const [companyName, setCompanyName] = useState('');
@@ -86,7 +54,7 @@ const RegistrationComponent = () => {
   const [phoneNumberValid, setPhoneNumberValid] = useState(true);
   const [nationalityValid, setNationalityValid] = useState(true);
   const [civilStatusValid, setCivilStatusValid] = useState(true);
-  const [genderValid, setGenderValid] = useState(true);
+  const [sexValid, setSexValid] = useState(true);
   const [employmentStatusValid, setEmploymentStatusValid] = useState(true);
   const [positionValid, setPositionValid] = useState(true);
   const [companyNameValid, setCompanyNameValid] = useState(true);
@@ -96,12 +64,9 @@ const RegistrationComponent = () => {
   const [birthPlaceValid, setBirthPlaceValid] = useState(true);
   const [ageValid, setAgeValid] = useState(true);
   const [highestEducationValid, setHighestEducationValid] = useState(true);
-  const [residenceClassValid, setResidenceClassValid] = useState(true);
   const [voterRegistrationValid, setVoterRegistrationValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
   const [confirmPasswordValid, setConfirmPasswordValid] = useState(true);
-
-
   const navigate = useNavigate();
 
   async function register(e) {
@@ -155,8 +120,6 @@ const RegistrationComponent = () => {
       return;
     }
 
-
-
     if (region.trim() === '') {
       setRegionValid(false);
       return;
@@ -174,8 +137,8 @@ const RegistrationComponent = () => {
       setNationalityValid(false);
       return;
     }
-    if (gender.trim() === '') {
-      setGenderValid(false);
+    if (sex.trim() === '') {
+      setSexValid(false);
       return;
     }
     if (civilStatus.trim() === '') {
@@ -186,10 +149,6 @@ const RegistrationComponent = () => {
       setEmploymentStatusValid(false);
       return;
     }
-
-
-
-
 
     if (homeOwnership.trim() === '') {
       setHomeOwnershipValid(false);
@@ -212,10 +171,6 @@ const RegistrationComponent = () => {
       setHighestEducationValid(false);
       return;
     }
-    if (residenceClass.trim() === '') {
-      setResidenceClassValid(false);
-      return;
-    }
     if (voterRegistration.trim() === '') {
       setVoterRegistrationValid(false);
       return;
@@ -229,14 +184,31 @@ const RegistrationComponent = () => {
       return;
     }
 
-
     try {
 
-      navigate("/login");
-    } catch (e) {
-      console.error(e);
-      alert("Registration Failed!");
+      await axios.post("http://localhost:8000/signup", {
+        firstName, middleName, lastName, suffix, houseNumber,barangay,district,cityMunicipality,province,region, email, phoneNumber,nationality,sex, civilStatus, employmentStatus,homeOwnership, dateOfBirth,birthPlace,age,highestEducation,residenceClass,voterRegistration,password,companyName,position
+      })
+        .then(res => {
+          if (res.data == "exist") {
+            alert("User Already Exist!");
+          }
+          else if (res.data == "notexist") {
+            navigate("/login");
+          }
+        })
+        .catch(e => {
+          alert("Registration Failed!")
+          console.log(e);
+        })
+
     }
+    catch (e) {
+      console.log(e);
+
+    }
+
+  
   }
 
   const handleFirstNameChange = (e) => {
@@ -309,10 +281,10 @@ const RegistrationComponent = () => {
     setNationality(value);
     setNationalityValid(value.trim() !== '');
   };
-  const handleGenderChange = (e) => {
+  const handleSexChange = (e) => {
     const value = e.target.value;
-    setGender(value);
-    setGenderValid(value.trim() !== '');
+    setSex(value);
+    setSexValid(value.trim() !== '');
   };
   const handleCivilStatusChange = (e) => {
     const value = e.target.value;
@@ -358,7 +330,7 @@ const RegistrationComponent = () => {
     setEmploymentStatusValid(isValid);
 
     // If not "Unemployed," proceed with other validations
-    if (value !== "Unemployed") {
+    if (value !== "Unemployed" ||value !== "Student") {
       const isPositionValid = position.trim() !== ''; // Example validation for position
       setPositionValid(isPositionValid);
       const isCompanyNameValid = companyName.trim() !== ''; // Example validation for company name
@@ -397,12 +369,6 @@ const RegistrationComponent = () => {
     setHighestEducation(value);
     setHighestEducationValid(value.trim() !== '');
   };
-  const handleResidenceClassChange = (e) => {
-    const value = e.target.value;
-    setresidenceClass(value);
-    setResidenceClassValid(value.trim() !== '');
-  };
-  
   const handleVoterRegistrationChange = (e) => {
     const value = e.target.value;
     setVoterRegistration(value);
@@ -428,6 +394,8 @@ const RegistrationComponent = () => {
     const value = e.target.value;
     setConfirmPassword(value);
     setConfirmPasswordValid(value === password);
+
+    
   };
 
 
@@ -455,7 +423,6 @@ const RegistrationComponent = () => {
                         type="text"
                         className={`input-field form-control ${!firstNameValid ? 'is-invalid' : ''}`}
                         id="first-name"
-                        value={firstName}
                         onChange={handleFirstNameChange}
                         required
                       />
@@ -468,7 +435,6 @@ const RegistrationComponent = () => {
                         type="text"
                         className={`input-field form-control ${!middleNameValid ? 'is-invalid' : ''}`}
                         id="middle-name"
-                        value={middleName}
                         onChange={handleMiddleNameChange}
                         required
                       />
@@ -481,7 +447,6 @@ const RegistrationComponent = () => {
                         type="text"
                         className={`input-field form-control ${!lastNameValid ? 'is-invalid' : ''}`}
                         id="last-name"
-                        value={lastName}
                         onChange={handleLastNameChange}
                         required
                       />
@@ -493,8 +458,7 @@ const RegistrationComponent = () => {
                       <input
                         type="text" className="input-field"
                         id="last-name"
-
-                        // onChange={(e) => setLastName(e.target.value)}
+                         onChange={(e) => setSuffix(e.target.value)}
                         required
                       />
                     </div>
@@ -506,7 +470,6 @@ const RegistrationComponent = () => {
                         type="text"
                         className={`input-field form-control ${!houseNumberValid ? 'is-invalid' : ''}`}
                         id="house-no-street"
-                        value={houseNumber}
                         onChange={handleHouseNumberChange}
                         required
                       />
@@ -519,7 +482,6 @@ const RegistrationComponent = () => {
                         type="text"
                         className={`input-field form-control ${!barangayValid ? 'is-invalid' : ''}`}
                         id="barangay"
-                        value={barangay}
                         onChange={handleBarangayChange}
                         required
                       />
@@ -532,7 +494,6 @@ const RegistrationComponent = () => {
                         type="text"
                         className={`input-field form-control ${!districtValid ? 'is-invalid' : ''}`}
                         id="district"
-                        value={district}
                         onChange={handleDistrictChange}
                         required
                       />
@@ -545,7 +506,6 @@ const RegistrationComponent = () => {
                         type="text"
                         className={`input-field form-control ${!cityMunicipalityValid ? 'is-invalid' : ''}`}
                         id="city-municipality"
-                        value={cityMunicipality}
                         onChange={handleCityMunicipalityChange}
                         required
                       />
@@ -558,7 +518,6 @@ const RegistrationComponent = () => {
                         type="text"
                         className={`input-field form-control ${!provinceValid ? 'is-invalid' : ''}`}
                         id="province"
-                        value={province}
                         onChange={handleProvinceChange}
                         required
                       />
@@ -574,7 +533,6 @@ const RegistrationComponent = () => {
                       <input
                         type="text" className={`input-field form-control ${!regionValid ? 'is-invalid' : ''}`}
                         id="region"
-                        value={region}
                         onChange={handleRegionChange}
                         required
                       />
@@ -586,7 +544,6 @@ const RegistrationComponent = () => {
                       <input
                         type="email" className={`input-field form-control ${!emailValid ? 'is-invalid' : ''}`}
                         id="email"
-                        value={email}
                         onChange={handleEmailChange}
                         required
                       />
@@ -598,7 +555,6 @@ const RegistrationComponent = () => {
                       <input
                         type="tel" className={`input-field form-control ${!phoneNumberValid ? 'is-invalid' : ''}`}
                         id="phoneNumber"
-                        value={phoneNumber}
                         onChange={handlePhoneNumberChange}
                         required
                       />
@@ -610,22 +566,21 @@ const RegistrationComponent = () => {
                       <input
                         type="text" className={`input-field form-control ${!nationalityValid ? 'is-invalid' : ''}`}
                         id="nationality"
-                        value={nationality}
                         onChange={handleNationalityChange}
                         required
                       />
                     </div>
 
-                    {/* GENDER */}
-                    <div className={`form-group d-flex flex-column ${!genderValid ? 'has-error' : ''}`}>
-                      <label className="label" htmlFor="gender">Gender</label>
+                    {/* Sex */}
+                    <div className={`form-group d-flex flex-column ${!sexValid ? 'has-error' : ''}`}>
+                      <label className="label" htmlFor="sex">Sex</label>
                       <select
-                        id="gender"
-                        onChange={handleGenderChange}
-                        className={`option form-control ${!genderValid ? 'is-invalid' : ''}`}
+                        id="sex"
+                        onChange={handleSexChange}
+                        className={`option form-control ${!sexValid ? 'is-invalid' : ''}`}
                         style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
-                        <option value="">Select Gender</option>
+                        <option value="">Select Sex</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                       </select>
@@ -636,7 +591,6 @@ const RegistrationComponent = () => {
                       <label className="label" htmlFor="civilStatus">Civil Status</label>
                       <select
                         id="civilStatuss"
-                        value={civilStatus}
                         onChange={handleCivilStatusChange}
                         className={`option form-control ${!civilStatusValid ? 'is-invalid' : ''}`}
                         style={{ fontSize: '14px', marginBottom: '10px' }}
@@ -657,12 +611,12 @@ const RegistrationComponent = () => {
                         id="employmentStatus"
                         onChange={handleEmploymentStatusChange}
                         className={`input-field form-control ${!employmentStatusValid ? 'is-invalid' : ''}`}
-                        value={employmentStatus}
                         required
                       >
                         <option value="">Select Employment Status</option>
                         <option value="Employed">Employed</option>
                         <option value="Unemployed">Unemployed</option>
+                        <option value="Student">Student</option>
                       </select>
                     </div>
 
@@ -676,7 +630,6 @@ const RegistrationComponent = () => {
                             type="text"
                             className={`input-field form-control ${!companyNameValid ? 'is-invalid' : ''}`}
                             id="companyName"
-                            value={companyName}
                             onChange={handleCompanyNameChange}
                             required
                           />
@@ -689,7 +642,6 @@ const RegistrationComponent = () => {
                             type="text"
                             className={`input-field form-control ${!positionValid ? 'is-invalid' : ''}`}
                             id="position"
-                            value={position}
                             onChange={handlePositionChange}
                             required
                           />
@@ -722,7 +674,6 @@ const RegistrationComponent = () => {
                       <input
                         type="date" className={`input-field form-control ${!dateOfBirthValid ? 'is-invalid' : ''}`}
                         id="dateOfBirth"
-                        value={dateOfBirth}
                         onChange={handleDateOfBirthChange}
                         required
                       />
@@ -734,7 +685,6 @@ const RegistrationComponent = () => {
                       <input
                         type="text" className={`input-field form-control ${!birthPlaceValid ? 'is-invalid' : ''}`}
                         id="placeofbirth"
-                        value={birthPlace}
                         onChange={handleBirthPlaceChange}
                         required
                       />
@@ -746,7 +696,6 @@ const RegistrationComponent = () => {
                       <input
                         type="text" className={`input-field form-control ${!ageValid ? 'is-invalid' : ''}`}
                         id="Age"
-                        value={age}
                         onChange={handleAgeChange}
                         required
                       />
@@ -763,19 +712,22 @@ const RegistrationComponent = () => {
                         style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Highest Educational Attainment</option>
-                        <option value="undergrad">Undergraduate (Bachelor's Degree)</option>
+                        <option value="undergraduate">Undergraduate</option>
+                        <option value="elementary">Elementary</option>
+                        <option value="highschool">High School</option>
+                        <option value="bachelor">Bachelor's Degree</option>
                         <option value="postgrad">Postgraduate (Master's Degree)</option>
                         <option value="doctoral">Doctoral (PhD)</option>
                       </select>
                     </div>
 
                     {/* Residence Class */}
-                    <div className={`form-group d-flex flex-column ${!residenceClassValid ? 'has-error' : ''}`}>
+                    <div className={`form-group d-flex flex-column  'has-error' : ''}`}>
                       <label className="label" htmlFor="residenceClass"> Residence Class</label>
                       <select
                         id="residenceClass"
-                        onChange={handleResidenceClassChange}
-                        className={`option2 form-control ${!residenceClassValid ? 'is-invalid' : ''}`}
+                        onChange={(e) => setresidenceClass(e.target.value)}
+                        className={`option2 form-control `}
                         required
                         style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
@@ -783,7 +735,6 @@ const RegistrationComponent = () => {
                         <option value="PWD">Person with Disability (PWD)</option>
                         <option value="soloParent">Solo Parent</option>
                         <option value="outOfSchoolYouth">Out of School Youth</option>
-                        <option value="student">Student</option>
                       </select>
                     </div>
 
@@ -814,7 +765,6 @@ const RegistrationComponent = () => {
                         type="password"
                         className={`input-field form-control ${!passwordValid ? 'is-invalid' : ''}`}
                         id="password"
-                        value={password}
                         onChange={handlePasswordChange}
                         required
                       />
@@ -829,7 +779,6 @@ const RegistrationComponent = () => {
                         type="password"
                         className={`input-field form-control ${!confirmPasswordValid ? 'is-invalid' : ''}`}
                         id="cpassword"
-                        value={confirmPassword}
                         onChange={handleConfirmPasswordChange}
                         required
                       />
