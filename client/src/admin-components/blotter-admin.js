@@ -653,6 +653,7 @@ function BlotterAdmin() {
                             id="status"
                             className="form-control"
                             value={editStatus}
+                            onChange={(e) => { setEditStatus(e.target.value); }}
                             style={{ fontSize: '20px', marginBottom: '10px' }}
                           >
                             <option value="????" ></option>
