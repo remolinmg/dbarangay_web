@@ -255,7 +255,7 @@ function Adminaccounts() {
                                                     <td>B1-1286</td>
                                                     <td>01 - June - 2023</td>
                                                 </tr>
-                                                <tr onClick={() => { window.location.href = "/admin-details" }}>
+                                                <tr onClick={() => { window.location.href = "/residents-accounts" }}>
                                                     <th scope="row">2</th>
                                                     <td>Carl</td>
                                                     <td>B1-1286</td>
