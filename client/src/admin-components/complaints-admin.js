@@ -27,7 +27,7 @@ import {
 import 'bootstrap/dist/css/bootstrap.css';
 import { FaUserCircle } from "react-icons/fa";
 
-function BlotterAdmin() {
+function Complaintsadmin() {
 
   //  ------------------------------ SIDEBAR TOPBAR ------------------------------
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -418,7 +418,7 @@ function BlotterAdmin() {
           </div>
         </div>
         <div class="pagetitle">
-          <h1> Blotter Table </h1>
+          <h1> Complaints Table </h1>
         </div>
         {/* -------------------------------------------------------------  TABLE -------------------------------------------------------------  */}
         <main id="main" class="main">
@@ -460,7 +460,7 @@ function BlotterAdmin() {
                     <table class="table">
                       <thead>
                         <tr>
-                          <th scope="col">Blotter #</th>
+                          <th scope="col">Complaints #</th>
                           <th scope="col">DATE</th>
                           <th scope="col">COMPLAINANT</th>
                           <th scope="col">DEFENDANT</th>
@@ -507,7 +507,7 @@ function BlotterAdmin() {
                 <div className="popup-form">
                   <form >
                     <div className="certificate">
-                      <h2 className="certificate-title">ADD BLOTTER INFO</h2>
+                      <h2 className="certificate-title">ADD COMPLAINT INFO</h2>
                       <div className="certificate-content">
 
                         <div className="form-group">
@@ -678,4 +678,4 @@ function BlotterAdmin() {
     </>
   );
 }
-export default BlotterAdmin;
+export default Complaintsadmin;

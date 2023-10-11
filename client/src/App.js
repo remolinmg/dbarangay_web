@@ -19,11 +19,13 @@ import BofficialsAdmin from "./admin-components/b-officials-admin";
 import StafflogsAdmin from "./admin-components/staff-logs-admin";
 import AdminProfile from "./admin-components/admin-profile";
 import Adminaccounts from "./admin-components/admin-accounts";
-import Admindetails from "./admin-components/admin-details";
+
 import BconstuctionAdmin from "./admin-components/d-barangay-construction"
 import Biddmin from "./admin-components/d-barangay-id"
 import ResidentsInactiveAdmin from "./admin-components/resident-inactive"
 import Residentsaccounts from "./admin-components/residents-accounts";
+import Complaintsadmin from "./admin-components/complaints-admin";
+
 
 import UserNav from "./user-components/user-navbar";
 import Announcement from "./user-components/user-announcement";
@@ -78,9 +80,8 @@ function App() {
           <Route path="feedbacks-admin" element={<FeedbackAdmin />} />
           <Route path="admin-profile" element={<AdminProfile />} />
           <Route path="admin-accounts" element={<Adminaccounts />} />
-          <Route path="admin-details" element={<Admindetails />} />
           <Route path="residents-accounts" element={<Residentsaccounts />} />
-
+          <Route path="complaints-admin" element={<Complaintsadmin />} />
 
           <Route path="login" element={<Login />} />
           <Route path="registration" element={<Registration />} />
