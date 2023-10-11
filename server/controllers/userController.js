@@ -3,39 +3,37 @@ const User = require('../models/userModel'); // Import the User model
 //user signup
 exports.signup = async (req, res) => {
   const {
-    firstName,
-    middleName,
-    lastName,
-    gender,
-    religion,
-    civilStatus,
-    employmentStatus,
-    highestEducation,
-    nationality,
-    address,
-    householdMember,
-    dateOfBirth,
-    phoneNumber,
-    email,
-    password,
+    firstName, middleName, lastName, suffix, houseNumber,barangay,district,cityMunicipality,province,region, email, phoneNumber,nationality,sex, civilStatus, employmentStatus,homeOwnership, dateOfBirth,birthPlace,age,highestEducation,residenceClass,voterRegistration,password,companyName,position,status,type
   } = req.body;
 
   const data = {
     firstName: firstName,
     middleName: middleName,
     lastName: lastName,
-    gender: gender,
-    religion: religion,
-    civilStatus: civilStatus,
-    employmentStatus: employmentStatus,
-    highestEducation: highestEducation,
-    nationality: nationality,
-    address: address,
-    householdMember: householdMember,
-    dateOfBirth: dateOfBirth,
-    phoneNumber: phoneNumber,
+    suffix:suffix,
+    houseNumber:houseNumber,
+    barangay:barangay,
+    district:district,
+    cityMunicipality:cityMunicipality,
+    province,province,
+    region:region,
     email: email,
+    phoneNumber:phoneNumber,
+    nationality:nationality,
+    sex:sex,
+    civilStatus:civilStatus,
+    employmentStatus:employmentStatus,
+    companyName:companyName,
+    position:position,
+    homeOwnership:homeOwnership,
+    dateOfBirth:dateOfBirth,
+    birthPlace:birthPlace,
+    age:age,
+    highestEducation,highestEducation,
+    residenceClass,voterRegistration,
     password: password,
+    status:status,
+    type:type
   };
 
   try {

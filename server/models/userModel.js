@@ -13,11 +13,46 @@ lastName:{
     type:String,
     required:true
 },
-gender:{
+suffix:{
+    type:String,
+},
+houseNumber:{
     type:String,
     required:true
 },
-religion:{
+barangay:{
+    type:String,
+    required:true
+},
+district:{
+    type:String,
+    required:true
+},
+cityMunicipality:{
+    type:String,
+    required:true
+},
+province:{
+    type:String,
+    required:true
+},
+region:{
+    type:String,
+    required:true
+},
+email:{
+    type:String,
+    required:true
+},
+phoneNumber:{
+    type:String,
+    required:true
+},
+nationality:{
+    type:String,
+    required:true
+},
+sex:{
     type:String,
     required:true
 },
@@ -29,19 +64,15 @@ employmentStatus:{
     type:String,
     required:true
 },
-highestEducation:{
+companyName:{
     type:String,
-    required:true
+ 
 },
-nationality:{
+position:{
     type:String,
-    required:true
+
 },
-address:{
-    type:String,
-    required:true
-},
-householdMember:{
+homeOwnership:{
     type:String,
     required:true
 },
@@ -49,11 +80,22 @@ dateOfBirth:{
     type:String,
     required:true
 },
-phoneNumber:{
+birthPlace:{
     type:String,
     required:true
 },
-email:{
+age:{
+    type:String,
+    required:true
+},
+highestEducation:{
+    type:String,
+    required:true
+},
+residenceClass:{
+    type:String,
+},
+voterRegistration:{
     type:String,
     required:true
 },
