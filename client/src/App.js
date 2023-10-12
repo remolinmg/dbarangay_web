@@ -26,6 +26,9 @@ import ResidentsInactiveAdmin from "./admin-components/resident-inactive"
 import Residentsaccounts from "./admin-components/residents-accounts";
 import Complaintsadmin from "./admin-components/complaints-admin";
 
+import BpromotionAdminfastfood from "./admin-components/b-promotion-admin-fastfood";
+import BpromotionAdminhardware from "./admin-components/b-promotion-admin-hardware";
+import BpromotionAdminOthers from "./admin-components/b-promotion-admin-others";
 
 import UserNav from "./user-components/user-navbar";
 import Announcement from "./user-components/user-announcement";
@@ -74,7 +77,6 @@ function App() {
           <Route path="residents-admin" element={<ResidentsAdmin />} />
           <Route path="resident-inactiveadmin" element={<ResidentsInactiveAdmin/>} />
           <Route path="b-permit-admin" element={<BpermitAdmin />} />
-          <Route path="b-promotion-admin" element={<BpromotionAdmin />} />
           <Route path="b-officials-admin" element={<BofficialsAdmin />} />
           <Route path="staff-logs-admin" element={<StafflogsAdmin />} />
           <Route path="feedbacks-admin" element={<FeedbackAdmin />} />
@@ -82,6 +84,12 @@ function App() {
           <Route path="admin-accounts" element={<Adminaccounts />} />
           <Route path="residents-accounts" element={<Residentsaccounts />} />
           <Route path="complaints-admin" element={<Complaintsadmin />} />
+          <Route path="b-promotion-admin" element={<BpromotionAdmin />} />
+          <Route path="b-promotion-fastfood" element={<BpromotionAdminfastfood />} />
+          <Route path="b-promotion-hardware" element={<BpromotionAdminhardware />} />
+          <Route path="b-promotion-others" element={<BpromotionAdminOthers />} />
+
+
 
           <Route path="login" element={<Login />} />
           <Route path="registration" element={<Registration />} />
