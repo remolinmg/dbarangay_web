@@ -187,7 +187,7 @@ const RegistrationComponent = () => {
     try {
 
       await axios.post("http://localhost:8000/signup", {
-        firstName, middleName, lastName, suffix, houseNumber,barangay,district,cityMunicipality,province,region, email, phoneNumber,nationality,sex, civilStatus, employmentStatus,homeOwnership, dateOfBirth,birthPlace,age,highestEducation,residenceClass,voterRegistration,password,companyName,position
+        firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residenceClass, voterRegistration, password, companyName, position
       })
         .then(res => {
           if (res.data == "exist") {
@@ -208,54 +208,54 @@ const RegistrationComponent = () => {
 
     }
 
-  
+
   }
 
   const handleFirstNameChange = (e) => {
     const value = e.target.value;
-    setFirstName(value);
+    setFirstName(value.charAt(0).toUpperCase() + value.slice(1));
     setFirstNameValid(value.trim() !== '');
   };
 
   const handleMiddleNameChange = (e) => {
     const value = e.target.value;
-    setMiddleName(value);
+    setMiddleName(value.charAt(0).toUpperCase() + value.slice(1));
     setMiddleNameValid(value.trim() !== '');
   };
 
   const handleLastNameChange = (e) => {
     const value = e.target.value;
-    setLastName(value);
+    setLastName(value.charAt(0).toUpperCase() + value.slice(1));
     setLastNameValid(value.trim() !== '');
   };
 
   const handleHouseNumberChange = (e) => {
     const value = e.target.value;
-    setHouseNumber(value);
+    setHouseNumber(value.charAt(0).toUpperCase() + value.slice(1));
     setHouseNumberValid(value.trim() !== '');
   };
 
   const handleBarangayChange = (e) => {
     const value = e.target.value;
-    setBarangay(value);
+    setBarangay(value.charAt(0).toUpperCase() + value.slice(1));
     setBarangayValid(value.trim() !== '');
   };
 
   const handleDistrictChange = (e) => {
     const value = e.target.value;
-    setDistrict(value);
+    setDistrict(value.charAt(0).toUpperCase() + value.slice(1));
     setDistrictValid(value.trim() !== '');
   };
 
   const handleCityMunicipalityChange = (e) => {
     const value = e.target.value;
-    setCityMunicipality(value);
+    setCityMunicipality(value.charAt(0).toUpperCase() + value.slice(1));
     setCityMunicipalityValid(value.trim() !== '');
   };
 
   const handleProvinceChange = (e) => {
     const value = e.target.value;
-    setProvince(value);
+    setProvince(value.charAt(0).toUpperCase() + value.slice(1));
     setProvinceValid(value.trim() !== '');
   };
 
@@ -263,32 +263,47 @@ const RegistrationComponent = () => {
 
   const handleRegionChange = (e) => {
     const value = e.target.value;
-    setRegion(value);
+    setRegion(value.charAt(0).toUpperCase() + value.slice(1));
     setRegionValid(value.trim() !== '');
   };
   const handleEmailChange = (e) => {
+    const emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     const value = e.target.value;
-    setEmail(value);
-    setEmailValid(value.trim() !== '');
+
+    if (emailRegExp.test(value)) {
+      setEmail(value);
+      // Clear the email error if it was previously marked as invalid
+      setEmailValid(true);
+    } else {
+      // Invalid email input
+      setEmailValid(false);
+    }
   };
   const handlePhoneNumberChange = (e) => {
+    const phoneRegExp = /^\d*$/; // Allows only digits (numbers)
     const value = e.target.value;
-    setPhoneNumber(value);
-    setPhoneNumberValid(value.trim() !== '');
+    if (phoneRegExp.test(value)) {
+      setPhoneNumber(value);
+      // Clear the phone error if it was previously marked as invalid
+      setPhoneNumberValid(true);
+    } else {
+      // Invalid phone number input
+      setPhoneNumberValid(false);
+    }
   };
   const handleNationalityChange = (e) => {
     const value = e.target.value;
-    setNationality(value);
+    setNationality(value.charAt(0).toUpperCase() + value.slice(1));
     setNationalityValid(value.trim() !== '');
   };
   const handleSexChange = (e) => {
     const value = e.target.value;
-    setSex(value);
+    setSex(value.charAt(0).toUpperCase() + value.slice(1));
     setSexValid(value.trim() !== '');
   };
   const handleCivilStatusChange = (e) => {
     const value = e.target.value;
-    setCivilStatus(value);
+    setCivilStatus(value.charAt(0).toUpperCase() + value.slice(1));
     setCivilStatusValid(value.trim() !== '');
   };
 
@@ -301,22 +316,19 @@ const RegistrationComponent = () => {
     return value.trim() !== '';
   };
 
-  // Validation function for Employment Status
-  const isEmploymentStatusValid = (value) => {
-    return value.trim() !== '';
-  };
+
 
   // Change handler for Company Name
   const handleCompanyNameChange = (e) => {
     const value = e.target.value;
-    setCompanyName(value);
+    setCompanyName(value.charAt(0).toUpperCase() + value.slice(1));
     setCompanyNameValid(isCompanyNameValid(value));
   };
 
   // Change handler for Position
   const handlePositionChange = (e) => {
     const value = e.target.value;
-    setPosition(value);
+    setPosition(value.charAt(0).toUpperCase() + value.slice(1));
     setPositionValid(isPositionValid(value));
   };
 
@@ -330,7 +342,7 @@ const RegistrationComponent = () => {
     setEmploymentStatusValid(isValid);
 
     // If not "Unemployed," proceed with other validations
-    if (value !== "Unemployed" ||value !== "Student") {
+    if (value !== "Unemployed" || value !== "Student") {
       const isPositionValid = position.trim() !== ''; // Example validation for position
       setPositionValid(isPositionValid);
       const isCompanyNameValid = companyName.trim() !== ''; // Example validation for company name
@@ -346,32 +358,40 @@ const RegistrationComponent = () => {
 
   const handleHomeOwnershipChange = (e) => {
     const value = e.target.value;
-    setHomeOwnership(value);
+    setHomeOwnership(value.charAt(0).toUpperCase() + value.slice(1));
     setHomeOwnershipValid(value.trim() !== '');
   };
   const handleDateOfBirthChange = (e) => {
     const value = e.target.value;
-    setDateOfBirth(value);
+    setDateOfBirth(value.charAt(0).toUpperCase() + value.slice(1));
     setDateOfBirthValid(value.trim() !== '');
   };
   const handleBirthPlaceChange = (e) => {
     const value = e.target.value;
-    setBirthPlace(value);
+    setBirthPlace(value.charAt(0).toUpperCase() + value.slice(1));
     setBirthPlaceValid(value.trim() !== '');
   };
   const handleAgeChange = (e) => {
+    const ageRegExp = /^\d*$/; // Allows only digits (numbers)
     const value = e.target.value;
-    setAge(value);
-    setAgeValid(value.trim() !== '');
+    if (ageRegExp.test(value)) {
+      setAge(value);
+      // Clear the age error if it was previously marked as invalid
+      setAgeValid(true);
+    } else {
+      // Invalid age input
+      setAgeValid(false);
+    }
   };
+
   const handleHighestEducationChange = (e) => {
     const value = e.target.value;
-    setHighestEducation(value);
+    setHighestEducation(value.charAt(0).toUpperCase() + value.slice(1));
     setHighestEducationValid(value.trim() !== '');
   };
   const handleVoterRegistrationChange = (e) => {
     const value = e.target.value;
-    setVoterRegistration(value);
+    setVoterRegistration(value.charAt(0).toUpperCase() + value.slice(1));
     const isValid = value.trim() !== '';
     setVoterRegistrationValid(isValid);
   };
@@ -395,7 +415,7 @@ const RegistrationComponent = () => {
     setConfirmPassword(value);
     setConfirmPasswordValid(value === password);
 
-    
+
   };
 
 
@@ -430,7 +450,7 @@ const RegistrationComponent = () => {
 
                     {/* MIDDLE NAME */}
                     <div className={`form-group d-flex flex-column ${!middleNameValid ? 'has-error' : ''}`}>
-                      <label className="label" htmlFor="middle-name">Middle Initial</label>
+                      <label className="label" htmlFor="middle-name">Middle Name</label>
                       <input
                         type="text"
                         className={`input-field form-control ${!middleNameValid ? 'is-invalid' : ''}`}
@@ -458,7 +478,7 @@ const RegistrationComponent = () => {
                       <input
                         type="text" className="input-field"
                         id="last-name"
-                         onChange={(e) => setSuffix(e.target.value)}
+                        onChange={(e) => setSuffix(e.target.value)}
                         required
                       />
                     </div>
@@ -798,6 +818,7 @@ const RegistrationComponent = () => {
         </div>
         <div className="col-12 col-md-4 right-side-reg text-light p-3">
           <div className="reg-desc p-5">
+            <h3 style={{ color: 'red' }}>if you dont have something like middle name put N/A</h3>
             <h3>Disclaimer:</h3>
             <p className="reg-p">This website (or organization) takes your privacy seriously. Any information collected through this platform will be treated with the utmost confidentiality and care. We are committed to ensuring that your personal information is kept secure and used only for the purposes of verification, as stated in our Privacy Policy.</p>
             <h5>Privacy Assurance:</h5>

@@ -8,35 +8,53 @@ const Login = () => {
   const [status, setStatus] = useState('active');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [emailValid, setEmailValid] = useState(true);
-  const [passwordValid, setPasswordValid] = useState(true);
+  const [emailValid, setEmailValid] = useState('');
+  const [passwordValid, setPasswordValid] = useState('');
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const navigate = useNavigate();
+
+  const emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+  const isValidEmail = (email) => emailRegExp.test(email);
+  const isValidPassword = (password) => password.length >= 8;
+
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail(value);
-    setEmailValid(value.trim() !== '');
+
+    if (formSubmitted) {
+      if (value.trim() === '') {
+        setEmailValid('Input Email address');
+      } else if (!isValidEmail(value)) {
+        setEmailValid('Wrong Credentials');
+      } else {
+        setEmailValid(true);
+      }
+    }
   };
 
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
-    setPasswordValid(value.trim() !== '');
+
+    if (formSubmitted) {
+      if (value.trim() === '') {
+        setPasswordValid('Please Input a Password');
+      } else if (!isValidPassword(value)) {
+        setPasswordValid('Invalid Password (minimum 8 characters)');
+      } else {
+        setPasswordValid(true);
+      }
+    }
   };
 
   async function login(e) {
     e.preventDefault();
+    setFormSubmitted(true);
 
-    // Check if email and password are empty
-    if (email.trim() === '') {
-      setEmailValid(false);
-    }
-    if (password.trim() === '') {
-      setPasswordValid(false);
-    }
-
-    // Don't proceed with login if email or password is invalid
     if (!emailValid || !passwordValid) {
+      setEmailValid('Invalid Email');
+      setPasswordValid('Invalid Password');
       return;
     }
 
@@ -50,17 +68,17 @@ const Login = () => {
           if (res.data === "exist") {
             navigate("/");
           } else if (res.data === "notexist") {
-            alert("Login Failed!");
+
           }
         })
         .catch(e => {
-          alert("Login Failed!");
           console.log(e);
         });
     } catch (e) {
       console.log(e);
     }
   }
+
 
   return (
     <div className="container-fluid main">
@@ -80,39 +98,42 @@ const Login = () => {
           <div className="login-container">
             <h2>LOGIN</h2>
             <form>
-              <div className={`form-group d-flex flex-column ${!emailValid ? 'has-error' : ''}`}>
-                <label className="label" htmlFor="email">Email Address</label>
+              <div className={`form-group d-flex flex-column ${formSubmitted && emailValid !== true ? 'has-error' : ''}`}>
+                <label className="label" htmlFor="email">
+                  Email Address
+                </label>
                 <input
                   type="email"
-                  className={`input-field form-control w-100 ${!emailValid ? 'is-invalid' : ''}`}
+                  className={`input-field form-control w-100 ${formSubmitted && emailValid !== true ? 'is-invalid' : ''}`}
                   id="email"
                   value={email}
                   onChange={handleEmailChange}
                 />
-                {!emailValid && (
+                {formSubmitted && emailValid !== true && (
                   <div className="invalid-feedback">
-                    <i className="bi bi-exclamation-triangle"></i> Input Email address.
+                    <i className="bi bi-exclamation-triangle"></i> {emailValid}
                   </div>
                 )}
               </div>
 
-              <div className={`form-group d-flex flex-column ${!passwordValid ? 'has-error' : ''}`}>
+              <div className={`form-group d-flex flex-column ${formSubmitted && passwordValid !== true ? 'has-error' : ''}`}>
                 <label className="label" htmlFor="password">
                   Password
                 </label>
                 <input
                   type="password"
-                  className={`input-field form-control w-100 ${!passwordValid ? 'is-invalid' : ''}`}
+                  className={`input-field form-control w-100 ${formSubmitted && passwordValid !== true ? 'is-invalid' : ''}`}
                   id="password"
                   value={password}
                   onChange={handlePasswordChange}
                 />
-                {!passwordValid && (
+                {formSubmitted && passwordValid !== true && (
                   <div className="invalid-feedback">
-                    <i className="bi bi-exclamation-triangle"></i> Input a Password
+                    <i className="bi bi-exclamation-triangle"></i> {passwordValid}
                   </div>
                 )}
               </div>
+
 
               <button onClick={login}>Login</button>
               <p className="register-link text-center text-dark">

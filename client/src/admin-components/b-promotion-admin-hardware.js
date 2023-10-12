@@ -28,7 +28,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { FaUserCircle } from "react-icons/fa";
 
 
-function BpromotionAdmin() {
+function BpromotionAdminhardware() {
   //  ------------------------------ SIDEBAR TOPBAR ------------------------------
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -422,7 +422,7 @@ function BpromotionAdmin() {
         </div>
         {/* -------------------------------------------------------------  TABLE -------------------------------------------------------------  */}
         <main id="main" className="main">
-          <div className="pagetitle"><h1> Grocery Table  </h1> </div>
+          <div className="pagetitle"><h1> hardware table  </h1> </div>
           <section className="section">
             <div className="row">
               <div className="col-lg-12">
@@ -751,4 +751,4 @@ function BpromotionAdmin() {
   );
 }
 
-export default BpromotionAdmin;
+export default BpromotionAdminhardware;
