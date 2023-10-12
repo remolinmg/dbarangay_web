@@ -79,6 +79,15 @@ function FeedbackAdmin() {
             console.error(error);
         }
     };
+     //  DELETE  
+     const deleteRow = async (id) => {
+        try {
+            await axios.delete(`http://localhost:8000/delete/feedback/${id}`);
+            fetchData();
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     // Event handler for dropdown change ----------------------------------------
     const handleRowCountChange = (e) => {
@@ -370,6 +379,7 @@ function FeedbackAdmin() {
                                                     <th scope="col">#</th>
                                                     <th scope="col ">Date</th>
                                                     <th scope="col">Feedback</th>
+                                                    <th scope="col">Delete</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -410,6 +420,14 @@ function FeedbackAdmin() {
                                                         <th scope="row">{val._id}</th>
                                                         <td>{val.date}</td>
                                                         <td >{val.feedback}</td>
+                                                        <td>
+                                                            <div className='gap-2 d-md-flex justify-content-start align-items-center'>
+                                                                <button
+                                                                    className="btn btn-outline-danger"
+                                                                    onClick={() => { deleteRow(val._id); }}>Delete</button>
+
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 ))}
                                             </tbody>

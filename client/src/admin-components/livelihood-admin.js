@@ -3,7 +3,6 @@ import './assets/css/style.css';
 import axios from 'axios';
 import { Outlet, Link, NavLink } from 'react-router-dom';
 import { format } from 'date-fns';
-import Axios from 'axios';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
 import { BiLogOut, BiCog } from "react-icons/bi";
@@ -60,6 +59,8 @@ function LivelihoodAdmin() {
     };
   }, []);
 
+ // NUMBER OF ROWS DISPLAYED -----------------------------------------------
+ const [rowCount, setRowCount] = useState(10);
 
   // PAGE NUMBER --------------------------------------------------------------
   const [currentPage, setCurrentPage] = useState(1);
@@ -126,9 +127,6 @@ function LivelihoodAdmin() {
     );
     return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
   });
-
-  // NUMBER OF ROWS DISPLAYED -----------------------------------------------
-  const [rowCount, setRowCount] = useState(10);
 
 
   // Forms ----------------------------------------------
@@ -390,9 +388,9 @@ function LivelihoodAdmin() {
             <div className="col-4">
               <div className="tabsz dropdown-center">
                 <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
-                <ul className="dropdown-menu">
-                  <li><Link to="/announcement-admin">General</Link></li>
-                  <li><Link to="/livelihood-admin">Livelihood</Link></li>
+                <ul className="dropdown-menu dropdown-topcategory">
+                  <li><Link to="/announcement-admin" className="dropdown-item text-center">General</Link></li>
+                  <li><Link to="/livelihood-admin" className="dropdown-item text-center">Livelihood</Link></li>
                 </ul>
               </div>
             </div>
