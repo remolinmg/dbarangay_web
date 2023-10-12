@@ -30,6 +30,7 @@ const promoteBusinessRoutes =require('./routes/promoteBusinessRoutes');
 const livelihoodRoutes =  require('./routes/livelihoodRoutes');
 const feedbackRoutes =  require('./routes/feedbackRoutes');
 const blotterRoutes = require('./routes/blotterRoutes');
+const complaintRoutes = require('./routes/complaintRoutes');
 
 
 /********USER*******/
@@ -78,6 +79,12 @@ app.use('/blotter',blotterRoutes);//add blotter
 app.use('/get/blotter',blotterRoutes); //get blotter
 app.use('/update/blotter',blotterRoutes);//update blotter
 app.use('/delete/blotter',blotterRoutes);//delete blotter
+
+/********COMPLAINT*******/
+app.use('/complaint',complaintRoutes);//add complaint
+app.use('/get/complaint',complaintRoutes); //get complaint
+app.use('/update/complaint',complaintRoutes);//update complaint
+app.use('/delete/complaint',complaintRoutes);//delete complaint
 
 /********ANNOUNCEMENT*******/
 app.use('/announcement', announcementRoutes);//add announcement

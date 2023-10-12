@@ -76,7 +76,7 @@ function Complaintsadmin() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get/blotter');
+      const response = await axios.get('http://localhost:8000/get/complaint');
       setData(response.data);
     } catch (error) {
       console.error(error);
@@ -139,7 +139,7 @@ function Complaintsadmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/delete/blotter/${id}`);
+      await axios.delete(`http://localhost:8000/delete/complaint/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -156,7 +156,7 @@ function Complaintsadmin() {
   const [file, setFile] = useState();
   //-------------------------- ADD FUNCTION -----------------------------------
 
-  const blotter = () => {
+  const complaint = () => {
     const formData = new FormData();
     formData.append('date', date);
     formData.append('complainant', complainant);
@@ -165,9 +165,9 @@ function Complaintsadmin() {
     formData.append('address', address);
     formData.append('status', status);
     formData.append('file', file);
-    axios.post('http://localhost:8000/blotter', formData).then(res => {
+    axios.post('http://localhost:8000/complaint', formData).then(res => {
       if (res.data == "Error saving data to MongoDB") {
-        alert("Blotter Already Exist!");
+        alert("Complaint Already Exist!");
       }
       else if (res.data == "File and text data saved to MongoDB") {
       }
@@ -211,7 +211,7 @@ function Complaintsadmin() {
       formData.append('status', editStatus);
       formData.append('file', editFile);
       const response = await axios.put(
-        `http://localhost:8000/update/blotter/${selectedRowData}`,
+        `http://localhost:8000/update/complaint/${selectedRowData}`,
         formData
       );
       console.log(response.data);
@@ -482,7 +482,7 @@ function Complaintsadmin() {
                             <td>{item.address}</td>
                             <td><img
                               style={{ width: "100px", height: "100px" }}
-                              src={require(`../../../server/uploads/blotter/${item.filename}`)}
+                              src={require(`../../../server/uploads/complaint/${item.filename}`)}
                               alt=""
                               className="business-picture"
                             /></td>
@@ -574,7 +574,7 @@ function Complaintsadmin() {
                           </select>
                         </div>
                         <div className="form-buttons">
-                          <button type="submit" className="btn btn-primary" onClick={blotter}>Submit </button>
+                          <button type="submit" className="btn btn-primary" onClick={complaint}>Submit </button>
                           <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
                         </div>
                       </div>
@@ -653,6 +653,7 @@ function Complaintsadmin() {
                             id="status"
                             className="form-control"
                             value={editStatus}
+                            onChange={(e) => { setEditStatus(e.target.value); }}
                             style={{ fontSize: '20px', marginBottom: '10px' }}
                           >
                             <option value="????" ></option>
