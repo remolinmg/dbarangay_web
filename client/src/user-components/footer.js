@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import {
   FaTwitter,
@@ -18,6 +18,11 @@ const Footer = () => {
   // Database Feedback
   const [date, setDate] = useState('');
   const [feedback, setFeedback] = useState('');
+   useEffect(() => {
+    const currentDate = new Date();
+    const currentDateStr = currentDate.toISOString().slice(0, 10);
+    setDate(currentDateStr);
+  }, []);
 
 
   async function submitFeedback(e) {
@@ -33,8 +38,8 @@ const Footer = () => {
             alert("You already sent the same feedback");
           }
           else if (res.data == "notexist") {
-            setDate(null);
-            setFeedback(null);
+            alert('Feedback Created')
+            setFeedback('');
           }
         })
         .catch(e => {
@@ -76,17 +81,16 @@ const Footer = () => {
                           type="date"
                           id="issuedDate"
                           name="issuedDate"
-                          onChange={(e) => {
-                            setDate(e.target.value);
-                          }}
+                          value={date}
                           className="form-control"
-                          required />
+                          viewOnly/>
                       </div>
                       <div className="form-group  w-75  m-auto">
                         <label htmlFor="suggestion">Your Suggestion/Feedback:</label>
                         <textarea
                           id="suggestion"
                           name="suggestion"
+                          value={feedback}
                           onChange={(e) => {
                             setFeedback(e.target.value);
                           }}

@@ -404,10 +404,10 @@ function ResidentsInactiveAdmin() {
             <div className="col-4">
               <div className="tabsz dropdown-center">
                 <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
-                <ul class="dropdown-menu">
-                  <Link to="/residents-admin">
+                <ul class="dropdown-menu dropdown-topcategory">
+                  <Link to="/residents-admin" className="dropdown-item text-center">
                     <li><a class="dropdown-item">Active Residents</a></li></Link>
-                  <Link to="/resident-inactiveadmin">
+                  <Link to="/resident-inactiveadmin" className="dropdown-item text-center">
                     <li><a class="dropdown-item">Inactive Residents</a></li></Link>
                 </ul>
               </div>

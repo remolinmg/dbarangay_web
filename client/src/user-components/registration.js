@@ -280,7 +280,7 @@ const RegistrationComponent = () => {
     }
   };
   const handlePhoneNumberChange = (e) => {
-    const phoneRegExp = /^\d*$/; // Allows only digits (numbers)
+    const phoneRegExp = /^(09\d{9}|[2-9]\d{9})$/; // Allows only digits (numbers)
     const value = e.target.value;
     if (phoneRegExp.test(value)) {
       setPhoneNumber(value);

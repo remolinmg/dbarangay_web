@@ -482,8 +482,6 @@ function ResidentsAdmin() {
                         <th scope="col">First Name</th>
                         <th scope="col">Age</th>
                         <th scope="col">Sex</th>
-                        <th scope="col">Date Registerd</th>
-                        <th scope="col">Action</th>
 
                       </tr>
                     </thead>
@@ -496,11 +494,6 @@ function ResidentsAdmin() {
                           <td>{item.r_firstname}</td>
                           <td>{item.r_age}</td>
                           <td>{item.r_sex}</td>
-                          <td>{format(new Date(item.r_dateregistered), "MM/dd/yyyy")}</td>
-                          <td>
-                            <button className="btn btn-primary btn-sm me-2">Edit</button>
-                            <button className="btn btn-danger btn-sm" onClick={() => deleteRow(item.id)}>Delete</button>
-                          </td>
                         </tr>
                       ))}
                     </tbody>

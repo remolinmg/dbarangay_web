@@ -8,4 +8,7 @@ router.post('/', feedbackController.createFeedback);
 // Get all feedback
 router.get('/', feedbackController.getAllFeedback);
 
+// Delete feedback
+router.delete('/:id', feedbackController.deleteFeedback);
+
 module.exports = router;

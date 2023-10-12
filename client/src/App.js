@@ -7,7 +7,6 @@ import Bceritificate from "./admin-components/d-barangay-certificate"
 import Dashboard from "./admin-components/dashboard"
 import Bindigency from "./admin-components/d-barangay-indigency";
 import Binstallation from "./admin-components/d-barangay-installation";
-import Blivelihood from "./admin-components/d-barangay-livelihood";
 import AnnouncementAdmin from "./admin-components/announcement-admin";
 import LivelihoodAdmin from "./admin-components/livelihood-admin";
 import EmergencyAdmin from "./admin-components/emergency-admin";
@@ -66,7 +65,6 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="d-barangay-certificate" element={<Bceritificate />} />
           <Route path="d-barangay-indigency" element={<Bindigency />} />
-          <Route path="d-barangay-livelihood" element={<Blivelihood />} />
           <Route path="d-barangay-installation" element={<Binstallation />} />
           <Route path="d-barangay-construction" element={<BconstuctionAdmin />} />
           <Route path="d-barangay-id" element={<Biddmin />} />

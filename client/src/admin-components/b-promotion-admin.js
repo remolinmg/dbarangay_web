@@ -379,50 +379,27 @@ function BpromotionAdmin() {
         </div>
       </div>
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
-        <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
-          <div className="toppart-table border row w-75 d-flex align-items-center">
-            <div className="col-4">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search"
-                  aria-label="Enter search keyword"
-                  name="query"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                />
-                <button className="btn btn-outline-secondary" type="button">
-                  <i className="bi bi-search"></i>
-                </button>
-              </div>
-            </div>
-            <div className="col-4">
-              <div className="tabsz dropdown-center">
-                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button>
-                <ul className="dropdown-menu dropdown-topcategory">
-                  <li><Link to="/b-promotion-admin" className="dropdown-item text-center">Grocery</Link></li>
-                  <li><Link to="/b-promotion-fastfood" className="dropdown-item text-center">Fastfood</Link></li>
-                  <li><Link to="/b-promotion-hardware" className="dropdown-item text-center">Hardware</Link></li>
-                  <li><Link to="/b-promotion-others" className="dropdown-item text-center">Others</Link></li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-4">
-              <div className="dropdown-tablenumbers">
-                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                </select>
-              </div>
+      <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
+          <div className="toppart-table border row w-50 d-flex align-items-center">
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search"
+                aria-label="Enter search keyword"
+                name="query"
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+              <button className="btn btn-outline-secondary" type="button">
+                <i className="bi bi-search"></i>
+              </button>
             </div>
           </div>
         </div>
         {/* -------------------------------------------------------------  TABLE -------------------------------------------------------------  */}
         <main id="main" className="main">
-          <div className="pagetitle"><h1> Grocery Table  </h1> </div>
+          <div className="pagetitle"><h1> BUSINESS PROMOTION  </h1> </div>
           <section className="section">
             <div className="row">
               <div className="col-lg-12">

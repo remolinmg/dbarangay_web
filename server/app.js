@@ -113,6 +113,7 @@ app.use('/delete/livelihood',livelihoodRoutes);//delete livelihood
 /********FEEDBACK*******/
 app.use('/feedback',feedbackRoutes); //add feedback
 app.use('/get/feedback',feedbackRoutes); //get feedback
+app.use('/delete/feedback',feedbackRoutes); //delete feedback
 
 
 

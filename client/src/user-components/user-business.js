@@ -1,80 +1,54 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.bundle';
-import 'bootstrap/js/dist/dropdown';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios'; // Import Axios
 import './assets/css/user-style.css';
-import Footer from "./footer"
+import Footer from './footer';
 import UserNav from './user-navbar';
-import ScrollToTopButton from "./scrolltotop";
-import Bot from "./faqbot"
+import ScrollToTopButton from './scrolltotop';
+import Bot from './faqbot';
 
-function UserBusiness() {
-    return (
-        <body>
-            <UserNav />
-            <section className="category-section pt-5" >
-                <div className="section-title p-5">
-                    <h1 className="text-white">BUSINESS</h1>
-                </div>
-                <div className="section-content">
-                    <div className="card category grocery">
-                        <div className="card-body cat-content-container">
-                            <h5 className="card-title">Grocery Store</h5>
-                        </div>
-                    </div>
-                    <div className="card category">
-                        <div className="card-body cat-content-container">
-                            <h5 className="card-title">Hardware</h5>
+const UserBusiness = () => {
+  const [business, setBusiness] = useState([]);
 
-                        </div>
-                    </div>
-                    <div className="card category">
-                        <div className="card-body cat-content-container">
-                            <h5 className="card-title">Fast Food</h5>
-                        </div>
-                    </div>
-                    <div className="card category">
-                        <div className="card-body cat-content-container">
-                            <h5 className="card-title">Others</h5>
-                        </div>
-                    </div>
-                </div>
-            </section>
+  useEffect(() => {
+    axios.get('http://localhost:8000/get/promotebusiness')
+      .then((response) => {
+        setBusiness(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching business data:', error);
+      });
+  }, []);
 
-            <section className="business-section">
-                <div className="business-content">
-                    <div className="card business">
-                        <div className="card-body business-content-container">
-                            <h5 className="card-title">Grocery Store</h5>
-                        </div>
-                    </div>
-                    <div className="card business">
-                        <div className="card-body business-content-container">
-                            <h5 className="card-title">Hardware</h5>
+  return (
+    <>
+      <UserNav />
 
-                        </div>
-                    </div>
-                    <div className="card business">
-                        <div className="card-body business-content-container">
-                            <h5 className="card-title">Banks</h5>
-                        </div>
-                    </div>
-                    <div className="card business">
-                        <div className="card-body business-content-container">
-                            <h5 className="card-title">Fast Food</h5>
-                        </div>
-                    </div>
-                    <div className="card business">
-                        <div className="card-body business-content-container">
-                            <h5 className="card-title">Others</h5>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <ScrollToTopButton />
-            <Footer />
-            <Bot />
-        </body>
-    );
-}
+      <div className="livelihood-container pt-5">
+        {business.map((post) => (
+          <div key={post._id} className="pt-5 d-flex flex-column w-100">
+            <div className="livelihood-card card mb-5 align-self-center">
+            <img
+                        //style={{ width: "300px", height: "300px" }}
+                        src={require(`../../../server/uploads/promotebusiness/${post.filename}`)}
+                        alt=""
+                        className="livelihood-img card-img-top"
+                                />
+              <div className="card-body">
+                <h5 className="card-title"><b>{post.businessName}</b></h5>
+                <h5 className="card-title"><b>Category: </b>{post.category}</h5>
+                <h5 className="card-title"><b>Address: </b>{post.address}</h5>
+                <h5 className="card-title"><b>Contact Number: </b>{post.contact}</h5>
+                <h5 className="card-title"><b>Open Hours: </b>{post.hours}</h5>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <ScrollToTopButton />
+      <Footer />
+      <Bot />
+    </>
+  );
+};
 
 export default UserBusiness;
