@@ -10,11 +10,17 @@ const Login = () => {
   const [emailValid, setEmailValid] = useState('');
   const [passwordValid, setPasswordValid] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(true);
+  const [loginAttempts, setLoginAttempts] = useState(0);
+  const [isLockedOut, setIsLockedOut] = useState(false);
+
   const navigate = useNavigate();
 
   const emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+  const passwordRegExp = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
   const isValidEmail = (email) => emailRegExp.test(email);
-  const isValidPassword = (password) => password.length >= 8;
+  const isValidPassword = (password) => passwordRegExp.test(password);
+  // const isValidPassword = (password) => password.length >= 8;
+
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
@@ -25,7 +31,7 @@ const Login = () => {
       if (value.trim() === '') {
         setEmailValid('Input Email address');
       } else if (!isValidEmail(value)) {
-        setEmailValid('Wrong Credentials');
+        setEmailValid('Invalid Email');
       }
     }
   };
@@ -48,11 +54,26 @@ const Login = () => {
     e.preventDefault();
     setFormSubmitted(true);
 
-    if (!emailValid || !passwordValid) {
-      setEmailValid('Invalid Email');
-      setPasswordValid('Invalid Password');
+    if (isLockedOut) {
+      setEmailValid('Try again after 30 mins');
+      return;
     }
 
+    if (!emailValid || !passwordValid) {
+      setEmailValid('Wrong Credentials');
+      setPasswordValid('Invalid Password');
+      setLoginAttempts(loginAttempts + 1);
+
+      if (loginAttempts >= 2) {
+        // User has reached 3 failed login attempts, set lockout status
+        setIsLockedOut(true);
+        setTimeout(() => {
+          setIsLockedOut(false);
+          setLoginAttempts(0);
+        }, 30 * 60 * 1000); // Reset lockout after 30 minutes
+      }
+      // return;
+    }
 
     try {
       await axios.post("http://localhost:8000/login", {
@@ -74,6 +95,7 @@ const Login = () => {
       console.log(e);
     }
   }
+
 
 
   return (
@@ -106,7 +128,7 @@ const Login = () => {
                   onChange={handleEmailChange}
                 />
                 {formSubmitted && emailValid !== '' && (
-                  <div className="invalid-feedback">
+                  <div className="error-message">
                     <i className="bi bi-exclamation-triangle"></i> {emailValid}
                   </div>
                 )}
@@ -124,21 +146,39 @@ const Login = () => {
                   onChange={handlePasswordChange}
                 />
                 {formSubmitted && passwordValid !== '' && (
-                  <div className="invalid-feedback">
+                  <div className="error-message">
                     <i className="bi bi-exclamation-triangle"></i> {passwordValid}
                   </div>
                 )}
               </div>
 
-              <button onClick={login}>Login</button>
+              <button
+                onClick={login}
+                disabled={isLockedOut}
+              >
+                Login
+              </button>
               <p className="register-link text-center text-dark">
                 New user? <a href="registration">Register here</a>
               </p>
+              <p className="register-link text-center text-dark">
+                <a href="registration">Forgot Password</a>
+              </p>
+              {isLockedOut && (
+                <div className="error-message">
+                  <i className="bi bi-exclamation-triangle"></i> Try again after 30 mins
+                </div>
+              )}
+
             </form>
           </div>
         </div>
       </div>
     </div>
+
+
+
+
   );
 };
 export default Login;
