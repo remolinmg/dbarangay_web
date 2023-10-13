@@ -1178,6 +1178,9 @@ li {
 /* START OF LOGIN DESIGN */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
 
+.error-message {
+  color: red;
+}
 
 .main {
   height: 100vh;
