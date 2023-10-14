@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './assets/css/user-style.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -9,17 +9,39 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [emailValid, setEmailValid] = useState('');
   const [passwordValid, setPasswordValid] = useState('');
-  const [formSubmitted, setFormSubmitted] = useState(true);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [loginAttempts, setLoginAttempts] = useState(0);
   const [isLockedOut, setIsLockedOut] = useState(false);
 
   const navigate = useNavigate();
 
   const emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-  const passwordRegExp = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  const passwordRegExp = /^(?=.*\d)(?=.*[!@#$%^&*?])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
   const isValidEmail = (email) => emailRegExp.test(email);
   const isValidPassword = (password) => passwordRegExp.test(password);
   // const isValidPassword = (password) => password.length >= 8;
+
+  const maxLoginAttempts = 3; // Define the maximum login attempts
+  const lockoutDuration = 1800000; // 30 minutes in milliseconds
+
+  useEffect(() => {
+    // Check if the user is still locked out
+    const lastLockoutTime = localStorage.getItem('lastLockoutTime');
+    if (lastLockoutTime) {
+      const timeSinceLockout = Date.now() - parseInt(lastLockoutTime, 10);
+      if (timeSinceLockout < lockoutDuration) {
+        setIsLockedOut(true);
+        // Schedule the removal of the lockout status and error messages after the remaining lockout time
+        setTimeout(() => {
+          setIsLockedOut(false);
+          setEmailValid('');
+          setPasswordValid('');
+          setLoginAttempts(0); // Reset login attempts
+          localStorage.removeItem('lastLockoutTime');
+        }, lockoutDuration - timeSinceLockout);
+      }
+    }
+  }, []);
 
 
   const handleEmailChange = (e) => {
@@ -59,20 +81,32 @@ const Login = () => {
       return;
     }
 
-    if (!emailValid || !passwordValid) {
+    if (isLockedOut) {
+      setEmailValid('Try again after 30 mins');
+      return;
+    }
+
+    if (!isValidEmail(email) || !isValidPassword(password)) {
       setEmailValid('Wrong Credentials');
       setPasswordValid('Invalid Password');
-      setLoginAttempts(loginAttempts + 1);
 
-      if (loginAttempts >= 2) {
-        // User has reached 3 failed login attempts, set lockout status
+      // Increment login attempts
+      const newLoginAttempts = loginAttempts + 1;
+      setLoginAttempts(newLoginAttempts);
+
+      if (newLoginAttempts >= maxLoginAttempts) {
         setIsLockedOut(true);
+        localStorage.setItem('lastLockoutTime', Date.now());
         setTimeout(() => {
           setIsLockedOut(false);
-          setLoginAttempts(0);
-        }, 30 * 60 * 1000); // Reset lockout after 30 minutes
+          setEmailValid('');
+          setPasswordValid('');
+          setLoginAttempts(0); // Reset login attempts
+          localStorage.removeItem('lastLockoutTime');
+        }, lockoutDuration);
       }
-      // return;
+
+      return;
     }
 
     try {
@@ -84,7 +118,15 @@ const Login = () => {
         .then(res => {
           if (res.data === "exist") {
             navigate("/");
+            // Reset validation messages after successful login
+            setEmailValid('');
+            setPasswordValid('');
+            setLoginAttempts(0);
           } else if (res.data === "notexist") {
+            // Update validation messages for invalid credentials
+            setEmailValid('Wrong Credentials');
+            setPasswordValid('Invalid Password');
+            
 
           }
         })
@@ -95,6 +137,7 @@ const Login = () => {
       console.log(e);
     }
   }
+
 
 
 

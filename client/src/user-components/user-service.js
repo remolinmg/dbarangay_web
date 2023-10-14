@@ -9,7 +9,6 @@ import axios from 'axios';
 import Footer from "./footer"
 
 
-
 function UserService() {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -569,7 +568,7 @@ function UserService() {
                 <div className="service__meta">
                   <h1 className="service__text">BARANGAY CERTIFICATE </h1>
                   <p className="p service__text p__color">
-                    A barangay clearance is a document issued by the barangay or local community government in the Philippines to certify the residency and good conduct of an individual within the barangay.</p>
+                    A document to certify the residency and good conduct of an individual within the barangay.</p>
                 </div>
               </div>
             </div>
@@ -583,7 +582,7 @@ function UserService() {
                 <div className="service__meta">
                   <h1 className="service__text">BUSINESS CLEARANCE</h1>
                   <p className="p service__text p__color">
-                    Business Permit is an official document or license issued by the government that grants permission to individuals or organizations to conduct business within a jurisdiction.
+                    An official document or license that grants permission to individuals or organizations to conduct business within a jurisdiction.
                   </p>
                 </div>
               </div>
@@ -598,7 +597,7 @@ function UserService() {
                 <div className="service__meta">
                   <h1 className="service__text">BARANGAY ID</h1>
                   <p className="p service__text p__color">
-                    A barangay ID is a government-issued identification card that serves as proof of residence and provides access to local barangay services and benefits within a specific community in the Philippines.</p>
+                    A government-issued identification card that serves as proof of residence and provides access to local barangay services.</p>
                 </div>
               </div>
             </div>
@@ -614,7 +613,7 @@ function UserService() {
                 <div className="service__meta">
                   <h1 className="service__text">INSTALLATION PERMIT</h1>
                   <p className="p service__text p__color">
-                    An installation permit in Barangay is a document required for obtaining legal permission to install or make changes to certain structures, equipment, or facilities within the jurisdiction of a Barangay, ensuring compliance and safety.</p>
+                    A document required for obtaining legal permission to install or make changes to certain structures, equipment, or facilities within the jurisdiction of a Barangay.</p>
                 </div>
               </div>
             </div>
@@ -627,7 +626,7 @@ function UserService() {
                 <div className="service__meta">
                   <h1 className="service__text">CONSTRUCTION PERMIT</h1>
                   <p className="p service__text p__color">
-                    A Barangay construction permit is a government-issued authorization allowing individuals or organizations to legally undertake construction activities within the Barangay's jurisdictional boundaries.</p></div>                            </div>
+                    A government-issued authorization allowing individuals or organizations to legally undertake construction activities within the Barangay.</p></div>                            </div>
             </div>
             {/* ----------------------- BRGY INDIGENCY FORM ---------------------------- */}
             <div className=" col-4 col__3" onClick={() => handleServiceClick('barangayIndigency')}>
@@ -638,7 +637,7 @@ function UserService() {
                 <div className="service__meta">
                   <h1 className="service__text">BARANGAY INDIGENCY </h1>
                   <p className="p service__text p__color">
-                    The Certificate of Indigency is a document issued to less fortunate resident who desires to avail assistance such as Scholarship, Medical Services, and the likes.</p>
+                    A document issued to less fortunate resident who desires to avail assistance such as Scholarship, Medical Services, and the likes.</p>
                 </div>
               </div>
             </div>

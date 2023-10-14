@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import Picture from '../user-components/assets/img/Official1.jpg';
-import '../user-components/assets/css/user-style.css';
 import Axios from "axios";
 import { BsCamera } from "react-icons/bs";
 import { Link, NavLink, Route } from 'react-router-dom';
