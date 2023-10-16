@@ -29,7 +29,7 @@ exports.createCertificate = async (req, res) => {
 
 exports.getCertificates = async (req, res) => {
   try {
-    const data = await userCertificate.find();
+    const data = await userCertificate.find().sort({createdAt: -1});
     res.json(data);
   } catch (error) {
     console.error(error);

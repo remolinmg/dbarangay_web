@@ -438,7 +438,6 @@ function BpromotionAdmin() {
                     <table className="table">
                       <thead>
                         <tr>
-                          <th scope="col">#</th>
                           <th scope="col">Business Name </th>
                           <th scope="col">Business Address </th>
                           <th scope="col">Business Hours </th>
@@ -453,7 +452,6 @@ function BpromotionAdmin() {
                       <tbody>
                         {getCurrentPageData().map((val) => {
                           return <tr key={val._id}>
-                            <th scope="row">{val._id}</th>
                             <td>{val.businessName}</td>
                             <td>{val.address}</td>
                             <td>{val.hours}</td>

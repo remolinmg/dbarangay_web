@@ -388,7 +388,6 @@ function BlotterAdmin() {
                   placeholder="Search"
                   aria-label="Enter search keyword"
                   name="query"
-                  value={searchQuery}
                   onChange={handleSearchChange}
                 />
                 <button className="btn btn-outline-secondary" type="button">
@@ -407,12 +406,18 @@ function BlotterAdmin() {
             </div>
             <div className="col-4">
               <div className="dropdown-tablenumbers">
-                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                </select>
+              <select
+                  type="text"
+                  className="form-control"
+                  placeholder="Search"
+                  aria-label="Enter search keyword"
+                  name="query"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                >
+                  <option value="pending">Pending</option>
+                  <option value="processed">Processed</option>
+              </select>
               </div>
             </div>
           </div>

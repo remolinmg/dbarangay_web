@@ -450,7 +450,6 @@ function BofficialsAdmin() {
                     <table class="table caption-top">
                       <thead>
                         <tr>
-                          <th scope="col">#</th>
                           <th scope="col">Position</th>
                           <th scope="col">First Name</th>
                           <th scope="col">Middle Name</th>
@@ -470,7 +469,6 @@ function BofficialsAdmin() {
 
                           return (
                             <tr key={val._id}>
-                              <th scope="row">{val._id}</th>
                               <td>{val.position}</td>
                               <td>{val.firstName}</td>
                               <td>{val.middleName}</td>

@@ -25,10 +25,6 @@ import ResidentsInactiveAdmin from "./admin-components/resident-inactive"
 import Residentsaccounts from "./admin-components/residents-accounts";
 import Complaintsadmin from "./admin-components/complaints-admin";
 
-import BpromotionAdminfastfood from "./admin-components/b-promotion-admin-fastfood";
-import BpromotionAdminhardware from "./admin-components/b-promotion-admin-hardware";
-import BpromotionAdminOthers from "./admin-components/b-promotion-admin-others";
-
 import UserNav from "./user-components/user-navbar";
 import Announcement from "./user-components/user-announcement";
 import BrgyOfficial from "./user-components/brgy-officials";
@@ -83,9 +79,7 @@ function App() {
           <Route path="residents-accounts" element={<Residentsaccounts />} />
           <Route path="complaints-admin" element={<Complaintsadmin />} />
           <Route path="b-promotion-admin" element={<BpromotionAdmin />} />
-          <Route path="b-promotion-fastfood" element={<BpromotionAdminfastfood />} />
-          <Route path="b-promotion-hardware" element={<BpromotionAdminhardware />} />
-          <Route path="b-promotion-others" element={<BpromotionAdminOthers />} />
+         
 
 
 

@@ -428,7 +428,7 @@ function BconstuctionAdmin() {
                   placeholder="Search"
                   aria-label="Enter search keyword"
                   name="query"
-                  value={searchQuery}
+     
                   onChange={handleSearchChange}
                 />
                 <button className="btn btn-outline-secondary" type="button">
@@ -455,12 +455,20 @@ function BconstuctionAdmin() {
             </div>
             <div className="col-4">
               <div className="dropdown-tablenumbers">
-                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                </select>
+              <select
+                  type="text"
+                  className="form-control"
+                  placeholder="Search"
+                  aria-label="Enter search keyword"
+                  name="query"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                >
+                   <option value="new">New</option>
+                  <option value="on process">On process</option>
+                  <option value="processed">Processed</option>
+                  <option value="declined">Declined</option>
+              </select>
               </div>
             </div>
           </div>
@@ -511,7 +519,6 @@ function BconstuctionAdmin() {
                     <table class="table caption-top">
                       <thead>
                         <tr>
-                          <th scope="col">#</th>
                           <th scope="col">Resident Name</th>
                           <th scope="col">Address</th>
                           <th scope="col">Reason</th>
@@ -525,7 +532,6 @@ function BconstuctionAdmin() {
                       <tbody>
                         {getCurrentPageData().map((item, index) => (
                           <tr key={index}>
-                            <th scope="row">{item._id}</th>
                             <td>{item.residentName}</td>
                             <td>{item.address}</td>
                             <td>{item.reasonOfRequest}</td>

@@ -3,11 +3,20 @@ const jwt = require('jsonwebtoken')
 
 //user signup
 exports.signup = async (req, res) => {
+  try{
   const {
     firstName, middleName, lastName, suffix, houseNumber,barangay,district,cityMunicipality,province,region, email, phoneNumber,nationality,sex, civilStatus, employmentStatus,homeOwnership, dateOfBirth,birthPlace,age,highestEducation,residenceClass,voterRegistration,password,companyName,position,status,type
   } = req.body;
-
-  const data = {
+  const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  const lastCustomIdDoc = await User.findOne().sort({ _id: -1 });
+  let newCustomId = currentDate + '01';
+  if (lastCustomIdDoc) {
+    const lastIncrement = parseInt(lastCustomIdDoc._id.slice(-2));
+    const newIncrement = (lastIncrement + 1).toString().padStart(2, '0');
+    newCustomId = currentDate + newIncrement;
+  }
+  const newCustomData = new User( {
+    _id: newCustomId,
     firstName: firstName,
     middleName: middleName,
     lastName: lastName,
@@ -35,19 +44,12 @@ exports.signup = async (req, res) => {
     password: password,
     status:status,
     type:type
-  };
-
-  try {
-    const check = await User.findOne({ email: email });
-    if (check) {
-      res.json('exist');
-    } else {
-      res.json('notexist');
-      await User.create(data);
-    }
-  } catch (e) {
-    res.json('notexist');
-  }
+  });
+  await newCustomData.save();
+  res.json({ success: true, message: 'Custom Data created successfully' });
+} catch (error) {
+  res.status(500).json({ success: false, message: 'Error creating custom data' });
+}
 };
 
 //user login
