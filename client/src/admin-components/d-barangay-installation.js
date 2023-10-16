@@ -194,10 +194,10 @@ function Binstallation() {
         residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
       })
         .then(res => {
-          if (res.data == "exist") {
+          if (res.data === "exist") {
             alert("You already sent the same request!");
           }
-          else if (res.data == "notexist") {
+          else if (res.data === "notexist") {
             setShowForm(false);
             fetchData();
           }

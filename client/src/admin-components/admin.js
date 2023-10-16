@@ -13,22 +13,15 @@ const Admin = () => {
     e.preventDefault();
 
     try{
-        await axios.post("http://localhost:8000/adminlogin",{
+        const response = await axios.post("http://localhost:8000/adminlogin",{
             email,password,type
         })
-        .then(res=>{
-            if(res.data=="exist"){
+            if(response.status === 201){
               navigate("/dashboard")
             }
-            else if(res.data=="notexist"){
+            else{
                 alert("Login Failed!")
             }
-        })
-        .catch(e=>{
-            alert("Login Failed!")
-            console.log(e);
-        })
-
     }
     catch(e){
         console.log(e);
