@@ -387,7 +387,7 @@ function LivelihoodAdmin() {
             </div>
             <div className="col-4">
               <div className="tabsz dropdown-center">
-                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
+                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button>
                 <ul className="dropdown-menu dropdown-topcategory">
                   <li><Link to="/announcement-admin" className="dropdown-item text-center">General</Link></li>
                   <li><Link to="/livelihood-admin" className="dropdown-item text-center">Livelihood</Link></li>
@@ -447,7 +447,6 @@ function LivelihoodAdmin() {
                     <table className="table">
                       <thead>
                         <tr>
-                          <th scope="col">#</th>
                           <th scope="col">WHAT</th>
                           <th scope="col">WHERE</th>
                           <th scope="col">WHEN</th>
@@ -460,7 +459,6 @@ function LivelihoodAdmin() {
                       <tbody>
                         {getCurrentPageData().map((val) => {
                           return <tr key={val._id}>
-                            <th scope="row">{val._id}</th>
                             <td>{val.what}</td>
                             <td>{val.where}</td>
                             <td>{val.when}</td>

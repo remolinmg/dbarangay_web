@@ -84,12 +84,7 @@ function BclearanceAdmin() {
     }
   };
 
-  // Event handler for dropdown change ----------------------------------------
-  const handleRowCountChange = (e) => {
-    const selectedRowCount = parseInt(e.target.value);
-    setRowCount(selectedRowCount);
-    setCurrentPage(1); // Reset current page to 1 when row count changes
-  };
+ 
 
   // Event handler for search input change -------------------------------------
   const handleSearchChange = (e) => {
@@ -119,7 +114,6 @@ function BclearanceAdmin() {
   };
   // Calculate the starting and ending indices for the current page -------------
   const startIndex = (currentPage - 1) * rowCount;
-  const endIndex = startIndex + rowCount;
 
   // Function to filter data based on search query -----------------------------
   const filteredData = data.filter((item) => {
@@ -156,7 +150,6 @@ function BclearanceAdmin() {
   // gcash reference
   const [isGCashChecked, setIsGCashChecked] = useState(false);
   const [isCOPChecked, setIsCOPChecked] = useState(false);
-  const [gcashInputValues, setGcashInputValues] = useState([]);
 
   const handleCheckboxChangeGcash = () => {
     setIsGCashChecked(!isGCashChecked);
@@ -196,7 +189,7 @@ function BclearanceAdmin() {
 
     try {
 
-      const responseCertificate = await axios.post("http://localhost:8000/barangaycertificate", {
+      await axios.post("http://localhost:8000/barangaycertificate", {
         residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
       })
         .then(res => {
@@ -431,7 +424,6 @@ function BclearanceAdmin() {
                   placeholder="Search"
                   aria-label="Enter search keyword"
                   name="query"
-                  value={searchQuery}
                   onChange={handleSearchChange}
                 />
                 <button className="btn btn-outline-secondary" type="button">
@@ -458,12 +450,20 @@ function BclearanceAdmin() {
             </div>
             <div className="col-4">
               <div className="dropdown-tablenumbers">
-                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                </select>
+              <select
+                  type="text"
+                  className="form-control"
+                  placeholder="Search"
+                  aria-label="Enter search keyword"
+                  name="query"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                >
+                   <option value="new">New</option>
+                  <option value="on process">On process</option>
+                  <option value="processed">Processed</option>
+                  <option value="declined">Declined</option>
+              </select>
               </div>
             </div>
           </div>
@@ -513,7 +513,6 @@ function BclearanceAdmin() {
                     <table class="table caption-top">
                       <thead>
                         <tr>
-                          <th scope="col">#</th>
                           <th scope="col">Resident Name</th>
                           <th scope="col">Address</th>
                           <th scope="col">Reason</th>
@@ -527,7 +526,6 @@ function BclearanceAdmin() {
                       <tbody>
                         {getCurrentPageData().map((item, index) => (
                           <tr key={index}>
-                            <th scope="row">{item._id}</th>
                             <td>{item.residentName}</td>
                             <td>{item.address}</td>
                             <td>{item.reasonOfRequest}</td>

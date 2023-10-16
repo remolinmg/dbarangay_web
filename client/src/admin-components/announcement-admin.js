@@ -447,7 +447,6 @@ function AnnouncementAdmin() {
                     <table className="table">
                       <thead>
                         <tr>
-                          <th scope="col">#</th>
                           <th scope="col">WHAT</th>
                           <th scope="col">WHERE</th>
                           <th scope="col">WHEN</th>
@@ -460,7 +459,6 @@ function AnnouncementAdmin() {
                       <tbody>
                         {getCurrentPageData().map((val) => {
                           return <tr key={val._id}>
-                            <th scope="row">{val._id}</th>
                             <td>{val.what}</td>
                             <td>{val.where}</td>
                             <td>{val.when}</td>

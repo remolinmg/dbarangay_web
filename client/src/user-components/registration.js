@@ -186,22 +186,11 @@ const RegistrationComponent = () => {
 
     try {
 
-      await axios.post("http://localhost:8000/signup", {
+     await axios.post("http://localhost:8000/signup", {
         firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residenceClass, voterRegistration, password, companyName, position
-      })
-        .then(res => {
-          if (res.data == "exist") {
-            alert("User Already Exist!");
-          }
-          else if (res.data == "notexist") {
-            navigate("/login");
-          }
-        })
-        .catch(e => {
-          alert("Registration Failed!")
-          console.log(e);
-        })
-
+      });  
+      alert("Registered Successfully")   
+      navigate("/login");
     }
     catch (e) {
       console.log(e);

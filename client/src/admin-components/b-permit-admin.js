@@ -467,12 +467,20 @@ function BpermitAdmin() {
                         </div>
                         <div className="col-4">
                             <div className="dropdown-tablenumbers">
-                                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>
+                            <select
+                  type="text"
+                  className="form-control"
+                  placeholder="Search"
+                  aria-label="Enter search keyword"
+                  name="query"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                >
+                   <option value="new">New</option>
+                  <option value="on process">On process</option>
+                  <option value="processed">Processed</option>
+                  <option value="declined">Declined</option>
+              </select>
                             </div>
                         </div>
                     </div>
@@ -518,7 +526,6 @@ function BpermitAdmin() {
                                         <table className="table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Request #</th>
                                                     <th scope="col">Business Name</th>
                                                     <th scope="col">Business Address </th>
                                                     <th scope="col">Business Owner </th>
@@ -535,7 +542,7 @@ function BpermitAdmin() {
                                             <tbody>
                                                 {getCurrentPageData().map((val) => {
                                                     return <tr key={val.id}>
-                                                        <th scope="row">{val._id}</th>
+                                                       
                                                         <td>{val.businessName}</td>
                                                         <td>{val.address}</td>
                                                         <td>{val.residentName}</td>

@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const userRegistrationSchema = new mongoose.Schema({
-  firstName:{
+_id:{
+    type:String,
+    required:true
+},
+firstName:{
     type:String,
     required:true
 },
