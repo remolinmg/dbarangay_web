@@ -187,6 +187,7 @@ function UserService() {
       alert("Failed!");
       console.error(error);
     }
+   
   }
 
   //business clearance connection & validation
@@ -388,10 +389,10 @@ function UserService() {
         residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
       })
         .then(res => {
-          if (res.data == "exist") {
+          if (res.data === "exist") {
             alert("You already sent the same request!");
           }
-          else if (res.data == "notexist") {
+          else if (res.data === "notexist") {
             setIsSubmitted(true);
             setShowPopup(false);
             setIsGCashChecked(false);
@@ -457,10 +458,10 @@ function UserService() {
         residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
       })
         .then(res => {
-          if (res.data == "exist") {
+          if (res.data === "exist") {
             alert("You already sent the same request!");
           }
-          else if (res.data == "notexist") {
+          else if (res.data === "notexist") {
             setIsSubmitted(true);
             setShowPopup(false);
             setIsGCashChecked(false);
@@ -528,10 +529,10 @@ function UserService() {
         residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
       })
         .then(res => {
-          if (res.data == "exist") {
+          if (res.data === "exist") {
             alert("You already sent the same request!");
           }
-          else if (res.data == "notexist") {
+          else if (res.data === "notexist") {
             setIsSubmitted(true);
             setShowPopup(false);
             setIsGCashChecked(false);

@@ -110,29 +110,25 @@ const Login = () => {
     }
 
     try {
-      await axios.post("http://localhost:8000/login", {
+      const response = await axios.post("http://localhost:8000/login", {
         email,
         password,
         status: 'active'
       })
-        .then(res => {
-          if (res.data === "exist") {
+          if (response.status === 201) {
             navigate("/");
             // Reset validation messages after successful login
             setEmailValid('');
             setPasswordValid('');
             setLoginAttempts(0);
-          } else if (res.data === "notexist") {
+          } else{
             // Update validation messages for invalid credentials
             setEmailValid('Wrong Credentials');
             setPasswordValid('Invalid Password');
             
 
           }
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      
     } catch (e) {
       console.log(e);
     }

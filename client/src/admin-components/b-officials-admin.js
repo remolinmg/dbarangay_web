@@ -165,10 +165,10 @@ function BofficialsAdmin() {
     formData.append('startTerm', startTerm);
     formData.append('endTerm', endTerm);
     axios.post('http://localhost:8000/official', formData).then(res => {
-      if (res.data == "Error saving data to MongoDB") {
+      if (res.data === "Error saving data to MongoDB") {
         alert("Barangay Official Already Exist!");
       }
-      else if (res.data == "File and text data saved to MongoDB") {
+      else if (res.data === "File and text data saved to MongoDB") {
       }
     })
       .catch(er => console.log(er))
