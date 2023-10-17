@@ -3,6 +3,7 @@ import './assets/css/user-style.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { BiCheckCircle } from "react-icons/bi";
+import { useCookies } from 'react-cookie';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ const Login = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [loginAttempts, setLoginAttempts] = useState(0);
   const [isLockedOut, setIsLockedOut] = useState(false);
-
+  const [, setCookies] = useCookies(['access_token']);
   const navigate = useNavigate();
 
   const emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
@@ -114,23 +115,24 @@ const Login = () => {
         email,
         password,
         status: 'active'
-      })
-          if (response.status === 201) {
-            navigate("/");
-            // Reset validation messages after successful login
-            setEmailValid('');
-            setPasswordValid('');
-            setLoginAttempts(0);
-          } else{
-            // Update validation messages for invalid credentials
-            setEmailValid('Wrong Credentials');
-            setPasswordValid('Invalid Password');
-            
+      });
 
-          }
-      
-    } catch (e) {
-      console.log(e);
+      if (response.data.token) {
+        // Store JWT token in local storage
+        localStorage.setItem('jwtToken', response.data.token);
+        navigate('/');
+        // Reset validation messages after successful login
+        setEmailValid('');
+        setPasswordValid('');
+        setLoginAttempts(0);
+      } else if (response.data === "notexist") {
+        // Update validation messages for invalid credentials
+        setEmailValid('Wrong Credentials');
+        setPasswordValid('Invalid Password');
+      }
+    } catch (error) {
+      // Handle specific error cases and provide user-friendly messages
+      console.log(error);
     }
   }
 

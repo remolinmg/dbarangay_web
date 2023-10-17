@@ -69,7 +69,7 @@ exports.login = async (req, res) => {
         res.status(400).json({message: 'user inactive'})
       }else{
         res.status(201).json({
-          token: jwt.sign({id: user.id, email: user.email},'y7y9u92348y5789yye789yq234785y78q34y78oghio', {expiresIn: '1d'})
+          token: jwt.sign({id: user.id, email: user.email},'secret', {expiresIn: '1d'})
         })
       }
     } else {
