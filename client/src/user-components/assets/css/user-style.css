@@ -36,8 +36,8 @@
 /* Homepage */
 
 .section1 {
-  padding-top: 280px;
-  padding-bottom: 280px;
+  padding-top: 230px;
+  padding-bottom: 230px;
   background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7)), url('/src/user-components/assets/img/bg.jpg');
   background-size: cover;
   background-repeat: no-repeat;
@@ -129,7 +129,7 @@
 }
 
 .image-1 {
-  background-image:url('/src/user-components/assets/img/evac-map-1.png');
+  background-image: url('/src/user-components/assets/img/evac-map-1.png');
 }
 
 .evacuation {
@@ -272,7 +272,7 @@
 /* SERVICE SECTION */
 .service {
   padding-top: 100px;
-  padding-bottom:50px ;
+  padding-bottom: 50px;
   background-Repeat: 'no-repeat';
   background-size: cover;
   background-attachment: fixed;
@@ -515,8 +515,8 @@ h1.service__text {
 }
 
 /* userprofile */
-.userprof {
-  background: #f8f8f8
+.user-profile {
+  background-color: #0060AD;
 }
 
 /* ANNOUNCEMENT SUBMENU  */
@@ -799,7 +799,7 @@ li {
     list-style-type: none;
     background-color: #0060AD;
     color: white;
-    border: 2px solid #ddd;
+    border: 1px solid #ddd;
     border-radius: 4px;
     max-width: 300px;
 
@@ -829,7 +829,7 @@ li {
     columns: 1;
     column-gap: 5px;
     background-color: #0060AD;
-    border: 2px solid #ddd;
+    border: 1px solid #ddd;
     border-radius: 4px;
   }
 
@@ -872,6 +872,7 @@ li {
 @media screen and (max-width: 1435px) {
   .menu-icon {
     display: block;
+    background-color: white;
   }
 
   /* Hide the menu items by default on smaller screens */
@@ -900,15 +901,18 @@ li {
 
   .bar1.bar {
     transform: rotate(-45deg) translate(-9px, 4px);
+    background-color: white;
   }
 
   .bar2.bar {
     opacity: 10;
     transform: rotate(45deg) translate(-4px, 1px);
+    background-color: white;
   }
 
   .bar3 {
     opacity: 0;
+    background-color: white;
     /* Hide the middle bar to form the 'X' */
   }
 
@@ -1307,6 +1311,7 @@ li {
   height: 80%;
   overflow-y: scroll;
 }
+
 .reg-p {
   font-size: 12px;
 

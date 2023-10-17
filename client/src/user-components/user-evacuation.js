@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import 'bootstrap/js/dist/dropdown';
-import './assets/css/user-style.css';
+// import './assets/css/user-style.css';
 import bhall from './assets/img/Rooftop.jpg'
 import bhall1 from './assets/img/bhall1.png'
 import bhall2 from './assets/img/bhall2.png'
@@ -58,8 +58,8 @@ function UserEvacuation() {
         }
     }
     return (
-        <> <UserNav />
-
+        <>
+            <UserNav />
             <section className="container-fluid evacuation-section pt-5 pb-5">
                 <div className="row section-title text-center p-5 text-white">
                     <h1>EVACUATION CENTERS</h1>

@@ -134,9 +134,6 @@ const Login = () => {
     }
   }
 
-
-
-
   return (
     <div className="container-fluid main">
       <div className="row">

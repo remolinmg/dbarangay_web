@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Map1 from "../user-components/assets/img/MAP.png";
 import Map2 from "../user-components/assets/img/MAP2.png";
 import Stats from "./stats"
@@ -12,6 +12,8 @@ import bhall from './assets/img/Rooftop.jpg'
 import court from './assets/img/MagalonaCourt.jpg'
 import playground from './assets/img/BarangayPlayground.png'
 import Bot from "./faqbot"
+import logo from '../user-components/assets/img/MANDALUYONG-Logo.png';
+import brgy from '../user-components/assets/img/brgy.png';
 
 import '../user-components/assets/css/user-style.css';
 
@@ -60,14 +62,23 @@ const Homepage = () => {
     height: '50rem'
   }
 
- 
-  
+  const logoStyle = {
+    width: '130px',
+    height: '130px',
+    marginLeft: '20px',
+    marginRight: '20px'
+  }
+
 
   return (
     <>
       <UserNav />
 
       <div ref={homeRef} className="section1 text-center" id='home'>
+        <div id="homelogo">
+          <img src={brgy} style={logoStyle}/>
+          <img src={logo} style={logoStyle}/>
+        </div>
         <div id="titlecontainer">
           <h1 id="title" className="text-white">Welcome to Barangay Harapin ang Bukas</h1>
         </div>

@@ -2,6 +2,7 @@ import './assets/css/user-style.css';
 import React, { useState, useEffect, useRef } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import logo from '../user-components/assets/img/MANDALUYONG-Logo.png';
+import brgy from '../user-components/assets/img/brgy.png';
 import Bot from './faqbot.js';
 import { Link, NavLink, Route } from 'react-router-dom';
 import ScrollToTopButton from "./scrolltotop";
@@ -110,12 +111,10 @@ function UserNav() {
   } else {
     boxClassSubMenu.push('');
   }
-
-
+  
   return (
     <>
       <div className={`App ${navbarVisible ? "transparent" : ""} ${navbarColored ? "colored" : ""} container-fluid`}>
-        {/* <ScrollToTopButton /> */}
         <div className="hero">
           <nav className="navbar-content">
             <div className="menu-icon" onClick={handleMenuClick}>
@@ -127,13 +126,6 @@ function UserNav() {
             <ul className={click ? "nav-menu active" : "nav-menu"}>
 
               <li className="link">
-                <img
-                  src={logo}
-                  alt="logo"
-                  object-fit="cover"
-                  width="40px"
-                  height="40px"
-                />
                 <Link to="/./"> <span>BARANGAY HARAPIN ANG BUKAS</span> </Link>
               </li>
               <li className="link"> <NavLink className="link" to="/./" activeClassName="active"> Home  </NavLink> </li>
@@ -178,7 +170,6 @@ function UserNav() {
           </nav>
         </div>
       </div>
-      {/* <Bot /> */}
     </>
   )
 }
