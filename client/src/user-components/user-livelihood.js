@@ -24,15 +24,18 @@ const Livelihood = () => {
       <UserNav />
 
       <div className="livelihood-container pt-5">
+        <div className="container-fluid text-white text-center pt-5">
+          <h3><b>Livelihood Programs</b></h3>
+        </div>
         {livelihoodData.map((livelihoodItem) => (
           <div key={livelihoodItem._id} className="pt-5 d-flex flex-column w-100">
             <div className="livelihood-card card mb-5 align-self-center">
-            <img
-                        //style={{ width: "300px", height: "300px" }}
-                        src={require(`../../../server/uploads/livelihood/${livelihoodItem.filename}`)}
-                        alt=""
-                        className="livelihood-img card-img-top"
-                                />
+              <img
+                //style={{ width: "300px", height: "300px" }}
+                src={require(`../../../server/uploads/livelihood/${livelihoodItem.filename}`)}
+                alt=""
+                className="livelihood-img card-img-top"
+              />
               <div className="card-body">
                 <h5 className="card-title"><b>{livelihoodItem.what}</b></h5>
                 <p className="card-text"><b>Where:</b> {livelihoodItem.where}</p>

@@ -86,19 +86,18 @@
   width: 100%;
 }
 
-.section-content {
+#section-content {
   width: 100%;
-  /* height: 100%;
   display: flex;
   justify-content: space-around;
-  align-items: center; */
 }
 
-.evacuation-center {
-  background: #fff;
+#evacuation-center {
   width: 20%;
+  height: 20%;
   border-radius: 50px;
   display: flex;
+  align-items: center;
   text-align: center;
   justify-content: center;
   box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
@@ -113,9 +112,28 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
 }
 
-.loc-marker {
-  height: 40px;
-  width: 40px;
+.loc-marker-1 {
+  position: absolute;
+  height: 35px;
+  width: 35px;
+  left: 450px;
+  top: 280px;
+}
+
+.loc-marker-2 {
+  position: absolute;
+  height: 35px;
+  width: 35px;
+  right: 600px;
+  top: 420px;
+}
+
+.loc-marker-3 {
+  position: absolute;
+  height: 35px;
+  width: 35px;
+  left: 620px;
+  top: 280px;
 }
 
 .loc-marker:hover {
@@ -129,7 +147,10 @@
 }
 
 .image-1 {
-  background-image: url('/src/user-components/assets/img/evac-map-1.png');
+  width: 80%;
+  padding: 10px;
+  background-image: url('/src/user-components/assets/img/brgyMap.png');
+  border-radius: 50px 50px 0 0;
 }
 
 .evacuation {
@@ -138,6 +159,46 @@
 
 .bhallCont span {
   z-index: 99;
+  position: absolute;
+}
+
+#mapBtn {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  width: 80%;
+  border-radius: 0 0 50px 50px;
+}
+
+.map-btn {
+  border-radius: 0;
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  appearance: none;
+  text-decoration: none;
+}
+
+.mapBtn-cont-close {
+  background-color: #bdbdbd;
+  padding: 10px;
+  border-radius: 0 0 0 50px;
+}
+
+.mapBtn-cont-close:hover {
+  background-color: #9e9e9e;
+}
+
+.mapBtn-cont-direction {
+  background-color: #119b61;
+  padding: 10px;
+  border-radius: 0 0 50px 0;
+}
+
+.mapBtn-cont-direction:hover {
+  background-color: #0b7448;
 }
 
 /* .location span {
@@ -157,7 +218,7 @@
 
 }
 
-.evac-icon {
+#evac-icon {
   border-radius: 50px 50px 0 0;
   width: 100%;
   height: 100%;
@@ -170,7 +231,7 @@
   color: white;
 }
 
-.contingency-card {
+#contingency-card {
   display: flex;
   text-align: center;
   width: 80%;
@@ -526,7 +587,7 @@ h1.service__text {
   justify-content: center;
   width: 170px;
   position: absolute;
-  left: 49%;
+  left: 47%;
   flex-direction: column;
   background-color: #0060AD;
   padding: 8px;
@@ -1149,7 +1210,6 @@ li {
   min-height: 750px;
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
   text-align: center;
   width: 100%;

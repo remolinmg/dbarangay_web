@@ -1,7 +1,7 @@
+import './assets/css/user-style.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import 'bootstrap/js/dist/dropdown';
-// import './assets/css/user-style.css';
 import bhall from './assets/img/Rooftop.jpg'
 import bhall1 from './assets/img/bhall1.png'
 import bhall2 from './assets/img/bhall2.png'
@@ -61,13 +61,13 @@ function UserEvacuation() {
         <>
             <UserNav />
             <section className="container-fluid evacuation-section pt-5 pb-5">
-                <div className="row section-title text-center p-5 text-white">
+                <div className="row text-center p-5 text-white">
                     <h1>EVACUATION CENTERS</h1>
                 </div>
-                <div className="row section-content">
-                    <button className="col-12 col-md-4 card evacuation-center p-0" onClick={toggleBHall}>
+                <div className="row" id="section-content">
+                    <button className="col-12 col-md-4 card p-0 evacuation-center" id="evacuation-center" onClick={toggleBHall}>
                         <div className="evac-content-container">
-                            <img src={bhall} className="card-img-top evac-icon" alt="Evacuation Center Icon" />
+                            <img src={bhall} className="card-img-top evac-icon" id="evac-icon" alt="Evacuation Center Icon" />
                         </div>
                         <div className="card-body evac-content-container">
                             <h5 className="card-title">Brgy. Hall 3rd Floor</h5>
@@ -77,33 +77,23 @@ function UserEvacuation() {
                     {showBHall && (
                         <div className="popup-overlay">
                             <div className="popup-content w-100 h-100 d-flex flex-column justify-content-center align-content-center">
-                                {/* <img
-                                    src={sample}
-                                    alt="Popup"
-                                    className="popup-image w-75 h-75 m-auto mb-0"
-                                /> */}
-                                <div className="popup-image image-1 w-75 h-75 m-auto mb-0">
-                                    <div className="bhall-content w-100 h-100 d-flex justify-content-center align-items-center">
-                                        {/* <a className="location"> */}
-                                        <FaLocationDot className="loc-marker text-danger " onClick={handleEvacIsPressed} />
-                                        {/* <span><img src={bhall1} /></span>
-                                        <span><img src={bhall2} /></span>
-                                        <span><img src={bhall3} /></span></a> */}
-
-
-                                    </div>
-                                    {showEvacImages}
+                                <div className="popup-image image-1 h-75 m-auto mb-0">
+                                    <FaLocationDot className="text-danger loc-marker loc-marker-1" onClick={toggleBHallCont} />
                                 </div>
-                                <div className="w-50 h-auto m-auto mt-0" >
-                                    <button className="btn btn-secondary w-50" onClick={toggleBHall}>Close</button>
-                                    <a href="https://goo.gl/maps/poebPHS6bGWGfmWL7" target="_blank"><button className="btn btn-primary w-50">Get Directions</button></a>
+                                <div className="h-auto m-auto mt-0" id="mapBtn" >
+                                    <div className="mapBtn-cont-close w-50">
+                                        <button className="map-btn w-100" onClick={toggleBHall}>Close</button>
+                                    </div>
+                                    <div className="mapBtn-cont-direction w-50 text-center">
+                                        <a className="map-btn w-100 text-dark " href="https://goo.gl/maps/poebPHS6bGWGfmWL7" target="_blank"><button className="map-btn w-100 ">Get Directions</button></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     )}
-                    <button className="col-12 col-md-4 card evacuation-center p-0" onClick={toggleCourt}>
+                    <button className="col-12 col-md-4 card p-0 evacuation-center" id="evacuation-center" onClick={toggleCourt}>
                         <div className="evac-content-container">
-                            <img src={court} className="card-img-top evac-icon" alt="Evacuation Center Icon" />
+                            <img src={court} class="card-img-top evac-icon" id="evac-icon" alt="Evacuation Center Icon" />
                         </div>
                         <div className="card-body evac-content-container">
                             <h5 className="card-title">Magalona Court</h5>
@@ -113,21 +103,23 @@ function UserEvacuation() {
                     {showCourt && (
                         <div className="popup-overlay">
                             <div className="popup-content w-100 h-100 d-flex flex-column justify-content-center align-content-center">
-                                <img
-                                    src={map2}
-                                    alt="Popup"
-                                    className="popup-image w-75 h-75 m-auto mb-0"
-                                />
-                                <div className="w-50 h-auto m-auto mt-0" >
-                                    <button className="btn btn-secondary w-50" onClick={toggleCourt}>Close</button>
-                                    <a href="https://goo.gl/maps/2q1h6wGWvMSZJ9Ct9" target="_blank"><button className="btn btn-primary w-50">Get Directions</button></a>
+                                <div className="popup-image image-1 h-75 m-auto mb-0">
+                                    <FaLocationDot className="text-danger loc-marker loc-marker-2" onClick={toggleBHallCont} />
+                                </div>
+                                <div className="h-auto m-auto mt-0" id="mapBtn" >
+                                    <div className="mapBtn-cont-close w-50">
+                                        <button className="map-btn w-100" onClick={toggleCourt}>Close</button>
+                                    </div>
+                                    <div className="mapBtn-cont-direction w-50 text-center">
+                                        <a className="map-btn w-100 text-dark " href="https://goo.gl/maps/2q1h6wGWvMSZJ9Ct9" target="_blank"><button className="map-btn w-100 ">Get Directions</button></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     )}
-                    <button className="col-12 col-md-4 card evacuation-center p-0" onClick={togglePlayground}>
+                    <button className="col-12 col-md-4 card p-0 evacuation-center" id="evacuation-center" onClick={togglePlayground}>
                         <div className="evac-content-container">
-                            <img src={playground} className="card-img-top evac-icon" alt="Evacuation Center Icon" />
+                            <img src={playground} class="card-img-top evac-icon" id="evac-icon" alt="Evacuation Center Icon" />
                         </div>
                         <div className="card-body evac-content-container">
                             <h5 className="card-title">Brgy. Playground</h5>
@@ -137,14 +129,16 @@ function UserEvacuation() {
                     {showPlayground && (
                         <div className="popup-overlay">
                             <div className="popup-content w-100 h-100 d-flex flex-column justify-content-center align-content-center">
-                                <img
-                                    src={map3}
-                                    alt="Popup"
-                                    className="popup-image w-75 h-75 m-auto mb-0"
-                                />
-                                <div className="w-50 h-auto m-auto mt-0" >
-                                    <button className="btn btn-secondary w-50" onClick={togglePlayground}>Close</button>
-                                    <a href="https://goo.gl/maps/erZZXYRf7JTRF4LQ6" target="_blank"><button className="btn btn-primary w-50">Get Directions</button></a>
+                                <div className="popup-image image-1 h-75 m-auto mb-0">
+                                    <FaLocationDot className="text-danger loc-marker loc-marker-3" onClick={toggleBHallCont} />
+                                </div>
+                                <div className="h-auto m-auto mt-0" id="mapBtn" >
+                                    <div className="mapBtn-cont-close w-50">
+                                        <button className="map-btn w-100" onClick={togglePlayground}>Close</button>
+                                    </div>
+                                    <div className="mapBtn-cont-direction w-50 text-center">
+                                        <a className="map-btn w-100 text-dark " href="https://goo.gl/maps/erZZXYRf7JTRF4LQ6" target="_blank"><button className="map-btn w-100 ">Get Directions</button></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +162,7 @@ function UserEvacuation() {
                     <h1>EMERGENCY PLAN</h1>
                 </div>
                 <div className="row emergency-section-content early-warning">
-                    <div class="col-12 card contingency-card">
+                    <div class="col-12 card" id="contingency-card">
                         <h3 class="card-header">CONTINGENCY PLAN</h3>
 
                         <div class="card-body bg-light pt-3 pb-3">
@@ -319,7 +313,6 @@ function UserEvacuation() {
                 </div>
 
             </section>
-
             <ScrollToTopButton />
             <Footer />
             <Bot />
