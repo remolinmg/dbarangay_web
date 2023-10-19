@@ -23,8 +23,8 @@ const Login = () => {
   const isValidPassword = (password) => passwordRegExp.test(password);
   // const isValidPassword = (password) => password.length >= 8;
 
-  const maxLoginAttempts = 3; // Define the maximum login attempts
-  const lockoutDuration = 1800000; // 30 minutes in milliseconds
+  const maxLoginAttempts = 5; // Define the maximum login attempts
+  const lockoutDuration = 300000; // 30 minutes in milliseconds
 
   useEffect(() => {
     // Check if the user is still locked out
@@ -122,8 +122,12 @@ const Login = () => {
         setCookie('access_token', result);
         window.localStorage.setItem('accountType',  response.data.type);
         navigate("/")
+        setEmailValid('');
+        setPasswordValid('');
+        setLoginAttempts(0);
       } else {
-        alert("Login Failed!")
+        setEmailValid('Wrong Credentials');
+        setPasswordValid('Invalid Password');
       }
     } catch (error) {
       
@@ -198,7 +202,7 @@ const Login = () => {
               </p>
               {isLockedOut && (
                 <div className="error-message">
-                  <i className="bi bi-exclamation-triangle"></i> Try again after 30 mins
+                  <i className="bi bi-exclamation-triangle"></i> Try again after 5 mins
                 </div>
               )}
 
