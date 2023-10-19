@@ -1,5 +1,5 @@
-import { Link, NavLink, Route } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { Link, NavLink, Navigate, useNavigate } from 'react-router-dom';
+import {  useRef, useState } from 'react';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
 import { AiOutlineDashboard } from 'react-icons/ai';
@@ -27,6 +27,7 @@ import { FaUserCircle } from "react-icons/fa";
 
 
 function Adminaccounts() {
+    const navigate = useNavigate();
     const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
 
     const handleSidebarCollapse = () => {
@@ -51,6 +52,13 @@ function Adminaccounts() {
         setSearchQuery(e.target.value);
         
     };
+    
+    const handleSignOut = () => {
+        document.cookie = 'access_token=; ';
+        localStorage.removeItem('jwtToken');
+        window.localStorage.clear();
+        navigate('/admin')
+      };
     
     return (
         <>
@@ -89,11 +97,11 @@ function Adminaccounts() {
                                         <hr />
                                         <div className="button-profile1">
 
-                                            <NavLink to="/admin" activeClassName="active">
-                                                <div href="#" className="profilebuttons">
+                                           
+                                                <div  className="profilebuttons" onClick={handleSignOut}>
                                                     <BiLogOut className="profileicons" /> Log out
                                                 </div>
-                                            </NavLink>
+                                   
                                         </div>
                                     </div>
                                 </div>

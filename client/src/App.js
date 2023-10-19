@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import React from 'react';
+import { useCookies } from "react-cookie";
 import './admin-components/assets/css/style.css';
 import Admin from "./admin-components/admin";
 import RegisterA from "./admin-components/register-admin";
@@ -42,12 +43,19 @@ import UserBusiness from "./user-components/user-business";
 import FeedbackAdmin from "./admin-components/feedback";
 import UserProfile from "./user-components/user-profile";
 import ScrollToTopButton from "./user-components/scrolltotop";
-
-
+import ProtectedRoute from "./utils/protectedRoutes";
+import AdminRoute from "./utils/adminRoutes";
+import SuperRoute from "./utils/superRoutes";
 
 import Sample from "./admin-components/sample"
 import Usersample from "./user-components/usersample";
+
+
 function App() {
+
+  const [cookies] = useCookies(['access_token']);
+  const isAuthenticated = !!cookies.access_token;
+
   return (
     <BrowserRouter>
       <div>
@@ -58,47 +66,54 @@ function App() {
         <Route path="usersample" element={<Usersample />} />
 
           <Route path="admin" element={<Admin />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="d-barangay-certificate" element={<Bceritificate />} />
-          <Route path="d-barangay-indigency" element={<Bindigency />} />
-          <Route path="d-barangay-installation" element={<Binstallation />} />
-          <Route path="d-barangay-construction" element={<BconstuctionAdmin />} />
-          <Route path="d-barangay-id" element={<Biddmin />} />
-          <Route path="announcement-admin" element={<AnnouncementAdmin />} />
-          <Route path="livelihood-admin" element={<LivelihoodAdmin />} />
-          <Route path="emergency-admin" element={<EmergencyAdmin />} />
-          <Route path="blotter-admin" element={<BlotterAdmin />} />
-          <Route path="residents-admin" element={<ResidentsAdmin />} />
-          <Route path="resident-inactiveadmin" element={<ResidentsInactiveAdmin/>} />
-          <Route path="b-permit-admin" element={<BpermitAdmin />} />
-          <Route path="b-officials-admin" element={<BofficialsAdmin />} />
-          <Route path="staff-logs-admin" element={<StafflogsAdmin />} />
-          <Route path="feedbacks-admin" element={<FeedbackAdmin />} />
-          <Route path="admin-profile" element={<AdminProfile />} />
-          <Route path="admin-accounts" element={<Adminaccounts />} />
-          <Route path="residents-accounts" element={<Residentsaccounts />} />
-          <Route path="complaints-admin" element={<Complaintsadmin />} />
-          <Route path="b-promotion-admin" element={<BpromotionAdmin />} />
-         
-
-
-
           <Route path="login" element={<Login />} />
           <Route path="registration" element={<Registration />} />
-          <Route path="/" element={<Homepage />} />
-          <Route path="stats" element={<Stats />} />
-          <Route path="brgy-official" element={<BrgyOfficial />} />
-          <Route path="community" element={<Community />} />
-          <Route path="mission-vision" element={<MissionVision />} />
-          <Route path="footer" element={<Footer />} />
-          <Route path="announcement" element={<Announcement />} />
-          <Route path="livelihood" element={<Livelihood />} />
-          <Route path="evacuation" element={<Evacuation />} />
-          <Route path="service" element={<UserService />} />
-          <Route path="business" element={<UserBusiness />} />
-          <Route path="userprofile" element={<UserProfile />} />
-          <Route path="scrollup" element={<ScrollToTopButton />} />
 
+          {/* SUPERADMIN */}
+          <Route  element={<SuperRoute/>}>
+          <Route path="admin-accounts" element={<Adminaccounts />} isAuthenticated={isAuthenticated}/>
+          <Route path="staff-logs-admin" element={<StafflogsAdmin />} isAuthenticated={isAuthenticated}/>
+          </Route>
+
+
+        {/* ADMIN */}
+          <Route  element={<AdminRoute/>}>
+          <Route path="dashboard" element={<Dashboard />} isAuthenticated={isAuthenticated}/>
+          <Route path="d-barangay-certificate" element={<Bceritificate />} isAuthenticated={isAuthenticated}/>
+          <Route path="d-barangay-indigency" element={<Bindigency />} isAuthenticated={isAuthenticated}/>
+          <Route path="d-barangay-installation" element={<Binstallation />} isAuthenticated={isAuthenticated}/>
+          <Route path="d-barangay-construction" element={<BconstuctionAdmin />} isAuthenticated={isAuthenticated}/>
+          <Route path="d-barangay-id" element={<Biddmin />} isAuthenticated={isAuthenticated}/>
+          <Route path="announcement-admin" element={<AnnouncementAdmin />} isAuthenticated={isAuthenticated}/>
+          <Route path="livelihood-admin" element={<LivelihoodAdmin />} isAuthenticated={isAuthenticated}/>
+          <Route path="emergency-admin" element={<EmergencyAdmin />} isAuthenticated={isAuthenticated}/>
+          <Route path="blotter-admin" element={<BlotterAdmin />} isAuthenticated={isAuthenticated}/>
+          <Route path="residents-admin" element={<ResidentsAdmin />} isAuthenticated={isAuthenticated}/>
+          <Route path="resident-inactiveadmin" element={<ResidentsInactiveAdmin/>} isAuthenticated={isAuthenticated}/>
+          <Route path="b-permit-admin" element={<BpermitAdmin />} isAuthenticated={isAuthenticated}/>
+          <Route path="b-officials-admin" element={<BofficialsAdmin />} isAuthenticated={isAuthenticated}/>
+          <Route path="feedbacks-admin" element={<FeedbackAdmin />} isAuthenticated={isAuthenticated}/>
+          <Route path="admin-profile" element={<AdminProfile />} isAuthenticated={isAuthenticated}/>
+          <Route path="residents-accounts" element={<Residentsaccounts />} isAuthenticated={isAuthenticated}/>
+          <Route path="complaints-admin" element={<Complaintsadmin />} isAuthenticated={isAuthenticated}/>
+          <Route path="b-promotion-admin" element={<BpromotionAdmin />} isAuthenticated={isAuthenticated}/>
+          </Route> 
+          {/* User */}
+          <Route  element={<ProtectedRoute/>}>
+          <Route path="/" element={<Homepage />} isAuthenticated={isAuthenticated}/>
+          <Route path="stats" element={<Stats />} isAuthenticated={isAuthenticated}/>
+          <Route path="brgy-official" element={<BrgyOfficial />} isAuthenticated={isAuthenticated}/>
+          <Route path="community" element={<Community/>} isAuthenticated={isAuthenticated}/>
+          <Route path="mission-vision" element={<MissionVision />} isAuthenticated={isAuthenticated}/>
+          <Route path="footer" element={<Footer />} isAuthenticated={isAuthenticated}/>
+          <Route path="announcement" element={<Announcement />} isAuthenticated={isAuthenticated}/>
+          <Route path="livelihood" element={<Livelihood />} isAuthenticated={isAuthenticated}/>
+          <Route path="evacuation" element={<Evacuation />} isAuthenticated={isAuthenticated}/>
+          <Route path="service" element={<UserService />} isAuthenticated={isAuthenticated}/>
+          <Route path="business" element={<UserBusiness />} isAuthenticated={isAuthenticated}/>
+          <Route path="userprofile" element={<UserProfile />} isAuthenticated={isAuthenticated}/>
+          <Route path="scrollup" element={<ScrollToTopButton />} isAuthenticated={isAuthenticated}/>
+          </Route>
 
         </Routes>
       </div>

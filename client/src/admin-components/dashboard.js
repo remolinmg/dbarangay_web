@@ -1,4 +1,4 @@
-import { Link, NavLink, Route } from 'react-router-dom';
+import { Link, NavLink, Route, useNavigate } from 'react-router-dom';
 import Chart from 'chart.js/auto';
 import { useEffect, useRef, useState } from 'react';
 import logo from '../admin-components/assets/img/brgy.png';
@@ -191,6 +191,15 @@ function Dashboard() {
         };
     }, []);
 
+    const navigate = useNavigate();  
+
+  const handleSignOut = () => {
+    document.cookie = 'access_token=; ';
+    localStorage.removeItem('jwtToken');
+    window.localStorage.clear();
+    navigate('/admin')
+  };
+
     return (
         <>
             <div className="topbarsection">
@@ -228,11 +237,10 @@ function Dashboard() {
                                         <hr />
                                         <div className="button-profile1">
 
-                                            <NavLink to="/admin" activeClassName="active">
-                                                <div href="#" className="profilebuttons">
+                                                <div onClick={handleSignOut} className="profilebuttons">
                                                     <BiLogOut className="profileicons" /> Log out
                                                 </div>
-                                            </NavLink>
+
                                         </div>
                                     </div>
                                 </div>

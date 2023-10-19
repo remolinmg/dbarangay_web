@@ -1,7 +1,7 @@
 import './assets/css/style.css';
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from "react";
-import { Outlet, Link, NavLink } from 'react-router-dom';
+import { Outlet, Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
 import { BiLogOut, BiCog } from "react-icons/bi";
@@ -222,6 +222,15 @@ function BlotterAdmin() {
     }
   };
 
+  const navigate = useNavigate();  
+
+  const handleSignOut = () => {
+    document.cookie = 'access_token=; ';
+    localStorage.removeItem('jwtToken');
+    window.localStorage.clear();
+    navigate('/admin')
+  };
+
   return (
     <>
       <div className="topbarsection">
@@ -259,11 +268,11 @@ function BlotterAdmin() {
                     <hr />
                     <div className="button-profile1">
 
-                      <NavLink to="/admin" activeClassName="active">
-                        <div href="#" className="profilebuttons">
+                     
+                        <div onClick={handleSignOut} className="profilebuttons">
                           <BiLogOut className="profileicons" /> Log out
                         </div>
-                      </NavLink>
+                     
                     </div>
                   </div>
                 </div>
@@ -465,7 +474,6 @@ function BlotterAdmin() {
                     <table class="table">
                       <thead>
                         <tr>
-                          <th scope="col">Blotter #</th>
                           <th scope="col">DATE</th>
                           <th scope="col">COMPLAINANT</th>
                           <th scope="col">DEFENDANT</th>
@@ -479,7 +487,6 @@ function BlotterAdmin() {
                       <tbody>
                         {getCurrentPageData().map((item) => (
                           <tr key={item._id}>
-                            <td>{item._id}</td>
                             <td>{item.date}</td>
                             <td>{item.complainant}</td>
                             <td>{item.defendant}</td>

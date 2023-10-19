@@ -1,5 +1,6 @@
 const User = require('../models/userModel'); // Import the User model
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
 
 //user signup
 exports.signup = async (req, res) => {
@@ -15,6 +16,8 @@ exports.signup = async (req, res) => {
     const newIncrement = (lastIncrement + 1).toString().padStart(2, '0');
     newCustomId = currentDate + newIncrement;
   }
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   const newCustomData = new User( {
     _id: newCustomId,
     firstName: firstName,
@@ -41,7 +44,7 @@ exports.signup = async (req, res) => {
     age:age,
     highestEducation,highestEducation,
     residenceClass,voterRegistration,
-    password: password,
+    password: hashedPassword,
     status:status,
     type:type
   });
@@ -62,14 +65,13 @@ exports.login = async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ email, password });
-
+    const user = await User.findOne({email});
     if (user) {
       if(user.status !== 'active'){
         res.status(400).json({message: 'user inactive'})
-      }else{
+      }else if (await bcrypt.compare(password, user.password)){
         res.status(201).json({
-          token: jwt.sign({id: user.id, email: user.email},'secret', {expiresIn: '1d'})
+          token: jwt.sign({id: user.id, email: user.email},'y7y9u92348y5789yye789yq234785y78q34y78oghio', {expiresIn: '1d'}),type: user.type
         })
       }
     } else {

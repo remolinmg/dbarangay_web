@@ -10,9 +10,9 @@ exports.createIndigency = async (req, res) => {
     });
 
     if (check) {
-      res.json('exist');
+      res.status(400).json('exist');
     } else {
-      res.json('notexist');
+      res.status(201).json('notexist');
       await userIndigency.create({
         residentName,
         address,

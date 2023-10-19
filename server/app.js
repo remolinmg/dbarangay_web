@@ -31,6 +31,7 @@ const livelihoodRoutes =  require('./routes/livelihoodRoutes');
 const feedbackRoutes =  require('./routes/feedbackRoutes');
 const blotterRoutes = require('./routes/blotterRoutes');
 const complaintRoutes = require('./routes/complaintRoutes');
+const {requireAuth} = require('./middleware/authMiddleware')
 
 
 /********USER*******/
@@ -114,7 +115,6 @@ app.use('/delete/livelihood',livelihoodRoutes);//delete livelihood
 app.use('/feedback',feedbackRoutes); //add feedback
 app.use('/get/feedback',feedbackRoutes); //get feedback
 app.use('/delete/feedback',feedbackRoutes); //delete feedback
-
 
 
 app.listen(8000,()=>{

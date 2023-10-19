@@ -4,8 +4,8 @@ import '../user-components/assets/css/user-style.css';
 import './assets/css/style.css';
 import Axios from "axios";
 import { BsCamera } from "react-icons/bs";
-import { Link, NavLink, Route } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { Link, NavLink, useNavigate} from 'react-router-dom';
+import { useRef, useState } from 'react';
 import { BiLogOut, BiCog } from "react-icons/bi";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 
@@ -26,6 +26,14 @@ function Admindetails() {
   const [ProfilesubmenuVisible, setProfileSubmenuVisible] = useState(false);
   const toggleProfileSubmenu = () => {
     setProfileSubmenuVisible(!ProfilesubmenuVisible);
+  };
+  const navigate = useNavigate();  
+
+const handleSignOut = () => {
+    document.cookie = 'access_token=; ';
+    localStorage.removeItem('jwtToken');
+    window.localStorage.clear();
+    navigate('/admin')
   };
 
   return (
@@ -65,11 +73,11 @@ function Admindetails() {
                     <hr />
                     <div className="button-profile1">
 
-                      <NavLink to="/admin" activeClassName="active">
-                        <div href="#" className="profilebuttons">
+                      
+                        <div className="profilebuttons" onClick={handleSignOut}>
                           <BiLogOut className="profileicons" /> Log out
                         </div>
-                      </NavLink>
+                   
                     </div>
                   </div>
                 </div>

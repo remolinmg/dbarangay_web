@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import './assets/css/style.css';
 import axios from 'axios';
-import { Outlet, Link, NavLink } from 'react-router-dom';
+import { Outlet, Link, NavLink, useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
@@ -211,6 +211,15 @@ function LivelihoodAdmin() {
     }
   };
 
+  const navigate = useNavigate();  
+
+  const handleSignOut = () => {
+    document.cookie = 'access_token=; ';
+    localStorage.removeItem('jwtToken');
+    window.localStorage.clear();
+    navigate('/admin')
+  };
+
   return (
     <>
       <div className="topbarsection">
@@ -248,11 +257,10 @@ function LivelihoodAdmin() {
                     <hr />
                     <div className="button-profile1">
 
-                      <NavLink to="/admin" activeClassName="active">
-                        <div href="#" className="profilebuttons">
+                    
+                        <div onClick={handleSignOut} className="profilebuttons">
                           <BiLogOut className="profileicons" /> Log out
                         </div>
-                      </NavLink>
                     </div>
                   </div>
                 </div>

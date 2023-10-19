@@ -18,10 +18,10 @@ module.exports = {
   try{
     const check=await userBarangayID.findOne({$and:[{residentName:residentName},{pickUpDate:pickUpDate}]})
     if(check){
-      res.json("exist")
+      res.status(400).json("exist")
     }
     else{
-      res.json("notexist")
+      res.status(201).json("notexist")
       await userBarangayID.insertMany([data])
     }
   }

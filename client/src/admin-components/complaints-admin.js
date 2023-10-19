@@ -1,7 +1,7 @@
 import './assets/css/style.css';
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from "react";
-import { Outlet, Link, NavLink } from 'react-router-dom';
+import { Outlet, Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
 import { BiLogOut, BiCog } from "react-icons/bi";
@@ -222,6 +222,15 @@ function Complaintsadmin() {
     }
   };
 
+  const navigate = useNavigate();  
+
+  const handleSignOut = () => {
+    document.cookie = 'access_token=; ';
+    localStorage.removeItem('jwtToken');
+    window.localStorage.clear();
+    navigate('/admin')
+  };
+
   return (
     <>
       <div className="topbarsection">
@@ -259,11 +268,11 @@ function Complaintsadmin() {
                     <hr />
                     <div className="button-profile1">
 
-                      <NavLink to="/admin" activeClassName="active">
-                        <div href="#" className="profilebuttons">
+                     
+                        <div onClick={handleSignOut} className="profilebuttons">
                           <BiLogOut className="profileicons" /> Log out
                         </div>
-                      </NavLink>
+                      
                     </div>
                   </div>
                 </div>
@@ -388,7 +397,6 @@ function Complaintsadmin() {
                   placeholder="Search"
                   aria-label="Enter search keyword"
                   name="query"
-                  value={searchQuery}
                   onChange={handleSearchChange}
                 />
                 <button className="btn btn-outline-secondary" type="button">
@@ -407,12 +415,18 @@ function Complaintsadmin() {
             </div>
             <div className="col-4">
               <div className="dropdown-tablenumbers">
-                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                </select>
+              <select
+                  type="text"
+                  className="form-control"
+                  placeholder="Search"
+                  aria-label="Enter search keyword"
+                  name="query"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                >
+                  <option value="pending">Pending</option>
+                  <option value="processed">Processed</option>
+              </select>
               </div>
             </div>
           </div>
@@ -460,7 +474,6 @@ function Complaintsadmin() {
                     <table class="table">
                       <thead>
                         <tr>
-                          <th scope="col">Complaints #</th>
                           <th scope="col">DATE</th>
                           <th scope="col">COMPLAINANT</th>
                           <th scope="col">DEFENDANT</th>
@@ -474,7 +487,6 @@ function Complaintsadmin() {
                       <tbody>
                         {getCurrentPageData().map((item) => (
                           <tr key={item._id}>
-                            <td>{item._id}</td>
                             <td>{item.date}</td>
                             <td>{item.complainant}</td>
                             <td>{item.defendant}</td>
