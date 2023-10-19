@@ -15,10 +15,10 @@ exports.createCertificate = async (req, res) => {
   try{
     const check=await userCertificate.findOne({$and:[{residentName:residentName},{reasonOfRequest:reasonOfRequest},{pickUpDate:pickUpDate}]})
     if(check){
-      res.json("exist")
+      res.status(400).json("exist")
     }
     else{
-      res.json("notexist")
+      res.status(201).json("notexist")
       await userCertificate.insertMany([data])
     }
   }

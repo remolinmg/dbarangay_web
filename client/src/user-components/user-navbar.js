@@ -4,10 +4,9 @@ import { FaUserCircle } from "react-icons/fa";
 import logo from '../user-components/assets/img/MANDALUYONG-Logo.png';
 import brgy from '../user-components/assets/img/brgy.png';
 import Bot from './faqbot.js';
-import { Link, NavLink, Route } from 'react-router-dom';
+import { Link, NavLink, Route, useNavigate } from 'react-router-dom';
 import ScrollToTopButton from "./scrolltotop";
 import { BiChevronDown } from 'react-icons/bi';
-
 
 function UserNav() {
   const [submenuVisible, setSubmenuVisible] = useState(false);
@@ -17,7 +16,6 @@ function UserNav() {
   const [navbarVisible, setNavbarVisible] = useState(true);
   const [navbarColored, setNavbarColored] = useState(false);
   const [click, setClick] = useState(false)
-
   const handleScroll = () => {
     const currentPosition = window.pageYOffset;
     setScrollPosition(currentPosition);
@@ -49,22 +47,6 @@ function UserNav() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  // let homeRef = useRef();
-
-  // useEffect(() => {
-  //   let handler = (e) => {
-  //     if (!homeRef.current.contains(e.target)) {
-  //       setHomeSubmenuVisible(false);
-  //     }
-  //   };
-
-  //   document.addEventListener("mousedown", handler);
-
-  //   return () => {
-  //     document.removeEventListener("mousedown", handler);
-  //   }
-  // });
 
   let announceRef = useRef();
 
@@ -111,6 +93,14 @@ function UserNav() {
   } else {
     boxClassSubMenu.push('');
   }
+
+  const navigate = useNavigate();
+  const handleSignOut = () => {
+    document.cookie = 'access_token=; ';
+    localStorage.removeItem('jwtToken');
+    window.localStorage.clear();
+    navigate('/login')
+  };
   
   return (
     <>
@@ -160,7 +150,7 @@ function UserNav() {
                       </NavLink>
                     </li>
                     <li>
-                      <a href="/login" className="button">Sign Out</a>
+                      <a href="/login" className="button" onClick={handleSignOut}>Sign Out</a>
                     </li>
                   </ul>
                 )}

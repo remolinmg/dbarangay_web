@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import './assets/css/style.css';
-import { Outlet, Link, NavLink } from 'react-router-dom';
+import { useNavigate, Link, NavLink } from 'react-router-dom';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown, BiLogOut, BiCog } from 'react-icons/bi';
 import { AiOutlineDashboard } from 'react-icons/ai';
@@ -41,6 +41,14 @@ function EmergencyAdmin() {
     const toggleProfileSubmenu = () => {
         setProfileSubmenuVisible(!ProfilesubmenuVisible);
     };
+    const navigate = useNavigate();  
+
+  const handleSignOut = () => {
+    document.cookie = 'access_token=; ';
+    localStorage.removeItem('jwtToken');
+    window.localStorage.clear();
+    navigate('/admin')
+  };
     return (
         <>
             <div className="topbarsection">
@@ -78,11 +86,11 @@ function EmergencyAdmin() {
                                         <hr />
                                         <div className="button-profile1">
 
-                                            <NavLink to="/admin" activeClassName="active">
-                                                <div href="#" className="profilebuttons">
+                                            
+                                                <div onClick={handleSignOut} className="profilebuttons">
                                                     <BiLogOut className="profileicons" /> Log out
                                                 </div>
-                                            </NavLink>
+                                        
                                         </div>
                                     </div>
                                 </div>

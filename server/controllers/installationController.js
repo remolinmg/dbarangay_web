@@ -27,10 +27,10 @@ const createInstallation = async (req, res) => {
     });
 
     if (check) {
-      res.json('exist');
+      res.status(400).json('exist');
     } else {
       await userInstallation.create(data);
-      res.json('notexist');
+      res.status(201).json('notexist');
     }
   } catch (error) {
     console.error(error);

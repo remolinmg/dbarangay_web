@@ -1,4 +1,4 @@
-import { Link, NavLink, Route } from 'react-router-dom';
+import { Link, NavLink, useNavigate} from 'react-router-dom';
 import React, { useState, useEffect, useRef } from "react";
 import './assets/css/style.css';
 import Axios from 'axios';
@@ -258,6 +258,15 @@ function Biddmin() {
             // Handle error, show an error message to the user
         }
     };
+    const navigate = useNavigate();  
+
+  const handleSignOut = () => {
+    document.cookie = 'access_token=; ';
+    localStorage.removeItem('jwtToken');
+    window.localStorage.clear();
+    navigate('/admin')
+  };
+
     return (
         <>
             <div className="topbarsection">
@@ -295,11 +304,11 @@ function Biddmin() {
                                         <hr />
                                         <div className="button-profile1">
 
-                                            <NavLink to="/admin" activeClassName="active">
-                                                <div href="#" className="profilebuttons">
+                                          
+                                                <div onClick={handleSignOut} className="profilebuttons">
                                                     <BiLogOut className="profileicons" /> Log out
                                                 </div>
-                                            </NavLink>
+                                           
                                         </div>
                                     </div>
                                 </div>

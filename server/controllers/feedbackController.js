@@ -11,10 +11,10 @@ async function createFeedback(req, res) {
   try {
     const check = await Feedback.findOne({ $and: [{ date: date }, { feedback: feedback }] });
     if (check) {
-      res.json('exist');
+      res.status(400).json('exist');
     } else {
       await Feedback.create(data);
-      res.json('notexist');
+      res.status(201).json('notexist');
     }
   } catch (error) {
     console.error(error);

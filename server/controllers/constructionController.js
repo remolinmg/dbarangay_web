@@ -15,10 +15,10 @@ async function createConstruction(req, res) {
   try{
     const check=await userConstruction.findOne({$and:[{residentName:residentName},{reasonOfRequest:reasonOfRequest},{pickUpDate:pickUpDate}]})
     if(check){
-      res.json("exist")
+      res.status(400).json("exist")
     }
     else{
-      res.json("notexist")
+      res.status(201).json("notexist")
       await userConstruction.insertMany([data])
     }
   }

@@ -2,32 +2,34 @@ import React, { useState } from 'react';
 import './assets/css/style.css';
 import axios from "axios";
 import {useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 
 const Admin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [type,setType] = useState('admin');
   const navigate = useNavigate();
+  const [, setCookie] = useCookies(['access_token']);
+
   async function login(e){
     e.preventDefault();
 
     try{
         const response = await axios.post("http://localhost:8000/adminlogin",{
-            email,password,type
+            email,password
         })
-            if(response.status === 201){
-              navigate("/dashboard")
+        if (response.status===201) {
+          const result = response.data.token
+          setCookie('access_token', result);
+          window.localStorage.setItem('accountType',  response.data.type);
+          navigate("/dashboard")
             }
             else{
                 alert("Login Failed!")
             }
     }
     catch(e){
-        console.log(e);
-
     }
-
 }
 
   return (
