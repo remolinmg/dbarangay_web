@@ -22,7 +22,6 @@ import Adminaccounts from "./admin-components/admin-accounts";
 
 import BconstuctionAdmin from "./admin-components/d-barangay-construction"
 import Biddmin from "./admin-components/d-barangay-id"
-import ResidentsInactiveAdmin from "./admin-components/resident-inactive"
 import Residentsaccounts from "./admin-components/residents-accounts";
 import Complaintsadmin from "./admin-components/complaints-admin";
 
@@ -89,7 +88,6 @@ function App() {
           <Route path="emergency-admin" element={<EmergencyAdmin />} isAuthenticated={isAuthenticated}/>
           <Route path="blotter-admin" element={<BlotterAdmin />} isAuthenticated={isAuthenticated}/>
           <Route path="residents-admin" element={<ResidentsAdmin />} isAuthenticated={isAuthenticated}/>
-          <Route path="resident-inactiveadmin" element={<ResidentsInactiveAdmin/>} isAuthenticated={isAuthenticated}/>
           <Route path="b-permit-admin" element={<BpermitAdmin />} isAuthenticated={isAuthenticated}/>
           <Route path="b-officials-admin" element={<BofficialsAdmin />} isAuthenticated={isAuthenticated}/>
           <Route path="feedbacks-admin" element={<FeedbackAdmin />} isAuthenticated={isAuthenticated}/>

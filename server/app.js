@@ -11,11 +11,13 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 const app = express()
 const multer = require('multer');
+const cookieParser = require('cookie-parser');
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const barangayCertificateRoutes =  require('./routes/barangayCertificateRoutes');
@@ -31,7 +33,6 @@ const livelihoodRoutes =  require('./routes/livelihoodRoutes');
 const feedbackRoutes =  require('./routes/feedbackRoutes');
 const blotterRoutes = require('./routes/blotterRoutes');
 const complaintRoutes = require('./routes/complaintRoutes');
-const {requireAuth} = require('./middleware/authMiddleware')
 
 
 /********USER*******/
