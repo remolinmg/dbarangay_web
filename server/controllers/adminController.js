@@ -29,3 +29,15 @@ exports.adminLogin = async (req, res) => {
     res.status(400).json({message:'Login Error'})
   }
 };
+
+
+exports.getUser = async (req, res) => {
+  try {
+    const accountData = localStorage.getItem('account');
+    const data = await User.findOne({accountData});
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};

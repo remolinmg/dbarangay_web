@@ -84,4 +84,26 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.getUser = async (req, res) => {
+  try {
+    const data = await User.find();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+exports.getUserData = async (req, res) => {
+  try {
+    const accountData = req.params.id;
+    const data = await User.find({_id:accountData});
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
 

@@ -7,6 +7,7 @@ import Bot from './faqbot.js';
 import { Link, NavLink, Route, useNavigate } from 'react-router-dom';
 import ScrollToTopButton from "./scrolltotop";
 import { BiChevronDown } from 'react-icons/bi';
+import axios from 'axios';
 
 function UserNav() {
   const [submenuVisible, setSubmenuVisible] = useState(false);
@@ -16,6 +17,7 @@ function UserNav() {
   const [navbarVisible, setNavbarVisible] = useState(true);
   const [navbarColored, setNavbarColored] = useState(false);
   const [click, setClick] = useState(false)
+  
   const handleScroll = () => {
     const currentPosition = window.pageYOffset;
     setScrollPosition(currentPosition);
@@ -142,7 +144,7 @@ function UserNav() {
                       <FaUserCircle className="profile-icon" />
                     </li>
                     <li>
-                      <h5>CLARISE ANNELY</h5>
+                      <h5>Name here</h5>
                     </li>
                     <li>
                       <NavLink className="link" to="/UserProfile" activeClassName="active">
