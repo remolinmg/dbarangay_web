@@ -84,7 +84,14 @@ function BclearanceAdmin() {
     }
   };
 
- 
+
+
+  // Event handler for dropdown change ----------------------------------------
+  const handleRowCountChange = (e) => {
+    const selectedRowCount = parseInt(e.target.value);
+    setRowCount(selectedRowCount);
+    setCurrentPage(1); // Reset current page to 1 when row count changes
+  };
 
   // Event handler for search input change -------------------------------------
   const handleSearchChange = (e) => {
@@ -425,7 +432,7 @@ function BclearanceAdmin() {
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
-            <div className="col-4">
+            <div className="col-3">
               <div className="input-group">
                 <input
                   type="text"
@@ -440,7 +447,7 @@ function BclearanceAdmin() {
                 </button>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-3">
               <div className="tabsz dropdown-center">
                 <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Services Category</button>
                 <ul class="dropdown-menu dropdown-topcategory">
@@ -457,7 +464,7 @@ function BclearanceAdmin() {
                 </ul>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-3">
               <div className="dropdown-tablenumbers">
               <select
                   type="text"
@@ -473,6 +480,16 @@ function BclearanceAdmin() {
                   <option value="processed">Processed</option>
                   <option value="declined">Declined</option>
               </select>
+              </div>
+            </div>
+            <div className="col-3">
+              <div className="dropdown-tablenumbers">
+                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
               </div>
             </div>
           </div>

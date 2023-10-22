@@ -559,89 +559,98 @@ function UserService() {
       <div className="service container-fluid component__space" id="Services">
         <div className="heading"><h1 className="heading">OFFERED SERVICES </h1> </div>
         <div className="container">
-          <div className="row">
-            {/* ------------------- BARANGAY CLEARANCE --------------------------- */}
-            <div className=" col-4 col__3" onClick={() => handleServiceClick('barangayClearance')}>
-              <div className="service__box pointer">
-                <div className="icon">
-                  <MdOutlineFactCheck size={52} />
-                </div>
-                <div className="service__meta">
-                  <h1 className="service__text">BARANGAY CERTIFICATE </h1>
-                  <p className="p service__text p__color">
-                    A document to certify the residency and good conduct of an individual within the barangay.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* ------------------- BUSINESS PERMIT --------------------------- */}
-            <div className="col-4 col__3" onClick={() => handleServiceClick('businessPermit')}>
-              <div className="service__box pointer">
-                <div className="icon">
-                  <MdOutlineAddBusiness size={52} />
-                </div>
-                <div className="service__meta">
-                  <h1 className="service__text">BUSINESS CLEARANCE</h1>
-                  <p className="p service__text p__color">
-                    An official document or license that grants permission to individuals or organizations to conduct business within a jurisdiction.
-                  </p>
+          <div class="row">
+            {/* ------------------- BARANGAY CERT --------------------------- */}
+            
+              <div className=" col-4 col__3" onClick={() => handleServiceClick('barangayClearance')}>
+                <div className="service__box pointer">
+                  <div className="icon">
+                    <MdOutlineFactCheck size={52} />
+                  </div>
+                  <div className="service__meta">
+                    <h1 className="service__text">BARANGAY CERTIFICATE </h1>
+                    <p className="p service__text p__color">
+                      A document to certify the residency and good conduct of an individual within the barangay.</p>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* ------------------- BARANGAY ID --------------------------- */}
-            <div className="col-4 col__3" onClick={() => handleServiceClick('barangayID')}>
-              <div className="service__box pointer">
-                <div className="icon">
-                  <HiOutlineIdentification size={52} />
-                </div>
-                <div className="service__meta">
-                  <h1 className="service__text">BARANGAY ID</h1>
-                  <p className="p service__text p__color">
-                    A government-issued identification card that serves as proof of residence and provides access to local barangay services.</p>
+            
+            {/* ------------------- BUSINESS CLEARANCE --------------------------- */}
+            
+              <div className="service-right col-4 col__3" onClick={() => handleServiceClick('businessPermit')}>
+                <div className="service__box pointer">
+                  <div className="icon">
+                    <MdOutlineAddBusiness size={52} />
+                  </div>
+                  <div className="service__meta">
+                    <h1 className="service__text">BUSINESS CLEARANCE</h1>
+                    <p className="p service__text p__color">
+                      An official document or license that grants permission to individuals or organizations to conduct business within a jurisdiction.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
           </div>
+            
+            {/* ------------------- BARANGAY ID --------------------------- */}
+          <div class="row">
+              <div className="col-4 col__3" onClick={() => handleServiceClick('barangayID')}>
+                <div className="service__box pointer">
+                  <div className="icon">
+                    <HiOutlineIdentification size={52} />
+                  </div>
+                  <div className="service__meta">
+                    <h1 className="service__text">BARANGAY ID</h1>
+                    <p className="p service__text p__color">
+                      A government-issued identification card that serves as proof of residence and provides access to local barangay services.</p>
+                  </div>
+                </div>
+              </div>
+
           {/* --------------------------------------------------- 2nd ROW ----------------------------------------------------  */}
-          <div className="row">
+          
             {/* ---------------------- INSTALLATION PERMIT  --------------------------- */}
-            <div className="col-4 col__3" onClick={() => handleServiceClick('installation')}>
-              <div className="service__box pointer">
-                <div className="icon">
-                  <MdOutlineInstallDesktop size={32} />
-                </div>
-                <div className="service__meta">
-                  <h1 className="service__text">INSTALLATION PERMIT</h1>
-                  <p className="p service__text p__color">
-                    A document required for obtaining legal permission to install or make changes to certain structures, equipment, or facilities within the jurisdiction of a Barangay.</p>
+            
+              <div className="service-right col-4 col__3" onClick={() => handleServiceClick('installation')}>
+                <div className="service__box pointer">
+                  <div className="icon">
+                    <MdOutlineInstallDesktop size={32} />
+                  </div>
+                  <div className="service__meta">
+                    <h1 className="service__text">INSTALLATION PERMIT</h1>
+                    <p className="p service__text p__color">
+                      A document required for obtaining legal permission to install or make changes to certain structures, equipment, or facilities within the jurisdiction of a Barangay.</p>
+                  </div>
                 </div>
               </div>
-            </div>
+          </div> 
             {/* ---------------------- CONSTRUCTION PERMIT  --------------------------- */}
-            <div className="col-4 col__3" onClick={() => handleServiceClick('constructionPermit')}>
-              <div className="service__box pointer">
-                <div className="icon">
-                  <MdConstruction size={32} />
-                </div>
-                <div className="service__meta">
-                  <h1 className="service__text">CONSTRUCTION PERMIT</h1>
-                  <p className="p service__text p__color">
-                    A government-issued authorization allowing individuals or organizations to legally undertake construction activities within the Barangay.</p></div>                            </div>
-            </div>
+          <div class="row">
+              <div className="col-4 col__3" onClick={() => handleServiceClick('constructionPermit')}>
+                <div className="service__box pointer">
+                  <div className="icon">
+                    <MdConstruction size={32} />
+                  </div>
+                  <div className="service__meta">
+                    <h1 className="service__text">CONSTRUCTION PERMIT</h1>
+                    <p className="p service__text p__color">
+                      A government-issued authorization allowing individuals or organizations to legally undertake construction activities within the Barangay.</p></div>                            </div>
+              </div>
+            
             {/* ----------------------- BRGY INDIGENCY FORM ---------------------------- */}
-            <div className=" col-4 col__3" onClick={() => handleServiceClick('barangayIndigency')}>
-              <div className="service__box pointer">
-                <div className="icon">
-                  <MdOutlineFactCheck size={52} />
-                </div>
-                <div className="service__meta">
-                  <h1 className="service__text">BARANGAY INDIGENCY </h1>
-                  <p className="p service__text p__color">
-                    A document issued to less fortunate resident who desires to avail assistance such as Scholarship, Medical Services, and the likes.</p>
+            
+              <div className="service-right col-4 col__3" onClick={() => handleServiceClick('barangayIndigency')}>
+                <div className="service__box pointer">
+                  <div className="icon">
+                    <MdOutlineFactCheck size={52} />
+                  </div>
+                  <div className="service__meta">
+                    <h1 className="service__text">BARANGAY INDIGENCY </h1>
+                    <p className="p service__text p__color">
+                      A document issued to less fortunate resident who desires to avail assistance such as Scholarship, Medical Services, and the likes.</p>
+                  </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
         {/* --------------------------------------------------------- barangayClearance forms  --------------------------------------------------------- */}

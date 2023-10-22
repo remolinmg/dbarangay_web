@@ -25,81 +25,83 @@ const BrgyOfficial = () => {
       </p>
 
       <div className="pt-5">
-        <div className="text-center">
+        <div class="official-lists" className="text-center">
           <img className="rounded-circle official-list" src={Official1} />
-          <h4>Hon. Federico Y. Ogbac</h4>
-          <p>Punong Barangay</p>
+          <h4 class="official-name">Hon. Federico Y. Ogbac</h4>
+          <p class="official-title">Punong Barangay</p>
         </div>
       </div>
 
       <div className="d-flex justify-content-evenly">
+        <div class="official-group">
+          <div class="official-lists" className="text-center">
+            <img className="rounded-circle official-list" src={Official2} />
+            <h4 class="official-name">Hon. Jeffrey L. Angeles</h4>
+            <p class="official-title">Kagawad</p>
+          </div>
 
-        <div className="text-center">
-          <img className="rounded-circle official-list" src={Official2} />
-          <h4>Hon. Jeffrey L. Angeles</h4>
-          <p>Kagawad</p>
+          <div class="official-lists" className="text-center">
+            <img className="rounded-circle official-list" src={Official3} />
+            <h4 class="official-name">Hon. Zenaida R. Candelaria</h4>
+            <p class="official-title">Kagawad</p>
+          </div>
         </div>
+        <div class="official-group">
+          <div class="official-lists" className="text-center">
+            <img className="rounded-circle official-list" src={Official4} />
+            <h4 class="official-name">Hon. Joselito R. Eleazar</h4>
+            <p class="official-title">Kagawad</p>
+          </div>
 
-        <div className="text-center">
-          <img className="rounded-circle official-list" src={Official3} />
-          <h4>Hon. Zenaida R. Candelaria</h4>
-          <p>Kagawad</p>
+          <div class="official-lists" className="text-center">
+            <img className="rounded-circle official-list" src={Official5} />
+            <h4 class="official-name">Hon. Arvin R. Arcangel</h4>
+            <p class="official-title">Kagawad</p>
+          </div>
         </div>
-
-        <div className="text-center">
-          <img className="rounded-circle official-list" src={Official4} />
-          <h4>Hon. Joselito R. Eleazar</h4>
-          <p>Kagawad</p>
-        </div>
-
-        <div className="text-center">
-          <img className="rounded-circle official-list" src={Official5} />
-          <h4>Hon. Arvin R. Arcangel</h4>
-          <p>Kagawad</p>
-        </div>
-
       </div>
 
       <div className="d-flex justify-content-evenly">
-
-        <div className="text-center">
+      <div class="official-group">
+        <div class="official-lists" className="text-center">
           <img className="rounded-circle official-list" src={Official6} />
-          <h4>Hon. Jerry C. Buenaventura</h4>
-          <p>Kagawad</p>
+          <h4 class="official-name">Hon. Jerry C. Buenaventura</h4>
+          <p class="official-title">Kagawad</p>
         </div>
 
-        <div className="text-center">
+        <div class="official-lists" className="text-center">
           <img className="rounded-circle official-list" src={Official7} />
-          <h4>Hon. Susana S. Lopez</h4>
-          <p>Kagawad</p>
+          <h4 class="official-name">Hon. Susana S. Lopez</h4>
+          <p class="official-title">Kagawad</p>
         </div>
-
-        <div className="text-center">
+        </div>
+      <div class="official-group">
+        <div class="official-lists" className="text-center">
           <img className="rounded-circle official-list" src={Official8} />
-          <h4>Hon. Mark Joseph D. Quieta</h4>
-          <p>Kagawad</p>
+          <h4 class="official-name">Hon. Mark Joseph D. Quieta</h4>
+          <p class="official-title">Kagawad</p>
         </div>
 
-        <div className="text-center">
+        <div class="official-lists" className="text-center">
           <img className="rounded-circle official-list" src={Official9} />
-          <h4>Hon. Ellice B. Ignacio</h4>
-          <p>SK Chairwoman</p>
+          <h4 class="official-name">Hon. Ellice B. Ignacio</h4>
+          <p class="official-title">SK Chairwoman</p>
         </div>
-
+      </div>
       </div>
 
       <div className="d-flex justify-content-evenly">
 
-        <div className="text-center">
+        <div class="official-lists" className="text-center">
           <img className="rounded-circle official-list" src={Official10} />
-          <h4>Dyan Grace L. Cortes</h4>
-          <p>Barangay Secretary</p>
+          <h4 class="official-name">Dyan Grace L. Cortes</h4>
+          <p class="official-title">Barangay Secretary</p>
         </div>
 
-        <div className="text-center">
+        <div class="official-lists" className="text-center">
           <img className="rounded-circle official-list" src={Official11} />
-          <h4>Allan Roy C. Agustin</h4>
-          <p>Barangay Treasurer</p>
+          <h4 class="official-name">Allan Roy C. Agustin</h4>
+          <p class="official-title">Barangay Treasurer</p>
         </div>
 
       </div>

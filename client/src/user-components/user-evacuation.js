@@ -206,8 +206,8 @@ function UserEvacuation() {
 
                         </div>
                     </div>
-
-                    <h1 className="mt-5 mb-5 text-center">EARLY WARNING SYSTEM</h1>
+                
+                    <h1 className="warning-title mt-5 mb-5 text-center">EARLY WARNING SYSTEM</h1>
 
                     <table class="table ps-5 pe-5">
                         <thead>
@@ -310,7 +310,8 @@ function UserEvacuation() {
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                
+            </div>
 
             </section>
             <ScrollToTopButton />

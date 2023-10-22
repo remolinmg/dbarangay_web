@@ -93,10 +93,10 @@ const Homepage = () => {
             <div class="carousel-item active w-100">
               <div className="d-flex flex-row justify-content-evenly align-self-center">
                 <div className="d-flex flex-column align-self-center justify-content-center">
-                  <h1>MAP</h1>
-                  <p>If you are wondering about the location of the barangay.</p>
+                  <h1 class="carousel-title" >MAP</h1>
+                  <p class="carousel-desc">If you are wondering about the location of the barangay.</p>
                 </div>
-                <div>
+                <div class="map1">
                   <img src={Map1} class="d-block w-100" alt="..." style={{ height: "200px", width: "200px" }} />
                 </div>
               </div>
@@ -104,21 +104,21 @@ const Homepage = () => {
             <div class="carousel-item align-self-center">
               <div className="d-flex flex-row justify-content-evenly align-self-center">
                 <div className="d-flex flex-column align-self-center justify-content-center">
-                  <h1>MAP</h1>
-                  <p>If you are wondering about the location of the barangay.</p>
+                  <h1 class="carousel-title">MAP</h1>
+                  <p class="carousel-desc">If you are wondering about the location of the barangay.</p>
                 </div>
-                <div>
+                <div class="map2">
                   <img src={Map2} class="d-block w-100" alt="..." style={{ height: "200px", width: "200px" }} />
                 </div>
               </div>
             </div>
             <div class="carousel-item">
-              <div className="d-flex flex-row justify-content-evenly">
+              <div class="carousel-info" className="d-flex flex-row justify-content-evenly">
                 <Stats />
               </div>
             </div>
             <div class="carousel-item">
-              <div className="d-flex flex-row justify-content-evenly">
+              <div class="carousel-info"  className="d-flex flex-row justify-content-evenly">
                 <Community />
               </div>
             </div>

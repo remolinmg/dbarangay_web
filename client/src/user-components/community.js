@@ -19,9 +19,9 @@ const OurCommunity = () => {
   };
 
   return (
-    <div className="container-fluid overflow-hidden" style={containerStyle}>
-      <h2 style={headingStyle}>OUR COMMUNITY</h2>
-        <p>
+    <div id="comm-main" className="container-fluid overflow-hidden" style={containerStyle}>
+      <h2 class="comm-title" style={headingStyle}>OUR COMMUNITY</h2>
+        <p class="comm-info">
           The barangay has power and authority over its domain. The improvement of the barangay rests on the barangay officials. The barangay chairman, the barangay council, and the local businessmen forge the prosperity of the barangay. Not the president of the Philippines, senate, nor congress. Not the governor of the province, not the mayor nor council of the municipality or city. Poor barangays stay poor because of weak and/or ignorant (uninformed) barangay leaders.
         </p>
     </div>
