@@ -332,7 +332,7 @@
 
 /* SERVICE SECTION */
 .service {
-  padding-top: 100px;
+  padding-top: 120px;
   padding-bottom: 50px;
   background-Repeat: 'no-repeat';
   background-size: cover;
@@ -381,9 +381,12 @@ p.heading.p__color {
 
 
 .service__box {
-  margin-top: 0px;
+  margin-top: 20px;
+  margin-left: 250px;
   border-radius: 10px;
-  width: 100%;
+  width: 500px;
+  height: 250px;
+  color: #fff;
   background-color: #5b8fff;
   padding: 25px;
   transition: .4s ease;
@@ -400,6 +403,10 @@ p.heading.p__color {
 
 .service__box:hover p.service__text .p__color {
   color: #fff !important;
+}
+
+.service-right {
+  margin-left: 150px;
 }
 
 .icon {
@@ -759,7 +766,6 @@ h1.service__text {
 /* --------------------------------------------------- TOP NAV CONTENT --------------------------------------------------------------- */
 /* TOPNAV TEXT DESIGN  */
 .link {
-  text-decoration: none;
   display: inline;
   padding: 15px 50px;
   font-weight: 700;
@@ -770,6 +776,7 @@ h1.service__text {
 
 .link a {
   padding: 15px 0;
+  text-decoration: none;
 }
 
 .link:hover {
@@ -911,7 +918,7 @@ li {
 .bar {
   width: 35px;
   height: 5px;
-  background-color: #333;
+  background-color: white;
   margin: 6px 0;
   transition: 0.4s;
 }
@@ -933,7 +940,7 @@ li {
 @media screen and (max-width: 1435px) {
   .menu-icon {
     display: block;
-    background-color: white;
+    background-color: transparent;
   }
 
   /* Hide the menu items by default on smaller screens */
@@ -1496,4 +1503,206 @@ li {
 
 .profile-menu {
   width: 30px;
+}
+
+/*==================== NEW MEDIA QUERIES (for responsive) ====================*/
+
+/* For small devices */
+@media screen and (max-width: 350px){
+  /* homepage */
+  #title {
+    font-size: 25px;
+  }
+
+  #quote {
+    font-size: 20px;
+  }
+
+  .comm-title, .carousel-desc {
+    font-size: 15px;
+  }
+
+  .stats-title span {
+    font-size: 12px;
+  }
+
+  .official-name {
+    font-size: 15px;
+  }
+
+  .comm-info, .container-fluid h3, .container-fluid p{
+    font-size: 10px;
+  }
+
+  #title, #quote, .official-lists {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .rounded-circle {
+    height: 100px;
+    width: 100px;
+  }
+
+  .card {
+    padding-bottom: 20%;
+  }
+
+  .card img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .footer-contact {
+    position: absolute;
+    z-index: 1;
+    padding-top: 170%;
+    left: 100px;
+  }
+
+  .text-dark {
+    padding-bottom: 100%;
+  }
+
+  /* services */
+
+  .service {
+    padding-bottom: 1000px;
+  }
+  
+  .service__box {
+    width: 200px;
+  }
+
+  .service-right {
+    position: absolute;
+    z-index: 1;
+    margin-left: -13px;
+    padding-top: 920px;
+  }
+
+  /* evacuation */
+
+  #contingency-card, .warning-title {
+    margin-right: 140px;
+  }
+
+  .table {
+    margin-right: 120px;
+  }
+
+  .warning-content {
+    width: 200px;
+    margin-right: 140px;
+  }
+
+  .emergency-section-content th, .emergency-section-content td {
+    font-size: 10px;
+  }
+
+}
+
+/* For medium devices */
+@media screen and (max-width:568px){
+  /* homepage */
+  #title {
+    font-size: 25px;
+  }
+
+  #quote {
+    font-size: 20px;
+  }
+
+  .comm-title, .carousel-desc, .official-name {
+    font-size: 15px;
+  }
+
+  .stats-title span, .stats-title, #stats {
+    font-size: 12px;
+  }
+
+  .comm-info, .container-fluid h3, .official-title, .container-fluid p{
+    font-size: 10px;
+  }
+
+  #title, #quote {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .rounded-circle {
+    height: 100px;
+    width: 100px;
+  }
+
+  .card {
+    padding-bottom: 20%;
+  }
+
+  .card img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .footer-contact {
+    position: absolute;
+    z-index: 1;
+    padding-top: 130%;
+    left: 100px;
+  }
+
+  .text-dark {
+    padding-bottom: 100%;
+  }
+  /* services */
+
+  .service {
+    padding-bottom: 1000px;
+  }
+  
+  .service__box {
+    width: 200px;
+  }
+
+  .service-right {
+    position: absolute;
+    z-index: 1;
+    margin-left: -5px;
+    padding-top: 880px;
+  }
+
+  /* evacuation */
+
+  #contingency-card, .warning-title {
+    margin-right: 140px;
+  }
+
+  .table {
+    margin-right: 120px;
+  }
+
+  .warning-content {
+    width: 200px;
+    margin-right: 140px;
+  }
+
+  .emergency-section-content th, .emergency-section-content td {
+    font-size: 10px;
+  }
+}
+
+/* For large devices */
+@media screen and (min-width: 768px){
+  .card {
+    padding-bottom: 5%;
+  }
+
+  .text-dark {
+    margin-right: 100px;
+  }
+}
+
+/*For x-large devices */
+@media screen and (min-width: 1024px){
+
 }

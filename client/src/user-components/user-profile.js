@@ -167,7 +167,7 @@ function UserProfile() {
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="sex" class="form-label">Sex:</label>
-                                                <input type="text" id="sex" class="form-control" placeholder="SEX" aria-label="SEX"  disabled/>
+                                                <input type="text" id="sex" class="form-control" placeholder="SEX" aria-label="SEX" disabled />
                                             </div>
                                             <div class="col">
                                                 <label for="civilstatus" class="form-label">Civil Status:</label>
@@ -200,13 +200,17 @@ function UserProfile() {
                                     <form class="form6 mt-3">
                                         <h2 id="form_name">Birthdate/Birthplace</h2>
                                         <div class="row g-3">
-                                        <div class="col">
-                                                <label for="companyName" class="form-label">Birthdate:</label>
-                                                <input
-                        type="date" className="form-control"
-                        id="dateOfBirth"
-                        disabled
-                      />
+                                            <div class="col">
+                                                <label for="companyName" class="form-label">Month:</label>
+                                                <input type="text" id="companyName" class="form-control" aria-label="House no. & Street" disabled />
+                                            </div>
+                                            <div class="col">
+                                                <label for="positionName" class="form-label">Day:</label>
+                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay" disabled />
+                                            </div>
+                                            <div class="col">
+                                                <label for="positionName" class="form-label">Year:</label>
+                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay" disabled />
                                             </div>
                                             <div class="col">
                                                 <label for="positionName" class="form-label">City/Municipality:</label>
@@ -237,12 +241,6 @@ function UserProfile() {
                                         </div>
                                     </form>
                                 </section>
-                                <div className="save_btn">
-                                <input type="checkbox" className="btn-check" id="btn-check-3" />
-                                <label className="btn btn-primary" htmlFor="btn-check-3">
-                                    Save Changes
-                                </label>
-                            </div>
                             </div>
                             <div id="content2" className={`viewreq content ${activeContent === 2 ? 'active' : ''}`}>
                                 <section className="request-summary flex-column m-3">

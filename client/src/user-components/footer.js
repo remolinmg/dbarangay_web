@@ -104,7 +104,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div class="col-6 col-md-2 mx-auto mt-3">
+            <div class="footer-product col-6 col-md-2 mx-auto mt-3">
               <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
               <p class="mb-1">
                 <Link className="text-decoration-none" to="/announcement">
@@ -132,25 +132,22 @@ const Footer = () => {
                   <a >Services</a>
                 </Link>
               </p>
-            </div>
+              </div>
+              
+              <div class="footer-contact col-6 col-md-2 mx-auto mt-3">         
+                <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+                <p><i class="mr-3"><FaHome /></i> 204 Daang Bakal Street, Harapin Ang Bukas, Mandaluyong City</p>
+                <p><i class="mr-3"><FaEnvelope /></i>  <a href="mailto:harapinangbukas@gmail.com" style={emailLinkStyle}>harapinangbukas@gmail.com</a></p>
 
-            <div class="col-6 col-md-3 mx-auto mt-3">
-              <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
-              <p><i class="mr-3"><FaHome /></i> 204 Daang Bakal Street, Harapin Ang Bukas, Mandaluyong City</p>
-              <p><i class="mr-3"><FaEnvelope /></i>  <a href="mailto:harapinangbukas@gmail.com" style={emailLinkStyle}>
-                harapinangbukas@gmail.com
-              </a></p>
-
-                <h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
-                <a
-                   class="btn btn-primary btn-floating m-1"
-                   style={{backgroundColor: "#3b5998"}}
-                   href="https://www.facebook.com/harapinangbukas"
-                   target="_blank"
-                   role="button"
-                   ><i><FaFacebook /></i
-                  ></a>
-            </div>
+                  <h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
+                  <a
+                    class="btn btn-primary btn-floating m-1"
+                    style={{backgroundColor: "#3b5998"}}
+                    href="https://www.facebook.com/harapinangbukas"
+                    target="_blank"
+                    role="button"
+                    ><i><FaFacebook /></i></a>
+              </div>
           </div>
 
         </section>

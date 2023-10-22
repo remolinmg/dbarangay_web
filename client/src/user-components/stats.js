@@ -78,6 +78,7 @@ const Stats = () => {
   
   const landAreaStyle = {
     fontSize: '25px',
+    fontWeight: 'bold',
     color: 'white',
   };
   
@@ -88,22 +89,22 @@ const Stats = () => {
   
 
   return (
-    <div className="container-fluid overflow-hidden" style={containerStyle}>
-      <h2 style={headerStyle}>
+    <div id="stats-main" className="container-fluid overflow-hidden" style={containerStyle}>
+      <h2 class="stats-title" style={headerStyle}>
         Harapin Ang Bukas is a barangay in the city of Mandaluyong,
         <span style={spanStyle}>National Capital Region (NCR), Philippines.</span>
       </h2>
       <div style={statContainerStyle}>
-        <div style={statItemStyle}>
+        <div id="stats" style={statItemStyle}>
           <h3 style={countStyle}>{voters}</h3>
           <p>Voters</p>
         </div>
-        <div style={statItemStyle}>
+        <div id="stats" style={statItemStyle}>
           <h3 style={countStyle}>{population}</h3>
           <p>Population</p>
         </div>
-        <div style={statItemStyle}>
-          <p style={landAreaStyle}>4.89 has</p>
+        <div id="stats" style={statItemStyle}>
+          <h3 style={countStyle}>4.89 has</h3>
           <p>Land Area</p>
         </div>
       </div>
