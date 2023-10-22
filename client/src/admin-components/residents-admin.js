@@ -303,7 +303,7 @@ function ResidentsAdmin() {
 
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
-            <div className="col-6">
+            <div className="col-4">
               <div className="input-group">
                 <input
                   type="text"
@@ -319,8 +319,24 @@ function ResidentsAdmin() {
                 </button>
               </div>
             </div>
+            <div className="col-4">
+              <div className="dropdown-tablenumbers">
+              <select
+                  type="text"
+                  className="form-control"
+                  placeholder="Search"
+                  aria-label="Enter search keyword"
+                  name="query"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                >
+                   <option value="new">Active</option>
+                  <option value="on process">Inactive</option>
+              </select>
+              </div>
+            </div>
            
-            <div className="col-6">
+            <div className="col-4">
               <div className="dropdown-tablenumbers">
                 <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
                   <option value="10">10</option>

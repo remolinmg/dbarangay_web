@@ -262,7 +262,7 @@ function BconstuctionAdmin() {
     }
   };
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     document.cookie = 'access_token=; ';
@@ -308,10 +308,10 @@ function BconstuctionAdmin() {
                     <hr />
                     <div className="button-profile1">
 
-                     
-                        <div onClick={handleSignOut} className="profilebuttons">
-                          <BiLogOut className="profileicons" /> Log out
-                        </div>
+
+                      <div onClick={handleSignOut} className="profilebuttons">
+                        <BiLogOut className="profileicons" /> Log out
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -428,7 +428,7 @@ function BconstuctionAdmin() {
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
-            <div className="col-4">
+            <div className="col-3">
               <div className="input-group">
                 <input
                   type="text"
@@ -436,7 +436,7 @@ function BconstuctionAdmin() {
                   placeholder="Search"
                   aria-label="Enter search keyword"
                   name="query"
-     
+
                   onChange={handleSearchChange}
                 />
                 <button className="btn btn-outline-secondary" type="button">
@@ -444,7 +444,7 @@ function BconstuctionAdmin() {
                 </button>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-3">
               <div className="tabsz dropdown-center">
                 <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Services Category</button>
                 <ul class="dropdown-menu dropdown-topcategory">
@@ -461,9 +461,9 @@ function BconstuctionAdmin() {
                 </ul>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-3">
               <div className="dropdown-tablenumbers">
-              <select
+                <select
                   type="text"
                   className="form-control"
                   placeholder="Search"
@@ -472,11 +472,21 @@ function BconstuctionAdmin() {
                   value={searchQuery}
                   onChange={handleSearchChange}
                 >
-                   <option value="new">New</option>
+                  <option value="new">New</option>
                   <option value="on process">On process</option>
                   <option value="processed">Processed</option>
                   <option value="declined">Declined</option>
-              </select>
+                </select>
+              </div>
+            </div>
+            <div className="col-3">
+              <div className="dropdown-tablenumbers">
+                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
               </div>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import { Link, NavLink, Route, useNavigate } from 'react-router-dom';
 import Chart from 'chart.js/auto';
+import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown, BiLogOut, BiCog } from 'react-icons/bi';
@@ -29,130 +30,260 @@ import { FaUserCircle } from "react-icons/fa";
 
 function Dashboard() {
     const pieChartTopRef = useRef(null);
-    const pieChartBottomRef = useRef(null);
-    const lineChartRef = useRef(null);
-    //pie chart -----------------------------------------------------------------------------------------------------------
-    const [totalPopulation, setTotalPopulation] = useState(10000); // Initial total population
-    const [registeredVoters, setRegisteredVoters] = useState(1000); // Initial registered voters
+    const barChartRef = useRef(null);
+    const residenceClassBarChartRef = useRef(null);
+    const [totalPopulation, setTotalPopulation] = useState(0);
+    const [registeredVoters, setRegisteredVoters] = useState(0);
+    const [registeredStudents, setRegisteredStudents] = useState(0);
+    const [maleCount, setMaleCount] = useState(0);
+    const [femaleCount, setFemaleCount] = useState(0);
+    const [malePercentage, setMalePercentage] = useState(0);
+    const [femalePercentage, setFemalePercentage] = useState(0);
 
-    // Simulate fetching data from a backend or database
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [profile, setProfile] = useState('');
+
+
+
+    //bar chart employmentStatus 
+    const [employmentStatusData, setEmploymentStatusData] = useState({
+        labels: ['Employed', 'Unemployed'],
+        data: [0, 0],
+    });
+    //pie chart age
+    const [ageData, setAgeData] = useState({
+        labels: ['1-12', '13-19', '20-30', '31-40', '41 Above'],
+        data: [0, 0, 0, 0, 0],
+    });
+    //bar chart residentClass 
+    const [residenceClassData, setResidenceClassData] = useState({
+        labels: ['PWD', 'Solo Parent'],
+        data: [0, 0],
+        backgroundColor: ['blue', 'orange'], // You can specify custom colors here
+    });
+
+
+
+
+
+    // top cards ---------------------------------------------------
     useEffect(() => {
-        setTimeout(() => {
-            const updatedTotalPopulation = 15000; // Updated total population
-            const updatedRegisteredVoters = 15000; // Updated registered voters
+        axios.get('http://localhost:8000/get/user')
+            .then((response) => {
+                const userCount = response.data.length;
+                setTotalPopulation(userCount);
 
-            setTotalPopulation(updatedTotalPopulation);
-            setRegisteredVoters(updatedRegisteredVoters);
-        }, 2000);
+                const maleUsers = response.data.filter((user) => user.sex === 'Male');
+                const femaleUsers = response.data.filter((user) => user.sex === 'Female');
+                const maleUsersCount = maleUsers.length;
+                const femaleUsersCount = femaleUsers.length;
+                setMaleCount(maleUsersCount);
+                setFemaleCount(femaleUsersCount);
+
+                setMalePercentage((maleUsersCount / userCount) * 100);
+                setFemalePercentage((femaleUsersCount / userCount) * 100);
+
+                const registeredVotersCount = response.data.filter((user) => user.voterRegistration === 'Registeredvoter').length;
+                setRegisteredVoters(registeredVotersCount);
+
+                const registeredStudentsCount = response.data.filter((user) => user.employmentStatus === 'Student').length;
+                setRegisteredStudents(registeredStudentsCount);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }, []);
 
+    //pie chart fetch data AGE-----------------------------------------------------------------------------------------------------------
+    useEffect(() => {
+        axios.get('http://localhost:8000/get/user')
+            .then((response) => {
+                const userData = response.data;
+                const ageCounts = [0, 0, 0, 0, 0];
+
+                userData.forEach((user) => {
+                    const age = user.age; // Assuming there's an "age" field in the user data
+                    if (age >= 1 && age <= 12) {
+                        ageCounts[0]++;
+                    } else if (age >= 13 && age <= 19) {
+                        ageCounts[1]++;
+                    } else if (age >= 20 && age <= 30) {
+                        ageCounts[2]++;
+                    } else if (age >= 31 && age <= 40) {
+                        ageCounts[3]++;
+                    } else {
+                        ageCounts[4]++; // For ages '41 Above'
+                    }
+                });
+
+                setAgeData({
+                    ...ageData,
+                    data: ageCounts,
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+    //pie chart display AGE-----------------------------------------------------------------------------------------------------------
     useEffect(() => {
         const pieChartTopCtx = pieChartTopRef.current.getContext('2d');
-        const pieChartBottomCtx = pieChartBottomRef.current.getContext('2d');
-
         let pieChartTopInstance = null;
-        let pieChartBottomInstance = null;
 
         const createPieChartTop = () => {
-            pieChartTopInstance = new Chart(pieChartTopCtx, {
-                type: 'pie',
-                data: {
-                    labels: ['1-5', '6-12', '13-19', '20-30', '30-50'],
-                    datasets: [
-                        {
-                            data: [12, 19, 3, 5, 2],
-                            backgroundColor: ['red', 'blue', 'yellow', 'green', 'purple'],
-                        },
-                    ],
-                },
-
-            });
+            if (ageData.labels.length > 0) {
+                pieChartTopInstance = new Chart(pieChartTopCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ageData.labels,
+                        datasets: [
+                            {
+                                data: ageData.data,
+                                backgroundColor: [
+                                    'red', 'blue', 'yellow', 'green', 'purple',
+                                ],
+                            },
+                        ],
+                    },
+                });
+            }
         };
-
-        const createPieChartBottom = () => {
-            pieChartBottomInstance = new Chart(pieChartBottomCtx, {
-                type: 'pie',
-                data: {
-                    labels: ['Male', 'Female', 'Undisclosed'],
-                    datasets: [
-                        {
-                            data: [25, 35, 40], // Replace with your data
-                            backgroundColor: ['orange', 'purple', 'pink'], // Customize colors
-                        },
-                    ],
-                },
-            });
-        };
-
         createPieChartTop();
-        createPieChartBottom();
-
         return () => {
             if (pieChartTopInstance) {
                 pieChartTopInstance.destroy();
             }
-            if (pieChartBottomInstance) {
-                pieChartBottomInstance.destroy();
+        };
+    }, [ageData]);
+    // Bar chart fetch data employment status -------------------------------------
+    useEffect(() => {
+        axios.get('http://localhost:8000/get/user')
+            .then((response) => {
+                const userData = response.data;
+                const employmentStatusCounts = [0, 0];
+
+                userData.forEach((user) => {
+                    const employmentStatus = user.employmentStatus;
+                    if (employmentStatus === 'Employed') {
+                        employmentStatusCounts[0]++;
+                    } else if (employmentStatus === 'Unemployed') {
+                        employmentStatusCounts[1]++;
+                    }
+                });
+
+                // Update state with employment status data
+                setEmploymentStatusData({
+                    ...employmentStatusData,
+                    data: employmentStatusCounts,
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+    // bar chart display data employment status-------------------------------------
+    useEffect(() => {
+        const barChartCtx = barChartRef.current.getContext('2d');
+        let barChartInstance = null;
+
+        const createBarChart = () => {
+            if (employmentStatusData.labels.length > 0) {
+                barChartInstance = new Chart(barChartCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: employmentStatusData.labels,
+                        datasets: [
+                            {
+                                label: 'Employment Status',
+                                data: employmentStatusData.data,
+                                backgroundColor: [
+                                    'red', 'blue',
+                                ],
+                            },
+                        ],
+                    },
+                });
             }
         };
-    }, []);
-    //line chart ------------------------------------------------------------------------------
-    useEffect(() => {
-        const lineChartCtx = lineChartRef.current.getContext('2d');
-        let lineChartInstance = null;
 
-        const createLineChart = () => {
-            lineChartInstance = new Chart(lineChartCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                    datasets: [
-                        {
-                            label: 'Revenue',
-                            data: [500, 800, 900, 700, 600, 1000],
-                            borderColor: 'rgb(75, 192, 192)',
-                            tension: 0.1,
-                            yAxisID: 'revenue-axis',
-                        },
-                        {
-                            label: 'Profit',
-                            data: [200, 400, 600, 800, 1000, 1200],
-                            borderColor: 'rgb(192, 75, 192)',
-                            tension: 0.1,
-                            yAxisID: 'profit-axis',
-                        },
-                    ],
-                },
-                options: {
-                    scales: {
-                        y: {
-                            id: 'revenue-axis',
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                        },
-                        y1: {
-                            id: 'profit-axis',
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                            grid: {
-                                drawOnChartArea: false,
+        createBarChart();
+
+        return () => {
+            if (barChartInstance) {
+                barChartInstance.destroy();
+            }
+        };
+    }, [employmentStatusData]);
+    // Bar chart fetch data resident Class -------------------------------------
+    useEffect(() => {
+        axios.get('http://localhost:8000/get/user')
+            .then((response) => {
+                const userData = response.data;
+                // Initialize counts for PWD and Solo Parent users
+                const residenceClassCounts = [0, 0];
+                userData.forEach((user) => {
+                    const residenceClass = user.residenceClass; // Assuming there's a "residenceClass" field in the user data
+                    if (residenceClass === 'PWD') {
+                        residenceClassCounts[0]++;
+                    } else if (residenceClass === 'soloParent') {
+                        residenceClassCounts[1]++;
+                    }
+                });
+                // Update state with residence class data
+                setResidenceClassData((prevData) => {
+                    return {
+                        ...prevData,
+                        data: residenceClassCounts,
+                    };
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+
+    // bar chart display data resident Classs-------------------------------------
+    useEffect(() => {
+        const residenceClassBarChartCtx = residenceClassBarChartRef.current.getContext('2d');
+        let residenceClassBarChartInstance = null;
+
+        const createResidenceClassBarChart = () => {
+            if (residenceClassData.labels.length > 0) {
+                residenceClassBarChartInstance = new Chart(residenceClassBarChartCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: residenceClassData.labels,
+                        datasets: [
+                            {
+                                label: 'Residence Class',
+                                data: residenceClassData.data,
+                                backgroundColor: residenceClassData.backgroundColor,
+                            },
+                        ],
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
                             },
                         },
                     },
-                },
-            });
-        };
-
-        createLineChart();
-
-        return () => {
-            if (lineChartInstance) {
-                lineChartInstance.destroy();
+                });
             }
         };
-    }, []);
+
+        createResidenceClassBarChart();
+
+        return () => {
+            if (residenceClassBarChartInstance) {
+                residenceClassBarChartInstance.destroy();
+            }
+        };
+    }, [residenceClassData]);
+
+
+
 
 
 
@@ -191,14 +322,31 @@ function Dashboard() {
         };
     }, []);
 
-    const navigate = useNavigate();  
+    const navigate = useNavigate();
 
-  const handleSignOut = () => {
-    document.cookie = 'access_token=; ';
-    localStorage.removeItem('jwtToken');
-    window.localStorage.clear();
-    navigate('/admin')
-  };
+    useEffect(() => {
+        // Make an HTTP request to fetch user information
+        axios.get('http://localhost:8000/get/user')
+            .then((response) => {
+                console.log('Response data:', response.data); // Log the entire response data
+                const userData = response.data;
+                console.log('User data:', userData); // Log the user data
+                setName(userData.name);
+                setEmail(userData.email);
+                setProfile(userData.profile);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+
+
+    const handleSignOut = () => {
+        document.cookie = 'access_token=; ';
+        localStorage.removeItem('jwtToken');
+        window.localStorage.clear();
+        navigate('/admin')
+    };
 
     return (
         <>
@@ -222,13 +370,13 @@ function Dashboard() {
                                             <FaUserCircle className="adminprofile" />
                                         </div>
                                         <div className="leftprofile">
-                                            <h5>CLARISE ANNELY</h5>
-                                            <h5>clariseannely@gmail.com</h5>
+                                            <h5>{name}</h5>
+                                            <h5>{email}</h5>
                                         </div>
                                     </div>
                                     <div className="lowerprofile">
                                         <div className="button-profile1">
-                                            <NavLink to="/admin-profile" activeClassName="active">
+                                            <NavLink to="/residents-accounts" activeClassName="active">
                                                 <div href="#" className="profilebuttons">
                                                     <BiCog className="profileicons" /> Settings
                                                 </div>
@@ -236,14 +384,13 @@ function Dashboard() {
                                         </div>
                                         <hr />
                                         <div className="button-profile1">
-
-                                                <div onClick={handleSignOut} className="profilebuttons">
-                                                    <BiLogOut className="profileicons" /> Log out
-                                                </div>
-
+                                            <div onClick={handleSignOut} className="profilebuttons">
+                                                <BiLogOut className="profileicons" /> Log out
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
                             )}
                         </div>
                     </div>
@@ -358,90 +505,85 @@ function Dashboard() {
 
             <div className={`dashboard-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
                 <div className="row m-5">
+                    <div className="dashboard-topside d-flex justify-content-evenly w-100">
+                        <div className="card topcard m-1 col-md-3">
+                            <div className="total-population card-body text-center">
+                                <h5 className="card-title">Total Population</h5>
+                                <p className="card-text">The current population of the barangay.</p>
+                                <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                                    Population: {totalPopulation}
+                                </p>
+                            </div>
+                        </div>
+                        <div className="card barangay-voters card topcard m-1 col-md-3">
+                            <div className="card-body text-center">
+                                <h5 className="card-title">Registered Voters</h5>
+                                <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                                    Registered Voters: {registeredVoters}
+                                </p>
+                                <p className="card-text" style={{ fontSize: '20px' }}>
+                                    Percentage of Registered Voters: {((registeredVoters / totalPopulation) * 100).toFixed(2)}%
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="Total-students card topcard m-1 col-md-3">
+                            <div className="card-body text-center">
+                                <h5 className="card-title">Registered Students</h5>
+                                <p className="card-text">The current Students of the barangay.</p>
+                                <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                                    Students: {registeredStudents}
+                                </p>
+                            </div>
+                        </div>
+                        <div className="male-female-percentages card topcard m-1 col-md-3">
+                            <div className="card-body text-center">
+                                <h5 className="card-title">Male and Female Statistics</h5>
+                                <p className="card-text" style={{ fontSize: '20px' }}>
+                                    Male: {maleCount} ({malePercentage.toFixed(2)}%)
+                                </p>
+                                <p className="card-text" style={{ fontSize: '20px' }}>
+                                    Female: {femaleCount} ({femalePercentage.toFixed(2)}%)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                     <div className="col-lg-8">
                         <div className="row">
-                            <div className="dashboard-topside d-flex justify-content-evenly w-100">
-                                <div className="card topcard m-1 col-md-4">
-                                    <div className="total-population card-body text-center">
-                                        <h5 className="card-title">Total Population</h5>
-                                        <p className="card-text">The current population of the barangay.</p>
-                                        <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
-                                            Population: {totalPopulation}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="barangay-voters card topcard m-1 col-md-4">
-                                    <div className="card-body text-center">
-                                        <h5 className="card-title">Registered Voters</h5>
-                                        <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
-                                            Registered Voters: {registeredVoters}
-                                        </p>
-                                        <p className="card-text" style={{ fontSize: '20px' }}>
-                                            Percentage of Registered Voters: {((registeredVoters / totalPopulation) * 100).toFixed(2)}%
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="Total-students card topcard m-1 col-md-4">
-                                    <div className="card-body text-center">
-                                        <h5 className="card-title">Student Percentage</h5>
-                                        <p className="card-text">The current Students of the barangay.</p>
-                                        <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
-                                            Students: 45%
-                                            <br />
-                                            Non Students: 55%
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                            <div className="col-12 p-1">
-                                <div className="card mt-3">
-                                    <div className="filter">
-                                        {/* Dropdown menu */}
-                                        {/* ... */}
-                                    </div>
-
-                                    <div className="axis-chart card-body Chart">
-                                        <h5 className="card-title">Line Chart</h5>
-
-                                        {/* Line Chart container */}
-                                        <canvas ref={lineChartRef} id="lineChart" width="400" height="200"></canvas>
+                            <div className="col-12 p-0">
+                                <div className="card">
+                                    <div className="filter"></div>
+                                    <div className="bar-chart card-body Chart">
+                                        <h5 className="card-title">Bar Chart</h5>
+                                        <canvas ref={barChartRef} id="barChart"></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-4">
+                    <div className="col-lg-4 p-0">
                         <div className="row">
                             <div className="col-6 col-sm-12">
                                 <div className="card">
                                     <div className="filter">
-                                        {/* Dropdown menu */}
-                                        {/* ... */}
                                     </div>
-
                                     <div className="pie-chart-top card-body Chart">
                                         <h5 className="card-title">AGE</h5>
-
-                                        {/* Pie Chart container */}
                                         <canvas ref={pieChartTopRef} id="pieChartTop" width="200" height="100"></canvas>
                                     </div>
                                 </div>
                             </div>
                             <div className="col-6 col-sm-12">
-                                <div className="pie-chart-bottom card mt-3">
-                                    <div className="card-body border">
-                                        <h5 className="card-title">Sex Chart</h5>
-                                        <p className="card-text">Total Sex Registered Citizen</p>
-                                        {/* Add a canvas for the bottom pie chart */}
-                                        <canvas ref={pieChartBottomRef} id="pieChartBottom" width="200" height="100"></canvas>
+                                <div className="card">
+                                    <div className="filter">
+                                    </div>
+                                    <div className="pie-chart-top card-body Chart">
+                                        <h5 className="card-title">Resident Class</h5>
+                                        <canvas ref={residenceClassBarChartRef} id="residentClassChart" width="200" height="100"></canvas>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

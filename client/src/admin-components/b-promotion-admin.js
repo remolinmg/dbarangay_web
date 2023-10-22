@@ -223,7 +223,7 @@ function BpromotionAdmin() {
     }
   };
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     document.cookie = 'access_token=; ';
@@ -269,11 +269,11 @@ function BpromotionAdmin() {
                     <hr />
                     <div className="button-profile1">
 
-                     
-                        <div onClick={handleSignOut} className="profilebuttons">
-                          <BiLogOut className="profileicons" /> Log out
-                        </div>
-                      
+
+                      <div onClick={handleSignOut} className="profilebuttons">
+                        <BiLogOut className="profileicons" /> Log out
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -388,21 +388,32 @@ function BpromotionAdmin() {
         </div>
       </div>
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
-      <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
+        <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-50 d-flex align-items-center">
-            <div className="input-group">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search"
-                aria-label="Enter search keyword"
-                name="query"
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
-              <button className="btn btn-outline-secondary" type="button">
-                <i className="bi bi-search"></i>
-              </button>
+            <div className="col-6">
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search"
+                  aria-label="Enter search keyword"
+                  name="query"
+                  onChange={handleSearchChange}
+                />
+                <button className="btn btn-outline-secondary" type="button">
+                  <i className="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="dropdown-tablenumbers">
+                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>

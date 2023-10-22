@@ -389,7 +389,7 @@ function BlotterAdmin() {
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
-            <div className="col-4">
+            <div className="col-3">
               <div className="input-group">
                 <input
                   type="text"
@@ -404,7 +404,7 @@ function BlotterAdmin() {
                 </button>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-3">
               <div className="tabsz dropdown-center">
                 <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button>
                 <ul className="dropdown-menu dropdown-topcategory">
@@ -413,7 +413,7 @@ function BlotterAdmin() {
                 </ul>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-3">
               <div className="dropdown-tablenumbers">
               <select
                   type="text"
@@ -427,6 +427,16 @@ function BlotterAdmin() {
                   <option value="pending">Pending</option>
                   <option value="processed">Processed</option>
               </select>
+              </div>
+            </div>
+            <div className="col-3">
+              <div className="dropdown-tablenumbers">
+                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
               </div>
             </div>
           </div>

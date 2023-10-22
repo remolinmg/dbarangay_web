@@ -1,4 +1,4 @@
-import { Link, NavLink, useNavigate} from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from "react";
 import './assets/css/style.css';
 import Axios from 'axios';
@@ -258,14 +258,14 @@ function Biddmin() {
             // Handle error, show an error message to the user
         }
     };
-    const navigate = useNavigate();  
+    const navigate = useNavigate();
 
-  const handleSignOut = () => {
-    document.cookie = 'access_token=; ';
-    localStorage.removeItem('jwtToken');
-    window.localStorage.clear();
-    navigate('/admin')
-  };
+    const handleSignOut = () => {
+        document.cookie = 'access_token=; ';
+        localStorage.removeItem('jwtToken');
+        window.localStorage.clear();
+        navigate('/admin')
+    };
 
     return (
         <>
@@ -304,11 +304,11 @@ function Biddmin() {
                                         <hr />
                                         <div className="button-profile1">
 
-                                          
-                                                <div onClick={handleSignOut} className="profilebuttons">
-                                                    <BiLogOut className="profileicons" /> Log out
-                                                </div>
-                                           
+
+                                            <div onClick={handleSignOut} className="profilebuttons">
+                                                <BiLogOut className="profileicons" /> Log out
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -425,7 +425,7 @@ function Biddmin() {
             <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
                 <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
                     <div className="toppart-table border row w-75 d-flex align-items-center">
-                        <div className="col-4">
+                        <div className="col-3">
                             <div className="input-group">
                                 <input
                                     type="text"
@@ -440,7 +440,7 @@ function Biddmin() {
                                 </button>
                             </div>
                         </div>
-                        <div className="col-4">
+                        <div className="col-3">
                             <div className="tabsz dropdown-center">
                                 <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Services Category</button>
                                 <ul class="dropdown-menu dropdown-topcategory">
@@ -457,22 +457,32 @@ function Biddmin() {
                                 </ul>
                             </div>
                         </div>
-                        <div className="col-4">
+                        <div className="col-3">
                             <div className="dropdown-tablenumbers">
-                            <select
-                  type="text"
-                  className="form-control"
-                  placeholder="Search"
-                  aria-label="Enter search keyword"
-                  name="query"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                >
-                   <option value="new">New</option>
-                  <option value="on process">On process</option>
-                  <option value="processed">Processed</option>
-                  <option value="declined">Declined</option>
-              </select>
+                                <select
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search"
+                                    aria-label="Enter search keyword"
+                                    name="query"
+                                    value={searchQuery}
+                                    onChange={handleSearchChange}
+                                >
+                                    <option value="new">New</option>
+                                    <option value="on process">On process</option>
+                                    <option value="processed">Processed</option>
+                                    <option value="declined">Declined</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="col-3 ">
+                            <div className="dropdown-tablenumbers">
+                                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -522,7 +532,7 @@ function Biddmin() {
                                         <table class="table caption-top">
                                             <thead>
                                                 <tr>
-                                                   
+
                                                     <th scope="col">Resident Name</th>
                                                     <th scope="col">Address</th>
                                                     <th scope="col">Pick-up Date</th>
@@ -536,7 +546,7 @@ function Biddmin() {
                                             <tbody>
                                                 {getCurrentPageData().map((item, index) => (
                                                     <tr key={index}>
-                                                        
+
                                                         <td>{item.residentName}</td>
                                                         <td>{item.address}</td>
                                                         <td>{item.pickUpDate}</td>

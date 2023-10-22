@@ -172,231 +172,239 @@ function Residentsaccounts() {
                                         {/* Residence Profile Section */}
                                         <section className="residence_profile">
                                             <h1 id="title">Residence Profile</h1>
-                                            <form class="form1">
-                                                <h2 id="form_name"> {item._id}</h2>
+                                            <div className="form1">
+                                                <h2 id="form_name">{item._id}</h2>
                                                 <br></br>
                                                 <h2 id="form_name">FULL NAME</h2>
                                                 <div class="row g-3">
                                                     <div class="col">
                                                         <label for="lastName" class="form-label">Last Name:</label>
-                                                        <input type="text" id="lastName" class="form-control" placeholder={item.lastName} />
+                                                        <input type="text" id="lastName" class="form-control" value={item.lastName} aria-label="LAST NAME" />
                                                     </div>
                                                     <div class="col">
                                                         <label for="firstName" class="form-label">First Name:</label>
-                                                        <input type="text" id="firstName" class="form-control" placeholder="FIRST NAME" aria-label="FIRST NAME" />
+                                                        <input type="text" id="firstName" class="form-control" value={item.firstName} aria-label="FIRST NAME" />
                                                     </div>
                                                     <div class="col">
                                                         <label for="midName" class="form-label">Middle Name:</label>
-                                                        <input type="text" id="midName" class="form-control" placeholder="MIDDLE NAME" aria-label="MIDDLE NAME" />
+                                                        <input type="text" id="midName" class="form-control" value={item.middleName} aria-label="MIDDLE NAME" />
                                                     </div>
                                                     <div class="col">
                                                         <label for="suffix" class="form-label">Suffix:</label>
-                                                        <input type="text" id="suffix" class="form-control" placeholder="SUFFIX" aria-label="SUFFIX" />
+                                                        <input type="text" id="suffix" class="form-control" value={item.suffix} aria-label="SUFFIX" />
                                                     </div>
                                                 </div>
-                                            </form>
-                                            <form class="form2">
+                                            </div>
+
+                                            {/* Complete Address */}
+                                            <div class="form2">
                                                 <h2 id="form_name">COMPLETE ADDRESS</h2>
                                                 <div class="row g-3">
                                                     <div class="col">
                                                         <label for="house&streetName" class="form-label">House no., Street:</label>
-                                                        <input type="text" id="house&streetName" class="form-control" aria-label="House no. & Street" />
+                                                        <input type="text" id="house&streetName" class="form-control" value={item.houseNumber} aria-label="House no. & Street" />
                                                     </div>
                                                     <div class="col">
                                                         <label for="brgyName" class="form-label">Barangay:</label>
-                                                        <input type="text" id="brgyName" class="form-control" aria-label="Barangay" />
+                                                        <input type="text" id="brgyName" class="form-control" value={item.barangay} aria-label="Barangay" />
                                                     </div>
                                                     <div class="col">
                                                         <label for="districtName" class="form-label">District:</label>
-                                                        <input type="text" id="districtName" class="form-control" aria-label="District" />
+                                                        <input type text id="districtName" class="form-control" value={item.district} aria-label="District" />
                                                     </div>
                                                 </div>
                                                 <div class="row g-3">
                                                     <div class="col">
                                                         <label for="cityName" class="form-label">City/Municipality:</label>
-                                                        <input type="text" id="cityName" class="form-control" aria-label="House no. & Street" />
+                                                        <input type="text" id="cityName" class="form-control" value={item.cityMunicipality} aria-label="City" />
                                                     </div>
                                                     <div class="col">
                                                         <label for="provinceName" class="form-label">Province:</label>
-                                                        <input type="text" id="provinceName" class="form-control" aria-label="Barangay" />
+                                                        <input type="text" id="provinceName" class="form-control" value={item.province} aria-label="Barangay" />
                                                     </div>
                                                     <div class="col">
                                                         <label for="regionName" class="form-label">Region:</label>
-                                                        <input type="text" id="regionName" class="form-control" aria-label="District" />
+                                                        <input type="text" id="regionName" class="form-control" value={item.region} aria-label="District" />
                                                     </div>
                                                 </div>
-                                            </form>
+                                            </div>
 
-                                            <form class="form3">
+                                            {/* Mailing Address */}
+                                            <div class="form3">
                                                 <h2 id="form_name">MAILING ADDRESS</h2>
                                                 <div class="row g-3">
                                                     <div class="col">
                                                         <label for="emailName" class="form-label">Email/FB Account:</label>
-                                                        <input type="text" id="emailName" class="form-control" aria-label="House no. & Street" />
+                                                        <input type="text" id="emailName" class="form-control" value={item.email} aria-label="House no. & Street" />
                                                     </div>
                                                     <div class="col">
                                                         <label for="contactName" class="form-label">Contact:</label>
-                                                        <input type="text" id="contactName" class="form-control" aria-label="Barangay" />
+                                                        <input type="text" id="contactName" class="form-control" value={item.phoneNumber} aria-label="Barangay" />
                                                     </div>
                                                     <div class="col">
                                                         <label for="nationalityName" class="form-label">Nationality:</label>
-                                                        <input type="text" id="nationalityName" class="form-control" aria-label="District" />
+                                                        <input type="text" id="nationalityName" class="form-control" value={item.nationality} aria-label="District" />
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </section>
+                                            </div>
 
-                                        {/* Personal Information Section */}
-                                        <section className="personal-information m-3">
-                                            <h3><b>Personal Information</b></h3>
-                                            <form class="form4 mt-3">
-                                                <div class="row g-3">
-                                                    <div class="col">
-                                                        <label for="sex" class="form-label">Sex:</label>
-                                                        <select
-                                                            id="sex"
-                                                            class="form-control"
-                                                        >
-                                                            <option value="">Select Sex</option>
-                                                            <option value="male">Male</option>
-                                                            <option value="female">Female</option>
-                                                        </select>
+                                            {/* Personal Information */}
+                                            <section className="personal-information m-3">
+                                                <h3><b>Personal Information</b></h3>
+                                                <form class="form4 mt-3">
+                                                    <div class="row g-3">
+                                                        <div class="col">
+                                                            <label for="sex" class="form-label">Sex:</label>
+                                                            <select
+                                                                id="sex"
+                                                                class="form-control"
+                                                                value={item.sex}
+                                                            >
+                                                                <option value="">Select Sex</option>
+                                                                <option value="male">Male</option>
+                                                                <option value="female">Female</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label for="civilstatus" class="form-label">Civil Status:</label>
+                                                            <select
+                                                                id="civilStatuss"
+                                                                class="form-control"
+                                                                value={item.civilStatus}
+                                                            >
+                                                                <option value="">Select Civil Status</option>
+                                                                <option value="single">Single</option>
+                                                                <option value="married">Married</option>
+                                                                <option value="widow">Widow/er</option>
+                                                                <option value="separated">Separated</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label for="homeownership" class="form-label">Home Ownership: </label>
+                                                            <select
+                                                                id="homeOwnership"
+                                                                class="form-control"
+                                                                value={item.homeOwnership}
+                                                                required
+                                                            >
+                                                                <option value="">Select Ownership</option>
+                                                                <option value="owner">Owner</option>
+                                                                <option value="renting">Renting</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label for="employmentstatus" class="form-label">Employment Status:</label>
+                                                            <select
+                                                                id="employmentStatus"
+                                                                class="form-control"
+                                                                value={item.employmentStatus}
+                                                                required
+                                                            >
+                                                                <option value="">Select Employment Status</option>
+                                                                <option value="Employed">Employed</option>
+                                                                <option value="Unemployed">Unemployed</option>
+                                                                <option value="Student">Student</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
-
-
-
-                                                    <div class="col">
-                                                        <label for="civilstatus" class="form-label">Civil Status:</label>
-                                                        <select
-                                                            id="civilStatuss"
-                                                            class="form-control"
-                                                        >
-                                                            <option value="">Select Civil Status</option>
-                                                            <option value="single">Single</option>
-                                                            <option value="married">Married</option>
-                                                            <option value="widow">Widow/er</option>
-                                                            <option value="separated">Separated</option>
-                                                        </select>
+                                                </form>
+                                                <form class="form5 mt-3">
+                                                    <h5 id="form_name">Employment Information</h5>
+                                                    <div class="row g-3">
+                                                        <div class="col">
+                                                            <label for="companyName" class="form-label">Company Name:</label>
+                                                            <input type="text" id="companyName" class="form-control" placeholder={item.companyName} aria-label="House no. & Street" />
+                                                        </div>
+                                                        <div class="col">
+                                                            <label for="positionName" class="form-label">Position:</label>
+                                                            <input type="text" id="positionName" class="form-control" placeholder={item.position} aria-label="Barangay" />
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <form class="form6 mt-3">
+                                                    <h2 id="form_name">Birthdate/Birthplace</h2>
+                                                    <div class="row g-3">
+                                                        <div class="col">
+                                                            <label for="birthdate" class="form-label">Birthdate:</label>
+                                                            <input
+                                                                type="date"
+                                                                className="form-control"
+                                                                id="birthdate"
+                                                                placeholder={item.birthdate}
+                                                                required
+                                                            />
+                                                        </div>
+                                                        <div class="col">
+                                                            <label for="birthplace" class="form-label">Birthplace:</label>
+                                                            <input type="text" id="birthplace" class="form-control" value={item.birthPlace} aria-label="Barangay" />
+                                                        </div>
+                                                        <div class="col">
+                                                            <label for="age" class="form-label">Age:</label>
+                                                            <input type="text" id="age" class="form-control" value={item.age} aria-label="Barangay" />
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <form class="form7 mt-3">
+                                                    <h2 id="form_name">Educational Attainment</h2>
+                                                    <div class="row g-3">
+                                                        <div class="col">
+                                                            <label for="educationalattainment" class="form-label">Highest Educational Attainment:</label>
+                                                            <select
+                                                                id="h-educational-a"
+                                                                class="form-control"
+                                                                placeholder={item.highestEducation}
+                                                                required
+                                                            >
+                                                                <option value="">Select Highest Educational Attainment</option>
+                                                                <option value="undergraduate">Undergraduate</option>
+                                                                <option value="elementary">Elementary</option>
+                                                                <option value="highschool">High School</option>
+                                                                <option value="bachelor">Bachelor's Degree</option>
+                                                                <option value="postgrad">Postgraduate (Master's Degree)</option>
+                                                                <option value="doctoral">Doctoral (PhD)</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <form class="form8 mt-3">
+                                                    <h2 id="form_name">Residence Class</h2>
+                                                    <div class="row g-3">
+                                                        <div class="col">
+                                                            <label for="residenceclass" class="form-label">Class:</label>
+                                                            <select
+                                                                id="residenceClass"
+                                                                className="form-control"
+                                                                placeholder={item.residenceClass}
+                                                            >
+                                                                <option value="">Select Residence Class</option>
+                                                                <option value="PWD">Person with Disability (PWD)</option>
+                                                                <option value="soloParent">Solo Parent</option>
+                                                                <option value="outOfSchoolYouth">Out of School Youth</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                     <div class="col">
-                                                        <label for="homeownership" class="form-label">Home Ownership: </label>
+                                                        <label for="status" class="form-label">Status:</label>
                                                         <select
-                                                            id="homeOwnership"
+                                                            id="status"
                                                             class="form-control"
+                                                            value={item.status}
                                                             required
                                                         >
-                                                            <option value="">Select Ownership</option>
-                                                            <option value="owner">Owner</option>
-                                                            <option value="renting">Renting</option>
+                                                            <option value="">Update status</option>
+                                                            <option value="active">active</option>
+                                                            <option value="inactive">inactive</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col">
-                                                        <label for="employmentstatus" class="form-label">Employment Status:</label>
-                                                        <select
-                                                            id="employmentStatus"
-                                                            class="form-control"
-                                                            required
-                                                        >
-                                                            <option value="">Select Employment Status</option>
-                                                            <option value="Employed">Employed</option>
-                                                            <option value="Unemployed">Unemployed</option>
-                                                            <option value="Student">Student</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-
-                                            <form class="form5 mt-3">
-                                                <h5 id="form_name">Employment Information</h5>
-                                                <div class="row g-3">
-                                                    <div class="col">
-                                                        <label for="companyName" class="form-label">Company Name:</label>
-                                                        <input type="text" id="companyName" class="form-control" aria-label="House no. & Street" />
-                                                    </div>
-                                                    <div class="col">
-                                                        <label for="positionName" class="form-label">Position:</label>
-                                                        <input type="text" id="positionName" class="form-control" aria-label="Barangay" />
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <form class="form6 mt-3">
-                                                <h2 id="form_name">Birthdate/Birthplace</h2>
-                                                <div class="row g-3">
-                                                    <div class="col">
-                                                        <label for="companyName" class="form-label">Birthdate:</label>
-                                                        <input
-                                                            type="date" className="form-control"
-                                                            id="dateOfBirth"
-                                                            required
-                                                        />
-                                                    </div>
-                                                    <div class="col">
-                                                        <label for="positionName" class="form-label">City/Municipality:</label>
-                                                        <input type="text" id="positionName" class="form-control" aria-label="Barangay" />
-                                                    </div>
-                                                    <div class="col">
-                                                        <label for="positionName" class="form-label">Age:</label>
-                                                        <input type="text" id="positionName" class="form-control" aria-label="Barangay" />
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <form class="form7 mt-3">
-                                                <h2 id="form_name">Educational Attainment</h2>
-                                                <div class="row g-3">
-                                                    <div class="col">
-                                                        <label for="educationalattainment" class="form-label">Highest Educational Attainment:</label>
-                                                        <select
-                                                            id="h-educational-a"
-                                                            class="form-control"
-                                                            required
-                                                        >
-                                                            <option value="">Select Highest Educational Attainment</option>
-                                                            <option value="undergraduate">Undergraduate</option>
-                                                            <option value="elementary">Elementary</option>
-                                                            <option value="highschool">High School</option>
-                                                            <option value="bachelor">Bachelor's Degree</option>
-                                                            <option value="postgrad">Postgraduate (Master's Degree)</option>
-                                                            <option value="doctoral">Doctoral (PhD)</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <form class="form8 mt-3">
-                                                <h2 id="form_name">Residence Class</h2>
-                                                <div class="row g-3">
-                                                    <div class="col">
-                                                        <label for="residenceclass" class="form-label">Class:</label>
-                                                        <select
-                                                            id="residenceClass"
-                                                            className="form-control"
-                                                        >
-                                                            <option value="">Select Residence Class</option>
-                                                            <option value="PWD">Person with Disability (PWD)</option>
-                                                            <option value="soloParent">Solo Parent</option>
-                                                            <option value="outOfSchoolYouth">Out of School Youth</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <label for="status" class="form-label">Status:</label>
-                                                    <select
-                                                        id="status"
-                                                        class="form-control"
-                                                        required
-                                                    >
-                                                        <option value="">Update status</option>
-                                                        <option value="active">active</option>
-                                                        <option value="inactive">inactive</option>
-                                                    </select>
-                                                </div>
-                                            </form>
-                                        </section>
-                                        <div className="save_btn">
-                                            <input type="checkbox" className="btn-check" id="btn-check-3" />
-                                            <label className="btn btn-primary" htmlFor="btn-check-3">
-                                                Save Changes
-                                            </label>
-                                        </div>
+                                                </form>
+                                            </section>
+                                            <div className="save_btn">
+                                                <input type="checkbox" className="btn-check" id="btn-check-3" />
+                                                <label className="btn btn-primary" htmlFor="btn-check-3">
+                                                    Save Changes
+                                                </label>
+                                            </div>
+                                            </section>
                                     </div>
 
                                     {/* View Request */}
