@@ -194,7 +194,6 @@ const RegistrationComponent = () => {
     }
     catch (e) {
       console.log(e);
-
     }
 
 
@@ -342,9 +341,6 @@ const RegistrationComponent = () => {
     }
   };
 
-
-
-
   const handleHomeOwnershipChange = (e) => {
     const value = e.target.value;
     setHomeOwnership(value.charAt(0).toUpperCase() + value.slice(1));
@@ -406,9 +402,6 @@ const RegistrationComponent = () => {
 
 
   };
-
-
-
 
 
   return (

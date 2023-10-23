@@ -245,7 +245,6 @@ function Binstallation() {
         status: editStatus,
       };
 
-
       const response = await axios.put(
         `http://localhost:8000/update/installation/${selectedRowData}`,
         updatedData

@@ -31,7 +31,7 @@ class Announcement extends Component {
         <UserNav />
         <div className="user-announcement-background pt-5">
           <div className="container-fluid text-white text-center pt-5">
-            <h3><b>General Announcement</b></h3>
+            <h3><b>Businesses</b></h3>
           </div>
           {this.state.posts.map((post) => (
             <div key={post._id} className="d-flex justify-content-center pt-5">

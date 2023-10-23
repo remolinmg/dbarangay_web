@@ -672,6 +672,35 @@ h1.service__text {
 
 }
 
+
+/* FORGOT PASS STARTS */
+
+.forgotpass-background-image {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/src/user-components/assets/img/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.forgotpass-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.forgotpass-login-box {
+  border-radius: 20px;
+  padding: 20px;
+  width: 400px;
+  background-color: white;
+}
+
+
 /* --------------------------------------------------- PROFILE SUBMENU CONTENT DESIGN  -------------------------------------------------------------- */
 .profile-info {
   display: flex;
@@ -1496,9 +1525,6 @@ li {
   flex-direction: column;
   gap: 10px; 
 } */
-
-
-
 /* END OF REGISTRATION DESIGN */
 
 .profile-menu {

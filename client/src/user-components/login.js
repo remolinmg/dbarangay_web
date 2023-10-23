@@ -198,7 +198,7 @@ const Login = () => {
                 New user? <a href="registration">Register here</a>
               </p>
               <p className="register-link text-center text-dark">
-                <a href="registration">Forgot Password</a>
+                <a href="/forgotpass">Forgot Password</a>
               </p>
               {isLockedOut && (
                 <div className="error-message">
@@ -211,9 +211,6 @@ const Login = () => {
         </div>
       </div>
     </div>
-
-
-
 
   );
 };

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import React from 'react';
 import { useCookies } from "react-cookie";
 import './admin-components/assets/css/style.css';
+
 import Admin from "./admin-components/admin";
 import RegisterA from "./admin-components/register-admin";
 import Bceritificate from "./admin-components/d-barangay-certificate"
@@ -19,7 +20,6 @@ import BofficialsAdmin from "./admin-components/b-officials-admin";
 import StafflogsAdmin from "./admin-components/staff-logs-admin";
 import AdminProfile from "./admin-components/admin-profile";
 import Adminaccounts from "./admin-components/admin-accounts";
-
 import BconstuctionAdmin from "./admin-components/d-barangay-construction"
 import Biddmin from "./admin-components/d-barangay-id"
 import Residentsaccounts from "./admin-components/residents-accounts";
@@ -41,6 +41,8 @@ import UserService from "./user-components/user-service";
 import UserBusiness from "./user-components/user-business";
 import FeedbackAdmin from "./admin-components/feedback";
 import UserProfile from "./user-components/user-profile";
+import ForgotPassword from "./user-components/forgotpassword";
+import ResetPassword from "./user-components/resetpassword";
 import ScrollToTopButton from "./user-components/scrolltotop";
 import ProtectedRoute from "./utils/protectedRoutes";
 import AdminRoute from "./utils/adminRoutes";
@@ -67,6 +69,8 @@ function App() {
           <Route path="admin" element={<Admin />} />
           <Route path="login" element={<Login />} />
           <Route path="registration" element={<Registration />} />
+          <Route path="forgotpass" element={<ForgotPassword />} />
+          <Route path="resetpass" element={<ResetPassword />} />
 
           {/* SUPERADMIN */}
           {/* <Route  element={<SuperRoute/>}> */}
@@ -76,7 +80,7 @@ function App() {
 
 
         {/* ADMIN */}
-          {/* <Route  element={<AdminRoute/>}> */}
+          <Route  element={<AdminRoute/>}>
           <Route path="dashboard" element={<Dashboard />} isAuthenticated={isAuthenticated}/>
           <Route path="d-barangay-certificate" element={<Bceritificate />} isAuthenticated={isAuthenticated}/>
           <Route path="d-barangay-indigency" element={<Bindigency />} isAuthenticated={isAuthenticated}/>
@@ -95,9 +99,9 @@ function App() {
           <Route path="residents-accounts" element={<Residentsaccounts />} isAuthenticated={isAuthenticated}/>
           <Route path="complaints-admin" element={<Complaintsadmin />} isAuthenticated={isAuthenticated}/>
           <Route path="b-promotion-admin" element={<BpromotionAdmin />} isAuthenticated={isAuthenticated}/>
-          {/* </Route>  */}
+          </Route> 
           {/* User */}
-          {/* <Route  element={<ProtectedRoute/>}> */}
+          <Route  element={<ProtectedRoute/>}>
           <Route path="/" element={<Homepage />} isAuthenticated={isAuthenticated}/>
           <Route path="stats" element={<Stats />} isAuthenticated={isAuthenticated}/>
           <Route path="brgy-official" element={<BrgyOfficial />} isAuthenticated={isAuthenticated}/>
@@ -111,7 +115,7 @@ function App() {
           <Route path="business" element={<UserBusiness />} isAuthenticated={isAuthenticated}/>
           <Route path="userprofile" element={<UserProfile />} isAuthenticated={isAuthenticated}/>
           <Route path="scrollup" element={<ScrollToTopButton />} isAuthenticated={isAuthenticated}/>
-          {/* </Route> */}
+          </Route>
 
         </Routes>
       </div>
