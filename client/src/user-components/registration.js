@@ -665,8 +665,8 @@ const RegistrationComponent = () => {
                         style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Ownership</option>
-                        <option value="owner">Owner</option>
-                        <option value="renting">Renting</option>
+                        <option value="Owner">Owner</option>
+                        <option value="Renting">Renting</option>
                       </select>
                     </div>
 
@@ -714,12 +714,12 @@ const RegistrationComponent = () => {
                         style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Highest Educational Attainment</option>
-                        <option value="undergraduate">Undergraduate</option>
-                        <option value="elementary">Elementary</option>
-                        <option value="highschool">High School</option>
-                        <option value="bachelor">Bachelor's Degree</option>
-                        <option value="postgrad">Postgraduate (Master's Degree)</option>
-                        <option value="doctoral">Doctoral (PhD)</option>
+                        <option value="Undergraduate">Undergraduate</option>
+                        <option value="Elementary">Elementary</option>
+                        <option value="Highschool">High School</option>
+                        <option value="Bachelor">Bachelor's Degree</option>
+                        <option value="Postgrad">Postgraduate (Master's Degree)</option>
+                        <option value="Doctoral">Doctoral (PhD)</option>
                       </select>
                     </div>
 

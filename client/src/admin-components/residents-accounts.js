@@ -74,20 +74,24 @@ function Residentsaccounts() {
     const navigate = useNavigate();
 
     const handleSignOut = () => {
-        document.cookie = 'access_token=; ';
-        localStorage.removeItem('jwtToken');
         window.localStorage.clear();
+        document.cookie = 'access_token= ;';
+        localStorage.removeItem('jwtToken');
         navigate('/admin')
     };
+    
+    const back =() =>{
+        window.history.back()
+    }
 
     return (
         <>
             <div className="topbarsection">
                 <div className="topnavbar d-flex justify-content-between align-items-center">
-                    <div className="topnavlef">
-                        <Link to="/admin-accounts" className="adminicon">
+                    <div className="topnavlef adminicon"  onClick={back} >
+                       
                             <BsFillArrowLeftCircleFill className="return1" />
-                        </Link>
+                      
                     </div>
                     <div className="topnavmid">
                         <h3>Barangay Harapin Ang Bukas</h3>
@@ -288,8 +292,8 @@ function Residentsaccounts() {
                                                                 required
                                                             >
                                                                 <option value="">Select Ownership</option>
-                                                                <option value="owner">Owner</option>
-                                                                <option value="renting">Renting</option>
+                                                                <option value="Owner">Owner</option>
+                                                                <option value="Renting">Renting</option>
                                                             </select>
                                                         </div>
                                                         <div class="col">
@@ -352,16 +356,16 @@ function Residentsaccounts() {
                                                             <select
                                                                 id="h-educational-a"
                                                                 class="form-control"
-                                                                placeholder={item.highestEducation}
+                                                                value={item.highestEducation}
                                                                 required
                                                             >
                                                                 <option value="">Select Highest Educational Attainment</option>
-                                                                <option value="undergraduate">Undergraduate</option>
-                                                                <option value="elementary">Elementary</option>
-                                                                <option value="highschool">High School</option>
-                                                                <option value="bachelor">Bachelor's Degree</option>
-                                                                <option value="postgrad">Postgraduate (Master's Degree)</option>
-                                                                <option value="doctoral">Doctoral (PhD)</option>
+                                                                <option value="Undergraduate">Undergraduate</option>
+                                                                <option value="Elementary">Elementary</option>
+                                                                <option value="Highschool">High School</option>
+                                                                <option value="Bachelor">Bachelor's Degree</option>
+                                                                <option value="Postgrad">Postgraduate (Master's Degree)</option>
+                                                                <option value="Doctoral">Doctoral (PhD)</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -374,7 +378,7 @@ function Residentsaccounts() {
                                                             <select
                                                                 id="residenceClass"
                                                                 className="form-control"
-                                                                placeholder={item.residenceClass}
+                                                                value={item.residenceClass}
                                                             >
                                                                 <option value="">Select Residence Class</option>
                                                                 <option value="PWD">Person with Disability (PWD)</option>
