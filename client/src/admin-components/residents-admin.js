@@ -404,8 +404,9 @@ function ResidentsAdmin() {
                     <tbody>
                       {getCurrentPageData().map((item, index) => (
                         <tr key={item._id} onClick={() => { 
-                          window.location.href = `/residents-accounts/`; // Redirect to a URL
-                          window.localStorage.setItem('account', item._id); // Store 'item._id' in local storage
+                          window.localStorage.setItem('account', item._id);
+                          window.location.href = "/residents-accounts"; // Redirect to a URL
+                          
                         }}>
                           <td>{item._id}</td>
                           <td>{item.lastName}</td>
