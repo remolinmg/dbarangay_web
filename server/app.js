@@ -33,6 +33,7 @@ const livelihoodRoutes =  require('./routes/livelihoodRoutes');
 const feedbackRoutes =  require('./routes/feedbackRoutes');
 const blotterRoutes = require('./routes/blotterRoutes');
 const complaintRoutes = require('./routes/complaintRoutes');
+const emergencyRoutes = require('./routes/emergencyRoutes');
 
 
 /********USER*******/
@@ -117,6 +118,11 @@ app.use('/feedback',feedbackRoutes); //add feedback
 app.use('/get/feedback',feedbackRoutes); //get feedback
 app.use('/delete/feedback',feedbackRoutes); //delete feedback
 
+
+/********EMERGENCY*******/
+app.use('/emergency',emergencyRoutes); //add emergency
+app.use('/get/emergency',emergencyRoutes); //get emergency
+app.use('/delete/emergency',emergencyRoutes); //delete emergency
 
 app.listen(8000,()=>{
   console.log("port connected");
