@@ -69,14 +69,14 @@ function App() {
           <Route path="registration" element={<Registration />} />
 
           {/* SUPERADMIN */}
-          <Route  element={<SuperRoute/>}>
+          {/* <Route  element={<SuperRoute/>}> */}
           <Route path="admin-accounts" element={<Adminaccounts />} isAuthenticated={isAuthenticated}/>
           <Route path="staff-logs-admin" element={<StafflogsAdmin />} isAuthenticated={isAuthenticated}/>
-          </Route>
+          {/* </Route> */}
 
 
         {/* ADMIN */}
-          <Route  element={<AdminRoute/>}>
+          {/* <Route  element={<AdminRoute/>}> */}
           <Route path="dashboard" element={<Dashboard />} isAuthenticated={isAuthenticated}/>
           <Route path="d-barangay-certificate" element={<Bceritificate />} isAuthenticated={isAuthenticated}/>
           <Route path="d-barangay-indigency" element={<Bindigency />} isAuthenticated={isAuthenticated}/>
@@ -95,9 +95,9 @@ function App() {
           <Route path="residents-accounts" element={<Residentsaccounts />} isAuthenticated={isAuthenticated}/>
           <Route path="complaints-admin" element={<Complaintsadmin />} isAuthenticated={isAuthenticated}/>
           <Route path="b-promotion-admin" element={<BpromotionAdmin />} isAuthenticated={isAuthenticated}/>
-          </Route> 
+          {/* </Route>  */}
           {/* User */}
-          <Route  element={<ProtectedRoute/>}>
+          {/* <Route  element={<ProtectedRoute/>}> */}
           <Route path="/" element={<Homepage />} isAuthenticated={isAuthenticated}/>
           <Route path="stats" element={<Stats />} isAuthenticated={isAuthenticated}/>
           <Route path="brgy-official" element={<BrgyOfficial />} isAuthenticated={isAuthenticated}/>
@@ -111,7 +111,7 @@ function App() {
           <Route path="business" element={<UserBusiness />} isAuthenticated={isAuthenticated}/>
           <Route path="userprofile" element={<UserProfile />} isAuthenticated={isAuthenticated}/>
           <Route path="scrollup" element={<ScrollToTopButton />} isAuthenticated={isAuthenticated}/>
-          </Route>
+          {/* </Route> */}
 
         </Routes>
       </div>
