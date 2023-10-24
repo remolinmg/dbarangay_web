@@ -1,9 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
 import './assets/css/style.css';
-import { useNavigate, Link, NavLink } from 'react-router-dom';
+import axios from 'axios';
+import React, { useState, useEffect, useRef } from "react";
+import { Outlet, Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../admin-components/assets/img/brgy.png';
-import { BiMenu, BiChevronDown, BiLogOut, BiCog } from 'react-icons/bi';
+import { BiMenu, BiChevronDown } from 'react-icons/bi';
+import { BiLogOut, BiCog } from "react-icons/bi";
 import { AiOutlineDashboard } from 'react-icons/ai';
+import { format } from 'date-fns';
+import { FiUser } from 'react-icons/fi';
 import {
     BsPersonFill,
     BsMegaphoneFill,
@@ -22,7 +26,12 @@ import {
 } from "react-icons/ri";
 import 'bootstrap/dist/css/bootstrap.css';
 import { FaUserCircle } from "react-icons/fa";
+
 function StafflogsAdmin() {
+
+    const [email, setEmail] = useState('');
+    const [accessDate, setAccessDate] = useState('');
+    const [data, setData] = useState([]);
 
     const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -40,22 +49,86 @@ function StafflogsAdmin() {
         setProfileSubmenuVisible(!ProfilesubmenuVisible);
     };
 
+    // NUMBER OF ROWS DISPLAYED -----------------------------------------------
+    const [rowCount, setRowCount] = useState(10);
+
+    // PAGE NUMBER --------------------------------------------------------------
+    const [currentPage, setCurrentPage] = useState(1);
+
     // SEARCH QUERY --------------------------------------------------------------
-    const [searchQuery, setSearchQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState(""); // State for the search query
+
+    // Event handler for dropdown change ----------------------------------------
+    const handleRowCountChange = (e) => {
+        const selectedRowCount = parseInt(e.target.value);
+        setRowCount(selectedRowCount);
+        setCurrentPage(1); // Reset current page to 1 when row count changes
+    };
 
     // Event handler for search input change -------------------------------------
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
-
+        setCurrentPage(1); // Reset current page to 1 when search query changes
     };
-    const navigate = useNavigate();  
 
-  const handleSignOut = () => {
-    document.cookie = 'access_token=; ';
-    localStorage.removeItem('jwtToken');
-    window.localStorage.clear();
-    navigate('/admin')
-  };
+    // Function to get the current page data using slice
+    const getCurrentPageData = () => {
+        const startIndex = (currentPage - 1) * rowCount;
+        const endIndex = startIndex + rowCount;
+        return filteredData.slice(startIndex, endIndex);
+    };
+
+    // Function to go to the next page ------------------------------------------
+    const nextPage = () => {
+        if (currentPage < Math.ceil(filteredData.length / rowCount)) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    // Function to go to the previous page --------------------------------------
+    const prevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    // Calculate the starting and ending indices for the current page -------------
+    const startIndex = (currentPage - 1) * rowCount;
+    const endIndex = startIndex + rowCount;
+
+    // Function to filter data based on search query -----------------------------
+    const filteredData = data.filter((item) => {
+        const itemValues = Object.values(item).map((value) =>
+            value.toString().toLowerCase()
+        );
+        return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+    });
+
+
+
+    // Data
+    useEffect(() => {
+        fetchData(); // Fetch initial data when the component mounts
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/get/stafflogs');
+            setData(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+
+    const navigate = useNavigate();
+
+    const handleSignOut = () => {
+        document.cookie = 'access_token=; ';
+        localStorage.removeItem('jwtToken');
+        window.localStorage.clear();
+        navigate('/admin')
+    };
 
     return (
         <>
@@ -94,11 +167,11 @@ function StafflogsAdmin() {
                                         <hr />
                                         <div className="button-profile1">
 
-                                            
-                                                <div onClick={handleSignOut} className="profilebuttons">
-                                                    <BiLogOut className="profileicons" /> Log out
-                                                </div>
-                                            
+
+                                            <div onClick={handleSignOut} className="profilebuttons">
+                                                <BiLogOut className="profileicons" /> Log out
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -213,65 +286,69 @@ function StafflogsAdmin() {
                 </div>
             </div>
             <div className={`container-documents vh-100 h-100 ${isSidebarCollapsed ? 'expanded' : ''}`}>
+                <div class="pagetitle">
+                    <h1> Staff Logs </h1>
+                </div>
+                {/* -------------------------------------------------------------  TABLE -------------------------------------------------------------  */}
                 <main id="main" class="main">
-
-                    <div class="pagetitle">
-                        <h1> STAFF LOGS </h1>
-                    </div>
-
                     <section class="section">
                         <div class="row">
-                            <div class="col-12">
-
+                            <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="d-md-flex justify-content-between align-items-center">
-                                            <h5 class="card-title">Staff Movement</h5>
-                                            <div className="input-group w-25">
-                                                <input type="text" className="form-control" placeholder="Search" aria-label="Enter search keyword" name="query"
-                                                    value={searchQuery} onChange={handleSearchChange} />
-                                                <button className="btn btn-outline-secondary" type="button">
-                                                    <i className="bi bi-search"></i>
-                                                </button>
+                                        <div className="row p-2 d-flex justify-content-between">
+                                            <div className="col-4">
+                                                <div className="table-pages">
+                                                    <nav aria-label="Page navigation example">
+                                                        <ul className="pagination">
+                                                            <li className="page-item">
+                                                                <a className="page-link" href="#" aria-label="Previous" onClick={prevPage}>
+                                                                    <span aria-hidden="true">&laquo;</span>
+                                                                </a>
+                                                            </li>
+                                                            {Array.from({ length: Math.ceil(filteredData.length / rowCount) }, (_, i) => (
+                                                                <li className={`page-item ${i + 1 === currentPage ? 'active' : ''}`} key={i}>
+                                                                    <a className="page-link" href="#" onClick={() => setCurrentPage(i + 1)}>
+                                                                        {i + 1}
+                                                                    </a>
+                                                                </li>
+                                                            ))}
+                                                            <li className="page-item">
+                                                                <a className="page-link" href="#" aria-label="Next" onClick={nextPage}>
+                                                                    <span aria-hidden="true">&raquo;</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <table class="table overflow-x-hidden">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">User</th>
-                                                    <th scope="col">Date</th>
-                                                    <th scope="col">Action</th>
+
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Date of Access</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Mark</td>
-                                                    <td>01 - June - 2023</td>
-                                                    <td>created concise and clear announcements about the LIGA in Barangay. </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Carl </td>
-                                                    <td>01 - June - 2023</td>
-                                                    <td>  Staff Posted Livelihood Programs about Women</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Larry the Bird</td>
-                                                    <td>01 - June - 2023</td>
-                                                    <td> Larry continuously monitor the distress signal sent by residents around barangay</td>
-                                                </tr>
+                                                {getCurrentPageData().map((item) => (
+                                                    <tr key={item._id}>
+                                                        <td>{item.email}</td>
+                                                        <td>{item.accessDate}</td>
+
+                                                    </tr>
+                                                ))}
                                             </tbody>
+
                                         </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                </main>
+                    </section >
+                </main >
+
             </div>
         </>
     );

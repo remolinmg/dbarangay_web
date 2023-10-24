@@ -34,6 +34,7 @@ const feedbackRoutes =  require('./routes/feedbackRoutes');
 const blotterRoutes = require('./routes/blotterRoutes');
 const complaintRoutes = require('./routes/complaintRoutes');
 const emergencyRoutes = require('./routes/emergencyRoutes');
+const StaffLogsRoutes = require('./routes/staffLogsRoutes');
 const healthRoutes = require('./routes/healthRoutes');
 
 
@@ -130,6 +131,9 @@ app.use('/delete/feedback',feedbackRoutes); //delete feedback
 app.use('/emergency',emergencyRoutes); //add emergency
 app.use('/get/emergency',emergencyRoutes); //get emergency
 app.use('/delete/emergency',emergencyRoutes); //delete emergency
+
+/*******STAFFLOGS*******/
+app.use('/get/stafflogs', StaffLogsRoutes) // get stafflogs
 
 app.listen(8000,()=>{
   console.log("port connected");

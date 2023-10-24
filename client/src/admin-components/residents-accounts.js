@@ -265,8 +265,8 @@ function Residentsaccounts() {
                                                                 value={item.sex}
                                                             >
                                                                 <option value="">Select Sex</option>
-                                                                <option value="male">Male</option>
-                                                                <option value="female">Female</option>
+                                                                <option value="Male">Male</option>
+                                                                <option value="Female">Female</option>
                                                             </select>
                                                         </div>
                                                         <div class="col">
@@ -277,10 +277,10 @@ function Residentsaccounts() {
                                                                 value={item.civilStatus}
                                                             >
                                                                 <option value="">Select Civil Status</option>
-                                                                <option value="single">Single</option>
-                                                                <option value="married">Married</option>
-                                                                <option value="widow">Widow/er</option>
-                                                                <option value="separated">Separated</option>
+                                                                <option value="Single">Single</option>
+                                                                <option value="Married">Married</option>
+                                                                <option value="Widow">Widow/er</option>
+                                                                <option value="Separated">Separated</option>
                                                             </select>
                                                         </div>
                                                         <div class="col">
@@ -334,7 +334,7 @@ function Residentsaccounts() {
                                                                 type="date"
                                                                 className="form-control"
                                                                 id="birthdate"
-                                                                placeholder={item.birthdate}
+                                                                value={Date(item.dateOfBirth)}
                                                                 required
                                                             />
                                                         </div>

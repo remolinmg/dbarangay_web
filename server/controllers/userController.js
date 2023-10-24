@@ -123,7 +123,6 @@ exports.updatepass = async (req, res) => {
   const { id } = req.params.id;
   const { password } = req.body;
 
-
   try {
 
     const hashedPassword = await bcrypt.hash(password, 10);
