@@ -6,6 +6,7 @@ const blotterSchema = new mongoose.Schema({
   defendant: String,
   type: String,
   address: String,
+  kind: String,
   status: String,
   filename: String,
 });

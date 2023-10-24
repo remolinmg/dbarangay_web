@@ -24,6 +24,7 @@ import BconstuctionAdmin from "./admin-components/d-barangay-construction"
 import Biddmin from "./admin-components/d-barangay-id"
 import Residentsaccounts from "./admin-components/residents-accounts";
 import Complaintsadmin from "./admin-components/complaints-admin";
+import Healthadmin from "./admin-components/health-admin";
 
 import UserNav from "./user-components/user-navbar";
 import Announcement from "./user-components/user-announcement";
@@ -98,6 +99,7 @@ function App() {
           <Route path="admin-profile" element={<AdminProfile />} isAuthenticated={isAuthenticated}/>
           <Route path="residents-accounts" element={<Residentsaccounts />} isAuthenticated={isAuthenticated}/>
           <Route path="complaints-admin" element={<Complaintsadmin />} isAuthenticated={isAuthenticated}/>
+          <Route path="health-admin" element={<Healthadmin />} isAuthenticated={isAuthenticated}/>
           <Route path="b-promotion-admin" element={<BpromotionAdmin />} isAuthenticated={isAuthenticated}/>
           </Route> 
           {/* User */}
