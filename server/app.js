@@ -34,6 +34,7 @@ const feedbackRoutes =  require('./routes/feedbackRoutes');
 const blotterRoutes = require('./routes/blotterRoutes');
 const complaintRoutes = require('./routes/complaintRoutes');
 const emergencyRoutes = require('./routes/emergencyRoutes');
+const healthRoutes = require('./routes/healthRoutes');
 
 
 /********USER*******/
@@ -88,6 +89,12 @@ app.use('/complaint',complaintRoutes);//add complaint
 app.use('/get/complaint',complaintRoutes); //get complaint
 app.use('/update/complaint',complaintRoutes);//update complaint
 app.use('/delete/complaint',complaintRoutes);//delete complaint
+
+/********HEALTH*******/
+app.use('/health',healthRoutes);//add health
+app.use('/get/health',healthRoutes); //get health
+app.use('/update/health',healthRoutes);//update health
+app.use('/delete/health',healthRoutes);//delete health
 
 /********ANNOUNCEMENT*******/
 app.use('/announcement', announcementRoutes);//add announcement

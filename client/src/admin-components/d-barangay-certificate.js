@@ -385,7 +385,7 @@ function BclearanceAdmin() {
                     <li>
                       <Link to="/blotter-admin" className="nav-link ">
                         <RiFolderWarningFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Blotter Records</span>
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Incident Reports</span>
 
                       </Link>
                     </li>

@@ -152,6 +152,7 @@ function Complaintsadmin() {
   const [defendant, setDefendant] = useState('');
   const [type, setType] = useState('');
   const [address, setAddress] = useState('');
+  const [kind, setKind] = useState('');
   const [status, setStatus] = useState('');
   const [file, setFile] = useState();
   //-------------------------- ADD FUNCTION -----------------------------------
@@ -163,6 +164,7 @@ function Complaintsadmin() {
     formData.append('defendant', defendant);
     formData.append('type', type);
     formData.append('address', address);
+    formData.append('kind', kind);
     formData.append('status', status);
     formData.append('file', file);
     axios.post('http://localhost:8000/complaint', formData).then(res => {
@@ -182,6 +184,7 @@ function Complaintsadmin() {
   const [editDefendant, setEditDefendant] = useState('');
   const [editType, setEditType] = useState('');
   const [editAddress, setEditAddress] = useState('');
+  const [editKind, setEditKind] = useState('');
   const [editStatus, setEditStatus] = useState('');
   const [editFile, setEditFile] = useState('');
   const [selectedRowData, setSelectedRowData] = useState(null);
@@ -196,6 +199,7 @@ function Complaintsadmin() {
     setEditDefendant(rowData.defendant);
     setEditType(rowData.type);
     setEditAddress(rowData.address);
+    setEditKind(rowData.kind);
     setEditStatus(rowData.status);
     setShowEditForm(true);
   };
@@ -208,6 +212,7 @@ function Complaintsadmin() {
       formData.append('defendant', editDefendant);
       formData.append('type', editType);
       formData.append('address', editAddress);
+      formData.append('kind', editKind);
       formData.append('status', editStatus);
       formData.append('file', editFile);
       const response = await axios.put(
@@ -342,7 +347,7 @@ function Complaintsadmin() {
                     <li>
                       <Link to="/blotter-admin" className="nav-link ">
                         <RiFolderWarningFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Blotter Records</span>
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Incident Reports</span>
 
                       </Link>
                     </li>
@@ -410,6 +415,7 @@ function Complaintsadmin() {
                 <ul className="dropdown-menu dropdown-topcategory">
                   <li><Link to="/blotter-admin" className="dropdown-item text-center">Blotter</Link></li>
                   <li><Link to="/complaints-admin" className="dropdown-item text-center">Complaints</Link></li>
+                  <li><Link to="/health-admin" className="dropdown-item text-center">Medical</Link></li>
                 </ul>
               </div>
             </div>
@@ -490,8 +496,9 @@ function Complaintsadmin() {
                           <th scope="col">COMPLAINT TYPE</th>
                           <th scope="col">INCIDENT ADDRESS</th>
                           <th scope="col">DOCUMENTATION</th>
-                          <th scope="col">Status</th>
-                          <th scope="col">Actions</th>
+                          <th scope="col">TYPE</th>
+                          <th scope="col">STATUS</th>
+                          <th scope="col">ACTIONS</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -508,6 +515,7 @@ function Complaintsadmin() {
                               alt=""
                               className="business-picture"
                             /></td>
+                            <td>{item.kind}</td>
                             <td>{item.status}</td>
                             <td>
                               <button className="btn btn-primary btn-sm" onClick={() => showEditFormHandler(item)}>Edit</button>
@@ -532,13 +540,14 @@ function Complaintsadmin() {
                       <h2 className="certificate-title">ADD COMPLAINT INFO</h2>
                       <div className="certificate-content">
 
-                        <div className="form-group">
-                          <label htmlFor="date">COMPLAINT Date </label>
+                      <div className="form-group">
+                          <label htmlFor="date">COMPLAINT DATE </label>
                           <input
                             type="date"
                             id="date"
                             name="date" onChange={(e) => { setDate(e.target.value); }}
                             className="form-control" required /> </div>
+                         
 
                         <div className="form-group">
                           <label htmlFor="complainant">COMPLAINANT </label>
@@ -558,12 +567,22 @@ function Complaintsadmin() {
 
                         <div className="form-group">
                           <label htmlFor="type"> COMPLAINT TYPE </label>
-                          <input
-                            type="text"
+                          <select
                             id="type"
-                            name="type"
+                            className="form-control"
                             onChange={(e) => { setType(e.target.value); }}
-                            className="form-control" required /> </div>
+                            style={{ fontSize: '20px', marginBottom: '10px' }}
+                            required
+                          >
+                            <option value="????" ></option>
+                            <option value="Noise Complaints">NOISE COMPLAINT</option>
+                            <option value="Illegal Parking">ILLEGAL PARKING</option>
+                            <option value="Curfew Violator">CURFEW VIOLATOR</option>
+                            <option value="Vandalism">VANDALISM</option>
+                            <option value="Rescission">RESCISSION OF CONTRACT</option>
+                            <option value="Garbage Problem">GARBAGE PROBLEM</option>
+                            <option value="Others">OTHERS</option>
+                          </select> </div>
 
                         <div className="form-group">
                           <label htmlFor="address">INCIDENT ADDRESS </label>
@@ -581,6 +600,20 @@ function Complaintsadmin() {
                             id="file"
                             name="file" onChange={(e) => setFile(e.target.files[0])}
                             className="form-control" required /></div>
+
+                             <div className="form-group">
+                          <label htmlFor="kind">TYPE</label>
+                          <select
+                            id="kind"
+                            className="form-control"
+                            onChange={(e) => { setKind(e.target.value); }}
+                            style={{ fontSize: '20px', marginBottom: '10px' }}
+                          >
+                            <option value="????" ></option>
+                            <option value="major">MAJOR</option>
+                            <option value="minor">MINOR</option>
+                          </select>
+                        </div>
 
                         <div className="form-group">
                           <label htmlFor="status">STATUS</label>
@@ -616,7 +649,7 @@ function Complaintsadmin() {
                       <h2 className='certificate-title'>EDIT RESIDENTS INFO</h2>
                       <div className='certificate-content'>
                         <div className="form-group">
-                          <label htmlFor="date">COMPLAINT Date </label>
+                          <label htmlFor="date">COMPLAINT DATE </label>
                           <input
                             type="date"
                             id="date"
@@ -644,13 +677,23 @@ function Complaintsadmin() {
 
                         <div className="form-group">
                           <label htmlFor="type"> COMPLAINT TYPE </label>
-                          <input
-                            type="text"
+                          <select
                             id="type"
-                            name="type"
-                            value={editType}
+                            className="form-control"
                             onChange={(e) => { setEditType(e.target.value); }}
-                            className="form-control" required /> </div>
+                            style={{ fontSize: '20px', marginBottom: '10px' }}
+                            required
+                            value={editType}
+                          >
+                            <option value="????" ></option>
+                            <option value="Noise Complaints">NOISE COMPLAINT</option>
+                            <option value="Illegal Parking">ILLEGAL PARKING</option>
+                            <option value="Curfew Violator">CURFEW VIOLATOR</option>
+                            <option value="Vandalism">VANDALISM</option>
+                            <option value="Rescission">RESCISSION OF CONTRACT</option>
+                            <option value="Garbage Problem">GARBAGE PROBLEM</option>
+                            <option value="Others">OTHERS</option>
+                          </select> </div>
 
                         <div className="form-group">
                           <label htmlFor="address">INCIDENT ADDRESS </label>
@@ -669,6 +712,22 @@ function Complaintsadmin() {
                             id="file"
                             name="file" onChange={(e) => setEditFile(e.target.files[0])}
                             className="form-control" /></div>
+
+                          <div className="form-group">
+                          <label htmlFor="kind">TYPE</label>
+                          <select
+                            id="kind"
+                            className="form-control"
+                            onChange={(e) => { setEditKind(e.target.value); }}
+                            style={{ fontSize: '20px', marginBottom: '10px' }}
+                            value={editKind}
+                          >
+                            <option value="????" ></option>
+                            <option value="major">MAJOR</option>
+                            <option value="minor">MINOR</option>
+                          </select>
+                        </div>
+
                         <div className="form-group">
                           <label htmlFor="status">STATUS</label>
                           <select
