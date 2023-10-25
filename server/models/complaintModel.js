@@ -4,7 +4,7 @@ const complaintSchema = new mongoose.Schema({
   date:String,
   complainant: String,
   defendant: String,
-  type: String,
+  complainttype: String,
   address: String,
   kind: String,
   status: String,

@@ -565,7 +565,7 @@ function BlotterAdmin() {
                             className="form-control" required /></div>
 
                         <div className="form-group">
-                          <label htmlFor="type"> COMPLAINT TYPE </label>
+                          <label htmlFor="type"> Blotter Type </label>
                           <select
                             id="type"
                             className="form-control"
