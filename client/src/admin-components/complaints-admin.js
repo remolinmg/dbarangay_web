@@ -150,7 +150,7 @@ function Complaintsadmin() {
   const [date, setDate] = useState('');
   const [complainant, setComplainant] = useState('');
   const [defendant, setDefendant] = useState('');
-  const [type, setType] = useState('');
+  const [complainttype, setType] = useState('');
   const [address, setAddress] = useState('');
   const [kind, setKind] = useState('');
   const [status, setStatus] = useState('');
@@ -162,7 +162,7 @@ function Complaintsadmin() {
     formData.append('date', date);
     formData.append('complainant', complainant);
     formData.append('defendant', defendant);
-    formData.append('type', type);
+    formData.append('complainttype', complainttype);
     formData.append('address', address);
     formData.append('kind', kind);
     formData.append('status', status);
@@ -507,7 +507,7 @@ function Complaintsadmin() {
                             <td>{item.date}</td>
                             <td>{item.complainant}</td>
                             <td>{item.defendant}</td>
-                            <td>{item.type}</td>
+                            <td>{item.complainttype}</td>
                             <td>{item.address}</td>
                             <td><img
                               style={{ width: "100px", height: "100px" }}

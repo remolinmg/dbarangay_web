@@ -25,6 +25,7 @@ import Biddmin from "./admin-components/d-barangay-id"
 import Residentsaccounts from "./admin-components/residents-accounts";
 import Complaintsadmin from "./admin-components/complaints-admin";
 import Healthadmin from "./admin-components/health-admin";
+import Dashboard1 from "./admin-components/dashboard1";
 
 import UserNav from "./user-components/user-navbar";
 import Announcement from "./user-components/user-announcement";
@@ -83,6 +84,7 @@ function App() {
         {/* ADMIN */}
           <Route  element={<AdminRoute/>}>
           <Route path="dashboard" element={<Dashboard />} isAuthenticated={isAuthenticated}/>
+          <Route path="dashboard1" element={<Dashboard1 />} isAuthenticated={isAuthenticated}/>
           <Route path="d-barangay-certificate" element={<Bceritificate />} isAuthenticated={isAuthenticated}/>
           <Route path="d-barangay-indigency" element={<Bindigency />} isAuthenticated={isAuthenticated}/>
           <Route path="d-barangay-installation" element={<Binstallation />} isAuthenticated={isAuthenticated}/>
