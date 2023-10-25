@@ -28,7 +28,7 @@ import React from 'react';
 import { FaUserCircle } from "react-icons/fa";
 import { Bar, Doughnut, Pie } from 'react-chartjs-2';
 function Dashboard() {
-    const pieChartTopRef = useRef(null);
+   
 
     const [totalPopulation, setTotalPopulation] = useState(0);
     const [registeredVoters, setRegisteredVoters] = useState(0);

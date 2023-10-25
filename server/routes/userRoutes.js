@@ -10,6 +10,7 @@ router.put('/resetpass/:id/:resetToken', userController.updatepass);
 router.get('/resetpass/:id/:resetToken', userController.resetpass);
 router.get('/get/user',  userController.getUser);
 router.get('/get/useredit/:id', userController.getUserData);
+router.get('/get/useradmin',  userController.getUserAdmin);
 
 
 module.exports = router;

@@ -558,7 +558,7 @@ function BpermitAdmin() {
                                             </thead>
 
                                             <tbody>
-                                                {getCurrentPageData().map((val) => {
+                                                {getCurrentPageData().reverse().map((val) => {
                                                     return <tr key={val.id}>
 
                                                         <td>{val.businessName}</td>

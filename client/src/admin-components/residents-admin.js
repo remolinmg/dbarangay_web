@@ -311,7 +311,6 @@ function ResidentsAdmin() {
                   placeholder="Search"
                   aria-label="Enter search keyword"
                   name="query"
-                  value={searchQuery}
                   onChange={handleSearchChange}
                 />
                 <button className="btn btn-outline-secondary" type="button">
@@ -330,8 +329,8 @@ function ResidentsAdmin() {
                   value={searchQuery}
                   onChange={handleSearchChange}
                 >
-                   <option value="new">Active</option>
-                  <option value="on process">Inactive</option>
+                   <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
               </select>
               </div>
             </div>

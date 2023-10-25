@@ -391,39 +391,7 @@ function FeedbackAdmin() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {/* {filteredData.map((val) => (
-                                                    <tr key={val.id}>
-                                                        <th scope="row">{val.id}</th>
-                                                        <td>{val.fdate}</td>
-                                                        <td className="w-75">
-                                                            {expandedRows[val.id] ? (
-                                                                <>
-                                                                    {val.ffeedback}
-                                                                    <button
-                                                                        onClick={() => toggleRow(val.id)}
-                                                                        className="btn btn-link btn-sm"
-                                                                    >
-                                                                        See Less
-                                                                    </button>
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    {val.ffeedback.slice(0, 50)}
-                                                                    {val.ffeedback.length > 50 && (
-                                                                        <button
-                                                                            onClick={() => toggleRow(val.id)}
-                                                                            className="btn btn-link btn-sm"
-                                                                        >
-                                                                            See More
-                                                                        </button>
-                                                                    )}
-                                                                </>
-                                                            )}
-                                                        </td>
-                                                    </tr>
-                                                ))} */}
-
-                                                {filteredData.map((val) => (
+                                                {filteredData.reverse().map((val) => (
                                                     <tr key={val._id}>
                                                         <th scope="row">{val._id}</th>
                                                         <td>{val.date}</td>

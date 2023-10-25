@@ -541,7 +541,7 @@ function Binstallation() {
                         </tr>
                       </thead>
                       <tbody>
-                        {getCurrentPageData().map((item, index) => (
+                        {getCurrentPageData().reverse().map((item, index) => (
                           <tr key={index}>
                             <td>{item.residentName}</td>
                             <td>{item.address}</td>

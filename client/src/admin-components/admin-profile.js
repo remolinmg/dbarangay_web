@@ -1,371 +1,311 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import Picture from '../user-components/assets/img/Official1.jpg';
 import '../user-components/assets/css/user-style.css';
 import './assets/css/style.css';
-import Axios from "axios";
-import { BsCamera } from "react-icons/bs";
-import { Link, NavLink, useNavigate} from 'react-router-dom';
-import { useRef, useState } from 'react';
-import { BiLogOut, BiCog } from "react-icons/bi";
-import { BsFillArrowLeftCircleFill } from "react-icons/bs";
+import { useRef, useState, useEffect } from 'react';
 
 import { FaUserCircle } from "react-icons/fa";
 
 function Admindetails() {
-  const stylediv = {
+  const [activeContent, setActiveContent] = useState(1);
+    const [profilePicSrc, setProfilePicSrc] = useState('https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG-Picture.png');
+    const [selectedFile, setSelectedFile] = useState(null);
 
-    height: "140px",
-    backgroundColor: "rgb(233, 236, 239)"
-  };
-  const stylespan = {
-    color: "rgb(166, 168, 170)",
-    font: "bold 8pt Arial"
-  };
-  const profileRef = useRef(null);
+    const showContent = (contentNumber) => {
+        setActiveContent(contentNumber);
+    };
 
-  const [ProfilesubmenuVisible, setProfileSubmenuVisible] = useState(false);
-  const toggleProfileSubmenu = () => {
-    setProfileSubmenuVisible(!ProfilesubmenuVisible);
-  };
-  const navigate = useNavigate();  
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
 
-const handleSignOut = () => {
-    document.cookie = 'access_token=; ';
-    localStorage.removeItem('jwtToken');
-    window.localStorage.clear();
-    navigate('/admin')
-  };
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                setProfilePicSrc(event.target.result);
+            };
+            reader.readAsDataURL(file);
+            setSelectedFile(file);
+        }
+    };
 
-  return (
-    <>
-      <div className="topbarsection">
-        <div className="topnavbar d-flex justify-content-between align-items-center">
-          <div className="topnavlef">
-            <Link to="/admin-accounts" className="adminicon">
-              <BsFillArrowLeftCircleFill className="return1" />
-            </Link>
-          </div>
-          <div className="topnavmid">
-            <h3>Barangay Harapin Ang Bukas</h3>
-          </div>
-          <div className="topnavright">
-            <div ref={profileRef}>
-              <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-              {ProfilesubmenuVisible && (
-                <div className="Profilesubmenuadmin">
-                  <div className="admininfo">
-                    <div className="rightprofile">
-                      <FaUserCircle className="adminprofile" />
-                    </div>
-                    <div className="leftprofile">
-                      <h5>CLARISE ANNELY</h5>
-                      <h5>clariseannely@gmail.com</h5>
-                    </div>
-                  </div>
-                  <div className="lowerprofile">
-                    <div className="button-profile1">
-                      <NavLink to="/admin-profile" activeClassName="active">
-                        <div href="#" className="profilebuttons">
-                          <BiCog className="profileicons" /> Settings
-                        </div>
-                      </NavLink>
-                    </div>
-                    <hr />
-                    <div className="button-profile1">
+    const [ProfilesubmenuVisible, setProfileSubmenuVisible] = useState(false);
+    const toggleProfileSubmenu = () => {
+        setProfileSubmenuVisible(!ProfilesubmenuVisible);
+    };
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
+    const profileRef = useRef(null);
+    const toggleDropdown = () => {
+        setDropdownOpen(!isDropdownOpen);
+    };
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (profileRef.current && !profileRef.current.contains(event.target)) {
+                setProfileSubmenuVisible(false);
+            }
+        };
 
-                      
-                        <div className="profilebuttons" onClick={handleSignOut}>
-                          <BiLogOut className="profileicons" /> Log out
-                        </div>
-                   
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+        document.addEventListener('mousedown', handleClickOutside);
 
-        </div>
-      </div>
-      <div className="py-5 text-dark" style={{ backgroundColor: "#1D5D9B" }}>
-        <div class="container userprof mt-5 ">
-          <div class="row flex-lg-nowrap" >
-            <div class="col">
-              <div class="row">
-                <div class="col mb-3">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="e-profile">
-                        <div class="row">
-                          <div class="col-12 col-sm-auto mb-3">
-                            <div class="mx-auto" style={{ width: "140px" }}>
-                              <div class="d-flex justify-content-center align-items-center rounded" style={stylediv}>
-                                <span style={stylespan}>140x140</span>
-                              </div>
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+
+    return (
+        <>
+        
+            <div className="user-profile">
+                <div className="container user-profile-container pt-5 pe-3 ps-3 pb-5">
+                    <div className="card user-profile-card p-4 m-5">
+                        <section>
+                            <div className="profile-pic-container ps-3 m-0">
+                                <img src={profilePicSrc} alt="Profile Picture" className="profile-pic" id="profile-pic" />
                             </div>
-                          </div>
-                          <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                            <div class=" text-sm-left mb-2 mb-sm-0">
-                              <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Carl Joshua Monreal</h4>
-                              <div class="text-muted"><small>0101011</small></div>
-                              <div class="mt-2">
-                                <button class="btn btn-primary" type="button">
-                                  <i style={{ fontSize: "20px" }}><BsCamera /> </i>
-                                  <span>Change Photo</span>
-                                </button>
-                              </div>
+                            <div className="p-3 m-0">
+                                <input type="file" accept="image/*" id="file-input" className="file-input" onChange={handleFileChange} />
+                                <label htmlFor="file-input" className="upload-button">Upload Profile</label>
                             </div>
-                            <div class="text-center text-sm-right">
-                              <div class="text-muted"><small>Barangay Harapin Ang Bukas</small></div>
+                        </section>
+                        <section>
+                            <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                <input type="radio" onClick={() => showContent(1)} className="btn-check" name="btnradio" id="btnradio1" autoComplete="off" checked={activeContent === 1} />
+                                <label className="btn btn-outline-primary" id="settings_btn" htmlFor="btnradio1">Settings</label>
+
+                                <input type="radio" onClick={() => showContent(2)} className="btn-check" name="btnradio" id="btnradio2" autoComplete="off" checked={activeContent === 2} />
+                                <label className="btn btn-outline-primary" id="viewrequest_btn" htmlFor="btnradio2">View Requests</label>
                             </div>
-                          </div>
-                        </div>
-                        <ul class="nav nav-tabs">
-                          <li class="nav-item"><a href="" class="active nav-link">Settings</a></li>
-                        </ul>
-                        <div class="tab-content pt-3">
-                          <div class="tab-pane active">
-                            <form class="form" novalidate="">
-                              <div class="row text-dark">
-                                <div class="col">
-                                  <div class="row ">
-                                    <div class="col">
-                                      <div class="form-group">
-                                        <label>First Name</label>
-                                        <input class="form-control" type="text" name="fname" placeholder="Carl Joshua" value="Carl Joshua" />
-                                      </div>
-                                    </div>
-                                    <div class="col">
-                                      <div class="form-group">
-                                        <label>Lastname</label>
-                                        <input class="form-control" type="text" name="mname" placeholder="Dorado" value="Dorado" />
-                                      </div>
-                                    </div>
-                                    <div class="col">
-                                      <div class="form-group">
-                                        <label>Lastname</label>
-                                        <input class="form-control" type="text" name="lname" placeholder="Monreal" value="Monreal" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="mt-3 mb-3">
-                                    <div class="row">
-                                      <div class="col">
-                                        <label class="mb-2">Sex</label>
-                                        <div class="custom-controls-stacked px-2">
-                                          <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="sex-male" checked="" />
-                                            <label class="custom-control-label" for="sex-male">Male</label>
-                                          </div>
-                                          <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="sex-female" checked="" />
-                                            <label class="custom-control-label" for="sex-female">Female</label>
-                                          </div>
+                            <div id="line"></div>
+                        </section>
+                        <section>
+                            <div id="content1" className={`settings content ${activeContent === 1 ? 'active' : ''}`}>
+                                {/* Residence Profile Section */}
+                                <section className="residence-profile m-3">
+                                    <h3><b>Residence Profile</b></h3>
+                                    <form class="form1">
+                                        <h2 id="form_name">FULL NAME</h2>
+                                        <div class="row g-3">
+                                            <div class="col">
+                                                <label for="lastName" class="form-label">Last Name:</label>
+                                                <input type="text" id="lastName" class="form-control" placeholder="LAST NAME" aria-label="LAST NAME"  />
+                                            </div>
+                                            <div class="col">
+                                                <label for="firstName" class="form-label">First Name:</label>
+                                                <input type="text" id="firstName" class="form-control" placeholder="FIRST NAME" aria-label="FIRST NAME"  />
+                                            </div>
+                                            <div class="col">
+                                                <label for="midName" class="form-label">Middle Name:</label>
+                                                <input type="text" id="midName" class="form-control" placeholder="MIDDLE NAME" aria-label="MIDDLE NAME"  />
+                                            </div>
+                                            <div class="col">
+                                                <label for="midName" class="form-label">Middle Name:</label>
+                                                <input type="text" id="suffix" class="form-control" placeholder="SUFFIX" aria-label="SUFFIX"  />
+                                            </div>
                                         </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="form-group">
-                                    <label htmlFor="religion">Religion</label>
-                                    <select
-                                      id="religion"
-                                      className="option" style={{ fontSize: '14px', marginBottom: '10px' }}
-                                    >
-                                      <option value="">Select Religion</option>
-                                      <option value="catholic">Roman Catholic</option>
-                                      <option value="inc">Iglesia ni Cristo</option>
-                                      <option value="muslim">Muslim</option>
-                                      <option value="islam">Islam</option>
-                                      <option value="sda">Seventh Day Adventist</option>
-                                      <option value="jw">Jehovah's Witness</option>
-                                      <option value="others">Other religious affiliations</option>
-                                    </select>
-                                  </div>
-                                  <div className="form-group">
-                                    <label htmlFor="civilStatus">Civil Status</label>
-                                    <select
-                                      id="civilStatuss"
-                                      className="option" style={{ fontSize: '14px', marginBottom: '10px' }}
-                                    >
-                                      <option value="">Select Civil Status</option>
-                                      <option value="single">Single</option>
-                                      <option value="married">Married</option>
-                                      <option value="divorced">Divorced</option>
-                                      <option value="separated">Separated</option>
-                                    </select>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="form-group">
-                                        <label>Nationality</label>
-                                        <input class="form-control" type="text" placeholder="Filipino" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="form-group">
-                                        <label>Address</label>
-                                        <input class="form-control" type="text" placeholder="123 Barangay Harapin Ang Bukas Mandaluyong,City" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="checkbox-container mt-3 mb-3">
-                                    <label htmlFor="isLivingWParents">Check if Living with Parents</label>
-                                    <input
-                                      type="checkbox"
-                                      id="isLivingWParents"
-                                    />
+                                    </form>
+                                    <form class="form2">
+                                        <h2 id="form_name">COMPLETE ADDRESS</h2>
+                                        <div class="row g-3">
+                                            <div class="col">
+                                                <label for="house&streetName" class="form-label">House no., Street:</label>
+                                                <input type="text" id="house&streetName" class="form-control" aria-label="House no. & Street"  />
+                                            </div>
+                                            <div class="col">
+                                                <label for="brgyName" class="form-label">Barangay:</label>
+                                                <input type="text" id="brgyName" class="form-control" aria-label="Barangay"  />
+                                            </div>
+                                            <div class="col">
+                                                <label for="districtName" class="form-label">District:</label>
+                                                <input type="text" id="districtName" class="form-control" aria-label="District"  />
+                                            </div>
+                                        </div>
+                                        <div class="row g-3">
+                                            <div class="col">
+                                                <label for="cityName" class="form-label">City/Municipality:</label>
+                                                <input type="text" id="cityName" class="form-control" aria-label="House no. & Street"  />
+                                            </div>
+                                            <div class="col">
+                                                <label for="provinceName" class="form-label">Province:</label>
+                                                <input type="text" id="provinceName" class="form-control" aria-label="Barangay"  />
+                                            </div>
+                                            <div class="col">
+                                                <label for="regionName" class="form-label">Region:</label>
+                                                <input type="text" id="regionName" class="form-control" aria-label="District"  />
+                                            </div>
+                                        </div>
+                                    </form>
 
-                                    <label htmlFor="isPWD">PWD </label>
-                                    <input
-                                      type="checkbox"
-                                      id="isPWD"
-                                    /> </div>
-                                  <div className="form-group mt-3">
-                                    <label htmlFor="H-Educational-A">Highest Educational Attaintment</label>
-                                    <select
-                                      id="h-educational-a"
-                                      className="option2" style={{ fontSize: '14px', marginBottom: '10px' }}
-                                    >
-                                      <option value="">Select Highest Educational Attaintment</option>
-                                      <option value="undergrad">Undergraduate (Bachelor's Degree)</option>
-                                      <option value="postgrad">Postgraduate (Master's Degree)</option>
-                                      <option value="doctoral">Doctoral (PhD)</option>
-                                    </select>
-                                  </div>
-                                  <div className="form-group">
-                                    <label htmlFor="employmentStatus"> Employment Status</label>
-                                    <select
-                                      id="employmentStatus"
-                                      className="option2" style={{ fontSize: '14px', marginBottom: '10px' }}
-                                    >
-                                      <option value="">Select Employment Status</option>
-                                      <option value="worker">Worker</option>
-                                      <option value="employee">Employee</option>
-                                      <option value="self-employed">Self-Employed</option>
-                                      <option value="unemployed">Unemployed</option>
-                                    </select>
-                                  </div>
-                                  <div className="form-group">
-                                    <label htmlFor="dateOfBirth">Date of Birth</label>
-                                    <input
-                                      type="date"
-                                      id="dateOfBirth"
-                                      required
-                                      class="m-2"
-                                    />
-                                  </div>
-                                  <div className="form-group">
-                                    <label htmlFor="phoneNumber">Phone Number</label>
-                                    <input
-                                      class="m-2"
-                                      type="tel"
-                                      id="phoneNumber"
-                                      required
-                                    />
-                                  </div>
+                                    <form class="form3">
+                                        <h2 id="form_name">MAILING ADDRESS</h2>
+                                        <div class="row g-3">
+                                            <div class="col">
+                                                <label for="emailName" class="form-label">Email/FB Account:</label>
+                                                <input type="text" id="emailName" class="form-control" aria-label="House no. & Street"  />
+                                            </div>
+                                            <div class="col">
+                                                <label for="contactName" class="form-label">Contact:</label>
+                                                <input type="text" id="contactName" class="form-control" aria-label="Barangay"  />
+                                            </div>
+                                            <div class="col">
+                                                <label for="nationalityName" class="form-label">Nationality:</label>
+                                                <input type="text" id="nationalityName" class="form-control" aria-label="District"  />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </section>
+
+                                {/* Personal Information Section */}
+                                <section className="personal-information m-3">
+                                    <h3><b>Personal Information</b></h3>
+                                    <form class="form4 mt-3">
+                                        <div class="row g-3">
+                                            <div class="col">
+                                                <label for="sex" class="form-label">Sex:</label>
+                                                <input type="text" id="sex" class="form-control" placeholder="SEX" aria-label="SEX"  />
+                                            </div>
+                                            <div class="col">
+                                                <label for="civilstatus" class="form-label">Civil Status:</label>
+                                                <input type="text" id="civilstatus" class="form-control" placeholder="CIVIL STATUS" aria-label="CIVIL STATUS"  />
+                                            </div>
+                                            <div class="col">
+                                                <label for="homeownership" class="form-label">Home Ownership: </label>
+                                                <input type="text" id="homeownership" class="form-control" placeholder="HOME OWNERSHIP" aria-label="HOME OWNERSHIP"  />
+                                            </div>
+                                            <div class="col">
+                                                <label for="employmentstatus" class="form-label">Employment Status:</label>
+                                                <input type="text" id="employmentstatus" class="form-control" placeholder="EMPLOYMENT STATUS" aria-label="EMPLOYMENT STATUS"  />
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <form class="form5 mt-3">
+                                        <h5 id="form_name">Employment Information</h5>
+                                        <div class="row g-3">
+                                            <div class="col">
+                                                <label for="companyName" class="form-label">Company Name:</label>
+                                                <input type="text" id="companyName" class="form-control" aria-label="House no. & Street"  />
+                                            </div>
+                                            <div class="col">
+                                                <label for="positionName" class="form-label">Position:</label>
+                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay"  />
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form class="form6 mt-3">
+                                        <h2 id="form_name">Birthdate/Birthplace</h2>
+                                        <div class="row g-3">
+                                            <div class="col">
+                                                <label for="companyName" class="form-label">Birthdate:</label>
+                                                <input
+                                                    type="date" className="form-control"
+                                                    id="dateOfBirth"
+                                                    
+                                                />
+                                            </div>
+                                            <div class="col">
+                                                <label for="positionName" class="form-label">City/Municipality:</label>
+                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay"  />
+                                            </div>
+                                            <div class="col">
+                                                <label for="positionName" class="form-label">Age:</label>
+                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay"  />
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form class="form7 mt-3">
+                                        <h2 id="form_name">Educational Attainment</h2>
+                                        <div class="row g-3">
+                                            <div class="col">
+                                                <label for="educationalattainment" class="form-label">Highest Educational Attainment:</label>
+                                                <input type="text" id="educationalattainment" class="form-control" aria-label="Educational Attainment"  />
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form class="form8 mt-3">
+                                        <h2 id="form_name">Residence Class</h2>
+                                        <div class="row g-3">
+                                            <div class="col">
+                                                <label for="residenceclass" class="form-label">Class:</label>
+                                                <input type="text" id="residenceclass" class="form-control" aria-label="Residence Class" />
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                                        <label for="status" class="form-label">Status:</label>
+                                                        <select
+                                                            id="status"
+                                                            class="form-control"
+                                                           
+                                                            required
+                                                        >
+                                                            <option value="">Update status</option>
+                                                            <option value="active">active</option>
+                                                            <option value="inactive">inactive</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col">
+                                        <label for="role" class="form-label">Roles:</label>
+                                        <select
+                                            id="role"
+                                            class="form-control"
+                                            required
+                         
+                                        >
+                                            <option value="">Update role</option>
+                                            <option value="resident">resident</option>
+                                            <option value="admin">admin</option>
+                                            <option value="superadmin">superadmin</option>
+                                        </select>
+                                    </div>
+                                    </form>
+                                </section>
+                                <div className="save_btn">
+                                    <input type="checkbox" className="btn-check" id="btn-check-3" />
+                                    <label className="btn btn-primary" htmlFor="btn-check-3">
+                                        Save Changes
+                                    </label>
                                 </div>
-                                <div className="form-column">
-
-                                  <div className="form-group">
-                                    <label htmlFor="telephoneNumber">Telephone Number</label>
-                                    <input
-                                      type="tel"
-                                      id="telephoneNumber"
-                                      class="m-2"
-                                      required
-                                    />
-                                  </div>
-                                  <div class="row">
-                                    <div class="col mb-3">
-                                      <div class="form-group">
-                                        <label>Email</label>
-                                        <input class="form-control" type="text" placeholder="user@example.com" />
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                </div>
-                              </div>
-
-                              <div class="row text-dark">
-                                <div class="col-12 col-sm-6 mb-3">
-                                  <div class="mb-2"><b>Change Password</b></div>
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="form-group">
-                                        <label>Current Password</label>
-                                        <input class="form-control" type="password" placeholder="••••••" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="form-group">
-                                        <label>New Password</label>
-                                        <input class="form-control" type="password" placeholder="••••••" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="form-group">
-                                        <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                                        <input class="form-control" type="password" placeholder="••••••" /></div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-5 offset-sm-1 mb-3">
-                                  <div class="mb-2"><b>Contact Person</b></div>
-                                  <div class="row">
-                                    <div class="col">
-                                      <div className="form-group">
-                                        <label htmlFor="contactPerson">Name</label>
-                                        <input
-                                          class="m-2"
-                                          type="tel"
-                                          id="contactPerson"
-                                          required
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="form-column">
-
-                                      <div className="form-group">
-                                        <label htmlFor="contactNumber">Contact Number</label>
-                                        <input
-                                          type="tel"
-                                          id="contactNumber"
-                                          class="m-2"
-                                          required
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col d-flex justify-content-end">
-                                  <button class="btn btn-primary" type="submit">Save Changes</button>
-                                </div>
-                              </div>
-                            </form>
-
-                          </div>
-                        </div>
-                      </div>
+                            </div>
+                            <div id="content2" className={`viewreq content ${activeContent === 2 ? 'active' : ''}`}>
+                                <section className="request-summary flex-column m-3">
+                                    <h3><b>Request</b></h3>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">LAST NAME</th>
+                                                <th scope="col">FIRST NAME</th>
+                                                <th scope="col">MIDDLE NAME</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>aaa</td>
+                                                <td>bbbbb</td>
+                                                <td>ccccccccc</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">2</th>
+                                                <td>dddddddd</td>
+                                                <td>eeeeeeeeee</td>
+                                                <td>fffffffff</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">3</th>
+                                                <td>gggggggggg</td>
+                                                <td>hhhhhhhhhh</td>
+                                                <td>iiiiiiii</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </section>
+                            </div>
+                        </section>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-    </>
-  );
+        </>
+    );
 }
 
 export default Admindetails;

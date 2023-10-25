@@ -147,19 +147,6 @@ function Residentsaccounts() {
                                         <input type="file" accept="image/*" id="file-input" className="file-input" onChange={handleFileChange} />
                                         <label htmlFor="file-input" className="upload-button">Upload Profile</label>
                                     </div>
-                                    <div class="col">
-                                        <label for="role" class="form-label">Roles:</label>
-                                        <select
-                                            id="role"
-                                            class="form-control"
-                                            required
-                                        >
-                                            <option value="">Update role</option>
-                                            <option value="resident">resident</option>
-                                            <option value="admin">admin</option>
-                                            <option value="superadmin">superadmin</option>
-                                        </select>
-                                    </div>
 
                                     <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
                                         <input type="radio" onClick={() => showContent(1)} className="btn-check" name="btnradio" id="btnradio1" autoComplete="off" checked={activeContent === 1} />
@@ -400,6 +387,20 @@ function Residentsaccounts() {
                                                             <option value="inactive">inactive</option>
                                                         </select>
                                                     </div>
+                                                    <div class="col">
+                                        <label for="role" class="form-label">Roles:</label>
+                                        <select
+                                            id="role"
+                                            class="form-control"
+                                            required
+                                            value={item.type}
+                                        >
+                                            <option value="">Update role</option>
+                                            <option value="resident">resident</option>
+                                            <option value="admin">admin</option>
+                                            <option value="superadmin">superadmin</option>
+                                        </select>
+                                    </div>
                                                 </form>
                                             </section>
                                             <div className="save_btn">
@@ -445,22 +446,7 @@ function Residentsaccounts() {
                                                 </tr>
                                             </tbody>
                                         </table>
-
-                                        <div className="save_btn">
-                                            <input type="checkbox" className="btn-check" id="btn-check-3" />
-                                            <label className="btn btn-primary" htmlFor="btn-check-3">
-                                                Save Changes
-                                            </label>
-                                        </div>
                                     </div>
-
-
-
-
-
-
-
-
                                 </div>
                             ))
                         ) : (

@@ -441,7 +441,7 @@ function EmergencyAdmin() {
                         </tr>
                       </thead>
                       <tbody>
-                        {getCurrentPageData().map((item, index) => (
+                        {getCurrentPageData().reverse().map((item, index) => (
                           <tr key={index}>
                             <td>{item.userId}</td>
                             <td>{item.currentLocation}</td>

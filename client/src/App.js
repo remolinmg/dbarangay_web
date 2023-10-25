@@ -75,10 +75,10 @@ function App() {
           <Route path="resetpass" element={<ResetPassword />} />
 
           {/* SUPERADMIN */}
-          {/* <Route  element={<SuperRoute/>}> */}
+          <Route  element={<SuperRoute/>}>
           <Route path="admin-accounts" element={<Adminaccounts />} isAuthenticated={isAuthenticated}/>
           <Route path="staff-logs-admin" element={<StafflogsAdmin />} isAuthenticated={isAuthenticated}/>
-          {/* </Route> */}
+          </Route>
 
 
         {/* ADMIN */}
