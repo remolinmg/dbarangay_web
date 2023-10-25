@@ -502,7 +502,7 @@ function Complaintsadmin() {
                         </tr>
                       </thead>
                       <tbody>
-                        {getCurrentPageData().map((item) => (
+                        {getCurrentPageData().reverse().map((item) => (
                           <tr key={item._id}>
                             <td>{item.date}</td>
                             <td>{item.complainant}</td>

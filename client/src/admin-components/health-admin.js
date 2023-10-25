@@ -496,7 +496,7 @@ function Healthadmin() {
                         </tr>
                       </thead>
                       <tbody>
-                        {getCurrentPageData().map((item) => (
+                        {getCurrentPageData().reverse().map((item) => (
                           <tr key={item._id}>
                             <td>{item.date}</td>
                             <td>{item.reporter}</td>
