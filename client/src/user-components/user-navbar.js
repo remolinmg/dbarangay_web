@@ -7,6 +7,9 @@ import Bot from './faqbot.js';
 import { Link, NavLink, Route, useNavigate } from 'react-router-dom';
 import ScrollToTopButton from "./scrolltotop";
 import { BiChevronDown } from 'react-icons/bi';
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
 
 function UserNav() {
   const [submenuVisible, setSubmenuVisible] = useState(false);
@@ -16,6 +19,7 @@ function UserNav() {
   const [navbarVisible, setNavbarVisible] = useState(true);
   const [navbarColored, setNavbarColored] = useState(false);
   const [click, setClick] = useState(false)
+  
   const handleScroll = () => {
     const currentPosition = window.pageYOffset;
     setScrollPosition(currentPosition);
@@ -101,9 +105,32 @@ function UserNav() {
     window.localStorage.clear();
     navigate('/login')
   };
+
+   // DATA FETCHING
+   const [data, setData] = useState([]);
+   useEffect(() => {
+     fetchData(); // Fetch initial data when the component mounts
+   }, []);
+  
+   const fetchData = async () => {
+     try {
+       const token = Cookies.get('access_token');
+       if (token) { 
+       const decoded = jwt_decode(token);
+         const _id = decoded.id;
+         const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+         setData(response.data);
+       }
+     } catch (error) {
+       console.error(error);
+     }
+   };
   
   return (
     <>
+     {Array.isArray(data) ? (
+                            data.map((item, index) => (
+                                <div key={index}>
       <div className={`App ${navbarVisible ? "transparent" : ""} ${navbarColored ? "colored" : ""} container-fluid`}>
         <div className="hero">
           <nav className="navbar-content">
@@ -142,7 +169,7 @@ function UserNav() {
                       <FaUserCircle className="profile-icon" />
                     </li>
                     <li>
-                      <h5>CLARISE ANNELY</h5>
+                      <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
                     </li>
                     <li>
                       <NavLink className="link" to="/UserProfile" activeClassName="active">
@@ -160,6 +187,11 @@ function UserNav() {
           </nav>
         </div>
       </div>
+      </div>
+                            ))
+                        ) : (
+                            <p>No data to display.</p>
+                        )}
     </>
   )
 }

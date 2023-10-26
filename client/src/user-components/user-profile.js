@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import Picture from '../user-components/assets/img/Official1.jpg';
-import Axios from "axios";
+import axios from "axios";
 import { BsCamera } from "react-icons/bs";
 import { Link, NavLink, Route } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
@@ -11,6 +11,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaUserCircle } from "react-icons/fa";
 import "./assets/css/user-style.css";
 import Footer from './footer';
+import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
 
 function UserProfile() {
     const [activeContent, setActiveContent] = useState(1);
@@ -57,10 +59,33 @@ function UserProfile() {
         };
     }, []);
 
+     // DATA FETCHING
+     const [data, setData] = useState([]);
+     useEffect(() => {
+       fetchData(); // Fetch initial data when the component mounts
+     }, []);
+    
+     const fetchData = async () => {
+       try {
+         const token = Cookies.get('access_token');
+         if (token) { 
+         const decoded = jwt_decode(token);
+           const _id = decoded.id;
+           const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+           setData(response.data);
+         }
+       } catch (error) {
+         console.error(error);
+       }
+     };
+
 
     return (
         <>
             <UserNav />
+            {Array.isArray(data) ? (
+                            data.map((item, index) => (
+                                <div key={index}>
             <div className="user-profile">
                 <div className="container user-profile-container pt-5 pe-3 ps-3 pb-5">
                     <div className="card user-profile-card p-4 m-5">
@@ -93,19 +118,19 @@ function UserProfile() {
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="lastName" class="form-label">Last Name:</label>
-                                                <input type="text" id="lastName" class="form-control" placeholder="LAST NAME" aria-label="LAST NAME" disabled />
+                                                <input type="text" id="lastName" class="form-control" value={item.lastName} aria-label="LAST NAME" disabled />
                                             </div>
                                             <div class="col">
                                                 <label for="firstName" class="form-label">First Name:</label>
-                                                <input type="text" id="firstName" class="form-control" placeholder="FIRST NAME" aria-label="FIRST NAME" disabled />
+                                                <input type="text" id="firstName" class="form-control" value={item.firstName}  aria-label="FIRST NAME" disabled />
                                             </div>
                                             <div class="col">
                                                 <label for="midName" class="form-label">Middle Name:</label>
-                                                <input type="text" id="midName" class="form-control" placeholder="MIDDLE NAME" aria-label="MIDDLE NAME" disabled />
+                                                <input type="text" id="midName" class="form-control" value={item.middleName}  aria-label="MIDDLE NAME" disabled />
                                             </div>
                                             <div class="col">
-                                                <label for="midName" class="form-label">Middle Name:</label>
-                                                <input type="text" id="suffix" class="form-control" placeholder="SUFFIX" aria-label="SUFFIX" disabled />
+                                                <label for="midName" class="form-label">Suffix:</label>
+                                                <input type="text" id="suffix" class="form-control" value={item.suffix}  aria-label="SUFFIX" disabled />
                                             </div>
                                         </div>
                                     </form>
@@ -114,29 +139,29 @@ function UserProfile() {
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="house&streetName" class="form-label">House no., Street:</label>
-                                                <input type="text" id="house&streetName" class="form-control" aria-label="House no. & Street" disabled />
+                                                <input type="text" id="house&streetName" class="form-control" aria-label="House no. & Street"  value={item.houseNumber} disabled />
                                             </div>
                                             <div class="col">
                                                 <label for="brgyName" class="form-label">Barangay:</label>
-                                                <input type="text" id="brgyName" class="form-control" aria-label="Barangay" disabled />
+                                                <input type="text" id="brgyName" class="form-control" aria-label="Barangay" value={item.barangay} disabled />
                                             </div>
                                             <div class="col">
                                                 <label for="districtName" class="form-label">District:</label>
-                                                <input type="text" id="districtName" class="form-control" aria-label="District" disabled />
+                                                <input type="text" id="districtName" class="form-control" aria-label="District"value={item.district}  disabled />
                                             </div>
                                         </div>
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="cityName" class="form-label">City/Municipality:</label>
-                                                <input type="text" id="cityName" class="form-control" aria-label="House no. & Street" disabled />
+                                                <input type="text" id="cityName" class="form-control" aria-label="House no. & Street" value={item.cityMunicipality} disabled />
                                             </div>
                                             <div class="col">
                                                 <label for="provinceName" class="form-label">Province:</label>
-                                                <input type="text" id="provinceName" class="form-control" aria-label="Barangay" disabled />
+                                                <input type="text" id="provinceName" class="form-control" aria-label="Barangay" value={item.province} disabled />
                                             </div>
                                             <div class="col">
                                                 <label for="regionName" class="form-label">Region:</label>
-                                                <input type="text" id="regionName" class="form-control" aria-label="District" disabled />
+                                                <input type="text" id="regionName" class="form-control" aria-label="District" value={item.region} disabled />
                                             </div>
                                         </div>
                                     </form>
@@ -145,16 +170,16 @@ function UserProfile() {
                                         <h2 id="form_name">MAILING ADDRESS</h2>
                                         <div class="row g-3">
                                             <div class="col">
-                                                <label for="emailName" class="form-label">Email/FB Account:</label>
-                                                <input type="text" id="emailName" class="form-control" aria-label="House no. & Street" disabled />
+                                                <label for="emailName" class="form-label">Email:</label>
+                                                <input type="text" id="emailName" class="form-control" aria-label="House no. & Street" value={item.email} disabled />
                                             </div>
                                             <div class="col">
                                                 <label for="contactName" class="form-label">Contact:</label>
-                                                <input type="text" id="contactName" class="form-control" aria-label="Barangay" disabled />
+                                                <input type="text" id="contactName" class="form-control" aria-label="Barangay" value={item.phoneNumber} disabled />
                                             </div>
                                             <div class="col">
                                                 <label for="nationalityName" class="form-label">Nationality:</label>
-                                                <input type="text" id="nationalityName" class="form-control" aria-label="District" disabled />
+                                                <input type="text" id="nationalityName" class="form-control" aria-label="District" value={item.nationality} disabled />
                                             </div>
                                         </div>
                                     </form>
@@ -167,19 +192,19 @@ function UserProfile() {
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="sex" class="form-label">Sex:</label>
-                                                <input type="text" id="sex" class="form-control" placeholder="SEX" aria-label="SEX" disabled />
+                                                <input type="text" id="sex" class="form-control" value={item.sex}  aria-label="SEX" disabled />
                                             </div>
                                             <div class="col">
                                                 <label for="civilstatus" class="form-label">Civil Status:</label>
-                                                <input type="text" id="civilstatus" class="form-control" placeholder="CIVIL STATUS" aria-label="CIVIL STATUS" disabled />
+                                                <input type="text" id="civilstatus" class="form-control"value={item.civilStatus}   aria-label="CIVIL STATUS" disabled />
                                             </div>
                                             <div class="col">
                                                 <label for="homeownership" class="form-label">Home Ownership: </label>
-                                                <input type="text" id="homeownership" class="form-control" placeholder="HOME OWNERSHIP" aria-label="HOME OWNERSHIP" disabled />
+                                                <input type="text" id="homeownership" class="form-control" value={item.homeOwnership}  aria-label="HOME OWNERSHIP" disabled />
                                             </div>
                                             <div class="col">
                                                 <label for="employmentstatus" class="form-label">Employment Status:</label>
-                                                <input type="text" id="employmentstatus" class="form-control" placeholder="EMPLOYMENT STATUS" aria-label="EMPLOYMENT STATUS" disabled />
+                                                <input type="text" id="employmentstatus" class="form-control" value={item.employmentStatus}  aria-label="EMPLOYMENT STATUS" disabled />
                                             </div>
                                         </div>
                                     </form>
@@ -189,11 +214,11 @@ function UserProfile() {
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="companyName" class="form-label">Company Name:</label>
-                                                <input type="text" id="companyName" class="form-control" aria-label="House no. & Street" disabled />
+                                                <input type="text" id="companyName" class="form-control" aria-label="House no. & Street" disabled value={item.companyName} />
                                             </div>
                                             <div class="col">
                                                 <label for="positionName" class="form-label">Position:</label>
-                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay" disabled />
+                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay" disabled value={item.position} />
                                             </div>
                                         </div>
                                     </form>
@@ -201,24 +226,20 @@ function UserProfile() {
                                         <h2 id="form_name">Birthdate/Birthplace</h2>
                                         <div class="row g-3">
                                             <div class="col">
-                                                <label for="companyName" class="form-label">Month:</label>
-                                                <input type="text" id="companyName" class="form-control" aria-label="House no. & Street" disabled />
-                                            </div>
-                                            <div class="col">
-                                                <label for="positionName" class="form-label">Day:</label>
-                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay" disabled />
-                                            </div>
-                                            <div class="col">
-                                                <label for="positionName" class="form-label">Year:</label>
-                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay" disabled />
+                                                <label for="companyName" class="form-label">Birthdate:</label>
+                                                <input
+                                                    type="date" className="form-control"
+                                                    id="dateOfBirth"value={item.dateOfBirth} 
+                                                    disabled
+                                                />
                                             </div>
                                             <div class="col">
                                                 <label for="positionName" class="form-label">City/Municipality:</label>
-                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay" disabled />
+                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay" disabled value={item.birthPlace} />
                                             </div>
                                             <div class="col">
                                                 <label for="positionName" class="form-label">Age:</label>
-                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay" disabled />
+                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay" disabled value={item.age} />
                                             </div>
                                         </div>
                                     </form>
@@ -227,7 +248,7 @@ function UserProfile() {
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="educationalattainment" class="form-label">Highest Educational Attainment:</label>
-                                                <input type="text" id="educationalattainment" class="form-control" aria-label="Educational Attainment" disabled />
+                                                <input type="text" id="educationalattainment" class="form-control" aria-label="Educational Attainment" value={item.highestEducation} disabled />
                                             </div>
                                         </div>
                                     </form>
@@ -236,11 +257,17 @@ function UserProfile() {
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="residenceclass" class="form-label">Class:</label>
-                                                <input type="text" id="residenceclass" class="form-control" aria-label="Residence Class" disabled />
+                                                <input type="text" id="residenceclass" class="form-control" aria-label="Residence Class" value={item.residenceClass} disabled />
                                             </div>
                                         </div>
                                     </form>
                                 </section>
+                                <div className="save_btn">
+                                    <input type="checkbox" className="btn-check" id="btn-check-3" />
+                                    <label className="btn btn-primary" htmlFor="btn-check-3">
+                                        Save Changes
+                                    </label>
+                                </div>
                             </div>
                             <div id="content2" className={`viewreq content ${activeContent === 2 ? 'active' : ''}`}>
                                 <section className="request-summary flex-column m-3">
@@ -281,6 +308,11 @@ function UserProfile() {
                     </div>
                 </div>
             </div>
+            </div>
+                            ))
+                        ) : (
+                            <p>No data to display.</p>
+                        )}
             <Footer />
         </>
     );

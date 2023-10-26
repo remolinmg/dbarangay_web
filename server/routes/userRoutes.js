@@ -11,6 +11,7 @@ router.get('/resetpass/:id/:resetToken', userController.resetpass);
 router.get('/get/user',  userController.getUser);
 router.get('/get/useredit/:id', userController.getUserData);
 router.get('/get/useradmin',  userController.getUserAdmin);
+router.get('/get/userprofile/:id',  userController.getUserProfile);
 
 
 module.exports = router;
