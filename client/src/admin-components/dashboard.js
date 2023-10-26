@@ -536,13 +536,13 @@ function Dashboard() {
             <div className={`dashboard-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
                 <ul class="nav justify-content-evenly">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Residents</a>
+                        <a class="nav-link active" aria-current="page" href="/dashboard">Residents</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/dashboard1">Incidents Reports</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Health</a>
+                    <a class="nav-link" href="/dashboard2">Health</a>
                     </li>
                 </ul>
                 <div className="row m-5 mt-0">
