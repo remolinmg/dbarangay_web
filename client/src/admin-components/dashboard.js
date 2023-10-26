@@ -30,7 +30,7 @@ import React from 'react';
 import { FaUserCircle } from "react-icons/fa";
 import { Bar, Doughnut, Pie } from 'react-chartjs-2';
 function Dashboard() {
-   
+
 
     const [totalPopulation, setTotalPopulation] = useState(0);
     const [registeredVoters, setRegisteredVoters] = useState(0);
@@ -43,6 +43,7 @@ function Dashboard() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [profile, setProfile] = useState('');
+
     // GRAPH EMPLOYMENT
     const [employmentChartData, setEmploymentChartData] = useState({
         employedData: 0,
@@ -76,60 +77,70 @@ function Dashboard() {
     useEffect(() => {
         axios.get('http://localhost:8000/get/user')
             .then((response) => {
-                const userCount = response.data.length;
-                setTotalPopulation(userCount);
+                const userData = response.data;
 
-                const maleUsers = response.data.filter((user) => user.sex === 'Male');
-                const femaleUsers = response.data.filter((user) => user.sex === 'Female');
+                // Filter the user data to get only "active" residents
+                const activeResidents = userData.filter((user) => user.status === 'active');
+
+                // Set the total population to the count of "active" residents
+                setTotalPopulation(activeResidents.length);
+
+                const maleUsers = activeResidents.filter((user) => user.sex === 'Male');
+                const femaleUsers = activeResidents.filter((user) => user.sex === 'Female');
                 const maleUsersCount = maleUsers.length;
                 const femaleUsersCount = femaleUsers.length;
                 setMaleCount(maleUsersCount);
                 setFemaleCount(femaleUsersCount);
 
-                setMalePercentage((maleUsersCount / userCount) * 100);
-                setFemalePercentage((femaleUsersCount / userCount) * 100);
+                setMalePercentage((maleUsersCount / activeResidents.length) * 100);
+                setFemalePercentage((femaleUsersCount / activeResidents.length) * 100);
 
-                const registeredVotersCount = response.data.filter((user) => user.voterRegistration === 'Registeredvoter').length;
+                const registeredVotersCount = activeResidents.filter((user) => user.voterRegistration === 'Registeredvoter').length;
                 setRegisteredVoters(registeredVotersCount);
 
-                const registeredStudentsCount = response.data.filter((user) => user.employmentStatus === 'Student').length;
+                const registeredStudentsCount = activeResidents.filter((user) => user.employmentStatus === 'Student').length;
                 setRegisteredStudents(registeredStudentsCount);
             })
             .catch((error) => {
                 console.error(error);
             });
     }, []);
+
     // BAR GRAPH EMPLOYMENT STATUS
     useEffect(() => {
-        // Make an HTTP request to the API endpoint to get user data
         axios.get('http://localhost:8000/get/user')
-            .then(response => {
-                // Count the number of "Employed" and "Unemployed" users
-                const employedCount = response.data.filter(user => user.employmentStatus === 'Employed').length;
-                const unemployedCount = response.data.filter(user => user.employmentStatus === 'Unemployed').length;
+            .then((response) => {
+                const userData = response.data;
 
-                setEmploymentChartData({ employedData: employedCount, unemployedData: unemployedCount });
+                // Filter the user data to get only "active" residents
+                const activeResidents = userData.filter((user) => user.status === 'active');
+
+                // Count the number of employed and unemployed residents among "active" residents
+                const employedCount = activeResidents.filter((user) => user.employmentStatus === 'Employed').length;
+                const unemployedCount = activeResidents.filter((user) => user.employmentStatus === 'Unemployed').length;
+
+                setEmploymentChartData({ employedCount, unemployedCount });
             })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
+            .catch((error) => {
+                console.error(error);
             });
     }, []);
     const employmentData = {
-        labels: ['Employment'],
+        labels: ['Employment Status'],
         datasets: [
             {
                 label: 'Employed',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
-                data: [employmentChartData.employedData],
+                data: [employmentChartData.employedCount],
             },
             {
                 label: 'Unemployed',
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1,
-                data: [employmentChartData.unemployedData],
+                data: [employmentChartData.unemployedCount],
             },
         ],
     };
@@ -140,6 +151,7 @@ function Dashboard() {
             },
         },
     };
+
     // BAR GRAPH CIVIL STATUS 
     useEffect(() => {
         // Make an HTTP request to the API endpoint to get user data
@@ -197,18 +209,23 @@ function Dashboard() {
             },
         },
     };
-    //Doughnut Educational attainemnt
+
+    // Doughnut Educational Attainment
     useEffect(() => {
-        // Make an HTTP request to the API endpoint to get user data
         axios.get('http://localhost:8000/get/user')
-            .then(response => {
-                // Count the number of users with different educational attainments
-                const undergraduateCount = response.data.filter(user => user.highestEducation === 'Undergraduate').length;
-                const elementaryCount = response.data.filter(user => user.highestEducation === 'Elementary').length;
-                const highSchoolCount = response.data.filter(user => user.highestEducation === 'Highschool').length;
-                const bachelorCount = response.data.filter(user => user.highestEducation === "Bachelor").length;
-                const postgraduateCount = response.data.filter(user => user.highestEducation === "Postgrad").length;
-                const doctoralCount = response.data.filter(user => user.highestEducation === "Doctoral").length;
+            .then((response) => {
+                const userData = response.data;
+
+                // Filter the user data to get only "active" residents
+                const activeResidents = userData.filter((user) => user.status === 'active');
+
+                // Count the number of users with different educational attainments among "active" residents
+                const undergraduateCount = activeResidents.filter((user) => user.highestEducation === 'Undergraduate').length;
+                const elementaryCount = activeResidents.filter((user) => user.highestEducation === 'Elementary').length;
+                const highSchoolCount = activeResidents.filter((user) => user.highestEducation === 'Highschool').length;
+                const bachelorCount = activeResidents.filter((user) => user.highestEducation === 'Bachelor').length;
+                const postgraduateCount = activeResidents.filter((user) => user.highestEducation === 'Postgrad').length;
+                const doctoralCount = activeResidents.filter((user) => user.highestEducation === 'Doctoral').length;
 
                 setEducationChartData({
                     undergraduateCount,
@@ -219,10 +236,11 @@ function Dashboard() {
                     doctoralCount,
                 });
             })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
+            .catch((error) => {
+                console.error(error);
             });
     }, []);
+
     const educationData = {
         labels: [
             'Undergraduate',
@@ -253,26 +271,29 @@ function Dashboard() {
             },
         ],
     };
+
     const educationOptions = {
         maintainAspectRatio: true,
         legend: {
             display: true,
-           
         },
-      
     };
 
-    //Age Educational attainemnt
+    // Age Distribution
     useEffect(() => {
-        // Make an HTTP request to the API endpoint to get user data
         axios.get('http://localhost:8000/get/user')
-            .then(response => {
-                // Count the number of users in different age groups
-                const age1to12Count = response.data.filter(user => user.age >= 1 && user.age <= 12).length;
-                const age13to19Count = response.data.filter(user => user.age >= 13 && user.age <= 19).length;
-                const age20to30Count = response.data.filter(user => user.age >= 20 && user.age <= 30).length;
-                const age31to40Count = response.data.filter(user => user.age >= 31 && user.age <= 40).length;
-                const age41AboveCount = response.data.filter(user => user.age >= 41).length;
+            .then((response) => {
+                const userData = response.data;
+
+                // Filter the user data to get only "active" residents
+                const activeResidents = userData.filter((user) => user.status === 'active');
+
+                // Count the number of users in different age groups among "active" residents
+                const age1to12Count = activeResidents.filter((user) => user.age >= 1 && user.age <= 12).length;
+                const age13to19Count = activeResidents.filter((user) => user.age >= 13 && user.age <= 19).length;
+                const age20to30Count = activeResidents.filter((user) => user.age >= 20 && user.age <= 30).length;
+                const age31to40Count = activeResidents.filter((user) => user.age >= 31 && user.age <= 40).length;
+                const age41AboveCount = activeResidents.filter((user) => user.age >= 41).length;
 
                 setAgeChartData({
                     age1to12Count,
@@ -282,11 +303,10 @@ function Dashboard() {
                     age41AboveCount,
                 });
             })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
+            .catch((error) => {
+                console.error(error);
             });
     }, []);
-
     const ageData = {
         labels: [
             '1-12',
@@ -320,6 +340,7 @@ function Dashboard() {
             display: true,
         },
     };
+
 
     //SIDEBAR - TOPBAR ---------------------------------------------------------------------------------------
 
@@ -574,7 +595,7 @@ return (
                         <a class="nav-link" href="/dashboard1">Incidents Reports</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="/dashboard2">Health</a>
+                        <a class="nav-link" href="/dashboard2">Health</a>
                     </li>
                 </ul>
                 <div className="row m-5 mt-0">

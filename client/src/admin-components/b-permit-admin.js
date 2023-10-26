@@ -98,11 +98,21 @@ function BpermitAdmin() {
     };
 
     // Function to get the current page data using slice
+    // Function to get the current page data using slice
     const getCurrentPageData = () => {
         const startIndex = (currentPage - 1) * rowCount;
         const endIndex = startIndex + rowCount;
-        return filteredData.slice(startIndex, endIndex);
+        const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
+        return reversedData.slice(startIndex, endIndex);
     };
+    // stay on first page
+    const filteredAndSortedData = data
+        .filter((item) => {
+            const itemValues = Object.values(item).map((value) =>
+                value.toString().toLowerCase()
+            );
+            return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+        })
 
     // Function to go to the next page ------------------------------------------
     const nextPage = () => {
@@ -122,6 +132,7 @@ function BpermitAdmin() {
     const startIndex = (currentPage - 1) * rowCount;
     const endIndex = startIndex + rowCount;
 
+
     // Function to filter data based on search query -----------------------------
     const filteredData = data.filter((item) => {
         const itemValues = Object.values(item).map((value) =>
@@ -129,7 +140,6 @@ function BpermitAdmin() {
         );
         return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
     });
-
 
 
     // Forms ----------------------------------------------
@@ -469,7 +479,7 @@ return (
             <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
                 <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
                     <div className="toppart-table border row w-75 d-flex align-items-center">
-                        <div className="col-3">
+                        <div className="col-4">
                             <div className="input-group">
                                 <input
                                     type="text"
@@ -480,17 +490,14 @@ return (
                                     value={searchQuery}
                                     onChange={handleSearchChange}
                                 />
-                                <button className="btn btn-outline-secondary" type="button">
-                                    <i className="bi bi-search"></i>
-                                </button>
                             </div>
                         </div>
-                        <div className="col-3">
+                        <div className="col-4">
                             <div className="tabsz dropdown-center">
                                 <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Services Category</button>
                                 <ul class="dropdown-menu dropdown-topcategory">
-                                    <Link to="/d-barangay-certificate" className="nav-link">
-                                        <li><a class="dropdown-item" className="dropdown-item text-center">Barangay Certificate</a></li></Link>
+                                    <Link to="/b-permit-admin" className="nav-link">
+                                        <li><a class="dropdown-item" className="dropdown-item text-center">Business Permit</a></li></Link>
                                     <Link to="/d-barangay-id" className="nav-link">
                                         <li><a class="dropdown-item" className="dropdown-item text-center"> Barangay ID</a></li></Link>
                                     <Link to="/d-barangay-installation" className="nav-link">
@@ -502,25 +509,7 @@ return (
                                 </ul>
                             </div>
                         </div>
-                        <div className="col-3">
-                            <div className="dropdown-tablenumbers">
-                                <select
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Search"
-                                    aria-label="Enter search keyword"
-                                    name="query"
-                                    value={searchQuery}
-                                    onChange={handleSearchChange}
-                                >
-                                    <option value="new">New</option>
-                                    <option value="on process">On process</option>
-                                    <option value="processed">Processed</option>
-                                    <option value="declined">Declined</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-3">
+                        <div className="col-4">
                             <div className="dropdown-tablenumbers">
                                 <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
                                     <option value="10">10</option>
@@ -587,7 +576,7 @@ return (
                                             </thead>
 
                                             <tbody>
-                                                {getCurrentPageData().reverse().map((val) => {
+                                                {getCurrentPageData().map((val) => {
                                                     return <tr key={val.id}>
 
                                                         <td>{val.businessName}</td>

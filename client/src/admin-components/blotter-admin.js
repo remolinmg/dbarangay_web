@@ -101,8 +101,17 @@ function BlotterAdmin() {
   const getCurrentPageData = () => {
     const startIndex = (currentPage - 1) * rowCount;
     const endIndex = startIndex + rowCount;
-    return filteredData.slice(startIndex, endIndex);
+    const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
+    return reversedData.slice(startIndex, endIndex);
   };
+  // stay on first page
+  const filteredAndSortedData = data
+    .filter((item) => {
+      const itemValues = Object.values(item).map((value) =>
+        value.toString().toLowerCase()
+      );
+      return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+    })
 
   // Function to go to the next page ------------------------------------------
   const nextPage = () => {
@@ -173,7 +182,7 @@ function BlotterAdmin() {
       if (res.data === "Error saving data to MongoDB") {
         alert("Blotter Already Exist!");
       }
-      else if (res.data ==="File and text data saved to MongoDB") {
+      else if (res.data === "File and text data saved to MongoDB") {
       }
     })
       .catch(er => console.log(er))
@@ -229,7 +238,7 @@ function BlotterAdmin() {
     }
   };
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     document.cookie = 'access_token=; ';
@@ -424,7 +433,7 @@ return (
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
-            <div className="col-3">
+            <div className="col-4">
               <div className="input-group">
                 <input
                   type="text"
@@ -432,40 +441,29 @@ return (
                   placeholder="Search"
                   aria-label="Enter search keyword"
                   name="query"
+                  value={searchQuery}
                   onChange={handleSearchChange}
                 />
-                <button className="btn btn-outline-secondary" type="button">
-                  <i className="bi bi-search"></i>
-                </button>
               </div>
             </div>
-            <div className="col-3">
+            <div className="col-4">
               <div className="tabsz dropdown-center">
-                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button>
-                <ul className="dropdown-menu dropdown-topcategory">
-                  <li><Link to="/blotter-admin" className="dropdown-item text-center">Blotter</Link></li>
-                  <li><Link to="/complaints-admin" className="dropdown-item text-center">Complaints</Link></li>
-                  <li><Link to="/health-admin" className="dropdown-item text-center">Medical</Link></li>
+                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Services Category</button>
+                <ul class="dropdown-menu dropdown-topcategory">
+                  <Link to="/b-permit-admin" className="nav-link">
+                    <li><a class="dropdown-item" className="dropdown-item text-center">Business Permit</a></li></Link>
+                  <Link to="/d-barangay-id" className="nav-link">
+                    <li><a class="dropdown-item" className="dropdown-item text-center"> Barangay ID</a></li></Link>
+                  <Link to="/d-barangay-installation" className="nav-link">
+                    <li><a class="dropdown-item" className="dropdown-item text-center">Installation Permit</a></li></Link>
+                  <Link to="/d-barangay-construction" className="nav-link">
+                    <li><a class="dropdown-item" className="dropdown-item text-center"> construction Permit</a></li></Link>
+                  <Link to="/d-barangay-indigency" className="nav-link">
+                    <li><a class="dropdown-item" className="dropdown-item text-center">Barangay Indigency</a></li></Link>
                 </ul>
               </div>
             </div>
-            <div className="col-3">
-              <div className="dropdown-tablenumbers">
-              <select
-                  type="text"
-                  className="form-control"
-                  placeholder="Search"
-                  aria-label="Enter search keyword"
-                  name="query"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                >
-                  <option value="pending">Pending</option>
-                  <option value="processed">Processed</option>
-              </select>
-              </div>
-            </div>
-            <div className="col-3">
+            <div className="col-4">
               <div className="dropdown-tablenumbers">
                 <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
                   <option value="10">10</option>
@@ -532,7 +530,7 @@ return (
                         </tr>
                       </thead>
                       <tbody>
-                        {getCurrentPageData().reverse().map((item) => (
+                        {getCurrentPageData().map((item) => (
                           <tr key={item._id}>
                             <td>{item.date}</td>
                             <td>{item.complainant}</td>
@@ -631,7 +629,7 @@ return (
                             name="file" onChange={(e) => setFile(e.target.files[0])}
                             className="form-control" required /></div>
 
-                          <div className="form-group">
+                        <div className="form-group">
                           <label htmlFor="kind">TYPE</label>
                           <select
                             id="kind"
@@ -744,7 +742,7 @@ return (
                             name="file" onChange={(e) => setEditFile(e.target.files[0])}
                             className="form-control" /></div>
 
-                          <div className="form-group">
+                        <div className="form-group">
                           <label htmlFor="kind">TYPE</label>
                           <select
                             id="kind"
