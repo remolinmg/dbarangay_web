@@ -457,7 +457,7 @@ function Dashboard1() {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/dashboard2">
                             Health
                         </a>
                     </li>
