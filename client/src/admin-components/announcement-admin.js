@@ -100,8 +100,22 @@ function AnnouncementAdmin() {
   const getCurrentPageData = () => {
     const startIndex = (currentPage - 1) * rowCount;
     const endIndex = startIndex + rowCount;
-    return filteredData.slice(startIndex, endIndex);
+    const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
+    return reversedData.slice(startIndex, endIndex);
   };
+// stay on first page
+  const filteredAndSortedData = data
+  .filter((item) => {
+    const itemValues = Object.values(item).map((value) =>
+      value.toString().toLowerCase()
+    );
+    return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+  })
+  .sort((a, b) => {
+    // Sort by a relevant property (e.g., creation time) in descending order
+    // Replace 'createdAt' with the actual property name if needed
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
 
   // Function to go to the next page ------------------------------------------
   const nextPage = () => {
@@ -376,7 +390,6 @@ function AnnouncementAdmin() {
                       <Link to="/b-promotion-admin" className="nav-link">
                         <BsBuildingFillUp className="sidebaricon" />
                         <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Promotion</span>
-
                       </Link>
                     </li>
                     <li>

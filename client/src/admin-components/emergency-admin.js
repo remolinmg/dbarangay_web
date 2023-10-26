@@ -102,8 +102,17 @@ function EmergencyAdmin() {
   const getCurrentPageData = () => {
     const startIndex = (currentPage - 1) * rowCount;
     const endIndex = startIndex + rowCount;
-    return filteredData.slice(startIndex, endIndex);
+    const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
+    return reversedData.slice(startIndex, endIndex);
   };
+// stay on first page
+  const filteredAndSortedData = data
+  .filter((item) => {
+    const itemValues = Object.values(item).map((value) =>
+      value.toString().toLowerCase()
+    );
+    return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+  })
 
   // Function to go to the next page ------------------------------------------
   const nextPage = () => {
@@ -469,7 +478,7 @@ return (
                         </tr>
                       </thead>
                       <tbody>
-                        {getCurrentPageData().reverse().map((item, index) => (
+                        {getCurrentPageData().map((item, index) => (
                           <tr key={index}>
                             <td>{item.userId}</td>
                             <td>{item.currentLocation}</td>
