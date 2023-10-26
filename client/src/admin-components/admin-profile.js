@@ -2,10 +2,14 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../user-components/assets/css/user-style.css';
 import './assets/css/style.css';
 import { useRef, useState, useEffect } from 'react';
-
 import { FaUserCircle } from "react-icons/fa";
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
+
 
 function Admindetails() {
+   
   const [activeContent, setActiveContent] = useState(1);
     const [profilePicSrc, setProfilePicSrc] = useState('https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG-Picture.png');
     const [selectedFile, setSelectedFile] = useState(null);
@@ -36,27 +40,37 @@ function Admindetails() {
     const toggleDropdown = () => {
         setDropdownOpen(!isDropdownOpen);
     };
+
+    // DATA FETCHING
+    const [data, setData] = useState([]);
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (profileRef.current && !profileRef.current.contains(event.target)) {
-                setProfileSubmenuVisible(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
+      fetchData(); // Fetch initial data when the component mounts
     }, []);
-
+   
+    const fetchData = async () => {
+      try {
+        const token = Cookies.get('access_token');
+        if (token) { 
+        const decoded = jwt_decode(token);
+          const _id = decoded.id;
+          const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+          setData(response.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
     return (
         <>
         
             <div className="user-profile">
-                <div className="container user-profile-container pt-5 pe-3 ps-3 pb-5">
+                <div className="container user-profile-container pt-5 pe-3 ps-3 pb-5">            
                     <div className="card user-profile-card p-4 m-5">
+
+                    {Array.isArray(data) ? (
+                            data.map((item, index) => (
+                                <div key={index}>
                         <section>
                             <div className="profile-pic-container ps-3 m-0">
                                 <img src={profilePicSrc} alt="Profile Picture" className="profile-pic" id="profile-pic" />
@@ -86,19 +100,19 @@ function Admindetails() {
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="lastName" class="form-label">Last Name:</label>
-                                                <input type="text" id="lastName" class="form-control" placeholder="LAST NAME" aria-label="LAST NAME"  />
+                                                <input type="text" id="lastName" class="form-control" value={item.lastName} aria-label="LAST NAME"  />
                                             </div>
                                             <div class="col">
                                                 <label for="firstName" class="form-label">First Name:</label>
-                                                <input type="text" id="firstName" class="form-control" placeholder="FIRST NAME" aria-label="FIRST NAME"  />
+                                                <input type="text" id="firstName" class="form-control" value={item.firstName} aria-label="FIRST NAME"  />
                                             </div>
                                             <div class="col">
                                                 <label for="midName" class="form-label">Middle Name:</label>
-                                                <input type="text" id="midName" class="form-control" placeholder="MIDDLE NAME" aria-label="MIDDLE NAME"  />
+                                                <input type="text" id="midName" class="form-control" value={item.middleName} aria-label="MIDDLE NAME"  />
                                             </div>
                                             <div class="col">
-                                                <label for="midName" class="form-label">Middle Name:</label>
-                                                <input type="text" id="suffix" class="form-control" placeholder="SUFFIX" aria-label="SUFFIX"  />
+                                                <label for="midName" class="form-label">Suffix:</label>
+                                                <input type="text" id="suffix" class="form-control" value={item.suffix} aria-label="SUFFIX"  />
                                             </div>
                                         </div>
                                     </form>
@@ -107,29 +121,29 @@ function Admindetails() {
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="house&streetName" class="form-label">House no., Street:</label>
-                                                <input type="text" id="house&streetName" class="form-control" aria-label="House no. & Street"  />
+                                                <input type="text" id="house&streetName" class="form-control" value={item.houseNumber}  aria-label="House no. & Street"  />
                                             </div>
                                             <div class="col">
                                                 <label for="brgyName" class="form-label">Barangay:</label>
-                                                <input type="text" id="brgyName" class="form-control" aria-label="Barangay"  />
+                                                <input type="text" id="brgyName" class="form-control" value={item.barangay} aria-label="Barangay"  />
                                             </div>
                                             <div class="col">
                                                 <label for="districtName" class="form-label">District:</label>
-                                                <input type="text" id="districtName" class="form-control" aria-label="District"  />
+                                                <input type="text" id="districtName" class="form-control" value={item.district}  aria-label="District"  />
                                             </div>
                                         </div>
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="cityName" class="form-label">City/Municipality:</label>
-                                                <input type="text" id="cityName" class="form-control" aria-label="House no. & Street"  />
+                                                <input type="text" id="cityName" class="form-control" value={item.cityMunicipality} aria-label="House no. & Street"  />
                                             </div>
                                             <div class="col">
                                                 <label for="provinceName" class="form-label">Province:</label>
-                                                <input type="text" id="provinceName" class="form-control" aria-label="Barangay"  />
+                                                <input type="text" id="provinceName" class="form-control" value={item.province}  aria-label="Barangay"  />
                                             </div>
                                             <div class="col">
                                                 <label for="regionName" class="form-label">Region:</label>
-                                                <input type="text" id="regionName" class="form-control" aria-label="District"  />
+                                                <input type="text" id="regionName" class="form-control" value={item.region}  aria-label="District"  />
                                             </div>
                                         </div>
                                     </form>
@@ -139,15 +153,15 @@ function Admindetails() {
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="emailName" class="form-label">Email/FB Account:</label>
-                                                <input type="text" id="emailName" class="form-control" aria-label="House no. & Street"  />
+                                                <input type="text" id="emailName" class="form-control" value={item.email} aria-label="House no. & Street"  />
                                             </div>
                                             <div class="col">
                                                 <label for="contactName" class="form-label">Contact:</label>
-                                                <input type="text" id="contactName" class="form-control" aria-label="Barangay"  />
+                                                <input type="text" id="contactName" value={item.phoneNumber} class="form-control" aria-label="Barangay"  />
                                             </div>
                                             <div class="col">
                                                 <label for="nationalityName" class="form-label">Nationality:</label>
-                                                <input type="text" id="nationalityName" class="form-control" aria-label="District"  />
+                                                <input type="text" id="nationalityName" value={item.nationality} class="form-control" aria-label="District"  />
                                             </div>
                                         </div>
                                     </form>
@@ -160,19 +174,38 @@ function Admindetails() {
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="sex" class="form-label">Sex:</label>
-                                                <input type="text" id="sex" class="form-control" placeholder="SEX" aria-label="SEX"  />
+                                                <input type="text" id="sex" class="form-control" value={item.sex} aria-label="SEX"  />
                                             </div>
                                             <div class="col">
                                                 <label for="civilstatus" class="form-label">Civil Status:</label>
-                                                <input type="text" id="civilstatus" class="form-control" placeholder="CIVIL STATUS" aria-label="CIVIL STATUS"  />
+                                                <input type="text" id="civilstatus" class="form-control" value={item.civilStatus}  aria-label="CIVIL STATUS"  />
                                             </div>
                                             <div class="col">
                                                 <label for="homeownership" class="form-label">Home Ownership: </label>
-                                                <input type="text" id="homeownership" class="form-control" placeholder="HOME OWNERSHIP" aria-label="HOME OWNERSHIP"  />
+                                                <select
+                        id="homeOwnership"
+                        value={item.homeOwnership}
+                        className={` form-control`}
+                        required
+                      >
+                        <option value="">Select Ownership</option>
+                        <option value="Owner">Owner</option>
+                        <option value="Renting">Renting</option>
+                      </select>
                                             </div>
                                             <div class="col">
                                                 <label for="employmentstatus" class="form-label">Employment Status:</label>
-                                                <input type="text" id="employmentstatus" class="form-control" placeholder="EMPLOYMENT STATUS" aria-label="EMPLOYMENT STATUS"  />
+                                                <select
+                        id="employmentStatus"
+                        value={item.employmentStatus}
+                        className={` form-control`}
+                        required
+                      >
+                        <option value="">Select Employment Status</option>
+                        <option value="Employed">Employed</option>
+                        <option value="Unemployed">Unemployed</option>
+                        <option value="Student">Student</option>
+                      </select>
                                             </div>
                                         </div>
                                     </form>
@@ -182,11 +215,11 @@ function Admindetails() {
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="companyName" class="form-label">Company Name:</label>
-                                                <input type="text" id="companyName" class="form-control" aria-label="House no. & Street"  />
+                                                <input type="text" id="companyName" class="form-control" value={item.companyName} aria-label="House no. & Street"  />
                                             </div>
                                             <div class="col">
                                                 <label for="positionName" class="form-label">Position:</label>
-                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay"  />
+                                                <input type="text" id="positionName" class="form-control" value={item.position} aria-label="Barangay"  />
                                             </div>
                                         </div>
                                     </form>
@@ -198,16 +231,16 @@ function Admindetails() {
                                                 <input
                                                     type="date" className="form-control"
                                                     id="dateOfBirth"
-                                                    
+                                                    value={item.dateOfBirth}
                                                 />
                                             </div>
                                             <div class="col">
                                                 <label for="positionName" class="form-label">City/Municipality:</label>
-                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay"  />
+                                                <input type="text" id="positionName" class="form-control" value={item.birthPlace}aria-label="Barangay"  />
                                             </div>
                                             <div class="col">
                                                 <label for="positionName" class="form-label">Age:</label>
-                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay"  />
+                                                <input type="text" id="positionName" class="form-control" aria-label="Barangay" value={item.age} />
                                             </div>
                                         </div>
                                     </form>
@@ -216,7 +249,20 @@ function Admindetails() {
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="educationalattainment" class="form-label">Highest Educational Attainment:</label>
-                                                <input type="text" id="educationalattainment" class="form-control" aria-label="Educational Attainment"  />
+                                                <select
+                        id="h-educational-a"
+                       value={item.highestEducation}
+                        className={`form-control `}
+                        required
+                      >
+                        <option value="">Select Highest Educational Attainment</option>
+                        <option value="Undergraduate">Undergraduate</option>
+                        <option value="Elementary">Elementary</option>
+                        <option value="Highschool">High School</option>
+                        <option value="Bachelor">Bachelor's Degree</option>
+                        <option value="Postgrad">Postgraduate (Master's Degree)</option>
+                        <option value="Doctoral">Doctoral (PhD)</option>
+                      </select>
                                             </div>
                                         </div>
                                     </form>
@@ -225,36 +271,20 @@ function Admindetails() {
                                         <div class="row g-3">
                                             <div class="col">
                                                 <label for="residenceclass" class="form-label">Class:</label>
-                                                <input type="text" id="residenceclass" class="form-control" aria-label="Residence Class" />
+                                                <select
+                        id="h-residence"
+                       value={item.residenceClass}
+                        className={`form-control `}
+                        required
+                      >
+                        <option value="">Select Residence Class</option>
+                        <option value="PWD">Person with Disability (PWD)</option>
+                        <option value="soloParent">Solo Parent</option>
+                        <option value="outOfSchoolYouth">Out of School Youth</option>
+                      </select>
                                             </div>
                                         </div>
-                                        <div class="col">
-                                                        <label for="status" class="form-label">Status:</label>
-                                                        <select
-                                                            id="status"
-                                                            class="form-control"
-                                                           
-                                                            required
-                                                        >
-                                                            <option value="">Update status</option>
-                                                            <option value="active">active</option>
-                                                            <option value="inactive">inactive</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col">
-                                        <label for="role" class="form-label">Roles:</label>
-                                        <select
-                                            id="role"
-                                            class="form-control"
-                                            required
-                         
-                                        >
-                                            <option value="">Update role</option>
-                                            <option value="resident">resident</option>
-                                            <option value="admin">admin</option>
-                                            <option value="superadmin">superadmin</option>
-                                        </select>
-                                    </div>
+                                     
                                     </form>
                                 </section>
                                 <div className="save_btn">
@@ -264,6 +294,8 @@ function Admindetails() {
                                     </label>
                                 </div>
                             </div>
+
+
                             <div id="content2" className={`viewreq content ${activeContent === 2 ? 'active' : ''}`}>
                                 <section className="request-summary flex-column m-3">
                                     <h3><b>Request</b></h3>
@@ -300,10 +332,15 @@ function Admindetails() {
                                 </section>
                             </div>
                         </section>
+                        </div>
+                            ))
+                        ) : (
+                            <p>No data to display.</p>
+                        )}
                     </div>
                 </div>
             </div>
-
+           
         </>
     );
 }

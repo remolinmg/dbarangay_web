@@ -258,5 +258,18 @@ exports.getUserAdmin = async (req, res) => {
   }
 };
 
+exports.getUserProfile = async (req, res) => {
+  try {
+    const _id = req.params.id;
+    const data = await User.find({ _id});
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+
 
 

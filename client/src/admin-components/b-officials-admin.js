@@ -8,6 +8,8 @@ import { RiFolderWarningFill, } from "react-icons/ri";
 import axios from 'axios';
 import { parse, format } from 'date-fns';
 import { FaUserCircle } from "react-icons/fa";
+import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
 import {
   BsPersonFill,
   BsMegaphoneFill,
@@ -241,10 +243,34 @@ function BofficialsAdmin() {
     navigate('/admin')
   };
 
+
+   // User FETCHING
+   const [userData, setUserData] = useState([]);
+   useEffect(() => {
+     fetchUser(); 
+   }, []);
   
+   const fetchUser = async () => {
+     try {
+       const token = Cookies.get('access_token');
+       if (token) { 
+       const decoded = jwt_decode(token);
+         const _id = decoded.id;
+         const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+         setUserData(response.data);
+       }
+     } catch (error) {
+       console.error(error);
+     }
+   };
+
   return (
     <>
+    
       <div className="topbarsection">
+      {Array.isArray(userData) ? (
+                            userData.map((item, index) => (
+                                <div key={index}>
         <div className="topnavbar d-flex justify-content-between align-items-center">
           <div className="topnavleft">
             <button className="collapse-button" onClick={handleSidebarCollapse}>
@@ -264,8 +290,7 @@ function BofficialsAdmin() {
                       <FaUserCircle className="adminprofile" />
                     </div>
                     <div className="leftprofile">
-                      <h5>CLARISE ANNELY</h5>
-                      <h5>clariseannely@gmail.com</h5>
+                      <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
                     </div>
                   </div>
                   <div className="lowerprofile">
@@ -279,11 +304,11 @@ function BofficialsAdmin() {
                     <hr />
                     <div className="button-profile1">
 
-                     
+                      
                         <div onClick={handleSignOut} className="profilebuttons">
                           <BiLogOut className="profileicons" /> Log out
                         </div>
-                     
+                      
                     </div>
                   </div>
                 </div>
@@ -292,6 +317,11 @@ function BofficialsAdmin() {
           </div>
 
         </div>
+        </div>
+                            ))
+                        ) : (
+                            <p>No data to display.</p>
+                        )}
       </div>
       <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">

@@ -6,6 +6,8 @@ import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
 import { BiLogOut, BiCog } from "react-icons/bi";
 import { AiOutlineDashboard } from 'react-icons/ai';
+import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
 
 import {
   BsPersonFill,
@@ -219,9 +221,34 @@ function AnnouncementAdmin() {
     navigate('/admin')
   };
 
+
+   // User FETCHING
+   const [userData, setUserData] = useState([]);
+   useEffect(() => {
+     fetchUser(); 
+   }, []);
+  
+   const fetchUser = async () => {
+     try {
+       const token = Cookies.get('access_token');
+       if (token) { 
+       const decoded = jwt_decode(token);
+         const _id = decoded.id;
+         const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+         setUserData(response.data);
+       }
+     } catch (error) {
+       console.error(error);
+     }
+   };
+
   return (
     <>
+    
       <div className="topbarsection">
+      {Array.isArray(userData) ? (
+                            userData.map((item, index) => (
+                                <div key={index}>
         <div className="topnavbar d-flex justify-content-between align-items-center">
           <div className="topnavleft">
             <button className="collapse-button" onClick={handleSidebarCollapse}>
@@ -241,8 +268,7 @@ function AnnouncementAdmin() {
                       <FaUserCircle className="adminprofile" />
                     </div>
                     <div className="leftprofile">
-                      <h5>CLARISE ANNELY</h5>
-                      <h5>clariseannely@gmail.com</h5>
+                      <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
                     </div>
                   </div>
                   <div className="lowerprofile">
@@ -269,6 +295,11 @@ function AnnouncementAdmin() {
           </div>
 
         </div>
+        </div>
+                            ))
+                        ) : (
+                            <p>No data to display.</p>
+                        )}
       </div>
       <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">

@@ -7,6 +7,8 @@ import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
 import { BiLogOut, BiCog } from "react-icons/bi";
 import { AiOutlineDashboard } from 'react-icons/ai';
+import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
 import {
     BsPersonFill,
     BsMegaphoneFill,
@@ -281,58 +283,85 @@ function BpermitAdmin() {
         window.localStorage.clear();
         navigate('/admin')
     };
+// User FETCHING
+const [userData, setUserData] = useState([]);
+useEffect(() => {
+  fetchUser(); 
+}, []);
 
-    return (
-        <>
-            <div className="topbarsection">
-                <div className="topnavbar d-flex justify-content-between align-items-center">
-                    <div className="topnavleft">
-                        <button className="collapse-button" onClick={handleSidebarCollapse}>
-                            <BiMenu />
-                        </button>
-                    </div>
-                    <div className="topnavmid">
-                        <h3>Barangay Harapin Ang Bukas</h3>
-                    </div>
-                    <div className="topnavright">
-                        <div ref={profileRef}>
-                            <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-                            {ProfilesubmenuVisible && (
-                                <div className="Profilesubmenuadmin">
-                                    <div className="admininfo">
-                                        <div className="rightprofile">
-                                            <FaUserCircle className="adminprofile" />
-                                        </div>
-                                        <div className="leftprofile">
-                                            <h5>CLARISE ANNELY</h5>
-                                            <h5>clariseannely@gmail.com</h5>
-                                        </div>
-                                    </div>
-                                    <div className="lowerprofile">
-                                        <div className="button-profile1">
-                                            <NavLink to="/admin-profile" activeClassName="active">
-                                                <div href="#" className="profilebuttons">
-                                                    <BiCog className="profileicons" /> Settings
-                                                </div>
-                                            </NavLink>
-                                        </div>
-                                        <hr />
-                                        <div className="button-profile1">
+const fetchUser = async () => {
+  try {
+    const token = Cookies.get('access_token');
+    if (token) { 
+    const decoded = jwt_decode(token);
+      const _id = decoded.id;
+      const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+      setUserData(response.data);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 
+return (
+ <>
+ 
+   <div className="topbarsection">
+   {Array.isArray(userData) ? (
+                         userData.map((item, index) => (
+                             <div key={index}>
+     <div className="topnavbar d-flex justify-content-between align-items-center">
+       <div className="topnavleft">
+         <button className="collapse-button" onClick={handleSidebarCollapse}>
+           <BiMenu />
+         </button>
+       </div>
+       <div className="topnavmid">
+         <h3>Barangay Harapin Ang Bukas</h3>
+       </div>
+       <div className="topnavright">
+         <div ref={profileRef}>
+           <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+           {ProfilesubmenuVisible && (
+             <div className="Profilesubmenuadmin">
+               <div className="admininfo">
+                 <div className="rightprofile">
+                   <FaUserCircle className="adminprofile" />
+                 </div>
+                 <div className="leftprofile">
+                   <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
+                 </div>
+               </div>
+               <div className="lowerprofile">
+                 <div className="button-profile1">
+                   <NavLink to="/admin-profile" activeClassName="active">
+                     <div href="#" className="profilebuttons">
+                       <BiCog className="profileicons" /> Settings
+                     </div>
+                   </NavLink>
+                 </div>
+                 <hr />
+                 <div className="button-profile1">
 
-                                            <div onClick={handleSignOut} className="profilebuttons">
-                                                <BiLogOut className="profileicons" /> Log out
-                                            </div>
+                   
+                     <div onClick={handleSignOut} className="profilebuttons">
+                       <BiLogOut className="profileicons" /> Log out
+                     </div>
+                   
+                 </div>
+               </div>
+             </div>
+           )}
+         </div>
+       </div>
 
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+     </div>
+     </div>
+                         ))
+                     ) : (
+                         <p>No data to display.</p>
+                     )}
+   </div>
             <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
                 <div className="newsidebar">
                     <div className="text-center">
