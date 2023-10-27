@@ -70,9 +70,7 @@ function Residentsaccounts() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
-
     const navigate = useNavigate();
-
     const handleSignOut = () => {
         window.localStorage.clear();
         document.cookie = 'access_token= ;';
@@ -83,10 +81,10 @@ function Residentsaccounts() {
     const back = () => {
         window.history.back()
     }
-    
+
     //EDIT INFORMATION
 
-    
+
 
     return (
         <>
@@ -151,6 +149,25 @@ function Residentsaccounts() {
                                         <input type="file" accept="image/*" id="file-input" className="file-input" onChange={handleFileChange} />
                                         <label htmlFor="file-input" className="upload-button">Upload Profile</label>
                                     </div>
+
+                                    <select
+                                        id="role"
+                                        className="form-control"
+                                        required
+                                        value={item.type}
+                                        onChange={(e) => {
+                                            if (item.type === 'superadmin') {
+                                                // Handle the change event and update the user's role
+
+                                            }
+                                        }}
+                                        disabled={item.type !== 'superadmin'}
+                                    >
+                                        <option value="resident">Resident</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="superadmin">Super Admin</option>
+                                    </select>
+
 
                                     <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
                                         <input type="radio" onClick={() => showContent(1)} className="btn-check" name="btnradio" id="btnradio1" autoComplete="off" checked={activeContent === 1} />
