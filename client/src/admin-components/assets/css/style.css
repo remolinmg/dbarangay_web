@@ -250,6 +250,16 @@
   transition: all 0.5s ease;
 }
 
+/* dashboard */
+.card-title {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 24px;
+}
+
 
 
 /* DASHBOARD ENDS */
@@ -592,73 +602,153 @@
 }
 
 
-@media screen and (max-width: 350px) {
+/* For small/medium screen laptops/desktop*/
+@media screen and (max-width: 800px) {
 
-  /* topbar */
-  .topnavbar {
-    width: 350px;
-    justify-content: space-between;
-    padding: 5px 10px;
+  /* dashboard */
+  .card-title {
+    font-size: 15px;
   }
 
-  .topnavlef {
-    flex: 1;
+  .card-text {
+    font-size: 12px;
   }
 
-  .topnavmid h3 {
-    font-size: 14px;
+  /* brgy officials */
+  #b-official-table {
+    width: 1200px;
+  }
+  #b-officialcard {
+    overflow-x: scroll;
+    margin-top: 2%;
+  }
+  #b-official-addbtn {
+    margin-left: 5%;
+    position: absolute;
   }
 
-  .topnavright {
-    flex: 1;
-    text-align: right;
+  /* brgy certificate, brgy id, brgy installation, brgy construction, & brgy indigency*/
+  
+  #services-cat-dropdown {
+    width: 220px;
+  }
+  
+  #b-cert-table, #b-permit-table, #b-id-table, #b-install-table, 
+  #b-construct-table, #b-indigency-table {
+    width: 1200px;
+  }
+  #b-certcard, #b-permitcard, #b-idcard, #b-installcard, 
+  #b-constructcard, #b-indigencycard {
+    overflow-x: scroll;
+    margin-top: 2%;
+  }
+  #b-cert-addbtn, #b-permit-addbtn, #b-id-addbtn, #b-install-addbtn, 
+  #b-construct-addbtn, #b-indigency-addbtn {
+    position: absolute;
+  }
+  
+
+  /* brgy blotter, brgy complaint, brgy medical reports */
+  #b-blotter-table, #b-complaint-table, #b-medical-table  {
+    width: 1200px;
+  }
+  #b-blottercard, #b-complaintcard, #b-medicalcard {
+    overflow-x: scroll;
+    margin-top: 2%;
+  }
+  #b-blotter-addbtn, #b-complaint-addbtn, #b-medical-addbtn {
+    position: absolute;
   }
 
-  .topnavright .mr-10 {
-    margin-right: 10px;
+  /* brgy business promotion */
+  #b-business-table {
+    width: 1200px;
+  }
+  #b-businesscard {
+    overflow-x: scroll;
+    margin-top: 2%;
+  }
+  #b-business-addbtn {
+    position: absolute;
   }
 
-  .collapse-button {
-    font-size: 30px;
+  #save_btn {
+    margin-left: 400px;
+    background: transparent;
   }
-
-  /* sidebar */
-  .containersidebar {
-    width: 350px;
-    top: 60px;
-    left: 0;
-    height: auto;
-    z-index: 1000;
-  }
-
-  .containersidebar.collapsed {
-    width: 0;
-  }
-
-  .newsidebar ul li {
-    width: 100%;
-    padding: 0;
-    text-align: center;
-    left: 0;
-  }
-
-  .newsidebar ul li a {
-    padding: 13px 0;
-  }
-
-  .sidebar-submenu li {
-    margin-left: 0;
-  }
-
-  /* Announcement */
-
 }
 
-/* For medium devices */
-@media screen and (max-width:568px) {}
+@media screen and (max-width: 1400px) {
 
-/* For large devices */
-@media screen and (min-width: 768px) {}
+  /* dashboard */
+  .card-title {
+    font-size: 15px;
+  }
 
-/*For x-large devices */
-@media screen and (min-width: 1024px) {}
+  .card-text {
+    font-size: 12px;
+  }
+
+  /* brgy officials */
+  #b-official-table {
+    width: 1200px;
+  }
+  #b-officialcard {
+    overflow-x: scroll;
+    margin-top: 2%;
+  }
+  #b-official-addbtn {
+    margin-left: 5%;
+    position: absolute;
+  }
+
+  /* brgy certificate, brgy id, brgy installation, brgy construction, & brgy indigency*/
+  
+  #services-cat-dropdown {
+    width: 220px;
+  }
+  
+  #b-cert-table, #b-permit-table, #b-id-table, #b-install-table, 
+  #b-construct-table, #b-indigency-table {
+    width: 1200px;
+  }
+  #b-certcard, #b-permitcard, #b-idcard, #b-installcard, 
+  #b-constructcard, #b-indigencycard {
+    overflow-x: scroll;
+    margin-top: 2%;
+  }
+  #b-cert-addbtn, #b-permit-addbtn, #b-id-addbtn, #b-install-addbtn, 
+  #b-construct-addbtn, #b-indigency-addbtn {
+    position: absolute;
+  }
+  
+
+  /* brgy blotter, brgy complaint, brgy medical reports */
+  #b-blotter-table, #b-complaint-table, #b-medical-table  {
+    width: 1200px;
+  }
+  #b-blottercard, #b-complaintcard, #b-medicalcard {
+    overflow-x: scroll;
+    margin-top: 2%;
+  }
+  #b-blotter-addbtn, #b-complaint-addbtn, #b-medical-addbtn {
+    position: absolute;
+  }
+
+  /* brgy business promotion */
+  #b-business-table {
+    width: 1200px;
+  }
+  #b-businesscard {
+    overflow-x: scroll;
+    margin-top: 2%;
+  }
+  #b-business-addbtn {
+    position: absolute;
+  }
+
+  #save_btn {
+    margin-left: 630px;
+    background: transparent;
+  }
+}

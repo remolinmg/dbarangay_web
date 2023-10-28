@@ -261,13 +261,16 @@ function UserProfile() {
                                             </div>
                                         </div>
                                     </form>
+
+                                    <div id="save_btn" className="save_btn">
+                                        <input type="checkbox" className="btn-check"/>
+                                        <label className="save-btn btn btn-primary" htmlFor="btn-check-3">
+                                            Save Changes
+                                        </label>
+                                    </div>
+
                                 </section>
-                                <div className="save_btn">
-                                    <input type="checkbox" className="btn-check" id="btn-check-3" />
-                                    <label className="btn btn-primary" htmlFor="btn-check-3">
-                                        Save Changes
-                                    </label>
-                                </div>
+                                
                             </div>
                             <div id="content2" className={`viewreq content ${activeContent === 2 ? 'active' : ''}`}>
                                 <section className="request-summary flex-column m-3">

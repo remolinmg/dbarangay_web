@@ -448,21 +448,15 @@ return (
             </div>
             <div className="col-4">
               <div className="tabsz dropdown-center">
-                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Services Category</button>
-                <ul class="dropdown-menu dropdown-topcategory">
-                  <Link to="/b-permit-admin" className="nav-link">
-                    <li><a class="dropdown-item" className="dropdown-item text-center">Business Permit</a></li></Link>
-                  <Link to="/d-barangay-id" className="nav-link">
-                    <li><a class="dropdown-item" className="dropdown-item text-center"> Barangay ID</a></li></Link>
-                  <Link to="/d-barangay-installation" className="nav-link">
-                    <li><a class="dropdown-item" className="dropdown-item text-center">Installation Permit</a></li></Link>
-                  <Link to="/d-barangay-construction" className="nav-link">
-                    <li><a class="dropdown-item" className="dropdown-item text-center"> construction Permit</a></li></Link>
-                  <Link to="/d-barangay-indigency" className="nav-link">
-                    <li><a class="dropdown-item" className="dropdown-item text-center">Barangay Indigency</a></li></Link>
+                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button>
+                <ul className="dropdown-menu dropdown-topcategory">
+                  <li><Link to="/blotter-admin" className="dropdown-item text-center">Blotter</Link></li>
+                  <li><Link to="/complaints-admin" className="dropdown-item text-center">Complaints</Link></li>
+                  <li><Link to="/health-admin" className="dropdown-item text-center">Medical</Link></li>
                 </ul>
               </div>
             </div>
+            
             <div className="col-4">
               <div className="dropdown-tablenumbers">
                 <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
@@ -483,7 +477,7 @@ return (
           <section class="section">
             <div class="row">
               <div class="col-lg-12">
-                <div class="card">
+                <div id="b-blottercard" class="card">
                   <div class="card-body">
                     <div className="row p-2 d-flex justify-content-between">
                       <div className="col-4">
@@ -511,11 +505,11 @@ return (
                           </nav>
                         </div>
                       </div>
-                      <div className="col-4 text-end ">
+                      <div id="b-blotter-addbtn" className="col-4 text-end ">
                         <button className="btn btn-primary float-end" onClick={toggleForm}>Add</button>
                       </div>
                     </div>
-                    <table class="table">
+                    <table id="b-blotter-table" class="table">
                       <thead>
                         <tr>
                           <th scope="col">DATE</th>

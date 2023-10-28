@@ -485,7 +485,7 @@ return (
           <section class="section">
             <div class="row">
               <div class="col-lg-12">
-                <div class="card">
+                <div id="b-medicalcard" class="card">
                   <div class="card-body">
                     <div className="row p-2 d-flex justify-content-between">
                       <div className="col-4">
@@ -513,11 +513,11 @@ return (
                           </nav>
                         </div>
                       </div>
-                      <div className="col-4 text-end ">
+                      <div id="b-medical-addbtn" className="col-4 text-end ">
                         <button className="btn btn-primary float-end" onClick={toggleForm}>Add</button>
                       </div>
                     </div>
-                    <table class="table">
+                    <table id="b-medical-table" class="table">
                       <thead>
                         <tr>
                           <th scope="col">DATE</th>

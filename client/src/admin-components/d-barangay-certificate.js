@@ -477,8 +477,8 @@ return (
         </div>
       </div>
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
-        <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
-          <div className="toppart-table border row w-75 d-flex align-items-center">
+        <div id="services-selections-main" className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
+          <div id="services-selections" className="toppart-table border row w-75 d-flex align-items-center">
             <div className="col-4">
               <div className="input-group">
                 <input
@@ -492,24 +492,26 @@ return (
                 />
               </div>
             </div>
-            <div className="col-4">
+            <div id="services-cat-dropdown" className="col-4">
               <div className="tabsz dropdown-center">
                 <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Services Category</button>
                 <ul class="dropdown-menu dropdown-topcategory">
+                  <Link to="/d-barangay-certificate" className="nav-link">
+                    <li><a class="dropdown-item" className="dropdown-item text-center">Barangay Certificate</a></li></Link>
                   <Link to="/b-permit-admin" className="nav-link">
                     <li><a class="dropdown-item" className="dropdown-item text-center">Business Permit</a></li></Link>
                   <Link to="/d-barangay-id" className="nav-link">
-                    <li><a class="dropdown-item" className="dropdown-item text-center"> Barangay ID</a></li></Link>
+                    <li><a class="dropdown-item" className="dropdown-item text-center">Barangay ID</a></li></Link>
                   <Link to="/d-barangay-installation" className="nav-link">
                     <li><a class="dropdown-item" className="dropdown-item text-center">Installation Permit</a></li></Link>
                   <Link to="/d-barangay-construction" className="nav-link">
-                    <li><a class="dropdown-item" className="dropdown-item text-center"> construction Permit</a></li></Link>
+                    <li><a class="dropdown-item" className="dropdown-item text-center">Construction Permit</a></li></Link>
                   <Link to="/d-barangay-indigency" className="nav-link">
                     <li><a class="dropdown-item" className="dropdown-item text-center">Barangay Indigency</a></li></Link>
                 </ul>
               </div>
             </div>
-            <div className="col-4">
+            <div id="services-value" className="col-4">
               <div className="dropdown-tablenumbers">
                 <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
                   <option value="10">10</option>
@@ -528,13 +530,13 @@ return (
           <section class="section">
             <div class="row">
               <div class="col-lg-12">
-                <div class="card">
+                <div id="b-certcard" class="card">
                   <div class="card-body">
                     <div className="row p-2 d-flex justify-content-between">
                       <div className="col-4">
                         <div className="table-pages">
                           <nav aria-label="Page navigation example">
-                            <ul className="pagination">
+                            <ul id="b-cert-nxtbtn" className="pagination">
                               <li className="page-item">
                                 <a className="page-link" href="#" aria-label="Previous" onClick={prevPage}>
                                   <span aria-hidden="true">&laquo;</span>
@@ -556,14 +558,14 @@ return (
                           </nav>
                         </div>
                       </div>
-                      <div className="col-4 text-end ">
+                      <div id="b-cert-addbtn" className="col-4 text-end ">
                         <button className="btn btn-primary float-end" onClick={toggleForm}>Add</button>
                       </div>
                     </div>
 
 
 
-                    <table class="table caption-top">
+                    <table id="b-cert-table" class="table caption-top">
                       <thead>
                         <tr>
                           <th scope="col">Resident Name</th>

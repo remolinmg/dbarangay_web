@@ -461,13 +461,13 @@ function BofficialsAdmin() {
           <section className="section">
             <div className="row">
               <div className="col-lg-12">
-                <div className="card">
+                <div id="b-officialcard" className="card">
                   <div className="card-body">
                     <div className="row p-2 d-flex justify-content-between">
                       <div className="col-4">
                         <div className="table-pages">
                           <nav aria-label="Page navigation example">
-                            <ul className="pagination">
+                            <ul id="b-official-nxtbtn" className="pagination">
                               <li className="page-item">
                                 <a className="page-link" href="#" aria-label="Previous" onClick={prevPage}>
                                   <span aria-hidden="true">&laquo;</span>
@@ -489,12 +489,12 @@ function BofficialsAdmin() {
                           </nav>
                         </div>
                       </div>
-                      <div className="col-4 text-end ">
+                      <div id="b-official-addbtn" className="col-4 text-end ">
                         <button className="btn btn-primary float-end" onClick={toggleForm}>Add Officials</button>
                       </div>
                     </div>
 
-                    <table class="table caption-top">
+                    <table id="b-official-table" class="table caption-top">
                       <thead>
                         <tr>
                           <th scope="col">Position</th>

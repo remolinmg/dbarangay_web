@@ -1535,6 +1535,36 @@ li {
 
 /* For small devices */
 @media screen and (max-width: 350px){
+
+  /* login */
+  #login-welcome {
+    height: 600px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: -50%;
+  }
+  #login-welcome h2 {
+    font-size: 20px;
+    margin-top: -80%;
+    margin-bottom: -30px;
+  }
+  #login-desc h4 {
+    font-size: 13px;
+  }
+  #login-desc span {
+    font-size: 11px;
+  }
+  #login-container-main {
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
+  #register-btn {
+    margin-bottom: -80%;
+  }
+  #forgotpass-btn {
+    padding: 25%;
+  }
+
   /* homepage */
   #title {
     font-size: 25px;
@@ -1579,17 +1609,6 @@ li {
     height: 100px;
   }
 
-  .footer-contact {
-    position: absolute;
-    z-index: 1;
-    padding-top: 170%;
-    left: 100px;
-  }
-
-  .text-dark {
-    padding-bottom: 100%;
-  }
-
   /* services */
 
   .service {
@@ -1626,10 +1645,50 @@ li {
     font-size: 10px;
   }
 
+  /* profile */
+
+  #save_btn {
+    margin-left: 10px;
+    background: transparent;
+  }
+
+  /* footer */
+  
 }
 
 /* For medium devices */
 @media screen and (max-width:568px){
+
+  /* login */
+  #login-welcome {
+    height: 600px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: -50%;
+  }
+  #login-welcome h2 {
+    font-size: 20px;
+    margin-top: -80%;
+    margin-bottom: -30px;
+  }
+  #login-desc h4 {
+    font-size: 13px;
+  }
+  #login-desc span {
+    font-size: 11px;
+  }
+  #login-container-main {
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
+  #register-btn {
+    margin-bottom: -80%;
+  }
+  #forgotpass-btn {
+    margin-top: -150px;
+    padding: 25%;
+  }
+
   /* homepage */
   #title {
     font-size: 25px;
@@ -1670,16 +1729,6 @@ li {
     height: 100px;
   }
 
-  .footer-contact {
-    position: absolute;
-    z-index: 1;
-    padding-top: 130%;
-    left: 100px;
-  }
-
-  .text-dark {
-    padding-bottom: 100%;
-  }
   /* services */
 
   .service {
@@ -1715,20 +1764,86 @@ li {
   .emergency-section-content th, .emergency-section-content td {
     font-size: 10px;
   }
+
+  #evacuation-center {
+    width: 150px;
+    margin: 20px;
+  }
+
+  /* profile */
+
+  #save_btn {
+    margin-left: 10px;
+    background: transparent;
+  }
+
+  /* footer */
+
 }
 
 /* For large devices */
-@media screen and (min-width: 768px){
+@media screen and (max-width: 768px){
+  .card {
+    padding-bottom: 5%;
+  }
+  
+  #save_btn {
+    margin-left: 360px;
+    background: transparent;
+  }
+
+  /* evacuation */
+
+  #evacuation-center {
+    width: 350px;
+    margin: 20px;
+  }
+
+  /* mission vision */
+  #mission-vision {
+    padding-bottom: 15%;
+  }
+
+  /* footer */
+  #footer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #feedback, #products, #footer-contact {
+    width: 400px;
+    height: 100px;
+  }
+  #products, #footer-contact {
+    padding-top: 30%;
+  }
+  #footer-contact {
+    margin-bottom: 10%;
+  }
+
+}
+
+@media screen and (max-width: 968px){
+  
+  .service__box {
+    width: 300px;
+    margin-right: 70%;
+  }
+
+  .service__text {
+    font-size: 13px;
+  }
+
+  /* profile */
+
+  
+}
+
+/*For x-large devices */
+@media screen and (max-width: 1024px){
   .card {
     padding-bottom: 5%;
   }
 
-  .text-dark {
-    margin-right: 100px;
-  }
-}
-
-/*For x-large devices */
-@media screen and (min-width: 1024px){
-
+ 
 }

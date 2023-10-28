@@ -65,12 +65,12 @@ const Footer = () => {
       style={{ backgroundColor: "#fffff" }}
     >
 
-      <div class="container">
+      <div id="footer-container" class="container">
 
         <section class="text-dark">
-          <div class="row">
+          <div id="footer-row" class="row">
             <div class="col-12 col-md-7 mx-auto mt-3">
-              <div className='feedback' id='feedback'>
+              <div className='feedback' id="feedback">
                 <form onSubmit={submitFeedback}>
                   <div className="pb-3">
                     <h6 className="text-uppercase mb-4 font-weight-bold text-center">Suggestions and Feedbacks</h6>
@@ -104,7 +104,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div class="footer-product col-6 col-md-2 mx-auto mt-3">
+            <div id="products" class="footer-product col-6 col-md-2 mx-auto mt-3">
               <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
               <p class="mb-1">
                 <Link className="text-decoration-none" to="/announcement">
@@ -134,7 +134,7 @@ const Footer = () => {
               </p>
               </div>
               
-              <div class="footer-contact col-6 col-md-2 mx-auto mt-3">         
+              <div id="footer-contact" class="footer-contact col-6 col-md-2 mx-auto mt-3">         
                 <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
                 <p><i class="mr-3"><FaHome /></i> 204 Daang Bakal Street, Harapin Ang Bukas, Mandaluyong City</p>
                 <p><i class="mr-3"><FaEnvelope /></i>  <a href="mailto:harapinangbukas@gmail.com" style={emailLinkStyle}>harapinangbukas@gmail.com</a></p>
