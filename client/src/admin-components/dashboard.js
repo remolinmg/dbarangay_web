@@ -604,7 +604,7 @@ return (
                             <div className="total-population card-body text-center">
                                 <h5 className="card-title">Total Population</h5>
                                 <p className="card-text">The current population of the barangay.</p>
-                                <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                                <p className="card-text">
                                     Population: {totalPopulation}
                                 </p>
                             </div>
@@ -612,10 +612,10 @@ return (
                         <div className="card barangay-voters topcard m-1 col-md-3  p-0 ">
                             <div className="card-body text-center">
                                 <h5 className="card-title">Registered Voters</h5>
-                                <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                                <p className="card-text">
                                     Registered Voters: {registeredVoters}
                                 </p>
-                                <p className="card-text" style={{ fontSize: '20px' }}>
+                                <p className="card-text">
                                     Percentage of Registered Voters: {((registeredVoters / totalPopulation) * 100).toFixed(2)}%
                                 </p>
                             </div>
@@ -625,7 +625,7 @@ return (
                             <div className="card-body text-center">
                                 <h5 className="card-title">Registered Students</h5>
                                 <p className="card-text">The current Students of the barangay.</p>
-                                <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                                <p className="card-text">
                                     Students: {registeredStudents}
                                 </p>
                             </div>
@@ -633,10 +633,10 @@ return (
                         <div className="male-female-percentages card topcard m-1 col-md-3  p-0 ">
                             <div className="card-body text-center">
                                 <h5 className="card-title">Male and Female Statistics</h5>
-                                <p className="card-text" style={{ fontSize: '20px' }}>
+                                <p className="card-text">
                                     Male: {maleCount} ({malePercentage.toFixed(2)}%)
                                 </p>
-                                <p className="card-text" style={{ fontSize: '20px' }}>
+                                <p className="card-text">
                                     Female: {femaleCount} ({femalePercentage.toFixed(2)}%)
                                 </p>
                             </div>

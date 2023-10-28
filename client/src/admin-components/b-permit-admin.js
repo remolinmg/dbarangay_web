@@ -499,11 +499,11 @@ return (
                                     <Link to="/b-permit-admin" className="nav-link">
                                         <li><a class="dropdown-item" className="dropdown-item text-center">Business Permit</a></li></Link>
                                     <Link to="/d-barangay-id" className="nav-link">
-                                        <li><a class="dropdown-item" className="dropdown-item text-center"> Barangay ID</a></li></Link>
+                                        <li><a class="dropdown-item" className="dropdown-item text-center">Barangay ID</a></li></Link>
                                     <Link to="/d-barangay-installation" className="nav-link">
                                         <li><a class="dropdown-item" className="dropdown-item text-center">Installation Permit</a></li></Link>
                                     <Link to="/d-barangay-construction" className="nav-link">
-                                        <li><a class="dropdown-item" className="dropdown-item text-center"> construction Permit</a></li></Link>
+                                        <li><a class="dropdown-item" className="dropdown-item text-center">Construction Permit</a></li></Link>
                                     <Link to="/d-barangay-indigency" className="nav-link">
                                         <li><a class="dropdown-item" className="dropdown-item text-center">Barangay Indigency</a></li></Link>
                                 </ul>
@@ -527,7 +527,7 @@ return (
                     <section className="section">
                         <div className="row">
                             <div className="col-lg-12">
-                                <div className="card">
+                                <div id="b-permitcard" className="card">
                                     <div className="card-body">
                                         <div className="row p-2 d-flex justify-content-between">
                                             <div className="col-4">
@@ -555,11 +555,11 @@ return (
                                                     </nav>
                                                 </div>
                                             </div>
-                                            <div className="col-4 text-end ">
+                                            <div id="b-permit-addbtn" className="col-4 text-end ">
                                                 <button className="btn btn-primary float-end" onClick={toggleForm}>Add</button>
                                             </div>
                                         </div>
-                                        <table className="table">
+                                        <table id="b-permit-table" className="table">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Business Name</th>

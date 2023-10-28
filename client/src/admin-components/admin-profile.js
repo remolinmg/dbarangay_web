@@ -287,7 +287,7 @@ function Admindetails() {
                                      
                                     </form>
                                 </section>
-                                <div className="save_btn">
+                                <div id="save_btn" className="save_btn">
                                     <input type="checkbox" className="btn-check" id="btn-check-3" />
                                     <label className="btn btn-primary" htmlFor="btn-check-3">
                                         Save Changes

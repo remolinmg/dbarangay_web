@@ -135,12 +135,12 @@ const Login = () => {
   };
 
   return (
-    <div className="container-fluid main">
-      <div className="row">
-        <div className="col-12 col-md-8 left-side text-light">
+    <div id="login-container" className="container-fluid main">
+      <div id="login-row" className="row">
+        <div id="login-welcome" className="col-12 col-md-8 left-side text-light">
           <h2 className="p-5 ps-5">Welcome to Barangay Harapin Ang Bukas</h2>
           <hr />
-          <div className="ps-5 pt-1 d-flex flex-column justify-content-center">
+          <div id="login-desc" className="ps-5 pt-1 d-flex flex-column justify-content-center">
             <h4>Sign up now, do everything remotely later</h4>
             <span><BiCheckCircle /> <i>Request documents online</i></span>
             <span><BiCheckCircle /> <i>Keep up with barangay programs</i></span>
@@ -148,8 +148,8 @@ const Login = () => {
             <span><BiCheckCircle /> <i>Be prepared against disaster</i></span>
           </div>
         </div>
-        <div className="col-12 col-md-4 right-side">
-          <div className="login-container">
+        <div id="login-container-main" className="col-12 col-md-4 right-side">
+          <div id="login-container" className="login-container">
             <h2>LOGIN</h2>
             <form>
               <div className={`form-group d-flex flex-column ${formSubmitted && emailValid !== '' ? 'has-error' : ''}`}>
@@ -194,10 +194,10 @@ const Login = () => {
               >
                 Login
               </button>
-              <p className="register-link text-center text-dark">
+              <p id="register-btn" className="register-link text-center text-dark">
                 New user? <a href="registration">Register here</a>
               </p>
-              <p className="register-link text-center text-dark">
+              <p id="forgotpass-btn" className="register-link text-center text-dark">
                 <a href="/forgotpass">Forgot Password</a>
               </p>
               {isLockedOut && (
