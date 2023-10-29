@@ -1,24 +1,37 @@
 const livelihood = require('../models/livelihoodModel');
 const fs = require('fs');
+const cloudinary = require('../uploads/cloudinary');
 
 // Function to create a new livelihood
 exports.createLivelihood = async (req, res) => {
-  const {
-    what,where,when,who
-  } = req.body;
-  const { filename } = req.file;
+  const { what, where, when, who } = req.body;
+  const { path } = req.file;
 
   try {
-    const newLivelihood = new livelihood({
-      what,where,when,who,filename
+    // Upload the image to Cloudinary
+    const result = await cloudinary.uploader.upload(path, {
+      folder: 'livelihood', // You can change the folder name as needed
     });
+
+    const newLivelihood = new livelihood({
+      what,
+      where,
+      when,
+      who,
+      filename: {
+        url: result.secure_url,
+        public_id: result.public_id,
+      },
+    });
+
     await newLivelihood.save();
-    res.status(201).send('File and text data saved to MongoDB');
+    res.status(201).send('File and text data saved to MongoDB and Cloudinary');
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error saving data to MongoDB');
+    res.status(500).send('Error saving data to MongoDB and Cloudinary');
   }
 };
+
 
 // Function to get all livelihood
 exports.getAllLivelihood = async (req, res) => {
@@ -55,6 +68,7 @@ exports.deleteLivelihood = async (req, res) => {
 };
 
 // Function to update an livelihood by ID
+// Function to update a livelihood by ID
 exports.updateLivelihood = async (req, res) => {
   const id = req.params.id;
   const formData = req.body;
@@ -70,28 +84,26 @@ exports.updateLivelihood = async (req, res) => {
 
     // Check if a new file was uploaded
     if (newFile) {
-      // Delete the old file if it exists
-      if (existingLivelihood.filename) {
-        const filepath = `./uploads/livelihood/${existingLivelihood.filename}`;
-        fs.unlink(filepath, (err) => {
-          if (err) {
-            console.error('Error deleting old file:', err);
-          }
-        });
-      }
+      // Upload the new image to Cloudinary
+      const result = await cloudinary.uploader.upload(newFile.path, {
+        folder: 'livelihood', // The folder for new images
+      });
 
-      // Update the livelihood with the new file
-      existingLivelihood.filename = newFile.filename;
+      // Update the livelihood data with the new image URL
+      existingLivelihood.filename = {
+        url: result.secure_url,
+        public_id: result.public_id,
+      };
     }
 
     // Update the livelihood with new data (excluding the file)
     existingLivelihood.set(formData);
 
-    const updatedLivelihood = await existingLivelihood.save();
+  const updatedLivelihood = await existingLivelihood.save();
 
-    res.status(200).json(updatedLivelihood);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
+  res.status(200).json(updatedLivelihood);
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ message: 'Internal server error' });
+}
 };

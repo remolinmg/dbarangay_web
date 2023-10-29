@@ -5,7 +5,16 @@ const livelihoodSchema = new mongoose.Schema({
   where: String,
   when: String,
   who: String,
-  filename: String,
+  filename: {
+    public_id: {
+      type: String,
+      required: true
+    },
+    url:{
+      type: String,
+      required: true
+    }
+  },
 });
 
 const livelihood = mongoose.model('livelihood', livelihoodSchema);
