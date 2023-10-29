@@ -179,6 +179,19 @@ function BpromotionAdmin() {
         alert("Business Already Exist!");
       }
       else if (res.data === "File and text data saved to MongoDB") {
+        // After successful upload to MongoDB, reset the form
+        setBusinessName('');
+        setAddress('');
+        setHours('');
+        setContact('');
+        setCategory('');
+        setResidentName('');
+        setFile(null);
+
+        // If you're using Cloudinary, you can also reset the Cloudinary widget here
+        // cloudinaryWidgetRef.current.uploadWidget().close();
+
+        fetchData(); // Fetch the updated data
       }
     })
       .catch(er => console.log(er))
@@ -217,9 +230,13 @@ function BpromotionAdmin() {
       formData.append('businessName', editBusinessName);
       formData.append('address', editAddress);
       formData.append('category', editCategory);
-      formData.append('file', editFile);
       formData.append('hours', editHours);
       formData.append('contact', editContact);
+
+      // Check if a new image is selected
+      if (editFile) {
+        formData.append('file', editFile);
+      }
 
       const response = await axios.put(
         `http://localhost:8000/update/promotebusiness/${selectedRowData}`,
@@ -242,85 +259,85 @@ function BpromotionAdmin() {
     navigate('/admin')
   };
 
-// User FETCHING
-const [userData, setUserData] = useState([]);
-useEffect(() => {
-  fetchUser(); 
-}, []);
+  // User FETCHING
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
-const fetchUser = async () => {
-  try {
-    const token = Cookies.get('access_token');
-    if (token) { 
-    const decoded = jwt_decode(token);
-      const _id = decoded.id;
-      const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
-      setUserData(response.data);
+  const fetchUser = async () => {
+    try {
+      const token = Cookies.get('access_token');
+      if (token) {
+        const decoded = jwt_decode(token);
+        const _id = decoded.id;
+        const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+        setUserData(response.data);
+      }
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
-  }
-};
+  };
 
-return (
- <>
- 
-   <div className="topbarsection">
-   {Array.isArray(userData) ? (
-                         userData.map((item, index) => (
-                             <div key={index}>
-     <div className="topnavbar d-flex justify-content-between align-items-center">
-       <div className="topnavleft">
-         <button className="collapse-button" onClick={handleSidebarCollapse}>
-           <BiMenu />
-         </button>
-       </div>
-       <div className="topnavmid">
-         <h3>Barangay Harapin Ang Bukas</h3>
-       </div>
-       <div className="topnavright">
-         <div ref={profileRef}>
-           <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-           {ProfilesubmenuVisible && (
-             <div className="Profilesubmenuadmin">
-               <div className="admininfo">
-                 <div className="rightprofile">
-                   <FaUserCircle className="adminprofile" />
-                 </div>
-                 <div className="leftprofile">
-                   <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
-                 </div>
-               </div>
-               <div className="lowerprofile">
-                 <div className="button-profile1">
-                   <NavLink to="/admin-profile" activeClassName="active">
-                     <div href="#" className="profilebuttons">
-                       <BiCog className="profileicons" /> Settings
-                     </div>
-                   </NavLink>
-                 </div>
-                 <hr />
-                 <div className="button-profile1">
+  return (
+    <>
 
-                   
-                     <div onClick={handleSignOut} className="profilebuttons">
-                       <BiLogOut className="profileicons" /> Log out
-                     </div>
-                   
-                 </div>
-               </div>
-             </div>
-           )}
-         </div>
-       </div>
+      <div className="topbarsection">
+        {Array.isArray(userData) ? (
+          userData.map((item, index) => (
+            <div key={index}>
+              <div className="topnavbar d-flex justify-content-between align-items-center">
+                <div className="topnavleft">
+                  <button className="collapse-button" onClick={handleSidebarCollapse}>
+                    <BiMenu />
+                  </button>
+                </div>
+                <div className="topnavmid">
+                  <h3>Barangay Harapin Ang Bukas</h3>
+                </div>
+                <div className="topnavright">
+                  <div ref={profileRef}>
+                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                    {ProfilesubmenuVisible && (
+                      <div className="Profilesubmenuadmin">
+                        <div className="admininfo">
+                          <div className="rightprofile">
+                            <FaUserCircle className="adminprofile" />
+                          </div>
+                          <div className="leftprofile">
+                            <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
+                          </div>
+                        </div>
+                        <div className="lowerprofile">
+                          <div className="button-profile1">
+                            <NavLink to="/admin-profile" activeClassName="active">
+                              <div href="#" className="profilebuttons">
+                                <BiCog className="profileicons" /> Settings
+                              </div>
+                            </NavLink>
+                          </div>
+                          <hr />
+                          <div className="button-profile1">
 
-     </div>
-     </div>
-                         ))
-                     ) : (
-                         <p>No data to display.</p>
-                     )}
-   </div>
+
+                            <div onClick={handleSignOut} className="profilebuttons">
+                              <BiLogOut className="profileicons" /> Log out
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No data to display.</p>
+        )}
+      </div>
       <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">
           <div className="text-center">
@@ -516,7 +533,7 @@ return (
                             <td>
                               <img
                                 style={{ width: "100px", height: "100px" }}
-                                src={require(`../../../server/uploads/promotebusiness/${val.filename}`)}
+                                src={val.filename.url}
                                 alt=""
                                 className="business-picture"
                               />

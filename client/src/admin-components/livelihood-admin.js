@@ -60,8 +60,8 @@ function LivelihoodAdmin() {
     };
   }, []);
 
- // NUMBER OF ROWS DISPLAYED -----------------------------------------------
- const [rowCount, setRowCount] = useState(10);
+  // NUMBER OF ROWS DISPLAYED -----------------------------------------------
+  const [rowCount, setRowCount] = useState(10);
 
   // PAGE NUMBER --------------------------------------------------------------
   const [currentPage, setCurrentPage] = useState(1);
@@ -103,14 +103,14 @@ function LivelihoodAdmin() {
     const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
     return reversedData.slice(startIndex, endIndex);
   };
-// stay on first page
+  // stay on first page
   const filteredAndSortedData = data
-  .filter((item) => {
-    const itemValues = Object.values(item).map((value) =>
-      value.toString().toLowerCase()
-    );
-    return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
-  })
+    .filter((item) => {
+      const itemValues = Object.values(item).map((value) =>
+        value.toString().toLowerCase()
+      );
+      return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+    })
 
   // Function to go to the next page ------------------------------------------
   const nextPage = () => {
@@ -169,11 +169,21 @@ function LivelihoodAdmin() {
     formData.append('when', when);
     formData.append('who', who);
     formData.append('file', file);
-    axios.post('http://localhost:8000/livelihood', formData).then(res => {
+    axios.post('http://localhost:8000/livelihood', formData)
+    .then(res => {
       if (res.data === "Error saving data to MongoDB") {
         alert("Livelihood Already Exist!");
       }
       else if (res.data === "File and text data saved to MongoDB") {
+        // After successful upload to MongoDB, reset the form
+        setWhat('');
+        setWhere('');
+        setWhen('');
+        setWho('');
+        setFile(null);
+
+
+        fetchData(); // Fetch the updated data
       }
     })
       .catch(er => console.log(er))
@@ -207,8 +217,12 @@ function LivelihoodAdmin() {
       formData.append('where', editWhere);
       formData.append('when', editWhen);
       formData.append('who', editWho);
-      formData.append('file', editFile);
-
+  
+      // Check if a new image is selected
+      if (editFile) {
+        formData.append('file', editFile);
+      }
+  
       const response = await axios.put(
         `http://localhost:8000/update/livelihood/${selectedRowData}`,
         formData
@@ -221,7 +235,7 @@ function LivelihoodAdmin() {
     }
   };
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     document.cookie = 'access_token=; ';
@@ -230,85 +244,85 @@ function LivelihoodAdmin() {
     navigate('/admin')
   };
 
-// User FETCHING
-const [userData, setUserData] = useState([]);
-useEffect(() => {
-  fetchUser(); 
-}, []);
+  // User FETCHING
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
-const fetchUser = async () => {
-  try {
-    const token = Cookies.get('access_token');
-    if (token) { 
-    const decoded = jwt_decode(token);
-      const _id = decoded.id;
-      const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
-      setUserData(response.data);
+  const fetchUser = async () => {
+    try {
+      const token = Cookies.get('access_token');
+      if (token) {
+        const decoded = jwt_decode(token);
+        const _id = decoded.id;
+        const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+        setUserData(response.data);
+      }
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
-  }
-};
+  };
 
-return (
- <>
- 
-   <div className="topbarsection">
-   {Array.isArray(userData) ? (
-                         userData.map((item, index) => (
-                             <div key={index}>
-     <div className="topnavbar d-flex justify-content-between align-items-center">
-       <div className="topnavleft">
-         <button className="collapse-button" onClick={handleSidebarCollapse}>
-           <BiMenu />
-         </button>
-       </div>
-       <div className="topnavmid">
-         <h3>Barangay Harapin Ang Bukas</h3>
-       </div>
-       <div className="topnavright">
-         <div ref={profileRef}>
-           <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-           {ProfilesubmenuVisible && (
-             <div className="Profilesubmenuadmin">
-               <div className="admininfo">
-                 <div className="rightprofile">
-                   <FaUserCircle className="adminprofile" />
-                 </div>
-                 <div className="leftprofile">
-                   <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
-                 </div>
-               </div>
-               <div className="lowerprofile">
-                 <div className="button-profile1">
-                   <NavLink to="/admin-profile" activeClassName="active">
-                     <div href="#" className="profilebuttons">
-                       <BiCog className="profileicons" /> Settings
-                     </div>
-                   </NavLink>
-                 </div>
-                 <hr />
-                 <div className="button-profile1">
+  return (
+    <>
 
-                   
-                     <div onClick={handleSignOut} className="profilebuttons">
-                       <BiLogOut className="profileicons" /> Log out
-                     </div>
-                   
-                 </div>
-               </div>
-             </div>
-           )}
-         </div>
-       </div>
+      <div className="topbarsection">
+        {Array.isArray(userData) ? (
+          userData.map((item, index) => (
+            <div key={index}>
+              <div className="topnavbar d-flex justify-content-between align-items-center">
+                <div className="topnavleft">
+                  <button className="collapse-button" onClick={handleSidebarCollapse}>
+                    <BiMenu />
+                  </button>
+                </div>
+                <div className="topnavmid">
+                  <h3>Barangay Harapin Ang Bukas</h3>
+                </div>
+                <div className="topnavright">
+                  <div ref={profileRef}>
+                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                    {ProfilesubmenuVisible && (
+                      <div className="Profilesubmenuadmin">
+                        <div className="admininfo">
+                          <div className="rightprofile">
+                            <FaUserCircle className="adminprofile" />
+                          </div>
+                          <div className="leftprofile">
+                            <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
+                          </div>
+                        </div>
+                        <div className="lowerprofile">
+                          <div className="button-profile1">
+                            <NavLink to="/admin-profile" activeClassName="active">
+                              <div href="#" className="profilebuttons">
+                                <BiCog className="profileicons" /> Settings
+                              </div>
+                            </NavLink>
+                          </div>
+                          <hr />
+                          <div className="button-profile1">
 
-     </div>
-     </div>
-                         ))
-                     ) : (
-                         <p>No data to display.</p>
-                     )}
-   </div>
+
+                            <div onClick={handleSignOut} className="profilebuttons">
+                              <BiLogOut className="profileicons" /> Log out
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No data to display.</p>
+        )}
+      </div>
       <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">
           <div className="text-center">
@@ -510,7 +524,7 @@ return (
                             <td>
                               <img
                                 style={{ width: "100px", height: "100px" }}
-                                src={require(`../../../server/uploads/livelihood/${val.filename}`)}
+                                src={val.filename.url}
                                 alt=""
                                 className="business-picture"
                               />

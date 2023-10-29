@@ -15,7 +15,22 @@
   background-color: #003c7de7;
 }
 
+.transparent-user-search {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid white; /* Add a white bottom border for better visibility */
+  color: white;
+  outline: none;
+  padding: 5px;
+  width: 100%;
+}
 
+.search-container-user {
+  position: relative;
+  width: 100%;
+  max-width: 300px; /* Adjust the width as needed */
+  margin: 0 auto;
+}
 .nav-menu {
   margin-top: 10px;
 }
@@ -433,6 +448,17 @@ h1.service__text {
   }
 }
 
+@media only screen and (max-width: 900px) {
+
+  .service {
+   width: 250px;
+  }
+  
+  .service-right {
+   margin-left: 10%;
+  }
+  
+  }
 
 
 @media only screen and (max-width: 768px) {
@@ -440,6 +466,7 @@ h1.service__text {
     flex-direction: row;
     margin-top: 20px;
   }
+  
 
   .col__3 {
     max-width: 100%;
@@ -725,6 +752,7 @@ h1.service__text {
   justify-content: space-between;
 
 }
+
 
 .column {
   flex: 1;
