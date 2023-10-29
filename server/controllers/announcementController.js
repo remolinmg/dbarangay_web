@@ -1,20 +1,37 @@
 const announcement = require('../models/announcementModel');
 const fs = require('fs');
+const cloudinary = require('../uploads/cloudinary')
 
 exports.createAnnouncement = async (req, res) => {
   const { what, where, when, who } = req.body;
-  const { filename } = req.file;
+  const { path } = req.file;
 
-  
   try {
-    const newAnnouncement = new announcement({ what, where, when, who, filename });
+    // Upload the image to Cloudinary
+    const result = await cloudinary.uploader.upload(path, {
+      folder: 'annoucement',
+    });
+
+    const newAnnouncement = new announcement({
+      what,
+      where,
+      when,
+      who,
+      filename: {
+        url: result.secure_url, 
+        public_id: result.public_id,
+      },
+    });
+
     await newAnnouncement.save();
-    res.send('File and text data saved to MongoDB');
+    res.send('File and text data saved to MongoDB and Cloudinary');
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error saving data to MongoDB');
+    res.status(500).send('Error saving data to MongoDB and Cloudinary');
   }
 };
+
+
 
 exports.getAllAnnouncements = async (req, res) => {
   try {
@@ -53,7 +70,7 @@ exports.deleteAnnouncement = async (req, res) => {
 exports.updateAnnouncement = async (req, res) => {
   const id = req.params.id;
   const formData = req.body;
-  const newFile = req.file;
+  const newFile = req.file; // The new image file
 
   try {
     // First, find the existing announcement
@@ -65,18 +82,16 @@ exports.updateAnnouncement = async (req, res) => {
 
     // Check if a new file was uploaded
     if (newFile) {
-      // Delete the old file if it exists
-      if (existingAnnouncement.filename) {
-        const filepath = `./uploads/announcement/${existingAnnouncement.filename}`;
-        fs.unlink(filepath, (err) => {
-          if (err) {
-            console.error('Error deleting old file:', err);
-          }
-        });
-      }
+      // Upload the new image to Cloudinary
+      const result = await cloudinary.uploader.upload(newFile.path, {
+        folder: 'announcement', // The folder for new images
+      });
 
-      // Update the announcement with the new file
-      existingAnnouncement.filename = newFile.filename;
+      // Update the announcement data with the new image URL
+      existingAnnouncement.filename = {
+        url: result.secure_url,
+        public_id: result.public_id,
+      };
     }
 
     // Update the announcement with new data (excluding the file)
