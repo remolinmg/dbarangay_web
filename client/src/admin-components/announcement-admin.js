@@ -29,6 +29,10 @@ import {
 import 'bootstrap/dist/css/bootstrap.css';
 import { FaUserCircle } from "react-icons/fa";
 
+
+import { CloudinaryContext, Image } from "cloudinary-react";
+
+
 function AnnouncementAdmin() {
   //  ------------------------------ SIDEBAR TOPBAR ------------------------------
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -103,19 +107,19 @@ function AnnouncementAdmin() {
     const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
     return reversedData.slice(startIndex, endIndex);
   };
-// stay on first page
+  // stay on first page
   const filteredAndSortedData = data
-  .filter((item) => {
-    const itemValues = Object.values(item).map((value) =>
-      value.toString().toLowerCase()
-    );
-    return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
-  })
-  .sort((a, b) => {
-    // Sort by a relevant property (e.g., creation time) in descending order
-    // Replace 'createdAt' with the actual property name if needed
-    return new Date(b.createdAt) - new Date(a.createdAt);
-  });
+    .filter((item) => {
+      const itemValues = Object.values(item).map((value) =>
+        value.toString().toLowerCase()
+      );
+      return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+    })
+    .sort((a, b) => {
+      // Sort by a relevant property (e.g., creation time) in descending order
+      // Replace 'createdAt' with the actual property name if needed
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
 
   // Function to go to the next page ------------------------------------------
   const nextPage = () => {
@@ -175,16 +179,27 @@ function AnnouncementAdmin() {
     formData.append('when', when);
     formData.append('who', who);
     formData.append('file', file);
-    axios.post('http://localhost:8000/announcement', formData).then(res => {
-      if (res.data === "Error saving data to MongoDB") {
-        alert("Announcement Already Exist!");
-      }
-      else if (res.data === "File and text data saved to MongoDB") {
-      }
-    })
+
+    axios.post('http://localhost:8000/announcement', formData)
+      .then(res => {
+        if (res.data === "Error saving data to MongoDB") {
+          alert("Announcement Already Exist!");
+        } else if (res.data === "File and text data saved to MongoDB") {
+          // After successful upload to MongoDB, reset the form
+          setWhat('');
+          setWhere('');
+          setWhen('');
+          setWho('');
+          setFile(null);
+
+          // If you're using Cloudinary, you can also reset the Cloudinary widget here
+          // cloudinaryWidgetRef.current.uploadWidget().close();
+
+          fetchData(); // Fetch the updated data
+        }
+      })
       .catch(er => console.log(er))
   };
-
   // EDIT FORM STATES (ShowForms) ------------------------------
 
   const [editWhat, setEditWhat] = useState('');
@@ -213,8 +228,12 @@ function AnnouncementAdmin() {
       formData.append('where', editWhere);
       formData.append('when', editWhen);
       formData.append('who', editWho);
-      formData.append('file', editFile);
-
+  
+      // Check if a new image is selected
+      if (editFile) {
+        formData.append('file', editFile);
+      }
+  
       const response = await axios.put(
         `http://localhost:8000/update/announcement/${selectedRowData}`,
         formData
@@ -226,7 +245,8 @@ function AnnouncementAdmin() {
       console.error(error);
     }
   };
-  const navigate = useNavigate();  
+   
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     document.cookie = 'access_token=; ';
@@ -236,84 +256,84 @@ function AnnouncementAdmin() {
   };
 
 
-   // User FETCHING
-   const [userData, setUserData] = useState([]);
-   useEffect(() => {
-     fetchUser(); 
-   }, []);
-  
-   const fetchUser = async () => {
-     try {
-       const token = Cookies.get('access_token');
-       if (token) { 
-       const decoded = jwt_decode(token);
-         const _id = decoded.id;
-         const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
-         setUserData(response.data);
-       }
-     } catch (error) {
-       console.error(error);
-     }
-   };
+  // User FETCHING
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    try {
+      const token = Cookies.get('access_token');
+      if (token) {
+        const decoded = jwt_decode(token);
+        const _id = decoded.id;
+        const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+        setUserData(response.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
-    
-      <div className="topbarsection">
-      {Array.isArray(userData) ? (
-                            userData.map((item, index) => (
-                                <div key={index}>
-        <div className="topnavbar d-flex justify-content-between align-items-center">
-          <div className="topnavleft">
-            <button className="collapse-button" onClick={handleSidebarCollapse}>
-              <BiMenu />
-            </button>
-          </div>
-          <div className="topnavmid">
-            <h3>Barangay Harapin Ang Bukas</h3>
-          </div>
-          <div className="topnavright">
-            <div ref={profileRef}>
-              <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-              {ProfilesubmenuVisible && (
-                <div className="Profilesubmenuadmin">
-                  <div className="admininfo">
-                    <div className="rightprofile">
-                      <FaUserCircle className="adminprofile" />
-                    </div>
-                    <div className="leftprofile">
-                      <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
-                    </div>
-                  </div>
-                  <div className="lowerprofile">
-                    <div className="button-profile1">
-                      <NavLink to="/admin-profile" activeClassName="active">
-                        <div href="#" className="profilebuttons">
-                          <BiCog className="profileicons" /> Settings
-                        </div>
-                      </NavLink>
-                    </div>
-                    <hr />
-                    <div className="button-profile1">
 
-                      
-                        <div onClick={handleSignOut} className="profilebuttons">
-                          <BiLogOut className="profileicons" /> Log out
+      <div className="topbarsection">
+        {Array.isArray(userData) ? (
+          userData.map((item, index) => (
+            <div key={index}>
+              <div className="topnavbar d-flex justify-content-between align-items-center">
+                <div className="topnavleft">
+                  <button className="collapse-button" onClick={handleSidebarCollapse}>
+                    <BiMenu />
+                  </button>
+                </div>
+                <div className="topnavmid">
+                  <h3>Barangay Harapin Ang Bukas</h3>
+                </div>
+                <div className="topnavright">
+                  <div ref={profileRef}>
+                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                    {ProfilesubmenuVisible && (
+                      <div className="Profilesubmenuadmin">
+                        <div className="admininfo">
+                          <div className="rightprofile">
+                            <FaUserCircle className="adminprofile" />
+                          </div>
+                          <div className="leftprofile">
+                            <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
+                          </div>
                         </div>
-                      
-                    </div>
+                        <div className="lowerprofile">
+                          <div className="button-profile1">
+                            <NavLink to="/admin-profile" activeClassName="active">
+                              <div href="#" className="profilebuttons">
+                                <BiCog className="profileicons" /> Settings
+                              </div>
+                            </NavLink>
+                          </div>
+                          <hr />
+                          <div className="button-profile1">
+
+
+                            <div onClick={handleSignOut} className="profilebuttons">
+                              <BiLogOut className="profileicons" /> Log out
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
-              )}
-            </div>
-          </div>
 
-        </div>
-        </div>
-                            ))
-                        ) : (
-                            <p>No data to display.</p>
-                        )}
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No data to display.</p>
+        )}
       </div>
       <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">
@@ -515,7 +535,7 @@ function AnnouncementAdmin() {
                             <td>
                               <img
                                 style={{ width: "100px", height: "100px" }}
-                                src={require(`../../../server/uploads/announcement/${val.filename}`)}
+                                src={val.filename.url}
                                 alt=""
                                 className="business-picture"
                               />
@@ -560,7 +580,6 @@ function AnnouncementAdmin() {
                               required
                             />
                           </div>
-
                           <div className="form-group">
                             <label htmlFor="where">WHERE</label>
                             <input
@@ -572,7 +591,6 @@ function AnnouncementAdmin() {
                               required
                             />
                           </div>
-
                           <div className="form-group">
                             <label htmlFor="when">WHEN</label>
                             <input
@@ -584,7 +602,6 @@ function AnnouncementAdmin() {
                               required
                             />
                           </div>
-
                           <div className="form-group">
                             <label htmlFor="who">WHO</label>
                             <input
@@ -596,7 +613,6 @@ function AnnouncementAdmin() {
                               required
                             />
                           </div>
-
                           <div className="form-group">
                             <label htmlFor="picture">PICTURE</label>
                             <input
@@ -607,8 +623,10 @@ function AnnouncementAdmin() {
                               onChange={(e) => setFile(e.target.files[0])}
                               className="form-control"
                             />
+                            {/* Cloudinary upload widget */}
+                            <CloudinaryContext cloudName="dwevzsrnz">
+                            </CloudinaryContext>
                           </div>
-
                           <div className="form-buttons">
                             <button type="submit" className="btn btn-primary" onClick={announcement}>
                               Submit

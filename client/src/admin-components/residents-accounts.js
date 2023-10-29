@@ -70,6 +70,7 @@ function Residentsaccounts() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
     const navigate = useNavigate();
     const handleSignOut = () => {
         window.localStorage.clear();
@@ -84,6 +85,46 @@ function Residentsaccounts() {
 
     //EDIT INFORMATION
 
+    const [lastName, setLastName] = useState(''); // Initialize with the current last name
+    const [newLastName, setNewLastName] = useState(''); // Initialize with an empty string
+    const [changesSaved, setChangesSaved] = useState(false);
+    const [loading, setLoading] = useState(true); // To track data loading state
+
+    // Function to handle changes in the last name input
+    const handleLastNameChange = (e) => {
+        setNewLastName(e.target.value);
+        setChangesSaved(false);
+    };
+
+    // Function to save changes
+    const saveChanges = () => {
+        // Update the last name with the new value
+        setLastName(newLastName);
+        setChangesSaved(true);
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const accountId = localStorage.getItem('account');
+                const response = await axios.get(`http://localhost:8000/get/useredit/${accountId}`);
+                const lastNameFromDatabase = response.data.lastName; // Access the lastName from the response
+
+                setLastName(lastNameFromDatabase);
+                setNewLastName(lastNameFromDatabase);
+                setLoading(false); // Data is now loaded
+            } catch (error) {
+                console.error(error);
+                setLoading(false); // Handle error and set loading to false
+            }
+        };
+
+        fetchData(); // Fetch data when the component mounts
+    }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
 
     return (
@@ -189,9 +230,18 @@ function Residentsaccounts() {
                                                 <br></br>
                                                 <h2 id="form_name">FULL NAME</h2>
                                                 <div class="row g-3">
-                                                    <div class="col">
-                                                        <label for="lastName" class="form-label">Last Name:</label>
-                                                        <input type="text" id="lastName" class="form-control" value={item.lastName} aria-label="LAST NAME" />
+                                                    <div className="col">
+                                                        <label htmlFor="lastName" className="form-label">
+                                                            Last Name:
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            id="lastName"
+                                                            className="form-control"
+                                                            value={item.lastName} // Use the new last name in the input
+                                                            onChange={handleLastNameChange} // Handle changes to the input
+                                                            aria-label="LAST NAME"
+                                                        />
                                                     </div>
                                                     <div class="col">
                                                         <label for="firstName" class="form-label">First Name:</label>
@@ -426,8 +476,8 @@ function Residentsaccounts() {
                                             </section>
                                             <div className="save_btn">
                                                 <input type="checkbox" className="btn-check" id="btn-check-3" />
-                                                <label className="btn btn-primary" htmlFor="btn-check-3">
-                                                    Save Changes
+                                                <label className="btn btn-primary" htmlFor="btn-check-3" onClick={saveChanges}>
+                                                    {changesSaved ? 'Changes Saved' : 'Save Changes'}
                                                 </label>
                                             </div>
                                         </section>
