@@ -286,6 +286,28 @@ function Admindetails() {
                                         </div>
                                      
                                     </form>
+
+                                    <form class="form8 mt-3">
+                                        <h2 id="form_name">Residence Class</h2>
+                                        <div class="row g-3">
+                                        <div class="col">
+                                                        <label for="voter" class="form-label">Voter:</label>
+                                                        <select
+                                                            id="voter"
+                                                            class="form-control"
+                                                            required
+                                                            value={item.voterRegistration
+                                                            }
+                                                        >
+                                                        <option value="">Select Voter's Registration</option>
+                                                        <option value="Registeredvoter">Registered</option>
+                                                        <option value="Unregisteredvoter">Not Registered</option>
+                                                        </select>
+                                                    </div>
+                                        </div>
+                                     
+                                    </form>
+
                                 </section>
                                 <div id="save_btn" className="save_btn">
                                     <input type="checkbox" className="btn-check" id="btn-check-3" />

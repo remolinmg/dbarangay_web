@@ -350,14 +350,6 @@ function UserProfile() {
                                                         </div>
                                                     </div>
                                                 </form>
-
-                                                <div id="save_btn" className="save_btn">
-                                                    <input type="checkbox" className="btn-check" />
-                                                    <label className="save-btn btn btn-primary" htmlFor="btn-check-3">
-                                                        Save Changes
-                                                    </label>
-                                                </div>
-
                                             </section>
 
                                         </div>
@@ -507,10 +499,55 @@ function UserProfile() {
                                                 </table>
                                             </section>
                                         </div>
-                                    </section>
+               
+                                    <form class="form7 mt-3">
+                                        <h2 id="form_name">Educational Attainment</h2>
+                                        <div class="row g-3">
+                                            <div class="col">
+                                                <label for="educationalattainment" class="form-label">Highest Educational Attainment:</label>
+                                                <input type="text" id="educationalattainment" class="form-control" aria-label="Educational Attainment" value={item.highestEducation} disabled />
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form class="form8 mt-3">
+                                        <h2 id="form_name">Residence Class</h2>
+                                        <div class="row g-3">
+                                            <div class="col">
+                                                <label for="residenceclass" class="form-label">Class:</label>
+                                                <input type="text" id="residenceclass" class="form-control" aria-label="Residence Class" value={item.residenceClass} disabled />
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form class="form8 mt-3">
+                                        <h2 id="form_name">Residence Class</h2>
+                                        <div class="row g-3">
+                                        <div class="col">
+                                                        <label for="voter" class="form-label">Voter:</label>
+                                                        <select
+                                                            id="voter"
+                                                            class="form-control"
+                                                            required
+                                                            value={item.voterRegistration
+                                                            }
+                                                        >
+                                                        <option value="">Select Voter's Registration</option>
+                                                        <option value="Registeredvoter">Registered</option>
+                                                        <option value="Unregisteredvoter">Not Registered</option>
+                                                        </select>
+                                                    </div>
+                                        </div>
+                                     
+                                    </form>
+                                </section>
+                                <div className="save_btn">
+                                    <input type="checkbox" className="btn-check" id="btn-check-3" />
+                                    <label className="btn btn-primary" htmlFor="btn-check-3">
+                                        Save Changes
+                                    </label>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 ))
             ) : (

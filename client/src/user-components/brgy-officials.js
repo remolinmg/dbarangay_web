@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
 import Official1 from "../user-components/assets/img/Official1.jpg";
 import Official2 from "../user-components/assets/img/Official2.jpg";
 import Official3 from "../user-components/assets/img/Official3.jpg";
@@ -12,7 +13,26 @@ import Official10 from "../user-components/assets/img/Official10.jpg";
 import Official11 from "../user-components/assets/img/Official11.jpg";
 
 
-const BrgyOfficial = () => {
+
+class BrgyOfficial extends Component {
+  constructor() {
+    super();
+    this.state = {
+      posts: [],
+    };
+  }
+
+  componentDidMount() {
+    // Fetch posts from your API using Axios
+    axios.get('http://localhost:8000/get/official') // Update the endpoint
+      .then((response) => {
+        this.setState({ posts: response.data });
+      })
+      .catch((error) => {
+        console.error('Error fetching posts:', error);
+      });
+  }
+  render() {
   return (
     <div className='officials' id='officials'>
 
@@ -105,9 +125,20 @@ const BrgyOfficial = () => {
         </div>
 
       </div>
+      {this.state.posts.map((post) => (
+            <div key={post._id} className="d-flex justify-content-center pt-5">
+              <div class="official-lists" className="text-center">
+          <img className="rounded-circle official-list" src={require(`../../../server/uploads/official/${post.filename}`)} />
+          <h4 class="official-name">{post.firstName} {post.middleName} {post.lastName}</h4>
+          <p class="official-title">{post.position}</p>
+        </div>
+ </div>
+          ))}
+      
     </div>
     </div>
   );
+      }
 };
 
 export default BrgyOfficial;

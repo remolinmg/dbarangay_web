@@ -33,20 +33,97 @@ function Residentsaccounts() {
             setSelectedFile(file);
         }
     };
-    const [data, setData] = useState([]);
-    useEffect(() => {
-        fetchData(); // Fetch initial data when the component mounts
-    }, []);
+   
 
-    const fetchData = async () => {
+   //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
+   const [editFirstName, setEditFirstName] = useState('');
+  const [editMiddleName, setEditMiddleName] = useState('');
+  const [editLastName, setEditLastName] = useState( '');
+  const [editSuffix, setEditSuffix] = useState('');
+  const [editHouseNumber, setEditHouseNumber] = useState('');
+  const [editBarangay, setEditBarangay] = useState('');
+  const [editDistrict, setEditDistrict] = useState('');
+  const [editCityMunicipality, setEditCityMunicipality] = useState('');
+  const [editProvince, setEditProvince] = useState('');
+
+  const [editEmail, setEditEmail] = useState('');
+  const [editRegion, setEditRegion] = useState('');
+  const [editPhoneNumber, setEditPhoneNumber] = useState('');
+  const [editNationality, setEditNationality] = useState('');
+  const [editCivilStatus, setEditCivilStatus] = useState('');
+  const [editSex, setEditSex] = useState('');
+  const [editEmploymentStatus, setEditEmploymentStatus] = useState('');
+  const [editPosition, setEditPosition] = useState('');
+  const [editCompanyName, setEditCompanyName] = useState('');
+
+  const [editHomeOwnership, setEditHomeOwnership] = useState('');
+  const [editDateOfBirth, setEditDateOfBirth] = useState('');
+  const [editBirthPlace, setEditBirthPlace] = useState('');
+  const [editAge, setEditAge] = useState('');
+  const [editHighestEducation, setEditHighestEducation] = useState('');
+  const [editResidenceClass, setEditResidenceClass] = useState('');
+  const [editStatus, setEditStatus] = useState('');
+  const [editRoles, setEditRoles] = useState('');
+  const [editVoterRegistration, setEditVoterRegistration] = useState('');
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+      fetchData(); // Fetch initial data when the component mounts
+  }, []);
+
+  const fetchData = async () => {
+      try {
+          const accountId = localStorage.getItem('account');
+          const response = await axios.get(`http://localhost:8000/get/useredit/${accountId}`);
+          setData(response.data);
+      } catch (error) {
+          console.error(error);
+      }
+  };
+
+
+    const updateRowData = async () => {
         try {
-            const accountId = localStorage.getItem('account');
-            const response = await axios.get(`http://localhost:8000/get/useredit/${accountId}`);
-            setData(response.data);
+         const accountId = localStorage.getItem('account');
+          const formData = new FormData();
+          formData.append('firstName', editFirstName);
+          formData.append('middleName', editMiddleName);
+          formData.append('lastName', editLastName);
+          formData.append('suffix', editSuffix);
+          formData.append('houseNumber', editHouseNumber);
+          formData.append('barangay', editBarangay);
+          formData.append('district', editDistrict);
+          formData.append('cityMunicipality', editCityMunicipality);
+          formData.append('province', editProvince);
+          formData.append('email', editEmail);
+          formData.append('region', editRegion);
+          formData.append('phoneNumber', editPhoneNumber);
+          formData.append('nationality', editNationality);
+          formData.append('civilStatus', editCivilStatus);
+          formData.append('sex', editSex);
+          formData.append('employmentStatus', editEmploymentStatus);
+          formData.append('position', editPosition);
+          formData.append('companyName', editCompanyName);
+          formData.append('homeOwnership', editHomeOwnership);
+          formData.append('dateOfBirth', editDateOfBirth);
+          formData.append('birthPlace', editBirthPlace);
+          formData.append('age', editAge);
+          formData.append('highestEducation', editHighestEducation);
+          formData.append('residenceClass', editResidenceClass);
+          formData.append('status', editStatus);
+          formData.append('roles', editRoles);
+          formData.append('voterRegistration', editVoterRegistration);
+        //   formData.append('file', editFile);
+          const response = await axios.put(
+            `http://localhost:8000/update/user/${accountId}`,
+            formData
+          );
+          console.log(response.data);
+          fetchData();
         } catch (error) {
-            console.error(error);
+          console.error(error);
         }
-    };
+      };
 
     const [ProfilesubmenuVisible, setProfileSubmenuVisible] = useState(false);
     const toggleProfileSubmenu = () => {
@@ -129,6 +206,7 @@ function Residentsaccounts() {
 
     return (
         <>
+       
             <div className="topbarsection">
                 <div className="topnavbar d-flex justify-content-between align-items-center">
                     <div className="topnavlef adminicon" onClick={back} >
@@ -230,30 +308,29 @@ function Residentsaccounts() {
                                                 <br></br>
                                                 <h2 id="form_name">FULL NAME</h2>
                                                 <div class="row g-3">
-                                                    <div className="col">
-                                                        <label htmlFor="lastName" className="form-label">
-                                                            Last Name:
-                                                        </label>
-                                                        <input
-                                                            type="text"
-                                                            id="lastName"
-                                                            className="form-control"
-                                                            value={item.lastName} // Use the new last name in the input
-                                                            onChange={handleLastNameChange} // Handle changes to the input
-                                                            aria-label="LAST NAME"
-                                                        />
+                                                    <div class="col">
+                                                        <label for="lastName" class="form-label">Last Name:</label>
+                                                        <input type="text" id="lastName" class="form-control" value={ item.lastName}  onChange={(e) => {
+                                setEditLastName(e.target.value);
+                              }}/>
                                                     </div>
                                                     <div class="col">
                                                         <label for="firstName" class="form-label">First Name:</label>
-                                                        <input type="text" id="firstName" class="form-control" value={item.firstName} aria-label="FIRST NAME" />
+                                                        <input type="text" id="firstName" class="form-control" value={item.firstName} aria-label="FIRST NAME"  onChange={(e) => {
+                                setEditFirstName(e.target.value);
+                              }}/>
                                                     </div>
                                                     <div class="col">
                                                         <label for="midName" class="form-label">Middle Name:</label>
-                                                        <input type="text" id="midName" class="form-control" value={item.middleName} aria-label="MIDDLE NAME" />
+                                                        <input type="text" id="midName" class="form-control" value={item.middleName} aria-label="MIDDLE NAME"  onChange={(e) => {
+                                setEditMiddleName(e.target.value);
+                              }}/>
                                                     </div>
                                                     <div class="col">
                                                         <label for="suffix" class="form-label">Suffix:</label>
-                                                        <input type="text" id="suffix" class="form-control" value={item.suffix} aria-label="SUFFIX" />
+                                                        <input type="text" id="suffix" class="form-control" value={item.suffix} aria-label="SUFFIX"  onChange={(e) => {
+                                setEditSuffix(e.target.value);
+                              }}/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -264,29 +341,41 @@ function Residentsaccounts() {
                                                 <div class="row g-3">
                                                     <div class="col">
                                                         <label for="house&streetName" class="form-label">House no., Street:</label>
-                                                        <input type="text" id="house&streetName" class="form-control" value={item.houseNumber} aria-label="House no. & Street" />
+                                                        <input type="text" id="house&streetName" class="form-control" value={item.houseNumber} aria-label="House no. & Street"  onChange={(e) => {
+                                setEditHouseNumber(e.target.value);
+                              }}/>
                                                     </div>
                                                     <div class="col">
                                                         <label for="brgyName" class="form-label">Barangay:</label>
-                                                        <input type="text" id="brgyName" class="form-control" value={item.barangay} aria-label="Barangay" />
+                                                        <input type="text" id="brgyName" class="form-control" value={item.barangay} aria-label="Barangay"  onChange={(e) => {
+                                setEditBarangay(e.target.value);
+                              }}/>
                                                     </div>
                                                     <div class="col">
                                                         <label for="districtName" class="form-label">District:</label>
-                                                        <input type text id="districtName" class="form-control" value={item.district} aria-label="District" />
+                                                        <input type text id="districtName" class="form-control" value={item.district} aria-label="District"  onChange={(e) => {
+                                setEditDistrict(e.target.value);
+                              }}/>
                                                     </div>
                                                 </div>
                                                 <div class="row g-3">
                                                     <div class="col">
                                                         <label for="cityName" class="form-label">City/Municipality:</label>
-                                                        <input type="text" id="cityName" class="form-control" value={item.cityMunicipality} aria-label="City" />
+                                                        <input type="text" id="cityName" class="form-control" value={item.cityMunicipality} aria-label="City"  onChange={(e) => {
+                                setEditCityMunicipality(e.target.value);
+                              }}/>
                                                     </div>
                                                     <div class="col">
                                                         <label for="provinceName" class="form-label">Province:</label>
-                                                        <input type="text" id="provinceName" class="form-control" value={item.province} aria-label="Barangay" />
+                                                        <input type="text" id="provinceName" class="form-control" value={item.province} aria-label="Barangay"  onChange={(e) => {
+                                setEditProvince(e.target.value);
+                              }}/>
                                                     </div>
                                                     <div class="col">
                                                         <label for="regionName" class="form-label">Region:</label>
-                                                        <input type="text" id="regionName" class="form-control" value={item.region} aria-label="District" />
+                                                        <input type="text" id="regionName" class="form-control" value={item.region} aria-label="District"  onChange={(e) => {
+                                setEditRegion(e.target.value);
+                              }}/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -297,15 +386,21 @@ function Residentsaccounts() {
                                                 <div class="row g-3">
                                                     <div class="col">
                                                         <label for="emailName" class="form-label">Email/FB Account:</label>
-                                                        <input type="text" id="emailName" class="form-control" value={item.email} aria-label="House no. & Street" />
+                                                        <input type="text" id="emailName" class="form-control" value={item.email} aria-label="House no. & Street"  onChange={(e) => {
+                                setEditEmail(e.target.value);
+                              }}/>
                                                     </div>
                                                     <div class="col">
                                                         <label for="contactName" class="form-label">Contact:</label>
-                                                        <input type="text" id="contactName" class="form-control" value={item.phoneNumber} aria-label="Barangay" />
+                                                        <input type="text" id="contactName" class="form-control" value={item.phoneNumber} aria-label="Barangay"  onChange={(e) => {
+                                setEditPhoneNumber(e.target.value);
+                              }}/>
                                                     </div>
                                                     <div class="col">
                                                         <label for="nationalityName" class="form-label">Nationality:</label>
-                                                        <input type="text" id="nationalityName" class="form-control" value={item.nationality} aria-label="District" />
+                                                        <input type="text" id="nationalityName" class="form-control" value={item.nationality} aria-label="District"  onChange={(e) => {
+                                setEditNationality(e.target.value);
+                              }}/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -321,6 +416,9 @@ function Residentsaccounts() {
                                                                 id="sex"
                                                                 class="form-control"
                                                                 value={item.sex}
+                                                                onChange={(e) => {
+                                                                    setEditSex(e.target.value);
+                                                                  }}
                                                             >
                                                                 <option value="">Select Sex</option>
                                                                 <option value="Male">Male</option>
@@ -333,6 +431,9 @@ function Residentsaccounts() {
                                                                 id="civilStatuss"
                                                                 class="form-control"
                                                                 value={item.civilStatus}
+                                                                onChange={(e) => {
+                                                                    setEditCivilStatus(e.target.value);
+                                                                  }}
                                                             >
                                                                 <option value="">Select Civil Status</option>
                                                                 <option value="Single">Single</option>
@@ -347,6 +448,9 @@ function Residentsaccounts() {
                                                                 id="homeOwnership"
                                                                 class="form-control"
                                                                 value={item.homeOwnership}
+                                                                onChange={(e) => {
+                                                                    setEditHomeOwnership(e.target.value);
+                                                                  }}
                                                                 required
                                                             >
                                                                 <option value="">Select Ownership</option>
@@ -360,6 +464,9 @@ function Residentsaccounts() {
                                                                 id="employmentStatus"
                                                                 class="form-control"
                                                                 value={item.employmentStatus}
+                                                                onChange={(e) => {
+                                                                    setEditEmploymentStatus(e.target.value);
+                                                                  }}
                                                                 required
                                                             >
                                                                 <option value="">Select Employment Status</option>
@@ -375,11 +482,15 @@ function Residentsaccounts() {
                                                     <div class="row g-3">
                                                         <div class="col">
                                                             <label for="companyName" class="form-label">Company Name:</label>
-                                                            <input type="text" id="companyName" class="form-control" placeholder={item.companyName} aria-label="House no. & Street" />
+                                                            <input type="text" id="companyName" class="form-control" value={item.companyName} aria-label="House no. & Street"  onChange={(e) => {
+                                setEditCompanyName(e.target.value);
+                              }}/>
                                                         </div>
                                                         <div class="col">
                                                             <label for="positionName" class="form-label">Position:</label>
-                                                            <input type="text" id="positionName" class="form-control" placeholder={item.position} aria-label="Barangay" />
+                                                            <input type="text" id="positionName" class="form-control" value={item.position} aria-label="Barangay"  onChange={(e) => {
+                                setEditPosition(e.target.value);
+                              }}/>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -393,16 +504,24 @@ function Residentsaccounts() {
                                                                 className="form-control"
                                                                 id="birthdate"
                                                                 value={item.dateOfBirth ? new Date(item.dateOfBirth).toISOString().split('T')[0] : ''}
+                                                                onChange={(e) => {
+                                                                    setEditDateOfBirth(e.target.value);
+                                                                  }}
                                                                 required
                                                             />
                                                         </div>
                                                         <div class="col">
                                                             <label for="birthplace" class="form-label">Birthplace:</label>
-                                                            <input type="text" id="birthplace" class="form-control" value={item.birthPlace} aria-label="Barangay" />
+                                                            <input type="text" id="birthplace" class="form-control" value={item.birthPlace} aria-label="Barangay"  onChange={(e) => {
+                                setEditBirthPlace(e.target.value);
+                              }}/>
                                                         </div>
                                                         <div class="col">
                                                             <label for="age" class="form-label">Age:</label>
-                                                            <input type="text" id="age" class="form-control" value={item.age} aria-label="Barangay" />
+                                                            <input type="text" id="age" class="form-control" value={item.age} aria-label="Barangay" 
+                                                             onChange={(e) => {
+                                                                setEditAge(e.target.value);
+                                                              }}/>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -415,6 +534,9 @@ function Residentsaccounts() {
                                                                 id="h-educational-a"
                                                                 class="form-control"
                                                                 value={item.highestEducation}
+                                                                onChange={(e) => {
+                                                                    setEditHighestEducation(e.target.value);
+                                                                  }}
                                                                 required
                                                             >
                                                                 <option value="">Select Highest Educational Attainment</option>
@@ -437,6 +559,9 @@ function Residentsaccounts() {
                                                                 id="residenceClass"
                                                                 className="form-control"
                                                                 value={item.residenceClass}
+                                                                onChange={(e) => {
+                                                                    setEditResidenceClass(e.target.value);
+                                                                  }}
                                                             >
                                                                 <option value="">Select Residence Class</option>
                                                                 <option value="PWD">Person with Disability (PWD)</option>
@@ -446,11 +571,31 @@ function Residentsaccounts() {
                                                         </div>
                                                     </div>
                                                     <div class="col">
+                                                        <label for="voter" class="form-label">Voter:</label>
+                                                        <select
+                                                            id="voter"
+                                                            class="form-control"
+                                                            required
+                                                            value={item.voterRegistration
+                                                            }
+                                                            onChange={(e) => {
+                                                                setEditVoterRegistration(e.target.value);
+                                                              }}
+                                                        >
+                                                        <option value="">Select Voter's Registration</option>
+                                                        <option value="Registeredvoter">Registered</option>
+                                                        <option value="Unregisteredvoter">Not Registered</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col">
                                                         <label for="status" class="form-label">Status:</label>
                                                         <select
                                                             id="status"
                                                             class="form-control"
                                                             value={item.status}
+                                                            onChange={(e) => {
+                                                                setEditStatus(e.target.value);
+                                                              }}
                                                             required
                                                         >
                                                             <option value="">Update status</option>
@@ -465,6 +610,9 @@ function Residentsaccounts() {
                                                             class="form-control"
                                                             required
                                                             value={item.type}
+                                                            onChange={(e) => {
+                                                                setEditRoles(e.target.value);
+                                                              }}
                                                         >
                                                             <option value="">Update role</option>
                                                             <option value="resident">resident</option>
@@ -475,9 +623,9 @@ function Residentsaccounts() {
                                                 </form>
                                             </section>
                                             <div className="save_btn">
-                                                <input type="checkbox" className="btn-check" id="btn-check-3" />
-                                                <label className="btn btn-primary" htmlFor="btn-check-3" onClick={saveChanges}>
-                                                    {changesSaved ? 'Changes Saved' : 'Save Changes'}
+                                                <input type="checkbox" className="btn-check" id="btn-check-3" onClick={updateRowData}/>
+                                                <label className="btn btn-primary" htmlFor="btn-check-3">
+                                                    Save Changes
                                                 </label>
                                             </div>
                                         </section>
