@@ -7,9 +7,17 @@ const promoteBusinessSchema = new mongoose.Schema({
   category: String,
   contact: String,
   residentName: String,
-  filename: String,
+  filename: {
+    public_id: {
+      type: String,
+      required: true
+    },
+    url: {
+      type: String,
+      required: true
+    }
+  },
 });
-
 const promoteBusiness = mongoose.model('promotebusiness', promoteBusinessSchema);
 
 module.exports = promoteBusiness;

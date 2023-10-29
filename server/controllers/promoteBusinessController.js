@@ -1,17 +1,28 @@
 const promoteBusiness = require('../models/promoteBusinessModel');
 const fs = require('fs');
-
+const cloudinary = require('../uploads/cloudinary')
 // Function to create a new promoteBusiness
 exports.createPromoteBusiness = async (req, res) => {
   const {
     businessName,address,hours,category,contact,residentName
   } = req.body;
-  const { filename } = req.file;
+  const { path } = req.file;
 
   try {
-    const newPromoteBusiness = new promoteBusiness({
-      businessName,address,hours,category,contact,residentName, filename
+    // Upload the image to Cloudinary
+    const result = await cloudinary.uploader.upload(path, {
+      folder: 'promotebusiness',
     });
+
+    const newPromoteBusiness = new promoteBusiness({
+      businessName,address,hours,category,contact,residentName,
+      filename: {
+        url: result.secure_url, 
+        public_id: result.public_id,
+      },
+    });
+
+
     await newPromoteBusiness.save();
     res.status(201).send('File and text data saved to MongoDB');
   } catch (error) {
@@ -68,21 +79,20 @@ exports.updatePromoteBusiness = async (req, res) => {
       return res.status(404).json({ message: 'Promote Business not found' });
     }
 
-    // Check if a new file was uploaded
-    if (newFile) {
-      // Delete the old file if it exists
-      if (existingPromoteBusiness.filename) {
-        const filepath = `./uploads/promotebusiness/${existingPromoteBusiness.filename}`;
-        fs.unlink(filepath, (err) => {
-          if (err) {
-            console.error('Error deleting old file:', err);
-          }
-        });
-      }
+  // Check if a new file was uploaded
+  if (newFile) {
+    // Upload the new image to Cloudinary
+    const result = await cloudinary.uploader.upload(newFile.path, {
+      folder: 'promotebusiness', // The folder for new images
+    });
 
-      // Update the promoteBusiness with the new file
-      existingPromoteBusiness.filename = newFile.filename;
-    }
+    // Update the announcement data with the new image URL
+    existingPromoteBusiness.filename = {
+      url: result.secure_url,
+      public_id: result.public_id,
+    };
+  }
+
 
     // Update the promoteBusiness with new data (excluding the file)
     existingPromoteBusiness.set(formData);
