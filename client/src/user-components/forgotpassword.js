@@ -1,37 +1,17 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, useContext } from 'react';
 import './assets/css/user-style.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { RecoveryContext } from "../App";
 
-export const RecoveryContext = createContext()
+
+// export const RecoveryContext = createContext();
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
-  const [timerCount, setTimer] = React.useState(60);
-  const [disable, setDisable] = useState(true);
+  // const [email, setEmail] = useState();
+  // const [otp, setOTP] = useState();
   const navigate = useNavigate();
-
-  // Resend email
-  const resendEmail = async (e) => {
-    if (disable) return;
-    await axios.post('http://localhost:8000/forgotpass', { email })
-      .then(() => setDisable(true))
-      .then(() => alert("A new email has been sent successfully."))
-      .then(() => setTimer(60))
-      .catch(console.log);
-  }
-
-  React.useEffect(() => {
-    let interval = setInterval(() => {
-      setTimer((lastTimerCount) => {
-        lastTimerCount <= 1 && clearInterval(interval);
-        if (lastTimerCount <= 1) setDisable(false);
-        if (lastTimerCount <= 0) return lastTimerCount;
-        return lastTimerCount - 1;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [disable]);
+  const { setEmail, email, otp, setOTP } = useContext(RecoveryContext);
 
 
   // backend
@@ -39,12 +19,20 @@ const ForgotPassword = () => {
     setEmail(e.target.value);
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const OTP = Math.floor(100000 + Math.random() * 900000);
+      console.log(OTP);
+      console.log(email);
+      setOTP(OTP);
+      setEmail(email);
       // Send a POST request to your Node.js server to initiate the password reset process
-      await axios.post('http://localhost:8000/forgotpass', { email });
+      await axios.post('http://localhost:8000/forgotpass', { OTP, email });
       alert('Email sent successfully.');
+
+      navigate("/resetpass")
     } catch (error) {
       console.error('Axios Error:', error);
 
@@ -76,45 +64,34 @@ const ForgotPassword = () => {
   };
 
   return (
-    <RecoveryContext.Provider value={{ setEmail, email }} >
-      <div className="container-fluid forgotpass-background-image">
-        <div className="forgotpass-login-container">
-          <div className="forgotpass-login-box">
-            <h2 className="text-center pb-3 pt-3">Forgot Password</h2>
-            <div className="mb-3">
-              <label htmlFor="exampleInputEmail1" className="form-label">
-                Email address
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                onChange={handleEmailChange}
-              />
-            </div>
-            <div className="text-center">
-              <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-                Send
-              </button>
-            </div>
-            <div className="text-center">
-              <p className="pt-3">Didn't receive email?</p>
-              <a
-                className="items-center pb-2"
-                style={{
-                  color: disable ? "gray" : "blue",
-                  cursor: disable ? "none" : "pointer",
-                  textDecorationLine: disable ? "none" : "underline",
-                }}
-                onClick={() => resendEmail()}>
-                {disable ? `Resend email in ${timerCount}s` : "Resend email"}
-              </a>
-            </div>
+    // <RecoveryContext.Provider
+    //   value={{ otp, setOTP, setEmail, email }}
+    // >
+    <div className="container-fluid forgotpass-background-image">
+      <div className="forgotpass-login-container">
+        <div className="forgotpass-login-box">
+          <h2 className="text-center pb-3 pt-3">Forgot Password</h2>
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">
+              Email address
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              onChange={handleEmailChange}
+            />
+          </div>
+          <div className="text-center">
+            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+              Send
+            </button>
           </div>
         </div>
       </div>
-    </RecoveryContext.Provider>
+    </div>
+    // </RecoveryContext.Provider>
   );
 };
 

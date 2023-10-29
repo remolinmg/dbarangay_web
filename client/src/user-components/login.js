@@ -117,10 +117,10 @@ const Login = () => {
         password,
       });
 
-      if (response.status===201) {
+      if (response.status === 201) {
         const result = response.data.token
         setCookie('access_token', result);
-        window.localStorage.setItem('accountType',  response.data.type);
+        window.localStorage.setItem('accountType', response.data.type);
         navigate("/")
         setEmailValid('');
         setPasswordValid('');
@@ -130,7 +130,7 @@ const Login = () => {
         setPasswordValid('Invalid Password');
       }
     } catch (error) {
-      
+
     }
   };
 

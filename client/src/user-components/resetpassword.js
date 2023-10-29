@@ -1,224 +1,208 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, useContext } from 'react';
 import './assets/css/user-style.css';
+import { RecoveryContext } from "../App";
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
-export const RecoveryContext = createContext()
-
 const ResetPassword = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const { email, otp, setOTP } = useContext(RecoveryContext);
+  const [timerCount, setTimer] = React.useState(60);
+  const [disable, setDisable] = useState(true);
+  const [OTPinput, setOTPinput] = useState([0, 0, 0, 0, 0, 0, 0]);
+  const navigate = useNavigate();
 
-  const [passwordValid, setPasswordValid] = useState(true);
-  const [confirmPasswordValid, setConfirmPasswordValid] = useState(true);
+  // Resend email
+  const resendEmail = async (e) => {
+    if (disable) return;
+    const OTP = Math.floor(100000 + Math.random() * 900000);
+    console.log(OTP);
+    setOTP(OTP);
+    await axios.post('http://localhost:8000/forgotpass', { OTP, email })
+      .then(() => setDisable(true))
+      .then(() => alert("A new otp has been sent successfully."))
+      .then(() => setTimer(60))
+      .catch(console.log);
+  }
 
-
-
-  // Validation
-  if (password.trim() === '') {
-    setPasswordValid(false);
+  // Verify OTP input
+  function verifyOTP() {
+    if (parseInt(OTPinput.join("")) === otp) {
+      navigate('/recoveredpass')
+      return;
+    }
+    alert(
+      "The code you have entered is not correct, try again or re-send the link"
+    );
     return;
   }
-  if (password !== confirmPassword) {
-    setConfirmPasswordValid(false);
-    return;
-  }
 
-  const isPasswordValid = (password) => {
-    const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    return passwordRegex.test(password);
-  };
-
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-    setPasswordValid(isPasswordValid(value));
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    const value = e.target.value;
-    setConfirmPassword(value);
-    setConfirmPasswordValid(value === password);
-
-
-  };
-  // backend
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   // Validate the first name
-  //   if (firstName.trim() === '') {
-  //     setFirstNameValid(false);
-  //     return;
-  //   }
-
-  //   // Validate the middle name
-  //   if (middleName.trim() === '') {
-  //     setMiddleNameValid(false);
-  //     return;
-  //   }
-
-  //   // Validate the last name
-  //   if (lastName.trim() === '') {
-  //     setLastNameValid(false);
-  //     return;
-  //   }
-
-  //   // Validate the House No. / Street
-  //   if (houseNumber.trim() === '') {
-  //     setHouseNumberValid(false);
-  //     return;
-  //   }
-
-  //   // Validate Barangay
-  //   if (barangay.trim() === '') {
-  //     setBarangayValid(false);
-  //     return;
-  //   }
-
-  //   // Validate District
-  //   if (district.trim() === '') {
-  //     setDistrictValid(false);
-  //     return;
-  //   }
-
-  //   // Validate City/Municipality
-  //   if (cityMunicipality.trim() === '') {
-  //     setCityMunicipalityValid(false);
-  //     return;
-  //   }
-
-  //   // Validate Province
-  //   if (province.trim() === '') {
-  //     setProvinceValid(false);
-  //     return;
-  //   }
-
-  //   if (region.trim() === '') {
-  //     setRegionValid(false);
-  //     return;
-  //   }
-  //   if (email.trim() === '') {
-  //     setEmailValid(false);
-  //     return;
-  //   }
-
-  //   if (phoneNumber.trim() === '') {
-  //     setPhoneNumberValid(false);
-  //     return;
-  //   }
-  //   if (nationality.trim() === '') {
-  //     setNationalityValid(false);
-  //     return;
-  //   }
-  //   if (sex.trim() === '') {
-  //     setSexValid(false);
-  //     return;
-  //   }
-  //   if (civilStatus.trim() === '') {
-  //     setCivilStatusValid(false);
-  //     return;
-  //   }
-  //   if (employmentStatus.trim() === '') {
-  //     setEmploymentStatusValid(false);
-  //     return;
-  //   }
-
-  //   if (homeOwnership.trim() === '') {
-  //     setHomeOwnershipValid(false);
-  //     return;
-  //   }
-  //   if (dateOfBirth.trim() === '') {
-  //     setDateOfBirthValid(false);
-  //     return;
-  //   }
-
-  //   if (birthPlace.trim() === '') {
-  //     setBirthPlaceValid(false);
-  //     return;
-  //   }
-  //   if (age.trim() === '') {
-  //     setAgeValid(false);
-  //     return;
-  //   }
-  //   if (highestEducation.trim() === '') {
-  //     setHighestEducationValid(false);
-  //     return;
-  //   }
-  //   if (voterRegistration.trim() === '') {
-  //     setVoterRegistrationValid(false);
-  //     return;
-  //   }
-  //   if (password.trim() === '') {
-  //     setPasswordValid(false);
-  //     return;
-  //   }
-  //   if (password !== confirmPassword) {
-  //     setConfirmPasswordValid(false);
-  //     return;
-  //   }
-
-  //   try {
-
-  //     const response = await axios.put(
-  //       `http://localhost:8000/update/businessclearance/${selectedRowData}`,
-  //       updatedData
-  //     );
-  //     console.log(response.data);
-  //   }
-  //   catch (e) {
-  //     console.log(e);
-  //   }
-
-
-  // };
-
+  React.useEffect(() => {
+    let interval = setInterval(() => {
+      setTimer((lastTimerCount) => {
+        lastTimerCount <= 1 && clearInterval(interval);
+        if (lastTimerCount <= 1) setDisable(false);
+        if (lastTimerCount <= 0) return lastTimerCount;
+        return lastTimerCount - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [disable]);
 
   return (
-      <div className="container-fluid forgotpass-background-image">
-        <div className="forgotpass-login-container">
-          <div className="forgotpass-login-box">
-            <h2 className="text-center pb-3 pt-3">Reset Password</h2>
+    <div className="container-fluid forgotpass-background-image">
+      <div className="forgotpass-login-container">
+        <div className="forgotpass-login-box">
+          <h2 className="text-center pb-3 pt-3">OTP Input</h2>
+          <p>Please check your email and put the OTP below.</p>
+          <form>
+            <div className="d-flex flex-column">
+              <div className="d-flex flex-row items-center justify-between mx-auto w-100 pb-3">
+                <div className="w-25 p-2">
+                  <input
+                    maxLength="1"
+                    className="w-100 rounded"
+                    type="text"
+                    name=""
+                    id=""
+                    onChange={(e) =>
+                      setOTPinput([
+                        e.target.value,
+                        OTPinput[1],
+                        OTPinput[2],
+                        OTPinput[3],
+                        OTPinput[4],
+                        OTPinput[5],
+                      ])
+                    }
+                  ></input>
+                </div>
+                <div className="w-25 p-2">
+                  <input
+                    maxLength="1"
+                    className="w-100 rounded"
+                    type="text"
+                    name=""
+                    id=""
+                    onChange={(e) =>
+                      setOTPinput([
+                        OTPinput[0],
+                        e.target.value,
+                        OTPinput[2],
+                        OTPinput[3],
+                        OTPinput[4],
+                        OTPinput[5],
+                      ])
+                    }
+                  ></input>
+                </div>
+                <div className="w-25 p-2">
+                  <input
+                    maxLength="1"
+                    className="w-100 rounded"
+                    type="text"
+                    name=""
+                    id=""
+                    onChange={(e) =>
+                      setOTPinput([
+                        OTPinput[0],
+                        OTPinput[1],
+                        e.target.value,
+                        OTPinput[3],
+                        OTPinput[4],
+                        OTPinput[5],
+                      ])
+                    }
+                  ></input>
+                </div>
+                <div className="w-25 p-2">
+                  <input
+                    maxLength="1"
+                    className="w-100 rounded"
+                    type="text"
+                    name=""
+                    id=""
+                    onChange={(e) =>
+                      setOTPinput([
+                        OTPinput[0],
+                        OTPinput[1],
+                        OTPinput[2],
+                        e.target.value,
+                        OTPinput[4],
+                        OTPinput[5],
+                      ])
+                    }
+                  ></input>
+                </div>
+                <div className="w-25 p-2">
+                  <input
+                    maxLength="1"
+                    className="w-100 rounded"
+                    type="text"
+                    name=""
+                    id=""
+                    onChange={(e) =>
+                      setOTPinput([
+                        OTPinput[0],
+                        OTPinput[1],
+                        OTPinput[2],
+                        OTPinput[3],
+                        e.target.value,
+                        OTPinput[5],
+                      ])
+                    }
+                  ></input>
+                </div>
+                <div className="w-25 p-2">
+                  <input
+                    maxLength="1"
+                    className="w-100 rounded"
+                    type="text"
+                    name=""
+                    id=""
+                    onChange={(e) =>
+                      setOTPinput([
+                        OTPinput[0],
+                        OTPinput[1],
+                        OTPinput[2],
+                        OTPinput[3],
+                        OTPinput[4],
+                        e.target.value,
+                      ])
+                    }
+                  ></input>
+                </div>
+              </div>
 
-            <h5>{email}</h5>
+              <div className="d-flex flex-column pb-3">
+                <div className="pb-3">
+                  <a
+                    onClick={() => verifyOTP()}
+                    className="btn btn-primary w-100"
+                  >
+                    Verify Account
+                  </a>
+                </div>
 
-            <div className={`form-group d-flex flex-column ${!passwordValid ? 'has-error' : ''}`}>
-              <label className="label" htmlFor="password">
-                Password
-              </label>
-              <input
-                type="password"
-                className={`input-field form-control ${!passwordValid ? 'is-invalid' : ''}`}
-                id="password"
-                onChange={handlePasswordChange}
-                required
-              />
+                <div className="d-flex flex-row items-center justify-center text-center">
+                  <p className="w-50">Didn't receive code?</p>{" "}
+                  <a
+                    className="text-center w-50"
+                    style={{
+                      color: disable ? "gray" : "blue",
+                      cursor: disable ? "none" : "pointer",
+                      textDecorationLine: disable ? "none" : "underline",
+                    }}
+                    onClick={() => resendEmail()}
+                  >
+                    {disable ? `Resend OTP in ${timerCount}s` : "Resend OTP"}
+                  </a>
+                </div>
+              </div>
             </div>
-
-            <div className={`form-group d-flex flex-column ${!confirmPasswordValid ? 'has-error' : ''}`}>
-              <label className="label" htmlFor="cpassword">
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                className={`input-field form-control ${!confirmPasswordValid ? 'is-invalid' : ''}`}
-                id="cpassword"
-                onChange={handleConfirmPasswordChange}
-                required
-              />
-            </div>
-            <div className="text-center">
-              <button type="submit" className="btn btn-primary" 
-              // onClick={handleSubmit}
-              >
-                Submit
-              </button>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
+    </div>
   );
 };
 

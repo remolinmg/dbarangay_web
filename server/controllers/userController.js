@@ -31,7 +31,7 @@ const generateResetToken = () => {
 exports.forgotpass = async (req, res) => {
 
   try {
-    const { email } = req.body;
+    const { OTP, email } = req.body;
     const config = {
       service: 'gmail',
       auth: {
@@ -47,11 +47,9 @@ exports.forgotpass = async (req, res) => {
       return res.send("User does not exist.");
     }
 
-    const secretReset = "qqywe8791y62389qdy8wy89d1381734edih" + user.password;
+    // const OTP = Math.floor(100000 + Math.random() * 900000);
 
-    const resetToken = jwt.sign({ email: user.email, id: user._id }, secretReset, { expiresIn: '1h' });
-    const link = `http://localhost:8000/resetpass/${user._id}/${resetToken}`;
-    console.log({ link });
+    console.log({ OTP });
     const MailGenerator = new Mailgen({
       theme: "default",
       product: {
@@ -63,16 +61,16 @@ exports.forgotpass = async (req, res) => {
     const passresetmail = {
       body: {
         name: 'Human Being',
-        intro: 'This email is sent to reset the password of your DBarangay account. Ignore the email if you wish to keep your old password instead.',
+        intro: 'This email contains a 6-digit verification code to reset the password of your DBarangay account.',
         action: {
-          instructions: 'Click button to reset password:',
+          instructions: 'Your verification code:',
           button: {
-            color: '#4BA2FF', // Optional action button color
-            text: 'Reset Password',
-            link: link
+            color: '#4BA2FF',
+            text: OTP.toString(), // Include the verification code
+            link: '',
           }
         },
-        outro: 'Be sure to always keep your password somewhere safe but accessible.',
+        outro: 'Be sure to always keep your verification code somewhere safe but accessible.',
         signature: false
       }
     }
@@ -98,38 +96,39 @@ exports.forgotpass = async (req, res) => {
 };
 
 // reset password page
-exports.resetpass = async (req, res) => {
-  const { id, resetToken } = req.params;
-  console.log(req.params);
+// exports.resetpass = async (req, res) => {
+//   const { id, resetToken } = req.params;
+//   console.log(req.params);
 
-  const user = await User.findOne({ _id: id });
-  if (!user) {
-    return res.json({ status: "User does not exist." });
-  }
+//   const user = await User.findOne({ _id: id });
+//   if (!user) {
+//     return res.json({ status: "User does not exist." });
+//   }
 
-  const secretReset = "qqywe8791y62389qdy8wy89d1381734edih" + user.password;
+//   const secretReset = "qqywe8791y62389qdy8wy89d1381734edih" + user.password;
 
-  try {
-    const verifyToken = jwt.verify(resetToken, secretReset);
-    res.render("resetPass.ejs", { _id: id, email: verifyToken.email });
-  } catch (e) {
-    res.send("Not Verified");
-    console.log(e);
-  }
-};
+//   try {
+//     const verifyToken = jwt.verify(resetToken, secretReset);
+//     res.render("resetPass.ejs", { _id: id, email: verifyToken.email });
+//   } catch (e) {
+//     res.send("Not Verified");
+//     console.log(e);
+//   }
+// };
 
 //update new password
 exports.updatepass = async (req, res) => {
-  const { id } = req.params.id;
-  const { password } = req.body;
+  const { email, password } = req.body;
 
   try {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const user = await User.findOne({ email });
+    console.log(user.id);
+
     const updatedPassword = await User.findByIdAndUpdate(
-      id,
-      {password: hashedPassword, new: true}
+      user.id,{ password:  hashedPassword } 
     );
 
     if (!updatedPassword) {
@@ -138,7 +137,6 @@ exports.updatepass = async (req, res) => {
 
     res.status(200).json(updatedPassword);
 
-    // res.render("resetPass.ejs", { email: verifyToken.email });
   } catch (e) {
     console.log(e);
     res.status(500).json('Internal Server Error');
@@ -261,14 +259,13 @@ exports.getUserAdmin = async (req, res) => {
 exports.getUserProfile = async (req, res) => {
   try {
     const _id = req.params.id;
-    const data = await User.find({ _id});
+    const data = await User.find({ _id });
     res.json(data);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 
 
 
