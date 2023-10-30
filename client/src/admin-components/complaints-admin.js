@@ -531,12 +531,12 @@ return (
                             <td>{item.defendant}</td>
                             <td>{item.complainttype}</td>
                             <td>{item.address}</td>
-                            <td><img
-                              style={{ width: "100px", height: "100px" }}
-                              src={require(`../../../server/uploads/complaint/${item.filename}`)}
-                              alt=""
-                              className="business-picture"
-                            /></td>
+                            <td>
+                              <a href={require(`../../../server/uploads/complaint/${item.filename}`)} download={item.filename}>
+                                {item.filename}
+                              </a>
+                            </td>
+
                             <td>{item.kind}</td>
                             <td>{item.status}</td>
                             <td>

@@ -428,7 +428,7 @@ return (
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
         <div className="toppart-table border row w-75 d-flex align-items-center">
-            <div className="col-3">
+            <div className="col-4">
               <div className="input-group">
                 <input
                   type="text"
@@ -440,7 +440,7 @@ return (
                 />
               </div>
             </div>
-            <div className="col-3">
+            <div className="col-4">
               <div className="tabsz dropdown-center">
                 <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button>
                 <ul className="dropdown-menu dropdown-topcategory">
@@ -450,23 +450,8 @@ return (
                 </ul>
               </div>
             </div>
-            <div className="col-3">
-              <div className="dropdown-tablenumbers">
-              <select
-                  type="text"
-                  className="form-control"
-                  placeholder="Search"
-                  aria-label="Enter search keyword"
-                  name="query"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                >
-                  <option value="pending">Pending</option>
-                  <option value="processed">Processed</option>
-              </select>
-              </div>
-            </div>
-            <div className="col-3">
+
+            <div className="col-4">
               <div className="dropdown-tablenumbers">
                 <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
                   <option value="10">10</option>
@@ -539,12 +524,11 @@ return (
                             <td>{item.respondents}</td>
                             <td>{item.type}</td>
                             <td>{item.address}</td>
-                            <td><img
-                              style={{ width: "100px", height: "100px" }}
-                              src={require(`../../../server/uploads/medical/${item.filename}`)}
-                              alt=""
-                              className="business-picture"
-                            /></td>
+                            <td>
+                              <a href={require(`../../../server/uploads/medical/${item.filename}`)} download={item.filename}>
+                                {item.filename}
+                              </a>
+                            </td>
                             <td>{item.status}</td>
                             <td>
                               <button className="btn btn-primary btn-sm" onClick={() => showEditFormHandler(item)}>Edit</button>
