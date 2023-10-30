@@ -328,6 +328,7 @@ function BconstuctionAdmin() {
                           </div>
                           <div className="leftprofile">
                             <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
+                            <h5>{item.email}</h5>
                           </div>
                         </div>
                         <div className="lowerprofile">

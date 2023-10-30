@@ -72,12 +72,19 @@
   color: rgb(239, 239, 239);
 }
 
+
 .official-list {
   height: 200px;
   width: 200px;
 }
 
+.first-row {
+  width: 100%;
+}
 
+.other-rows {
+  width: 50%; /* Display two items per row */
+}
 
 /* First Section - Evacuation Centers */
 
