@@ -267,6 +267,45 @@ exports.getUserProfile = async (req, res) => {
   }
 };
 
+exports.updateUser = async (req, res) => {
+  const id = req.params.id;
+  const formData = req.body;
+  const newFile = req.file; // The new image file
+
+  try {
+    // First, find the existing user
+    const existingUser = await User.findById(id);
+
+    if (!existingUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check if a new file was uploaded
+    if (newFile) {
+      // Upload the new image to Cloudinary
+      const result = await cloudinary.uploader.upload(newFile.path, {
+        folder: 'profile', // The folder for new images
+      });
+
+      // Update the user data with the new image URL
+      existingUser.filename = {
+        url: result.secure_url,
+        public_id: result.public_id,
+      };
+    }
+
+    // Update the user with new data (excluding the file)
+    existingUser.set(formData);
+
+    const updatedUser = await existingUser.save();
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 
 
 
