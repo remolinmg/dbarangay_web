@@ -23,7 +23,7 @@ const Login = () => {
   const isValidPassword = (password) => passwordRegExp.test(password);
   // const isValidPassword = (password) => password.length >= 8;
 
-  const maxLoginAttempts = 5; // Define the maximum login attempts
+  const maxLoginAttempts = 2; // Define the maximum login attempts
   const lockoutDuration = 300000; // 30 minutes in milliseconds
 
   useEffect(() => {
@@ -77,62 +77,69 @@ const Login = () => {
   async function login(e) {
     e.preventDefault();
     setFormSubmitted(true);
-
-    if (isLockedOut) {
+  
+    if (loginAttempts >= maxLoginAttempts) {
+      setIsLockedOut(true);
+      localStorage.setItem('lastLockoutTime', Date.now());
       setEmailValid('Try again after 30 mins');
+      setPasswordValid('Try again after 30 mins');
+  
+      setTimeout(() => {
+        setIsLockedOut(false);
+        setEmailValid('');
+        setPasswordValid('');
+        setLoginAttempts(0);
+        localStorage.removeItem('lastLockoutTime');
+      }, lockoutDuration);
+  
       return;
     }
-
-    if (isLockedOut) {
-      setEmailValid('Try again after 30 mins');
+  
+    if (email.trim() === '' || password.trim() === '') {
+      setEmailValid('Please input data');
+      setPasswordValid('Please input data');
       return;
     }
-
-    if (!isValidEmail(email) || !isValidPassword(password)) {
-      setEmailValid('Wrong Credentials');
-      setPasswordValid('Invalid Password');
-
-      // Increment login attempts
-      const newLoginAttempts = loginAttempts + 1;
-      setLoginAttempts(newLoginAttempts);
-
-      if (newLoginAttempts >= maxLoginAttempts) {
-        setIsLockedOut(true);
-        localStorage.setItem('lastLockoutTime', Date.now());
-        setTimeout(() => {
-          setIsLockedOut(false);
-          setEmailValid('');
-          setPasswordValid('');
-          setLoginAttempts(0); // Reset login attempts
-          localStorage.removeItem('lastLockoutTime');
-        }, lockoutDuration);
-      }
-
+  
+    if (!email.includes('@gmail')) {
+      setEmailValid('Wrong credentials');
+      setLoginAttempts(loginAttempts + 1);
       return;
     }
-
+  
+    if (password.length < 8 || !/[!@#]+/.test(password) || !/[a-z]+/.test(password) || !/[A-Z]+/.test(password)) {
+      setPasswordValid('Wrong password format');
+      setLoginAttempts(loginAttempts + 1);
+      return;
+    }
+  
     try {
       const response = await axios.post("http://localhost:8000/login", {
         email,
         password,
       });
-
+  
       if (response.status === 201) {
-        const result = response.data.token
+        const result = response.data.token;
         setCookie('access_token', result);
         window.localStorage.setItem('accountType', response.data.type);
-        navigate("/")
+        navigate("/");
         setEmailValid('');
         setPasswordValid('');
         setLoginAttempts(0);
       } else {
-        setEmailValid('Wrong Credentials');
-        setPasswordValid('Invalid Password');
+        setEmailValid('Invalid data');
+        setPasswordValid('Invalid data');
+        setLoginAttempts(loginAttempts + 1);
       }
     } catch (error) {
-
+      setEmailValid('Invalid data');
+      setPasswordValid('Invalid data');
+      setLoginAttempts(loginAttempts + 1);
     }
-  };
+  }
+  
+  
 
   return (
     <div id="login-container" className="container-fluid main">
@@ -202,7 +209,7 @@ const Login = () => {
               </p>
               {isLockedOut && (
                 <div className="error-message">
-                  <i className="bi bi-exclamation-triangle"></i> Try again after 5 mins
+                  <i className="bi bi-exclamation-triangle"></i> Try again after 30 minutes
                 </div>
               )}
 

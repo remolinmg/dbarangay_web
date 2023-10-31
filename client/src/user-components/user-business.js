@@ -47,7 +47,7 @@ class Promotebusiness extends Component {
     return (
       <>
         <UserNav />
-        <div className="livelihood-container pt-5">
+        <div className="user-announcement-background pt-5">
           <div className="container-fluid text-white text-center pt-5">
             <h3><b>Businesses</b></h3>
             <div className="search-container-user">
@@ -61,20 +61,26 @@ class Promotebusiness extends Component {
             </div>
           </div>
           {filteredPosts.map((post) => (
-            <div key={post._id} className="pt-5 d-flex flex-column w-100">
-              <div className="livelihood-card card mb-5 align-self-center">
-                <img
-                  style={{ width: "300px", height: "300px" }}
-                  src={post.filename.url}
-                  alt=""
-                  className="business-picture"
-                />
-                <div className="card-body">
-                  <h5 className="card-title"><b>{post.businessName}</b></h5>
-                  <h5 className="card-title"><b>Category: </b>{post.category}</h5>
-                  <h5 className="card-title"><b>Address: </b>{post.address}</h5>
-                  <h5 className="card-title"><b>Contact Number: </b>{post.contact}</h5>
-                  <h5 className="card-title"><b>Open Hours: </b>{post.hours}</h5>
+            <div key={post._id} className="d-flex justify-content-center pt-5">
+              <div className="card mb-3 announcement-card-item">
+                <div className="row g-0">
+                  <div className="col-md-4 img-container">
+                    <img
+                      style={{ width: "300px", height: "300px" }}
+                      src={post.filename.url}
+                      alt=""
+                      className="business-picture"
+                    />
+                     </div>
+                    <div className="col-md-8">
+                      <div className="card-body">
+                        <h5 className="card-title"><b>{post.businessName}</b></h5>
+                        <h5 className="card-title"><b>Category: </b>{post.category}</h5>
+                        <h5 className="card-title"><b>Address: </b>{post.address}</h5>
+                        <h5 className="card-title"><b>Contact Number: </b>{post.contact}</h5>
+                        <h5 className="card-title"><b>Open Hours: </b>{post.hours}</h5>
+                      </div>
+                    </div>
                 </div>
               </div>
             </div>
