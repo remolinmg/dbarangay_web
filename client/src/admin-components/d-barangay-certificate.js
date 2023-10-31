@@ -167,6 +167,7 @@ function BclearanceAdmin() {
 
   //------------------------------------------------ Database ----------------------------
   const [residentName, setResidentName] = useState('');
+  const [residentID, setResidentID] = useState('');
   const [address, setAddress] = useState('');
   const [reasonOfRequest, setReasonOfRequest] = useState('');
   const [pickUpDate, setPickUpDate] = useState('');
@@ -216,7 +217,7 @@ function BclearanceAdmin() {
     try {
 
       await axios.post("http://localhost:8000/barangaycertificate", {
-        residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
+        residentName, residentID, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
       })
         .then(res => {
           if (res.data === "exist") {
@@ -231,7 +232,6 @@ function BclearanceAdmin() {
           alert("Failed!")
           console.log(e);
         })
-
     }
     catch (e) {
       console.log(e);
@@ -628,6 +628,19 @@ function BclearanceAdmin() {
                               name="ResidentName"
                               onChange={(e) => {
                                 setResidentName(e.target.value);
+                              }}
+                              className="form-control"
+                              required
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label htmlFor="ResidentName">Resident ID</label>
+                            <input
+                              type="text"
+                              id="ResidentID"
+                              name="ResidentID"
+                              onChange={(e) => {
+                                setResidentID(e.target.value);
                               }}
                               className="form-control"
                               required

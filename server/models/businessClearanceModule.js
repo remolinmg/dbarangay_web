@@ -13,6 +13,10 @@ residentName:{
   type:String,
   required:true
 },
+residentID: {
+  type: String,
+  required: true
+},
 type:{
   type:String,
   required:true

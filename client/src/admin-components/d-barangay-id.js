@@ -155,6 +155,7 @@ function Biddmin() {
 
     //------------------------------------------------ Database ----------------------------
     const [residentName, setResidentName] = useState('');
+    const [residentID, setResidentID] = useState('');
     const [address, setAddress] = useState('');
     const [reasonOfRequest, setReasonOfRequest] = useState('');
     const [pickUpDate, setPickUpDate] = useState('');
@@ -204,7 +205,7 @@ function Biddmin() {
         try {
 
             await axios.post("http://localhost:8000/barangayid", {
-                residentName, address, pickUpDate, modeOfPayment, reference
+                residentName, residentID, address, pickUpDate, modeOfPayment, reference
             })
                 .then(res => {
                     if (res.data === "exist") {
@@ -613,6 +614,19 @@ function Biddmin() {
                                                             name="ResidentName"
                                                             onChange={(e) => {
                                                                 setResidentName(e.target.value);
+                                                            }}
+                                                            className="form-control"
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="ResidentID">Resident ID</label>
+                                                        <input
+                                                            type="text"
+                                                            id="ResidentID"
+                                                            name="ResidentID"
+                                                            onChange={(e) => {
+                                                                setResidentID(e.target.value);
                                                             }}
                                                             className="form-control"
                                                             required

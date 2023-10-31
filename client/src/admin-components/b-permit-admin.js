@@ -161,6 +161,7 @@ function BpermitAdmin() {
 
     //------------------------------------------------ Database ----------------------------
     const [residentName, setResidentName] = useState('');
+    const [residentID, setResidentID] = useState('');
     const [businessName, setBusinessName] = useState('');
     const [address, setAddress] = useState('');
     const [reasonOfRequest, setReasonOfRequest] = useState('');
@@ -212,7 +213,7 @@ function BpermitAdmin() {
         try {
 
             await axios.post("http://localhost:8000/businessclearance", {
-                businessName, address, residentName, type, reasonOfRequest, pickUpDate, modeOfPayment, reference
+                businessName, address, residentName, residentID, type, reasonOfRequest, pickUpDate, modeOfPayment, reference
             })
                 .then(res => {
                     if (res.data === "exist") {
@@ -645,6 +646,16 @@ function BpermitAdmin() {
                                                             id="residentName"
                                                             name="residentName"
                                                             onChange={(e) => setResidentName(e.target.value)}
+                                                            className="form-control"
+                                                            required /></div>
+                                                            
+                                                    <div className="form-group">
+                                                        <label htmlFor="residentsName">Owner's Resident ID:</label>
+                                                        <input
+                                                            type="text"
+                                                            id="residentName"
+                                                            name="residentName"
+                                                            onChange={(e) => setResidentID(e.target.value)}
                                                             className="form-control"
                                                             required /></div>
 

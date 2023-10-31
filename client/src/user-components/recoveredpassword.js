@@ -20,6 +20,13 @@ const ForgotPassword = () => {
       setPasswordValid(false);
       return;
     }
+
+    if (!isPasswordValid(password)) {
+      setPasswordValid(false);
+      alert("Password must meet the required pattern.");
+      return;
+    }
+
     if (password !== confirmPassword) {
       setConfirmPasswordValid(false);
       return;
@@ -37,14 +44,13 @@ const ForgotPassword = () => {
     catch (e) {
       console.log(e);
     }
-
-
   }
 
   //PASSWORD VALIDATION----------------------------------------------------
   const isPasswordValid = (password) => {
     const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     return passwordRegex.test(password);
+
   };
 
   const handlePasswordChange = (e) => {
@@ -57,8 +63,6 @@ const ForgotPassword = () => {
     const value = e.target.value;
     setConfirmPassword(value);
     setConfirmPasswordValid(value === password);
-
-
   };
 
 

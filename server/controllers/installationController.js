@@ -3,6 +3,7 @@ const userInstallation = require('../models/installationModel');
 const createInstallation = async (req, res) => {
   const {
     residentName,
+    residentID,
     address,
     reasonOfRequest,
     pickUpDate,
@@ -12,6 +13,7 @@ const createInstallation = async (req, res) => {
 
   const data = {
     residentName,
+    residentID,
     address,
     reasonOfRequest,
     pickUpDate,
@@ -82,9 +84,22 @@ const updateInstallation = async (req, res) => {
   }
 };
 
+async function getUserInstallationPermit (req, res) {
+  try {
+    const residentID = req.params.id;
+    const data = await userInstallation.find({ residentID });
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
 module.exports = {
   createInstallation,
   getInstallations,
   deleteInstallation,
   updateInstallation,
+  getUserInstallationPermit
 };

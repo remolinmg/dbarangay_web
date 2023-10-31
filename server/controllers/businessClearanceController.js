@@ -2,12 +2,13 @@ const userBusinessClearance = require('../models/businessClearanceModule');
 
 // Handle POST request
 exports.createBusinessClearance = async (req, res) => {
-  const{businessName,address,residentName,type,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
+  const{businessName,address,residentName,residentID,type,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
   const data = 
   {
     businessName:businessName,
     address:address,
     residentName:residentName,
+    residentID:residentID,
     type:type,
     reasonOfRequest:reasonOfRequest,
     pickUpDate:pickUpDate,
@@ -72,5 +73,16 @@ exports.updateBusinessClearance = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.getUserBusinessClearance = async (req, res) => {
+  try {
+    const residentID = req.params.id;
+    const data = await userBusinessClearance.find({ residentID });
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };

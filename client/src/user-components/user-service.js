@@ -7,6 +7,8 @@ import UserNav from './user-navbar';
 import Bot from "./faqbot"
 import axios from 'axios';
 import Footer from "./footer"
+import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
 
 
 function UserService() {
@@ -171,23 +173,29 @@ function UserService() {
 
     // If validation passes, proceed with the API request
     try {
-      const response = await axios.post("http://localhost:8000/barangaycertificate", {
-        residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
-      });
+      const token = Cookies.get('access_token');
+      if (token) {
+        const decoded = jwt_decode(token);
+        const residentID = decoded.id;
 
-      if (response.data === "exist") {
-        alert("You already sent the same request!");
-      } else if (response.data === "notexist") {
-        setIsSubmitted(true);
-        setShowPopup(false);
-        setIsGCashChecked(false);
-        setIsCOPChecked(false);
+        const response = await axios.post("http://localhost:8000/barangaycertificate", {
+          residentName, residentID, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
+        });
+
+        if (response.data === "exist") {
+          alert("You already sent the same request!");
+        } else if (response.data === "notexist") {
+          setIsSubmitted(true);
+          setShowPopup(false);
+          setIsGCashChecked(false);
+          setIsCOPChecked(false);
+        }
       }
     } catch (error) {
       alert("Failed!");
       console.error(error);
     }
-   
+
   }
 
   //business clearance connection & validation
@@ -251,23 +259,28 @@ function UserService() {
 
     // If validation passes, proceed with the API request
     try {
-      await axios.post("http://localhost:8000/businessclearance", {
-        businessName, address, residentName, type, reasonOfRequest, pickUpDate, modeOfPayment, reference
-      })
-        .then(res => {
-          if (res.data === "exist") {
-            alert("You already sent the same request!");
-          } else if (res.data === "notexist") {
-            setIsSubmitted(true);
-            setShowPopup(false);
-            setIsGCashChecked(false);
-            setIsCOPChecked(false);
-          }
+      const token = Cookies.get('access_token');
+      if (token) {
+        const decoded = jwt_decode(token);
+        const residentID = decoded.id;
+        await axios.post("http://localhost:8000/businessclearance", {
+          businessName, address, residentName, residentID, type, reasonOfRequest, pickUpDate, modeOfPayment, reference
         })
-        .catch(e => {
-          alert("Failed!")
-          console.log(e);
-        });
+          .then(res => {
+            if (res.data === "exist") {
+              alert("You already sent the same request!");
+            } else if (res.data === "notexist") {
+              setIsSubmitted(true);
+              setShowPopup(false);
+              setIsGCashChecked(false);
+              setIsCOPChecked(false);
+            }
+          })
+          .catch(e => {
+            alert("Failed!")
+            console.log(e);
+          });
+      }
     } catch (error) {
       alert("Failed!");
       console.error(error);
@@ -315,25 +328,32 @@ function UserService() {
 
     // If validation passes, proceed with the API request
     try {
-      await axios.post("http://localhost:8000/barangayid", {
-        residentName,
-        address,
-        pickUpDate,
-        modeOfPayment,
-        reference,
-      })
-        .then((res) => {
-          if (res.data === "exist") {
-            alert("You already sent the same request!");
-          } else if (res.data === "notexist") {
-            setIsSubmitted(true);
-            setShowPopup(false);
-          }
+      const token = Cookies.get('access_token');
+      if (token) {
+        const decoded = jwt_decode(token);
+        const residentID = decoded.id;
+
+        await axios.post("http://localhost:8000/barangayid", {
+          residentName,
+          residentID,
+          address,
+          pickUpDate,
+          modeOfPayment,
+          reference,
         })
-        .catch((e) => {
-          alert("Failed!");
-          console.log(e);
-        });
+          .then((res) => {
+            if (res.data === "exist") {
+              alert("You already sent the same request!");
+            } else if (res.data === "notexist") {
+              setIsSubmitted(true);
+              setShowPopup(false);
+            }
+          })
+          .catch((e) => {
+            alert("Failed!");
+            console.log(e);
+          });
+      }
     } catch (error) {
       alert("Failed!");
       console.error(error);
@@ -384,26 +404,31 @@ function UserService() {
       return; // Prevent form submission.
     }
     try {
+      const token = Cookies.get('access_token');
+      if (token) {
+        const decoded = jwt_decode(token);
 
-      await axios.post("http://localhost:8000/installation", {
-        residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
-      })
-        .then(res => {
-          if (res.data === "exist") {
-            alert("You already sent the same request!");
-          }
-          else if (res.data === "notexist") {
-            setIsSubmitted(true);
-            setShowPopup(false);
-            setIsGCashChecked(false);
-            setIsCOPChecked(false);
-          }
+        const residentID = decoded.id;
+        await axios.post("http://localhost:8000/installation", {
+          residentName, residentID, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
         })
-        .catch(e => {
-          alert("Failed!")
-          console.log(e);
-        })
+          .then(res => {
+            if (res.data === "exist") {
+              alert("You already sent the same request!");
+            }
+            else if (res.data === "notexist") {
+              setIsSubmitted(true);
+              setShowPopup(false);
+              setIsGCashChecked(false);
+              setIsCOPChecked(false);
+            }
+          })
+          .catch(e => {
+            alert("Failed!")
+            console.log(e);
+          })
 
+      }
     }
     catch (e) {
       console.log(e);
@@ -453,26 +478,30 @@ function UserService() {
       return; // Prevent form submission.
     }
     try {
-
-      await axios.post("http://localhost:8000/construction", {
-        residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
-      })
-        .then(res => {
-          if (res.data === "exist") {
-            alert("You already sent the same request!");
-          }
-          else if (res.data === "notexist") {
-            setIsSubmitted(true);
-            setShowPopup(false);
-            setIsGCashChecked(false);
-            setIsCOPChecked(false);
-          }
+      const token = Cookies.get('access_token');
+      if (token) {
+        const decoded = jwt_decode(token);
+        const residentID = decoded.id;
+        await axios.post("http://localhost:8000/construction", {
+          residentName, residentID, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
         })
-        .catch(e => {
-          alert("Failed!")
-          console.log(e);
-        })
+          .then(res => {
+            if (res.data === "exist") {
+              alert("You already sent the same request!");
+            }
+            else if (res.data === "notexist") {
+              setIsSubmitted(true);
+              setShowPopup(false);
+              setIsGCashChecked(false);
+              setIsCOPChecked(false);
+            }
+          })
+          .catch(e => {
+            alert("Failed!")
+            console.log(e);
+          })
 
+      }
     }
     catch (e) {
       console.log(e);
@@ -524,26 +553,31 @@ function UserService() {
       return; // Prevent form submission.
     }
     try {
+      const token = Cookies.get('access_token');
+      if (token) {
+        const decoded = jwt_decode(token);
+        const residentID = decoded.id;
 
-      await axios.post("http://localhost:8000/barangayindigency", {
-        residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
-      })
-        .then(res => {
-          if (res.data === "exist") {
-            alert("You already sent the same request!");
-          }
-          else if (res.data === "notexist") {
-            setIsSubmitted(true);
-            setShowPopup(false);
-            setIsGCashChecked(false);
-            setIsCOPChecked(false);
-          }
+        await axios.post("http://localhost:8000/barangayindigency", {
+          residentName, residentID, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
         })
-        .catch(e => {
-          alert("Failed!")
-          console.log(e);
-        })
+          .then(res => {
+            if (res.data === "exist") {
+              alert("You already sent the same request!");
+            }
+            else if (res.data === "notexist") {
+              setIsSubmitted(true);
+              setShowPopup(false);
+              setIsGCashChecked(false);
+              setIsCOPChecked(false);
+            }
+          })
+          .catch(e => {
+            alert("Failed!")
+            console.log(e);
+          })
 
+      }
     }
     catch (e) {
       console.log(e);
@@ -561,96 +595,96 @@ function UserService() {
         <div className="container">
           <div class="row">
             {/* ------------------- BARANGAY CERT --------------------------- */}
-            
-              <div className=" col-4 col__3" onClick={() => handleServiceClick('barangayClearance')}>
-                <div className="service__box pointer">
-                  <div className="icon">
-                    <MdOutlineFactCheck size={52} />
-                  </div>
-                  <div className="service__meta">
-                    <h1 className="service__text">BARANGAY CERTIFICATE </h1>
-                    <p className="p service__text p__color">
-                      A document to certify the residency and good conduct of an individual within the barangay.</p>
-                  </div>
-                </div>
-              </div>
-            
-            {/* ------------------- BUSINESS CLEARANCE --------------------------- */}
-            
-              <div className="service-right col-4 col__3" onClick={() => handleServiceClick('businessPermit')}>
-                <div className="service__box pointer">
-                  <div className="icon">
-                    <MdOutlineAddBusiness size={52} />
-                  </div>
-                  <div className="service__meta">
-                    <h1 className="service__text">BUSINESS CLEARANCE</h1>
-                    <p className="p service__text p__color">
-                      An official document or license that grants permission to individuals or organizations to conduct business within a jurisdiction.
-                    </p>
-                  </div>
-                </div>
-              </div>
-          </div>
-            
-            {/* ------------------- BARANGAY ID --------------------------- */}
-          <div class="row">
-              <div className="col-4 col__3" onClick={() => handleServiceClick('barangayID')}>
-                <div className="service__box pointer">
-                  <div className="icon">
-                    <HiOutlineIdentification size={52} />
-                  </div>
-                  <div className="service__meta">
-                    <h1 className="service__text">BARANGAY ID</h1>
-                    <p className="p service__text p__color">
-                      A government-issued identification card that serves as proof of residence and provides access to local barangay services.</p>
-                  </div>
-                </div>
-              </div>
 
-          {/* --------------------------------------------------- 2nd ROW ----------------------------------------------------  */}
-          
-            {/* ---------------------- INSTALLATION PERMIT  --------------------------- */}
-            
-              <div className="service-right col-4 col__3" onClick={() => handleServiceClick('installation')}>
-                <div className="service__box pointer">
-                  <div className="icon">
-                    <MdOutlineInstallDesktop size={32} />
-                  </div>
-                  <div className="service__meta">
-                    <h1 className="service__text">INSTALLATION PERMIT</h1>
-                    <p className="p service__text p__color">
-                      A document required for obtaining legal permission to install or make changes to certain structures, equipment, or facilities within the jurisdiction of a Barangay.</p>
-                  </div>
+            <div className=" col-4 col__3" onClick={() => handleServiceClick('barangayClearance')}>
+              <div className="service__box pointer">
+                <div className="icon">
+                  <MdOutlineFactCheck size={52} />
+                </div>
+                <div className="service__meta">
+                  <h1 className="service__text">BARANGAY CERTIFICATE </h1>
+                  <p className="p service__text p__color">
+                    A document to certify the residency and good conduct of an individual within the barangay.</p>
                 </div>
               </div>
-          </div> 
-            {/* ---------------------- CONSTRUCTION PERMIT  --------------------------- */}
+            </div>
+
+            {/* ------------------- BUSINESS CLEARANCE --------------------------- */}
+
+            <div className="service-right col-4 col__3" onClick={() => handleServiceClick('businessPermit')}>
+              <div className="service__box pointer">
+                <div className="icon">
+                  <MdOutlineAddBusiness size={52} />
+                </div>
+                <div className="service__meta">
+                  <h1 className="service__text">BUSINESS CLEARANCE</h1>
+                  <p className="p service__text p__color">
+                    An official document or license that grants permission to individuals or organizations to conduct business within a jurisdiction.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ------------------- BARANGAY ID --------------------------- */}
           <div class="row">
-              <div className="col-4 col__3" onClick={() => handleServiceClick('constructionPermit')}>
-                <div className="service__box pointer">
-                  <div className="icon">
-                    <MdConstruction size={32} />
-                  </div>
-                  <div className="service__meta">
-                    <h1 className="service__text">CONSTRUCTION PERMIT</h1>
-                    <p className="p service__text p__color">
-                      A government-issued authorization allowing individuals or organizations to legally undertake construction activities within the Barangay.</p></div>                            </div>
-              </div>
-            
-            {/* ----------------------- BRGY INDIGENCY FORM ---------------------------- */}
-            
-              <div className="service-right col-4 col__3" onClick={() => handleServiceClick('barangayIndigency')}>
-                <div className="service__box pointer">
-                  <div className="icon">
-                    <MdOutlineFactCheck size={52} />
-                  </div>
-                  <div className="service__meta">
-                    <h1 className="service__text">BARANGAY INDIGENCY </h1>
-                    <p className="p service__text p__color">
-                      A document issued to less fortunate resident who desires to avail assistance such as Scholarship, Medical Services, and the likes.</p>
-                  </div>
+            <div className="col-4 col__3" onClick={() => handleServiceClick('barangayID')}>
+              <div className="service__box pointer">
+                <div className="icon">
+                  <HiOutlineIdentification size={52} />
+                </div>
+                <div className="service__meta">
+                  <h1 className="service__text">BARANGAY ID</h1>
+                  <p className="p service__text p__color">
+                    A government-issued identification card that serves as proof of residence and provides access to local barangay services.</p>
                 </div>
               </div>
+            </div>
+
+            {/* --------------------------------------------------- 2nd ROW ----------------------------------------------------  */}
+
+            {/* ---------------------- INSTALLATION PERMIT  --------------------------- */}
+
+            <div className="service-right col-4 col__3" onClick={() => handleServiceClick('installation')}>
+              <div className="service__box pointer">
+                <div className="icon">
+                  <MdOutlineInstallDesktop size={32} />
+                </div>
+                <div className="service__meta">
+                  <h1 className="service__text">INSTALLATION PERMIT</h1>
+                  <p className="p service__text p__color">
+                    A document required for obtaining legal permission to install or make changes to certain structures, equipment, or facilities within the jurisdiction of a Barangay.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* ---------------------- CONSTRUCTION PERMIT  --------------------------- */}
+          <div class="row">
+            <div className="col-4 col__3" onClick={() => handleServiceClick('constructionPermit')}>
+              <div className="service__box pointer">
+                <div className="icon">
+                  <MdConstruction size={32} />
+                </div>
+                <div className="service__meta">
+                  <h1 className="service__text">CONSTRUCTION PERMIT</h1>
+                  <p className="p service__text p__color">
+                    A government-issued authorization allowing individuals or organizations to legally undertake construction activities within the Barangay.</p></div>                            </div>
+            </div>
+
+            {/* ----------------------- BRGY INDIGENCY FORM ---------------------------- */}
+
+            <div className="service-right col-4 col__3" onClick={() => handleServiceClick('barangayIndigency')}>
+              <div className="service__box pointer">
+                <div className="icon">
+                  <MdOutlineFactCheck size={52} />
+                </div>
+                <div className="service__meta">
+                  <h1 className="service__text">BARANGAY INDIGENCY </h1>
+                  <p className="p service__text p__color">
+                    A document issued to less fortunate resident who desires to avail assistance such as Scholarship, Medical Services, and the likes.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         {/* --------------------------------------------------------- barangayClearance forms  --------------------------------------------------------- */}

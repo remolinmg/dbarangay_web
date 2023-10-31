@@ -1,10 +1,11 @@
 const userCertificate = require('../models/barangayCertificateModel');
 
 exports.createCertificate = async (req, res) => {
-  const{residentName,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
+  const{residentName,residentID,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
   const data = 
   {
     residentName:residentName,
+    residentID:residentID,
     address:address,
     reasonOfRequest:reasonOfRequest,
     pickUpDate:pickUpDate,
@@ -66,5 +67,16 @@ exports.deleteCertificate = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.getUserBrgyCert = async (req, res) => {
+  try {
+    const residentID = req.params.id;
+    const data = await userCertificate.find({ residentID });
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };

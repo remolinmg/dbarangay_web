@@ -7,6 +7,7 @@ router.post('/', barangayIndigencyController.createIndigency);
 
 // GET /get/barangayindigency
 router.get('/', barangayIndigencyController.getIndigencyList);
+router.get('/:id', barangayIndigencyController.getUserBrgyIndigency);
 
 // DELETE /delete/barangayindigency/:id
 router.delete('/:id', barangayIndigencyController.deleteIndigency);

@@ -2,7 +2,7 @@ const userIndigency = require('../models/barangayIndigencyModel');
 
 // POST /barangayindigency
 exports.createIndigency = async (req, res) => {
-  const { residentName, address, reasonOfRequest, pickUpDate, modeOfPayment, reference } = req.body;
+  const { residentName, residentID, address, reasonOfRequest, pickUpDate, modeOfPayment, reference } = req.body;
 
   try {
     const check = await userIndigency.findOne({
@@ -15,6 +15,7 @@ exports.createIndigency = async (req, res) => {
       res.status(201).json('notexist');
       await userIndigency.create({
         residentName,
+        residentID,
         address,
         reasonOfRequest,
         pickUpDate,
@@ -77,5 +78,16 @@ exports.updateIndigency = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json('Internal Server Error');
+  }
+};
+
+exports.getUserBrgyIndigency = async (req, res) => {
+  try {
+    const residentID = req.params.id;
+    const data = await userIndigency.find({ residentID });
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };

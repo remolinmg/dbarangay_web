@@ -11,6 +11,12 @@ const { rmSync } = require('fs');
 const { error } = require('console');
 app.set('view engine', 'ejs');
 const path = require('path');
+const userBarangayID = require('../models/barangayIDModel');
+const userBarangayCertificate = require('../models/barangayCertificateModel');
+const userBarangayIndigency = require('../models/barangayIndigencyModel');
+const userBusinessClearance = require('../models/businessClearanceModule');
+const userConstructionPermit = require('../models/constructionModel');
+const userInstallationPermit = require('../models/installationModel');
 app.set('views', path.join(__dirname, '../views'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -94,27 +100,6 @@ exports.forgotpass = async (req, res) => {
     console.log(error)
   }
 };
-
-// reset password page
-// exports.resetpass = async (req, res) => {
-//   const { id, resetToken } = req.params;
-//   console.log(req.params);
-
-//   const user = await User.findOne({ _id: id });
-//   if (!user) {
-//     return res.json({ status: "User does not exist." });
-//   }
-
-//   const secretReset = "qqywe8791y62389qdy8wy89d1381734edih" + user.password;
-
-//   try {
-//     const verifyToken = jwt.verify(resetToken, secretReset);
-//     res.render("resetPass.ejs", { _id: id, email: verifyToken.email });
-//   } catch (e) {
-//     res.send("Not Verified");
-//     console.log(e);
-//   }
-// };
 
 //update new password
 exports.updatepass = async (req, res) => {

@@ -5,6 +5,7 @@ const businessClearanceController = require('../controllers/businessClearanceCon
 
 router.post('/', businessClearanceController.createBusinessClearance);
 router.get('/', businessClearanceController.getBusinessClearances);
+router.get('/:id', businessClearanceController.getUserBusinessClearance);
 router.delete('/:id', businessClearanceController.deleteBusinessClearance);
 router.put('/:id', businessClearanceController.updateBusinessClearance);
 

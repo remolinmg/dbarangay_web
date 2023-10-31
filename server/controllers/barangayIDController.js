@@ -4,10 +4,11 @@ const userBarangayID = require('../models/barangayIDModel');
 
 module.exports = {
   createBarangayId: async (req, res) => {
-    const{residentName,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
+    const{residentName,residentID,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
   const data = 
   {
     residentName:residentName,
+    residentID: residentID,
     address:address,
     reasonOfRequest:reasonOfRequest,
     pickUpDate:pickUpDate,
@@ -70,5 +71,16 @@ module.exports = {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
+  },
+
+  getUserBrgyID: async (req, res) => {
+    try {
+      const residentID = req.params.id;
+      const data = await userBarangayID.find({ residentID });
+      res.json(data);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 };

@@ -1,10 +1,11 @@
 const userConstruction = require('../models/constructionModel');
 
 async function createConstruction(req, res) {
-  const{residentName,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
+  const{residentName,residentID,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
   const data = 
   {
     residentName:residentName,
+    residentID:residentID,
     address:address,
     reasonOfRequest:reasonOfRequest,
     pickUpDate:pickUpDate,
@@ -72,9 +73,22 @@ async function updateConstruction(req, res) {
   }
 }
 
+async function getUserConstructionPermit (req, res) {
+  try {
+    const residentID = req.params.id;
+    const data = await userConstruction.find({ residentID });
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 module.exports = {
   createConstruction,
   getConstruction,
   deleteConstruction,
   updateConstruction,
+  getUserConstructionPermit
 };
+

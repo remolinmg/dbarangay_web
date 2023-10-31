@@ -79,95 +79,54 @@ function UserProfile() {
         }
     };
 
+
     useEffect(() => {
         if (activeContent === 2) { // Fetch "Barangay Clearance" data when "View Requests" section is active
-            fetchBarangayClearanceData();
+            fetchRequestData();
         }
     }, [activeContent]);
 
-
-    const [requestData, setRequestData] = useState([]);
-    const [barangayClearanceData, setBarangayClearanceData] = useState([]);
+    const [barangayCertificateData, setBarangayCertificateData] = useState([]);
     const [businessPermitData, setBusinessPermitData] = useState([]);
     const [barangayIdData, setBarangayIdData] = useState([]);
     const [barangayInstallationData, setBarangayInstallationData] = useState([]);
     const [barangayConstructionData, setBarangayConstructionData] = useState([]);
     const [barangayIndigencyData, setBarangayIndigencyData] = useState([]);
-    useEffect(() => {
-        fetchBarangayClearanceData();
-    }, []);
 
     useEffect(() => {
-        fetchBusinessPermitData();
-    }, []);
-    useEffect(() => {
-        fetchbarangayIdData();
+        fetchRequestData(); // Fetch initial data when the component mounts
     }, []);
 
-    useEffect(() => {
-        fetchbarangayInstallationData();
-    }, []);
-    useEffect(() => {
-        fetchbarangayConstructionData();
-    }, []);
-
-    useEffect(() => {
-        fetchbarangayIndigencyData();
-    }, []);
-
-
-    const fetchBarangayClearanceData = async () => {
+    const fetchRequestData = async () => {
         try {
-            const response = await axios.get("http://localhost:8000/get/barangaycertificate");
-            setBarangayClearanceData(response.data);
+            const token = Cookies.get('access_token');
+            if (token) {
+                const decoded = jwt_decode(token);
+                const _id = decoded.id;
+
+                const brgyCertData = await axios.get(`http://localhost:8000/get/barangaycertificate/${_id}`);
+                setBarangayCertificateData(brgyCertData.data);
+                console.log(barangayCertificateData);
+
+                const brgyIdData = await axios.get(`http://localhost:8000/get/barangayid/${_id}`);
+                setBarangayIdData(brgyIdData.data);
+
+                const brgyIndigencyData = await axios.get(`http://localhost:8000/get/barangayindigency/${_id}`);
+                setBarangayIndigencyData(brgyIndigencyData.data);
+
+                const bPermitData = await axios.get(`http://localhost:8000/get/businessclearance/${_id}`);
+                setBusinessPermitData(bPermitData.data);
+
+                const constPermitData = await axios.get(`http://localhost:8000/get/construction/${_id}`);
+                setBarangayConstructionData(constPermitData.data);
+
+                const installPermitData = await axios.get(`http://localhost:8000/get/installation/${_id}`);
+                setBarangayInstallationData(installPermitData.data);
+            }
         } catch (error) {
             console.error(error);
         }
     };
-
-    const fetchBusinessPermitData = async () => {
-        try {
-            const businessClearanceResponse = await axios.get("http://localhost:8000/get/businessclearance");
-            setBusinessPermitData(businessClearanceResponse.data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    const fetchbarangayIdData = async () => {
-        try {
-            const barangayidResponse = await axios.get("http://localhost:8000/get/barangayid");
-            setBarangayIdData(barangayidResponse.data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const fetchbarangayInstallationData = async () => {
-        try {
-            const installationreponse = await axios.get("http://localhost:8000/get/installation");
-            setBarangayInstallationData(installationreponse.data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    const fetchbarangayConstructionData = async () => {
-        try {
-            const constructionResponse = await axios.get("http://localhost:8000/get/construction");
-            setBarangayConstructionData(constructionResponse.data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const fetchbarangayIndigencyData = async () => {
-        try {
-            const barangayindigencyResponse = await axios.get("http://localhost:8000/get/barangayindigency");
-            setBarangayIndigencyData(barangayindigencyResponse.data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
 
     return (
         <>
@@ -350,44 +309,90 @@ function UserProfile() {
                                                         </div>
                                                     </div>
                                                 </form>
+                                                <form class="form7 mt-3">
+                                                    <h2 id="form_name">Educational Attainment</h2>
+                                                    <div class="row g-3">
+                                                        <div class="col">
+                                                            <label for="educationalattainment" class="form-label">Highest Educational Attainment:</label>
+                                                            <input type="text" id="educationalattainment" class="form-control" aria-label="Educational Attainment" value={item.highestEducation} disabled />
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <form class="form8 mt-3">
+                                                    <h2 id="form_name">Residence Class</h2>
+                                                    <div class="row g-3">
+                                                        <div class="col">
+                                                            <label for="residenceclass" class="form-label">Class:</label>
+                                                            <input type="text" id="residenceclass" class="form-control" aria-label="Residence Class" value={item.residenceClass} disabled />
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <form class="form8 mt-3">
+                                                    <h2 id="form_name">Residence Class</h2>
+                                                    <div class="row g-3">
+                                                        <div class="col">
+                                                            <label for="voter" class="form-label">Voter:</label>
+                                                            <select
+                                                                id="voter"
+                                                                class="form-control"
+                                                                required
+                                                                value={item.voterRegistration
+                                                                }
+                                                            >
+                                                                <option value="">Select Voter's Registration</option>
+                                                                <option value="Registeredvoter">Registered</option>
+                                                                <option value="Unregisteredvoter">Not Registered</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div className="save_btn">
+                                                        <input type="checkbox" className="btn-check" id="btn-check-3" />
+                                                        <label className="btn btn-primary" htmlFor="btn-check-3">
+                                                            Save Changes
+                                                        </label>
+                                                    </div>
+                                                </form>
                                             </section>
 
                                         </div>
                                         <div id="content2" className={`viewreq content ${activeContent === 2 ? 'active' : ''}`}>
                                             <section className="request-summary flex-column m-3">
-                                                <h3>Barangay Clearance</h3>
-                                                <table className="table">
+                                                <h2 id="form_name">Barangay Clearance</h2>
+                                                <table className="table text-center">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">#</th>
-                                                            <th scope="col">LAST NAME</th>
-                                                            <th scope="col">FIRST NAME</th>
-                                                            <th scope="col">MIDDLE NAME</th>
+                                                            <th scope="col">Reason of Request</th>
+                                                            <th scope="col">Pickup Date</th>
+                                                            <th scope="col">Mode of Payment</th>
+                                                            <th scope="col">Reference No.</th>
+                                                            <th scope="col">Status</th>
                                                         </tr>
                                                     </thead>
-                                                    {barangayClearanceData.map((item, index) => (
+                                                    {barangayCertificateData.map((item, index) => (
                                                         <tr key={index}>
                                                             <th scope="row">{index + 1}</th>
-                                                            <td>{item.residentName}</td>
-                                                            <td>{item.address}</td>
                                                             <td>{item.reasonOfRequest}</td>
                                                             <td>{item.pickUpDate}</td>
                                                             <td>{item.modeOfPayment}</td>
                                                             <td>{item.reference}</td>
                                                             <td>{item.status}</td>
-
                                                         </tr>
                                                     ))}
                                                 </table>
 
-                                                <h3>Business Permit</h3>
-                                                <table className="table">
+                                                <h2 id="form_name">Business Permit</h2>
+                                                <table className="table text-center">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">#</th>
-                                                            <th scope="col">LAST NAME</th>
-                                                            <th scope="col">FIRST NAME</th>
-                                                            <th scope="col">MIDDLE NAME</th>
+                                                            <th scope="col">Business Name</th>
+                                                            <th scope="col">Address</th>
+                                                            <th scope="col">Business Type</th>
+                                                            <th scope="col">Pickup Date</th>
+                                                            <th scope="col">Mode of Payment</th>
+                                                            <th scope="col">Reference No.</th>
+                                                            <th scope="col">Status</th>
                                                         </tr>
                                                     </thead>
                                                     {businessPermitData.map((item, index) => (
@@ -395,9 +400,7 @@ function UserProfile() {
                                                             <th scope="row">{index + 1}</th>
                                                             <td>{item.businessName}</td>
                                                             <td>{item.address}</td>
-                                                            <td>{item.residentName}</td>
                                                             <td>{item.type}</td>
-                                                            <td>{item.reasonOfRequest}</td>
                                                             <td>{item.pickUpDate}</td>
                                                             <td>{item.modeOfPayment}</td>
                                                             <td>{item.reference}</td>
@@ -407,21 +410,20 @@ function UserProfile() {
                                                     ))}
                                                 </table>
 
-                                                <h3>Barangay ID</h3>
-                                                <table class="table">
+                                                <h2 id="form_name">Barangay ID</h2>
+                                                <table class="table text-center">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">#</th>
-                                                            <th scope="col">LAST NAME</th>
-                                                            <th scope="col">FIRST NAME</th>
-                                                            <th scope="col">MIDDLE NAME</th>
+                                                            <th scope="col">Pickup Date</th>
+                                                            <th scope="col">Mode of Payment</th>
+                                                            <th scope="col">Reference No.</th>
+                                                            <th scope="col">Status</th>
                                                         </tr>
                                                     </thead>
                                                     {barangayIdData.map((item, index) => (
                                                         <tr key={index}>
                                                             <th scope="row">{index + 1}</th>
-                                                            <td>{item.residentName}</td>
-                                                            <td>{item.address}</td>
                                                             <td>{item.pickUpDate}</td>
                                                             <td>{item.modeOfPayment}</td>
                                                             <td>{item.reference}</td>
@@ -429,43 +431,21 @@ function UserProfile() {
                                                         </tr>
                                                     ))}
                                                 </table>
-                                                <h3>Business Installation</h3>
-                                                <table class="table">
+                                                <h2 id="form_name">Business Installation</h2>
+                                                <table class="table text-center">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">#</th>
-                                                            <th scope="col">LAST NAME</th>
-                                                            <th scope="col">FIRST NAME</th>
-                                                            <th scope="col">MIDDLE NAME</th>
+                                                            <th scope="col">Reason of Request</th>
+                                                            <th scope="col">Pickup Date</th>
+                                                            <th scope="col">Mode of Payment</th>
+                                                            <th scope="col">Reference No.</th>
+                                                            <th scope="col">Status</th>
                                                         </tr>
                                                     </thead>
                                                     {barangayInstallationData.map((item, index) => (
                                                         <tr key={index}>
                                                             <th scope="row">{index + 1}</th>
-                                                            <td>{item.residentName}</td>
-                                                            <td>{item.address}</td>
-                                                            <td>{item.reasonOfRequest}</td>
-                                                            <td>{item.pickUpDate}</td>
-                                                            <td>{item.modeOfPayment}</td>
-                                                            <td>{item.reference}</td>
-                                                            <td>{item.status}</td>
-                                                        </tr>
-                                                    ))}
-                                                </table> <h3>Barangay Construction</h3>
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">#</th>
-                                                            <th scope="col">LAST NAME</th>
-                                                            <th scope="col">FIRST NAME</th>
-                                                            <th scope="col">MIDDLE NAME</th>
-                                                        </tr>
-                                                    </thead>
-                                                    {barangayConstructionData.map((item, index) => (
-                                                        <tr key={index}>
-                                                            <th scope="row">{index + 1}</th>
-                                                            <td>{item.residentName}</td>
-                                                            <td>{item.address}</td>
                                                             <td>{item.reasonOfRequest}</td>
                                                             <td>{item.pickUpDate}</td>
                                                             <td>{item.modeOfPayment}</td>
@@ -474,21 +454,43 @@ function UserProfile() {
                                                         </tr>
                                                     ))}
                                                 </table>
-                                                <h3>Barangay Indigency</h3>
-                                                <table class="table">
+                                                <h2 id="form_name">Barangay Construction</h2>
+                                                <table class="table text-center">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">#</th>
-                                                            <th scope="col">LAST NAME</th>
-                                                            <th scope="col">FIRST NAME</th>
-                                                            <th scope="col">MIDDLE NAME</th>
+                                                            <th scope="col">Reason of Request</th>
+                                                            <th scope="col">Pickup Date</th>
+                                                            <th scope="col">Mode of Payment</th>
+                                                            <th scope="col">Reference No.</th>
+                                                            <th scope="col">Status</th>                                                        </tr>
+                                                    </thead>
+                                                    {barangayConstructionData.map((item, index) => (
+                                                        <tr key={index}>
+                                                            <th scope="row">{index + 1}</th>
+                                                            <td>{item.reasonOfRequest}</td>
+                                                            <td>{item.pickUpDate}</td>
+                                                            <td>{item.modeOfPayment}</td>
+                                                            <td>{item.reference}</td>
+                                                            <td>{item.status}</td>
+                                                        </tr>
+                                                    ))}
+                                                </table>
+                                                <h2 id="form_name">Barangay Indigency</h2>
+                                                <table class="table text-center">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">Reason of Request</th>
+                                                            <th scope="col">Pickup Date</th>
+                                                            <th scope="col">Mode of Payment</th>
+                                                            <th scope="col">Reference No.</th>
+                                                            <th scope="col">Status</th>
                                                         </tr>
                                                     </thead>
                                                     {barangayIndigencyData.map((item, index) => (
                                                         <tr key={index}>
                                                             <th scope="row">{index + 1}</th>
-                                                            <td> {item.residentName}</td>
-                                                            <td>{item.address}</td>
                                                             <td>{item.reasonOfRequest}</td>
                                                             <td>{item.pickUpDate}</td>
                                                             <td>{item.modeOfPayment}</td>
@@ -499,55 +501,10 @@ function UserProfile() {
                                                 </table>
                                             </section>
                                         </div>
-               
-                                    <form class="form7 mt-3">
-                                        <h2 id="form_name">Educational Attainment</h2>
-                                        <div class="row g-3">
-                                            <div class="col">
-                                                <label for="educationalattainment" class="form-label">Highest Educational Attainment:</label>
-                                                <input type="text" id="educationalattainment" class="form-control" aria-label="Educational Attainment" value={item.highestEducation} disabled />
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <form class="form8 mt-3">
-                                        <h2 id="form_name">Residence Class</h2>
-                                        <div class="row g-3">
-                                            <div class="col">
-                                                <label for="residenceclass" class="form-label">Class:</label>
-                                                <input type="text" id="residenceclass" class="form-control" aria-label="Residence Class" value={item.residenceClass} disabled />
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <form class="form8 mt-3">
-                                        <h2 id="form_name">Residence Class</h2>
-                                        <div class="row g-3">
-                                        <div class="col">
-                                                        <label for="voter" class="form-label">Voter:</label>
-                                                        <select
-                                                            id="voter"
-                                                            class="form-control"
-                                                            required
-                                                            value={item.voterRegistration
-                                                            }
-                                                        >
-                                                        <option value="">Select Voter's Registration</option>
-                                                        <option value="Registeredvoter">Registered</option>
-                                                        <option value="Unregisteredvoter">Not Registered</option>
-                                                        </select>
-                                                    </div>
-                                        </div>
-                                     
-                                    </form>
-                                </section>
-                                <div className="save_btn">
-                                    <input type="checkbox" className="btn-check" id="btn-check-3" />
-                                    <label className="btn btn-primary" htmlFor="btn-check-3">
-                                        Save Changes
-                                    </label>
+                                    </section>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 ))
             ) : (
