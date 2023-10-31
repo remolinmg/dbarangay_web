@@ -2,13 +2,13 @@ const userBusinessClearance = require('../models/businessClearanceModule');
 
 // Handle POST request
 exports.createBusinessClearance = async (req, res) => {
-  const{businessName,address,residentName,residentID,type,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
+  const{businessName,address,residentName,userId,type,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
   const data = 
   {
     businessName:businessName,
     address:address,
     residentName:residentName,
-    residentID:residentID,
+    userId:userId,
     type:type,
     reasonOfRequest:reasonOfRequest,
     pickUpDate:pickUpDate,
@@ -78,8 +78,8 @@ exports.updateBusinessClearance = async (req, res) => {
 
 exports.getUserBusinessClearance = async (req, res) => {
   try {
-    const residentID = req.params.id;
-    const data = await userBusinessClearance.find({ residentID });
+    const userId = req.params.id;
+    const data = await userBusinessClearance.find({ userId });
     res.json(data);
   } catch (error) {
     console.error(error);

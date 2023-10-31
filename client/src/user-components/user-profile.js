@@ -16,11 +16,16 @@ import Cookies from 'js-cookie';
 
 function UserProfile() {
     const [activeContent, setActiveContent] = useState(1);
+    const [activeTable, setActiveTable] = useState(1);
     const [profilePicSrc, setProfilePicSrc] = useState('https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG-Picture.png');
     const [selectedFile, setSelectedFile] = useState(null);
 
     const showContent = (contentNumber) => {
         setActiveContent(contentNumber);
+    };
+
+    const showTable = (tblNumber) => {
+        setActiveTable(tblNumber);
     };
 
     const handleFileChange = (e) => {
@@ -78,7 +83,6 @@ function UserProfile() {
             console.error(error);
         }
     };
-
 
     useEffect(() => {
         if (activeContent === 2) { // Fetch "Barangay Clearance" data when "View Requests" section is active
@@ -356,149 +360,188 @@ function UserProfile() {
 
                                         </div>
                                         <div id="content2" className={`viewreq content ${activeContent === 2 ? 'active' : ''}`}>
+                                            <section>
+                                                <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                                    <input type="radio" onClick={() => showTable(1)} className="btn-check" name="btnradio" id="btnradio1" autoComplete="off" checked={activeTable === 1} />
+                                                    <label className="btn btn-outline-primary" id="brgycert_btn" htmlFor="btnradio1">Barangay Certificate</label>
+
+                                                    <input type="radio" onClick={() => showTable(2)} className="btn-check" name="btnradio" id="btnradio2" autoComplete="off" checked={activeTable === 2} />
+                                                    <label className="btn btn-outline-primary" id="brgyid_btn" htmlFor="btnradio2">Barangay ID</label>
+
+                                                    <input type="radio" onClick={() => showTable(3)} className="btn-check" name="btnradio" id="btnradio3" autoComplete="off" checked={activeTable === 3} />
+                                                    <label className="btn btn-outline-primary" id="brgyindigency_btn" htmlFor="btnradio2">Indigency</label>
+
+                                                    <input type="radio" onClick={() => showTable(4)} className="btn-check" name="btnradio" id="btnradio4" autoComplete="off" checked={activeTable === 4} />
+                                                    <label className="btn btn-outline-primary" id="bpermit_btn" htmlFor="btnradio2">Business Permit</label>
+
+                                                    <input type="radio" onClick={() => showTable(5)} className="btn-check" name="btnradio" id="btnradio5" autoComplete="off" checked={activeTable === 5} />
+                                                    <label className="btn btn-outline-primary" id="construction_btn" htmlFor="btnradio2">Construction Permit</label>
+
+                                                    <input type="radio" onClick={() => showTable(6)} className="btn-check" name="btnradio" id="btnradio6" autoComplete="off" checked={activeTable === 6} />
+                                                    <label className="btn btn-outline-primary" id="installation_btn" htmlFor="btnradio2">Installation Permit</label>
+                                                </div>
+                                                {/* <div id="line"></div> */}
+                                            </section>
                                             <section className="request-summary flex-column m-3">
-                                                <h2 id="form_name">Barangay Clearance</h2>
-                                                <table className="table text-center">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">#</th>
-                                                            <th scope="col">Reason of Request</th>
-                                                            <th scope="col">Pickup Date</th>
-                                                            <th scope="col">Mode of Payment</th>
-                                                            <th scope="col">Reference No.</th>
-                                                            <th scope="col">Status</th>
-                                                        </tr>
-                                                    </thead>
-                                                    {barangayCertificateData.map((item, index) => (
-                                                        <tr key={index}>
-                                                            <th scope="row">{index + 1}</th>
-                                                            <td>{item.reasonOfRequest}</td>
-                                                            <td>{item.pickUpDate}</td>
-                                                            <td>{item.modeOfPayment}</td>
-                                                            <td>{item.reference}</td>
-                                                            <td>{item.status}</td>
-                                                        </tr>
-                                                    ))}
-                                                </table>
 
-                                                <h2 id="form_name">Business Permit</h2>
-                                                <table className="table text-center">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">#</th>
-                                                            <th scope="col">Business Name</th>
-                                                            <th scope="col">Address</th>
-                                                            <th scope="col">Business Type</th>
-                                                            <th scope="col">Pickup Date</th>
-                                                            <th scope="col">Mode of Payment</th>
-                                                            <th scope="col">Reference No.</th>
-                                                            <th scope="col">Status</th>
-                                                        </tr>
-                                                    </thead>
-                                                    {businessPermitData.map((item, index) => (
-                                                        <tr key={index}>
-                                                            <th scope="row">{index + 1}</th>
-                                                            <td>{item.businessName}</td>
-                                                            <td>{item.address}</td>
-                                                            <td>{item.type}</td>
-                                                            <td>{item.pickUpDate}</td>
-                                                            <td>{item.modeOfPayment}</td>
-                                                            <td>{item.reference}</td>
-                                                            <td>{item.status}</td>
-                                                            {/* Render the data for Business Permit */}
-                                                        </tr>
-                                                    ))}
-                                                </table>
+                                                <div id="table1" className={`brgycert content ${activeTable === 1 ? 'active' : ''}`}>
+                                                    <h2 id="form_name">Barangay Certificate</h2>
+                                                    <table className="table text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Reason of Request</th>
+                                                                <th scope="col">Pickup Date</th>
+                                                                <th scope="col">Mode of Payment</th>
+                                                                <th scope="col">Reference No.</th>
+                                                                <th scope="col">Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        {barangayCertificateData.map((item, index) => (
+                                                            <tr key={index}>
+                                                                <th scope="row">{index + 1}</th>
+                                                                <td>{item.reasonOfRequest}</td>
+                                                                <td>{item.pickUpDate}</td>
+                                                                <td>{item.modeOfPayment}</td>
+                                                                <td>{item.reference}</td>
+                                                                <td>{item.status}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </table>
+                                                </div>
 
-                                                <h2 id="form_name">Barangay ID</h2>
-                                                <table class="table text-center">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">#</th>
-                                                            <th scope="col">Pickup Date</th>
-                                                            <th scope="col">Mode of Payment</th>
-                                                            <th scope="col">Reference No.</th>
-                                                            <th scope="col">Status</th>
-                                                        </tr>
-                                                    </thead>
-                                                    {barangayIdData.map((item, index) => (
-                                                        <tr key={index}>
-                                                            <th scope="row">{index + 1}</th>
-                                                            <td>{item.pickUpDate}</td>
-                                                            <td>{item.modeOfPayment}</td>
-                                                            <td>{item.reference}</td>
-                                                            <td>{item.status}</td>
-                                                        </tr>
-                                                    ))}
-                                                </table>
-                                                <h2 id="form_name">Business Installation</h2>
-                                                <table class="table text-center">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">#</th>
-                                                            <th scope="col">Reason of Request</th>
-                                                            <th scope="col">Pickup Date</th>
-                                                            <th scope="col">Mode of Payment</th>
-                                                            <th scope="col">Reference No.</th>
-                                                            <th scope="col">Status</th>
-                                                        </tr>
-                                                    </thead>
-                                                    {barangayInstallationData.map((item, index) => (
-                                                        <tr key={index}>
-                                                            <th scope="row">{index + 1}</th>
-                                                            <td>{item.reasonOfRequest}</td>
-                                                            <td>{item.pickUpDate}</td>
-                                                            <td>{item.modeOfPayment}</td>
-                                                            <td>{item.reference}</td>
-                                                            <td>{item.status}</td>
-                                                        </tr>
-                                                    ))}
-                                                </table>
-                                                <h2 id="form_name">Barangay Construction</h2>
-                                                <table class="table text-center">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">#</th>
-                                                            <th scope="col">Reason of Request</th>
-                                                            <th scope="col">Pickup Date</th>
-                                                            <th scope="col">Mode of Payment</th>
-                                                            <th scope="col">Reference No.</th>
-                                                            <th scope="col">Status</th>                                                        </tr>
-                                                    </thead>
-                                                    {barangayConstructionData.map((item, index) => (
-                                                        <tr key={index}>
-                                                            <th scope="row">{index + 1}</th>
-                                                            <td>{item.reasonOfRequest}</td>
-                                                            <td>{item.pickUpDate}</td>
-                                                            <td>{item.modeOfPayment}</td>
-                                                            <td>{item.reference}</td>
-                                                            <td>{item.status}</td>
-                                                        </tr>
-                                                    ))}
-                                                </table>
-                                                <h2 id="form_name">Barangay Indigency</h2>
-                                                <table class="table text-center">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">#</th>
-                                                            <th scope="col">Reason of Request</th>
-                                                            <th scope="col">Pickup Date</th>
-                                                            <th scope="col">Mode of Payment</th>
-                                                            <th scope="col">Reference No.</th>
-                                                            <th scope="col">Status</th>
-                                                        </tr>
-                                                    </thead>
-                                                    {barangayIndigencyData.map((item, index) => (
-                                                        <tr key={index}>
-                                                            <th scope="row">{index + 1}</th>
-                                                            <td>{item.reasonOfRequest}</td>
-                                                            <td>{item.pickUpDate}</td>
-                                                            <td>{item.modeOfPayment}</td>
-                                                            <td>{item.reference}</td>
-                                                            <td>{item.status}</td>
-                                                        </tr>
-                                                    ))}
-                                                </table>
+                                                <div id="table2" className={`brgyid content ${activeTable === 2 ? 'active' : ''}`}>
+                                                    <h2 id="form_name">Barangay ID</h2>
+                                                    <table class="table text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Pickup Date</th>
+                                                                <th scope="col">Mode of Payment</th>
+                                                                <th scope="col">Reference No.</th>
+                                                                <th scope="col">Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        {barangayIdData.map((item, index) => (
+                                                            <tr key={index}>
+                                                                <th scope="row">{index + 1}</th>
+                                                                <td>{item.pickUpDate}</td>
+                                                                <td>{item.modeOfPayment}</td>
+                                                                <td>{item.reference}</td>
+                                                                <td>{item.status}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </table>
+                                                </div>
+
+                                                <div id="table3" className={`brgyindigency content ${activeTable === 3 ? 'active' : ''}`}>
+                                                    <h2 id="form_name">Barangay Indigency</h2>
+                                                    <table class="table text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Reason of Request</th>
+                                                                <th scope="col">Pickup Date</th>
+                                                                <th scope="col">Mode of Payment</th>
+                                                                <th scope="col">Reference No.</th>
+                                                                <th scope="col">Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        {barangayIndigencyData.map((item, index) => (
+                                                            <tr key={index}>
+                                                                <th scope="row">{index + 1}</th>
+                                                                <td>{item.reasonOfRequest}</td>
+                                                                <td>{item.pickUpDate}</td>
+                                                                <td>{item.modeOfPayment}</td>
+                                                                <td>{item.reference}</td>
+                                                                <td>{item.status}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </table>
+                                                </div>
+
+                                                <div id="table4" className={`bpermit content ${activeTable === 4 ? 'active' : ''}`}>
+                                                    <h2 id="form_name">Business Permit</h2>
+                                                    <table className="table text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Business Name</th>
+                                                                <th scope="col">Address</th>
+                                                                <th scope="col">Business Type</th>
+                                                                <th scope="col">Pickup Date</th>
+                                                                <th scope="col">Mode of Payment</th>
+                                                                <th scope="col">Reference No.</th>
+                                                                <th scope="col">Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        {businessPermitData.map((item, index) => (
+                                                            <tr key={index}>
+                                                                <th scope="row">{index + 1}</th>
+                                                                <td>{item.businessName}</td>
+                                                                <td>{item.address}</td>
+                                                                <td>{item.type}</td>
+                                                                <td>{item.pickUpDate}</td>
+                                                                <td>{item.modeOfPayment}</td>
+                                                                <td>{item.reference}</td>
+                                                                <td>{item.status}</td>
+                                                                {/* Render the data for Business Permit */}
+                                                            </tr>
+                                                        ))}
+                                                    </table>
+                                                </div>
+
+                                                <div id="table5" className={`construction content ${activeTable === 5 ? 'active' : ''}`}>
+                                                    <h2 id="form_name">Barangay Construction</h2>
+                                                    <table class="table text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Reason of Request</th>
+                                                                <th scope="col">Pickup Date</th>
+                                                                <th scope="col">Mode of Payment</th>
+                                                                <th scope="col">Reference No.</th>
+                                                                <th scope="col">Status</th>                                                        </tr>
+                                                        </thead>
+                                                        {barangayConstructionData.map((item, index) => (
+                                                            <tr key={index}>
+                                                                <th scope="row">{index + 1}</th>
+                                                                <td>{item.reasonOfRequest}</td>
+                                                                <td>{item.pickUpDate}</td>
+                                                                <td>{item.modeOfPayment}</td>
+                                                                <td>{item.reference}</td>
+                                                                <td>{item.status}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </table>
+                                                </div>
+
+                                                <div id="table6" className={`installation content ${activeTable === 6 ? 'active' : ''}`}>
+                                                    <h2 id="form_name">Business Installation</h2>
+                                                    <table class="table text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Reason of Request</th>
+                                                                <th scope="col">Pickup Date</th>
+                                                                <th scope="col">Mode of Payment</th>
+                                                                <th scope="col">Reference No.</th>
+                                                                <th scope="col">Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        {barangayInstallationData.map((item, index) => (
+                                                            <tr key={index}>
+                                                                <th scope="row">{index + 1}</th>
+                                                                <td>{item.reasonOfRequest}</td>
+                                                                <td>{item.pickUpDate}</td>
+                                                                <td>{item.modeOfPayment}</td>
+                                                                <td>{item.reference}</td>
+                                                                <td>{item.status}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </table>
+                                                </div>
+
                                             </section>
                                         </div>
                                     </section>

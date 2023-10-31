@@ -2,7 +2,7 @@ const userIndigency = require('../models/barangayIndigencyModel');
 
 // POST /barangayindigency
 exports.createIndigency = async (req, res) => {
-  const { residentName, residentID, address, reasonOfRequest, pickUpDate, modeOfPayment, reference } = req.body;
+  const { residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference } = req.body;
 
   try {
     const check = await userIndigency.findOne({
@@ -15,7 +15,7 @@ exports.createIndigency = async (req, res) => {
       res.status(201).json('notexist');
       await userIndigency.create({
         residentName,
-        residentID,
+        userId,
         address,
         reasonOfRequest,
         pickUpDate,
@@ -83,8 +83,8 @@ exports.updateIndigency = async (req, res) => {
 
 exports.getUserBrgyIndigency = async (req, res) => {
   try {
-    const residentID = req.params.id;
-    const data = await userIndigency.find({ residentID });
+    const userId = req.params.id;
+    const data = await userIndigency.find({ userId });
     res.json(data);
   } catch (error) {
     console.error(error);

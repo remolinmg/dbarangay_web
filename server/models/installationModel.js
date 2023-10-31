@@ -6,7 +6,7 @@ const installationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  residentID: {
+  userId: {
     type: String,
     required: true
   },

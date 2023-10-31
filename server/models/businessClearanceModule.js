@@ -13,7 +13,7 @@ residentName:{
   type:String,
   required:true
 },
-residentID: {
+userId: {
   type: String,
   required: true
 },

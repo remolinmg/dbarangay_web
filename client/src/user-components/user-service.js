@@ -176,10 +176,10 @@ function UserService() {
       const token = Cookies.get('access_token');
       if (token) {
         const decoded = jwt_decode(token);
-        const residentID = decoded.id;
+        const userId = decoded.id;
 
         const response = await axios.post("http://localhost:8000/barangaycertificate", {
-          residentName, residentID, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
+          residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
         });
 
         if (response.data === "exist") {
@@ -262,9 +262,9 @@ function UserService() {
       const token = Cookies.get('access_token');
       if (token) {
         const decoded = jwt_decode(token);
-        const residentID = decoded.id;
+        const userId = decoded.id;
         await axios.post("http://localhost:8000/businessclearance", {
-          businessName, address, residentName, residentID, type, reasonOfRequest, pickUpDate, modeOfPayment, reference
+          businessName, address, residentName, userId, type, reasonOfRequest, pickUpDate, modeOfPayment, reference
         })
           .then(res => {
             if (res.data === "exist") {
@@ -331,11 +331,11 @@ function UserService() {
       const token = Cookies.get('access_token');
       if (token) {
         const decoded = jwt_decode(token);
-        const residentID = decoded.id;
+        const userId = decoded.id;
 
         await axios.post("http://localhost:8000/barangayid", {
           residentName,
-          residentID,
+          userId,
           address,
           pickUpDate,
           modeOfPayment,
@@ -408,9 +408,9 @@ function UserService() {
       if (token) {
         const decoded = jwt_decode(token);
 
-        const residentID = decoded.id;
+        const userId = decoded.id;
         await axios.post("http://localhost:8000/installation", {
-          residentName, residentID, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
+          residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
         })
           .then(res => {
             if (res.data === "exist") {
@@ -481,9 +481,9 @@ function UserService() {
       const token = Cookies.get('access_token');
       if (token) {
         const decoded = jwt_decode(token);
-        const residentID = decoded.id;
+        const userId = decoded.id;
         await axios.post("http://localhost:8000/construction", {
-          residentName, residentID, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
+          residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
         })
           .then(res => {
             if (res.data === "exist") {
@@ -556,10 +556,10 @@ function UserService() {
       const token = Cookies.get('access_token');
       if (token) {
         const decoded = jwt_decode(token);
-        const residentID = decoded.id;
+        const userId = decoded.id;
 
         await axios.post("http://localhost:8000/barangayindigency", {
-          residentName, residentID, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
+          residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
         })
           .then(res => {
             if (res.data === "exist") {

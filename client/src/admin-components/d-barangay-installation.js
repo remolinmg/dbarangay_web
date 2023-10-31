@@ -153,7 +153,7 @@ function Binstallation() {
 
   //------------------------------------------------ Database ----------------------------
   const [residentName, setResidentName] = useState('');
-  const [residentID, setResidentID] = useState('');
+  const [userId, setUserId] = useState('');
   const [address, setAddress] = useState('');
   const [reasonOfRequest, setReasonOfRequest] = useState('');
   const [pickUpDate, setPickUpDate] = useState('');
@@ -203,7 +203,7 @@ function Binstallation() {
     try {
 
       await axios.post("http://localhost:8000/installation", {
-        residentName, residentID, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
+        residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
       })
         .then(res => {
           if (res.data === "exist") {
@@ -620,13 +620,13 @@ function Binstallation() {
                           </div>
 
                           <div className="form-group">
-                            <label htmlFor="ResidentID">Resident ID</label>
+                            <label htmlFor="UserId">Resident ID</label>
                             <input
                               type="text"
-                              id="ResidentID"
-                              name="ResidentID"
+                              id="UserId"
+                              name="UserId"
                               onChange={(e) => {
-                                setResidentID(e.target.value);
+                                setUserId(e.target.value);
                               }}
                               className="form-control"
                               required

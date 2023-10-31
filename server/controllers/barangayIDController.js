@@ -4,11 +4,11 @@ const userBarangayID = require('../models/barangayIDModel');
 
 module.exports = {
   createBarangayId: async (req, res) => {
-    const{residentName,residentID,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
+    const{residentName,userId,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
   const data = 
   {
     residentName:residentName,
-    residentID: residentID,
+    userId: userId,
     address:address,
     reasonOfRequest:reasonOfRequest,
     pickUpDate:pickUpDate,
@@ -75,8 +75,8 @@ module.exports = {
 
   getUserBrgyID: async (req, res) => {
     try {
-      const residentID = req.params.id;
-      const data = await userBarangayID.find({ residentID });
+      const userId = req.params.id;
+      const data = await userBarangayID.find({ userId });
       res.json(data);
     } catch (error) {
       console.error(error);

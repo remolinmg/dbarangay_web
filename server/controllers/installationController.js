@@ -3,7 +3,7 @@ const userInstallation = require('../models/installationModel');
 const createInstallation = async (req, res) => {
   const {
     residentName,
-    residentID,
+    userId,
     address,
     reasonOfRequest,
     pickUpDate,
@@ -13,7 +13,7 @@ const createInstallation = async (req, res) => {
 
   const data = {
     residentName,
-    residentID,
+    userId,
     address,
     reasonOfRequest,
     pickUpDate,
@@ -86,8 +86,8 @@ const updateInstallation = async (req, res) => {
 
 async function getUserInstallationPermit (req, res) {
   try {
-    const residentID = req.params.id;
-    const data = await userInstallation.find({ residentID });
+    const userId = req.params.id;
+    const data = await userInstallation.find({ userId });
     res.json(data);
   } catch (error) {
     console.error(error);

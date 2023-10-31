@@ -1,11 +1,11 @@
 const userConstruction = require('../models/constructionModel');
 
 async function createConstruction(req, res) {
-  const{residentName,residentID,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
+  const{residentName,userId,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
   const data = 
   {
     residentName:residentName,
-    residentID:residentID,
+    userId:userId,
     address:address,
     reasonOfRequest:reasonOfRequest,
     pickUpDate:pickUpDate,
@@ -75,8 +75,8 @@ async function updateConstruction(req, res) {
 
 async function getUserConstructionPermit (req, res) {
   try {
-    const residentID = req.params.id;
-    const data = await userConstruction.find({ residentID });
+    const userId = req.params.id;
+    const data = await userConstruction.find({ userId });
     res.json(data);
   } catch (error) {
     console.error(error);

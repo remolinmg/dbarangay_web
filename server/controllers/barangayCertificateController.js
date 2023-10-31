@@ -1,11 +1,11 @@
 const userCertificate = require('../models/barangayCertificateModel');
 
 exports.createCertificate = async (req, res) => {
-  const{residentName,residentID,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
+  const{residentName,userId,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
   const data = 
   {
     residentName:residentName,
-    residentID:residentID,
+    userId:userId,
     address:address,
     reasonOfRequest:reasonOfRequest,
     pickUpDate:pickUpDate,
@@ -72,8 +72,8 @@ exports.deleteCertificate = async (req, res) => {
 
 exports.getUserBrgyCert = async (req, res) => {
   try {
-    const residentID = req.params.id;
-    const data = await userCertificate.find({ residentID });
+    const userId = req.params.id;
+    const data = await userCertificate.find({ userId });
     res.json(data);
   } catch (error) {
     console.error(error);

@@ -161,7 +161,7 @@ function BpermitAdmin() {
 
     //------------------------------------------------ Database ----------------------------
     const [residentName, setResidentName] = useState('');
-    const [residentID, setResidentID] = useState('');
+    const [userId, setUserId] = useState('');
     const [businessName, setBusinessName] = useState('');
     const [address, setAddress] = useState('');
     const [reasonOfRequest, setReasonOfRequest] = useState('');
@@ -213,7 +213,7 @@ function BpermitAdmin() {
         try {
 
             await axios.post("http://localhost:8000/businessclearance", {
-                businessName, address, residentName, residentID, type, reasonOfRequest, pickUpDate, modeOfPayment, reference
+                businessName, address, residentName, userId, type, reasonOfRequest, pickUpDate, modeOfPayment, reference
             })
                 .then(res => {
                     if (res.data === "exist") {
@@ -655,7 +655,7 @@ function BpermitAdmin() {
                                                             type="text"
                                                             id="residentName"
                                                             name="residentName"
-                                                            onChange={(e) => setResidentID(e.target.value)}
+                                                            onChange={(e) => setUserId(e.target.value)}
                                                             className="form-control"
                                                             required /></div>
 
