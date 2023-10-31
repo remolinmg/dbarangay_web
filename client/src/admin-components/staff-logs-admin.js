@@ -77,17 +77,24 @@ function StafflogsAdmin() {
     const getCurrentPageData = () => {
         const startIndex = (currentPage - 1) * rowCount;
         const endIndex = startIndex + rowCount;
-        const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
-        return reversedData.slice(startIndex, endIndex);
-      };
+        const sortedData = data.slice().sort((a, b) => {
+            // Parse the time strings and compare them
+            const timeA = new Date(`1970-01-01T${a.accessTime}`);
+            const timeB = new Date(`1970-01-01T${b.accessTime}`);
+            return timeB - timeA;
+        });
+        return sortedData.slice(startIndex, endIndex);
+    };
+    
+
     // stay on first page
-      const filteredAndSortedData = data
-      .filter((item) => {
-        const itemValues = Object.values(item).map((value) =>
-          value.toString().toLowerCase()
-        );
-        return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
-      })
+    const filteredAndSortedData = data
+        .filter((item) => {
+            const itemValues = Object.values(item).map((value) =>
+                value.toString().toLowerCase()
+            );
+            return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+        })
 
     // Function to go to the next page ------------------------------------------
     const nextPage = () => {
@@ -141,86 +148,86 @@ function StafflogsAdmin() {
         navigate('/admin')
     };
 
-// User FETCHING
-const [userData, setUserData] = useState([]);
-useEffect(() => {
-  fetchUser(); 
-}, []);
+    // User FETCHING
+    const [userData, setUserData] = useState([]);
+    useEffect(() => {
+        fetchUser();
+    }, []);
 
-const fetchUser = async () => {
-  try {
-    const token = Cookies.get('access_token');
-    if (token) { 
-    const decoded = jwt_decode(token);
-      const _id = decoded.id;
-      const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
-      setUserData(response.data);
-    }
-  } catch (error) {
-    console.error(error);
-  }
-};
+    const fetchUser = async () => {
+        try {
+            const token = Cookies.get('access_token');
+            if (token) {
+                const decoded = jwt_decode(token);
+                const _id = decoded.id;
+                const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+                setUserData(response.data);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-return (
- <>
- 
-   <div className="topbarsection">
-   {Array.isArray(userData) ? (
-                         userData.map((item, index) => (
-                             <div key={index}>
-     <div className="topnavbar d-flex justify-content-between align-items-center">
-       <div className="topnavleft">
-         <button className="collapse-button" onClick={handleSidebarCollapse}>
-           <BiMenu />
-         </button>
-       </div>
-       <div className="topnavmid">
-         <h3>Barangay Harapin Ang Bukas</h3>
-       </div>
-       <div className="topnavright">
-         <div ref={profileRef}>
-           <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-           {ProfilesubmenuVisible && (
-             <div className="Profilesubmenuadmin">
-               <div className="admininfo">
-                 <div className="rightprofile">
-                   <FaUserCircle className="adminprofile" />
-                 </div>
-                 <div className="leftprofile">
-                   <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
-                   <h5>{item.email}</h5>
-                 </div>
-               </div>
-               <div className="lowerprofile">
-                 <div className="button-profile1">
-                   <NavLink to="/admin-profile" activeClassName="active">
-                     <div href="#" className="profilebuttons">
-                       <BiCog className="profileicons" /> Settings
-                     </div>
-                   </NavLink>
-                 </div>
-                 <hr />
-                 <div className="button-profile1">
+    return (
+        <>
 
-                   
-                     <div onClick={handleSignOut} className="profilebuttons">
-                       <BiLogOut className="profileicons" /> Log out
-                     </div>
-                   
-                 </div>
-               </div>
-             </div>
-           )}
-         </div>
-       </div>
+            <div className="topbarsection">
+                {Array.isArray(userData) ? (
+                    userData.map((item, index) => (
+                        <div key={index}>
+                            <div className="topnavbar d-flex justify-content-between align-items-center">
+                                <div className="topnavleft">
+                                    <button className="collapse-button" onClick={handleSidebarCollapse}>
+                                        <BiMenu />
+                                    </button>
+                                </div>
+                                <div className="topnavmid">
+                                    <h3>Barangay Harapin Ang Bukas</h3>
+                                </div>
+                                <div className="topnavright">
+                                    <div ref={profileRef}>
+                                        <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                                        {ProfilesubmenuVisible && (
+                                            <div className="Profilesubmenuadmin">
+                                                <div className="admininfo">
+                                                    <div className="rightprofile">
+                                                        <FaUserCircle className="adminprofile" />
+                                                    </div>
+                                                    <div className="leftprofile">
+                                                        <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
+                                                        <h5>{item.email}</h5>
+                                                    </div>
+                                                </div>
+                                                <div className="lowerprofile">
+                                                    <div className="button-profile1">
+                                                        <NavLink to="/admin-profile" activeClassName="active">
+                                                            <div href="#" className="profilebuttons">
+                                                                <BiCog className="profileicons" /> Settings
+                                                            </div>
+                                                        </NavLink>
+                                                    </div>
+                                                    <hr />
+                                                    <div className="button-profile1">
 
-     </div>
-     </div>
-                         ))
-                     ) : (
-                         <p>No data to display.</p>
-                     )}
-   </div>
+
+                                                        <div onClick={handleSignOut} className="profilebuttons">
+                                                            <BiLogOut className="profileicons" /> Log out
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p>No data to display.</p>
+                )}
+            </div>
             <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
                 <div className="newsidebar">
                     <div className="text-center">
@@ -373,7 +380,7 @@ return (
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {getCurrentPageData().reverse().map((item) => (
+                                                {getCurrentPageData().map((item) => (
                                                     <tr key={item._id}>
                                                         <td>{item.email}</td>
                                                         <td>{item.accessDate}</td>
