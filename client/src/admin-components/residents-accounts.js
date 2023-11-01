@@ -34,9 +34,8 @@ const fetchUser = async () => {
   }
 };
     const [activeContent, setActiveContent] = useState(0);
-    const [profilePicSrc, setProfilePicSrc] = useState('https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG-Picture.png');
-    const [selectedFile, setSelectedFile] = useState(null);
-
+    const [selectedFile, setSelectedFile] = useState('');
+    const [profilePicSrc, setProfilePicSrc] = useState('');
     const showContent = (contentNumber) => {
         setActiveContent(contentNumber);
     };
@@ -47,12 +46,13 @@ const fetchUser = async () => {
         if (file) {
             const reader = new FileReader();
             reader.onload = (event) => {
-                setProfilePicSrc(event.target.result);
+                setProfilePicSrc( event.target.result);
             };
             reader.readAsDataURL(file);
             setSelectedFile(file);
         }
     };
+    
    
 
    //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
@@ -128,6 +128,7 @@ const fetchUser = async () => {
     setEditStatus(rowData.status)
     setEditType(rowData.type)
     setEditVoterRegistration(rowData.voterRegistration)
+    setProfilePicSrc(rowData.filename.url)
   };
 
 
@@ -162,7 +163,7 @@ const fetchUser = async () => {
           formData.append('voterRegistration', editVoterRegistration);
           formData.append('type', editType);
           formData.append('status', editStatus);
-          formData.append('file', profilePicSrc);
+          formData.append('file', selectedFile);
           const response = await axios.put(
             `http://localhost:8000/update/user/${accountId}`,
             formData
@@ -268,7 +269,7 @@ const fetchUser = async () => {
                             data.map((item, index) => (
                                 <div key={index}>
                                     <div className="profile-pic-container">
-                                        <img src={profilePicSrc} alt="Profile Picture" className="profile-pic" id="profile-pic" />
+                                        <img src={profilePicSrc || item.filename.url} alt="Profile Picture" className="profile-pic" id="profile-pic" />
                                     </div>
                                     <div>
                                         <input type="file" accept="image/*" id="file-input" className="file-input" onChange={handleFileChange} /><br></br>

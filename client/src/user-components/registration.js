@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { CloudinaryContext } from 'cloudinary-react';
 
 const RegistrationComponent = () => {
 
@@ -36,6 +37,7 @@ const RegistrationComponent = () => {
   const [age, setAge] = useState('');
   const [highestEducation, setHighestEducation] = useState('');
   const [residenceClass, setresidenceClass] = useState('');
+  const [file, setFile] = useState();
   const [voterRegistration, setVoterRegistration] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -69,8 +71,8 @@ const RegistrationComponent = () => {
   const [confirmPasswordValid, setConfirmPasswordValid] = useState(true);
   const navigate = useNavigate();
 
-  async function register(e) {
-    e.preventDefault();
+   const register = () => {
+  
 
     // Validate the first name
     if (firstName.trim() === '') {
@@ -183,21 +185,51 @@ const RegistrationComponent = () => {
       setConfirmPasswordValid(false);
       return;
     }
+      const formData = new FormData();
+      formData.append('firstName', firstName)
+      formData.append('middleName', middleName)
+      formData.append('lastName', lastName)
+      formData.append('suffix', suffix)
+      formData.append('houseNumber', houseNumber)
+      formData.append('barangay', barangay)
+      formData.append('district', district)
+      formData.append('cityMunicipality', cityMunicipality)
+      formData.append('province', province)
+      formData.append('region', region)
+      formData.append('email', email)
+      formData.append('phoneNumber', phoneNumber)
+      formData.append('nationality', nationality)
+      formData.append('sex', sex)
+      formData.append('civilStatus', civilStatus)
+      formData.append('employmentStatus', employmentStatus)
+      formData.append('homeOwnership', homeOwnership)
+      formData.append('dateOfBirth', dateOfBirth)
+      formData.append('birthPlace', birthPlace)
+      formData.append('age', age)
+      formData.append('highestEducation', highestEducation)
+      formData.append('residenceClass', residenceClass)
+      formData.append('voterRegistration',voterRegistration)
+      formData.append('password', password)
+      formData.append('companyName', companyName)
+      formData.append('position', position)
+      formData.append('file', file)
+     axios.post("http://localhost:8000/signup", 
+      formData) .then(res => {
+        if (res.data === 'Error saving data to MongoDB and Cloudinary') {
+          alert("Announcement Already Exist!");
+        } else if (res.data === 'File and text data saved to MongoDB and Cloudinary') {
+          // After successful upload to MongoDB, reset the form
+          alert("Registered Successfully")   
+          navigate("/login");
 
-    try {
+          // If you're using Cloudinary, you can also reset the Cloudinary widget here
+          // cloudinaryWidgetRef.current.uploadWidget().close();
 
-     await axios.post("http://localhost:8000/signup", {
-        firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residenceClass, voterRegistration, password, companyName, position
-      });  
-      alert("Registered Successfully")   
-      navigate("/login");
-    }
-    catch (e) {
-      console.log(e);
-    }
-
-
-  }
+        }
+      })
+      .catch(er => console.log(er))
+  };
+      
 
   const handleFirstNameChange = (e) => {
     const value = e.target.value;
@@ -424,7 +456,8 @@ const RegistrationComponent = () => {
                       <input
                         type="text"
                         className={`input-field form-control ${!firstNameValid ? 'is-invalid' : ''}`}
-                        id="first-name"
+                        id="firstName"
+                        name="firstName"
                         onChange={handleFirstNameChange}
                         required
                       />
@@ -436,7 +469,8 @@ const RegistrationComponent = () => {
                       <input
                         type="text"
                         className={`input-field form-control ${!middleNameValid ? 'is-invalid' : ''}`}
-                        id="middle-name"
+                        id="middleName"
+                        name="middleName"
                         onChange={handleMiddleNameChange}
                         required
                       />
@@ -448,7 +482,8 @@ const RegistrationComponent = () => {
                       <input
                         type="text"
                         className={`input-field form-control ${!lastNameValid ? 'is-invalid' : ''}`}
-                        id="last-name"
+                        id="lastName"
+                        name="lastName"
                         onChange={handleLastNameChange}
                         required
                       />
@@ -459,9 +494,9 @@ const RegistrationComponent = () => {
                       <label className="label" htmlFor="last-name">Suffix</label>
                       <input
                         type="text" className="input-field"
-                        id="last-name"
+                        id="suffix"
+                        name="suffix"
                         onChange={(e) => setSuffix(e.target.value)}
-                        required
                       />
                     </div>
 
@@ -471,7 +506,8 @@ const RegistrationComponent = () => {
                       <input
                         type="text"
                         className={`input-field form-control ${!houseNumberValid ? 'is-invalid' : ''}`}
-                        id="house-no-street"
+                        id="houseNumber"
+                        name="houseNumber"
                         onChange={handleHouseNumberChange}
                         required
                       />
@@ -484,6 +520,7 @@ const RegistrationComponent = () => {
                         type="text"
                         className={`input-field form-control ${!barangayValid ? 'is-invalid' : ''}`}
                         id="barangay"
+                        name="barangay"
                         onChange={handleBarangayChange}
                         required
                       />
@@ -496,6 +533,7 @@ const RegistrationComponent = () => {
                         type="text"
                         className={`input-field form-control ${!districtValid ? 'is-invalid' : ''}`}
                         id="district"
+                        name="district"
                         onChange={handleDistrictChange}
                         required
                       />
@@ -507,7 +545,8 @@ const RegistrationComponent = () => {
                       <input
                         type="text"
                         className={`input-field form-control ${!cityMunicipalityValid ? 'is-invalid' : ''}`}
-                        id="city-municipality"
+                        id="cityMunicipality"
+                        name="cityMunicipality"
                         onChange={handleCityMunicipalityChange}
                         required
                       />
@@ -519,6 +558,7 @@ const RegistrationComponent = () => {
                       <input
                         type="text"
                         className={`input-field form-control ${!provinceValid ? 'is-invalid' : ''}`}
+                        name="province"
                         id="province"
                         onChange={handleProvinceChange}
                         required
@@ -535,6 +575,7 @@ const RegistrationComponent = () => {
                       <input
                         type="text" className={`input-field form-control ${!regionValid ? 'is-invalid' : ''}`}
                         id="region"
+                        name="region"
                         onChange={handleRegionChange}
                         required
                       />
@@ -546,6 +587,7 @@ const RegistrationComponent = () => {
                       <input
                         type="email" className={`input-field form-control ${!emailValid ? 'is-invalid' : ''}`}
                         id="email"
+                        name="email"
                         onChange={handleEmailChange}
                         required
                       />
@@ -557,6 +599,7 @@ const RegistrationComponent = () => {
                       <input
                         type="tel" className={`input-field form-control ${!phoneNumberValid ? 'is-invalid' : ''}`}
                         id="phoneNumber"
+                        name="phoneNumber"
                         onChange={handlePhoneNumberChange}
                         required
                       />
@@ -568,6 +611,7 @@ const RegistrationComponent = () => {
                       <input
                         type="text" className={`input-field form-control ${!nationalityValid ? 'is-invalid' : ''}`}
                         id="nationality"
+                        name="nationality"
                         onChange={handleNationalityChange}
                         required
                       />
@@ -578,6 +622,7 @@ const RegistrationComponent = () => {
                       <label className="label" htmlFor="sex">Sex</label>
                       <select
                         id="sex"
+                        name="sex"
                         onChange={handleSexChange}
                         className={`option form-control ${!sexValid ? 'is-invalid' : ''}`}
                         style={{ fontSize: '14px', marginBottom: '10px' }}
@@ -592,7 +637,8 @@ const RegistrationComponent = () => {
                     <div className={`form-group d-flex flex-column ${!civilStatusValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="civilStatus">Civil Status</label>
                       <select
-                        id="civilStatuss"
+                        id="civilStatus"
+                        name="civilStatus"
                         onChange={handleCivilStatusChange}
                         className={`option form-control ${!civilStatusValid ? 'is-invalid' : ''}`}
                         style={{ fontSize: '14px', marginBottom: '10px' }}
@@ -611,6 +657,7 @@ const RegistrationComponent = () => {
                       </label>
                       <select
                         id="employmentStatus"
+                        name="employmentStatus"
                         onChange={handleEmploymentStatusChange}
                         className={`input-field form-control ${!employmentStatusValid ? 'is-invalid' : ''}`}
                         required
@@ -632,6 +679,7 @@ const RegistrationComponent = () => {
                             type="text"
                             className={`input-field form-control ${!companyNameValid ? 'is-invalid' : ''}`}
                             id="companyName"
+                            name="companyName"
                             onChange={handleCompanyNameChange}
                             required
                           />
@@ -644,6 +692,7 @@ const RegistrationComponent = () => {
                             type="text"
                             className={`input-field form-control ${!positionValid ? 'is-invalid' : ''}`}
                             id="position"
+                            name="position"
                             onChange={handlePositionChange}
                             required
                           />
@@ -659,6 +708,7 @@ const RegistrationComponent = () => {
                       <label className="label" htmlFor="homeOwnership">Home Ownership</label>
                       <select
                         id="homeOwnership"
+                        name="homeOwnership"
                         onChange={handleHomeOwnershipChange}
                         className={`option form-control ${!homeOwnershipValid ? 'is-invalid' : ''}`}
                         required
@@ -676,6 +726,7 @@ const RegistrationComponent = () => {
                       <input
                         type="date" className={`input-field form-control ${!dateOfBirthValid ? 'is-invalid' : ''}`}
                         id="dateOfBirth"
+                        name="dateOfBirth"
                         onChange={handleDateOfBirthChange}
                         required
                       />
@@ -686,7 +737,8 @@ const RegistrationComponent = () => {
                       <label className="label" htmlFor="placeofbirth">Place of Birth</label>
                       <input
                         type="text" className={`input-field form-control ${!birthPlaceValid ? 'is-invalid' : ''}`}
-                        id="placeofbirth"
+                        id="placeOfBirth"
+                        name="placeOfBirth"
                         onChange={handleBirthPlaceChange}
                         required
                       />
@@ -697,7 +749,8 @@ const RegistrationComponent = () => {
                       <label className="label" htmlFor="Age">Age</label>
                       <input
                         type="text" className={`input-field form-control ${!ageValid ? 'is-invalid' : ''}`}
-                        id="Age"
+                        id="age"
+                        name="age"
                         onChange={handleAgeChange}
                         required
                       />
@@ -707,7 +760,8 @@ const RegistrationComponent = () => {
                     <div className={`form-group d-flex flex-column ${!highestEducationValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="H-Educational-A">Educational Attainment</label>
                       <select
-                        id="h-educational-a"
+                        id="highestEducation"
+                        name="highestEducation"
                         onChange={handleHighestEducationChange}
                         className={`option2 form-control ${!highestEducationValid ? 'is-invalid' : ''}`}
                         required
@@ -728,9 +782,9 @@ const RegistrationComponent = () => {
                       <label className="label" htmlFor="residenceClass"> Residence Class</label>
                       <select
                         id="residenceClass"
+                        name="residenceClass"
                         onChange={(e) => setresidenceClass(e.target.value)}
                         className={`option2 form-control `}
-                        required
                         style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Residence Class</option>
@@ -746,6 +800,7 @@ const RegistrationComponent = () => {
                       <label className="label" htmlFor="voterRegistration">Voter's Registration</label>
                       <select
                         id="voterRegistration"
+                        name="voterRegistration"
                         onChange={handleVoterRegistrationChange}
                         className={`option2 form-control ${!voterRegistrationValid ? 'is-invalid' : ''}`}
                         required
@@ -757,6 +812,22 @@ const RegistrationComponent = () => {
                       </select>
                     </div>
 
+                    <div className="form-group">
+                            <label className="label" htmlFor="voterRegistration">Profile Picture</label>
+                            <input
+                              type="file"
+                              id="file"
+                              name="file"
+                              accept="image/*"
+                              onChange={(e) => setFile(e.target.files[0])}
+                              className="form-control"
+                              required
+                            />
+                            {/* Cloudinary upload widget */}
+                            <CloudinaryContext cloudName="dwevzsrnz">
+                            </CloudinaryContext>
+                          </div>
+
 
                     {/* Password */}
                     <div className={`form-group d-flex flex-column ${!passwordValid ? 'has-error' : ''}`}>
@@ -767,6 +838,7 @@ const RegistrationComponent = () => {
                         type="password"
                         className={`input-field form-control ${!passwordValid ? 'is-invalid' : ''}`}
                         id="password"
+                        name="password"
                         onChange={handlePasswordChange}
                         required
                       />
@@ -781,6 +853,7 @@ const RegistrationComponent = () => {
                         type="password"
                         className={`input-field form-control ${!confirmPasswordValid ? 'is-invalid' : ''}`}
                         id="cpassword"
+                        name="cpassword"
                         onChange={handleConfirmPasswordChange}
                         required
                       />

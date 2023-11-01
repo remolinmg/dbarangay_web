@@ -17,7 +17,7 @@ import Cookies from 'js-cookie';
 function UserProfile() {
     const [activeContent, setActiveContent] = useState(1);
     const [activeTable, setActiveTable] = useState(1);
-    const [profilePicSrc, setProfilePicSrc] = useState('https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG-Picture.png');
+    const [profilePicSrc, setProfilePicSrc] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
 
     const showContent = (contentNumber) => {
@@ -132,6 +132,29 @@ function UserProfile() {
         }
     };
 
+    const showEditFormHandler = (rowData) => {
+        setProfilePicSrc(rowData.filename.url)
+      };
+
+
+    const updateRowData = async () => {
+        const token = Cookies.get('access_token');
+        const decoded = jwt_decode(token);
+        const _id = decoded.id;
+        try {
+          const formData = new FormData();
+          formData.append('file', selectedFile);
+          const response = await axios.put(
+            `http://localhost:8000/update/user/${_id}`,
+            formData
+          );
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+
     return (
         <>
             <UserNav />
@@ -143,7 +166,7 @@ function UserProfile() {
                                 <div className="card user-profile-card p-4 m-5">
                                     <section>
                                         <div className="profile-pic-container ps-3 m-0">
-                                            <img src={profilePicSrc} alt="Profile Picture" className="profile-pic" id="profile-pic" />
+                                            <img src={profilePicSrc || item.filename.url} calt="Profile Picture" className="profile-pic" id="profile-pic" />
                                         </div>
                                         <div className="p-3 m-0">
                                             <input type="file" accept="image/*" id="file-input" className="file-input" onChange={handleFileChange} />
@@ -165,6 +188,7 @@ function UserProfile() {
                                             {/* Residence Profile Section */}
                                             <section className="residence-profile m-3">
                                                 <h3>Residence Profile</h3>
+                                                <h2 id="form_name">{item._id}</h2>
                                                 <form class="form1">
                                                     <h2 id="form_name">FULL NAME</h2>
                                                     <div class="row g-3">
@@ -311,6 +335,21 @@ function UserProfile() {
                                                             <label for="residenceclass" class="form-label">Class:</label>
                                                             <input type="text" id="residenceclass" class="form-control" aria-label="Residence Class" value={item.residenceClass} disabled />
                                                         </div>
+                                                        <div class="col">
+                                                        <label for="voter" class="form-label">Voter:</label>
+                                                        <select
+                                                            id="voter"
+                                                            class="form-control"
+                                                            required
+                                                            value={item.voterRegistration
+                                                            }
+                                                            disabled
+                                                        >
+                                                        <option value="">Select Voter's Registration</option>
+                                                        <option value="Registeredvoter">Registered</option>
+                                                        <option value="Unregisteredvoter">Not Registered</option>
+                                                        </select>
+                                                        </div>
                                                     </div>
                                                 </form>
                                                 <form class="form7 mt-3">
@@ -342,6 +381,7 @@ function UserProfile() {
                                                                 required
                                                                 value={item.voterRegistration
                                                                 }
+                                                                disabled
                                                             >
                                                                 <option value="">Select Voter's Registration</option>
                                                                 <option value="Registeredvoter">Registered</option>
@@ -543,9 +583,15 @@ function UserProfile() {
                                                 </div>
 
                                             </section>
-                                        </div>
-                                    </section>
+                                        </div>         
+                                </section>
                                 </div>
+                                <div className="save_btn">
+                                                <input type="checkbox" className="btn-check" id="btn-check-3" onClick={updateRowData}/>
+                                                <label className="btn btn-primary" htmlFor="btn-check-3">
+                                                    Save Changes
+                                                </label>
+                                            </div>
                             </div>
                         </div>
                     </div>

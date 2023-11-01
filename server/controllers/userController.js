@@ -20,6 +20,7 @@ const userInstallationPermit = require('../models/installationModel');
 app.set('views', path.join(__dirname, '../views'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+const cloudinary = require('../uploads/cloudinary')
 
 
 
@@ -130,10 +131,11 @@ exports.updatepass = async (req, res) => {
 
 //user signup
 exports.signup = async (req, res) => {
-  try {
+
     const {
       firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residenceClass, voterRegistration, password, companyName, position, status, type
     } = req.body;
+    const { path } = req.file;
     const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, '');
     const lastCustomIdDoc = await User.findOne().sort({ _id: -1 });
     let newCustomId = currentDate + '01';
@@ -143,43 +145,30 @@ exports.signup = async (req, res) => {
       newCustomId = currentDate + newIncrement;
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newCustomData = new User({
+    try {
+      // Upload the image to Cloudinary
+      const result = await cloudinary.uploader.upload(path, {
+        folder: 'profile',
+      });
+  
+      const newCustomData = new User({
       _id: newCustomId,
-      firstName: firstName,
-      middleName: middleName,
-      lastName: lastName,
-      suffix: suffix,
-      houseNumber: houseNumber,
-      barangay: barangay,
-      district: district,
-      cityMunicipality: cityMunicipality,
-      province, province,
-      region: region,
-      email: email,
-      phoneNumber: phoneNumber,
-      nationality: nationality,
-      sex: sex,
-      civilStatus: civilStatus,
-      employmentStatus: employmentStatus,
-      companyName: companyName,
-      position: position,
-      homeOwnership: homeOwnership,
-      dateOfBirth: dateOfBirth,
-      birthPlace: birthPlace,
-      age: age,
-      highestEducation, highestEducation,
-      residenceClass, voterRegistration,
-      password: hashedPassword,
-      status: status,
-      type: type
-    });
-    await newCustomData.save();
-    res.json({ success: true, message: 'Custom Data created successfully' });
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Error creating custom data' });
-  }
-};
+      firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residenceClass, voterRegistration, password:hashedPassword, companyName, position, status, type,
+        filename: {
+          url: result.secure_url, 
+          public_id: result.public_id,
+        },
+      });
+      await newCustomData.save();
+      res.send('File and text data saved to MongoDB and Cloudinary');
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error saving data to MongoDB and Cloudinary');
+    }
+  };
+    
+
+  
 
 //user login
 exports.login = async (req, res) => {
