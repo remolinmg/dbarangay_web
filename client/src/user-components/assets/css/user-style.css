@@ -18,7 +18,8 @@
 .transparent-user-search {
   background: transparent;
   border: none;
-  border-bottom: 1px solid white; /* Add a white bottom border for better visibility */
+  border-bottom: 1px solid white;
+  /* Add a white bottom border for better visibility */
   color: white;
   outline: none;
   padding: 5px;
@@ -28,9 +29,11 @@
 .search-container-user {
   position: relative;
   width: 100%;
-  max-width: 300px; /* Adjust the width as needed */
+  max-width: 300px;
+  /* Adjust the width as needed */
   margin: 0 auto;
 }
+
 .nav-menu {
   margin-top: 10px;
 }
@@ -49,6 +52,43 @@
 
 
 /* Homepage */
+.faq-popup-container {
+  position: fixed;
+  bottom: 35px;
+  right: 35px;
+  z-index: 9999;
+}
+
+.faq-popup-button {
+  background-color: #4287f5;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+  height: 50px;
+  width: 50px;
+}
+
+.faq-popup {
+  position: absolute;
+  width: 300px;
+  bottom: 100%;
+  right: 100%;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+.close-button {
+  background: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
 
 .section1 {
   padding-top: 230px;
@@ -83,7 +123,8 @@
 }
 
 .other-rows {
-  width: 50%; /* Display two items per row */
+  width: 50%;
+  /* Display two items per row */
 }
 
 /* First Section - Evacuation Centers */
@@ -458,14 +499,14 @@ h1.service__text {
 @media only screen and (max-width: 900px) {
 
   .service {
-   width: 250px;
+    width: 250px;
   }
-  
+
   .service-right {
-   margin-left: 10%;
+    margin-left: 10%;
   }
-  
-  }
+
+}
 
 
 @media only screen and (max-width: 768px) {
@@ -473,7 +514,7 @@ h1.service__text {
     flex-direction: row;
     margin-top: 20px;
   }
-  
+
 
   .col__3 {
     max-width: 100%;
@@ -1411,6 +1452,7 @@ li {
   justify-content: center;
   align-items: center;
   padding: 20px;
+  height: 100vh;
 }
 
 .right-side-reg {
@@ -1566,10 +1608,28 @@ li {
   width: 30px;
 }
 
+.custom-tab {
+  list-style: none;
+  display: inline-block;
+  padding: 10px 20px; 
+  background-color: fff; 
+  color: #007BFF; 
+  border: 1px solid #007BFF;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 5px;
+  transition: background-color 0.2s;
+}
+
+.custom-tab:hover {
+  background-color: #0056b3;
+  color: #fff /* Change background color on hover */
+}
+
 /*==================== NEW MEDIA QUERIES (for responsive) ====================*/
 
 /* For small devices */
-@media screen and (max-width: 350px){
+@media screen and (max-width: 350px) {
 
   /* login */
   #login-welcome {
@@ -1578,24 +1638,30 @@ li {
     padding-right: 20px;
     margin-bottom: -50%;
   }
+
   #login-welcome h2 {
     font-size: 20px;
     margin-top: -80%;
     margin-bottom: -30px;
   }
+
   #login-desc h4 {
     font-size: 13px;
   }
+
   #login-desc span {
     font-size: 11px;
   }
+
   #login-container-main {
     padding-top: 5%;
     padding-bottom: 5%;
   }
+
   #register-btn {
     margin-bottom: -80%;
   }
+
   #forgotpass-btn {
     padding: 25%;
   }
@@ -1609,7 +1675,8 @@ li {
     font-size: 20px;
   }
 
-  .comm-title, .carousel-desc {
+  .comm-title,
+  .carousel-desc {
     font-size: 15px;
   }
 
@@ -1621,11 +1688,15 @@ li {
     font-size: 15px;
   }
 
-  .comm-info, .container-fluid h3, .container-fluid p{
+  .comm-info,
+  .container-fluid h3,
+  .container-fluid p {
     font-size: 10px;
   }
 
-  #title, #quote, .official-lists {
+  #title,
+  #quote,
+  .official-lists {
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -1649,7 +1720,7 @@ li {
   .service {
     padding-bottom: 1000px;
   }
-  
+
   .service__box {
     width: 200px;
   }
@@ -1663,7 +1734,8 @@ li {
 
   /* evacuation */
 
-  #contingency-card, .warning-title {
+  #contingency-card,
+  .warning-title {
     margin-right: 140px;
   }
 
@@ -1676,7 +1748,8 @@ li {
     margin-right: 140px;
   }
 
-  .emergency-section-content th, .emergency-section-content td {
+  .emergency-section-content th,
+  .emergency-section-content td {
     font-size: 10px;
   }
 
@@ -1688,11 +1761,11 @@ li {
   }
 
   /* footer */
-  
+
 }
 
 /* For medium devices */
-@media screen and (max-width:568px){
+@media screen and (max-width:568px) {
 
   /* login */
   #login-welcome {
@@ -1701,24 +1774,30 @@ li {
     padding-right: 20px;
     margin-bottom: -50%;
   }
+
   #login-welcome h2 {
     font-size: 20px;
     margin-top: -80%;
     margin-bottom: -30px;
   }
+
   #login-desc h4 {
     font-size: 13px;
   }
+
   #login-desc span {
     font-size: 11px;
   }
+
   #login-container-main {
     padding-top: 5%;
     padding-bottom: 5%;
   }
+
   #register-btn {
     margin-bottom: -80%;
   }
+
   #forgotpass-btn {
     margin-top: -150px;
     padding: 25%;
@@ -1733,19 +1812,27 @@ li {
     font-size: 20px;
   }
 
-  .comm-title, .carousel-desc, .official-name {
+  .comm-title,
+  .carousel-desc,
+  .official-name {
     font-size: 15px;
   }
 
-  .stats-title span, .stats-title, #stats {
+  .stats-title span,
+  .stats-title,
+  #stats {
     font-size: 12px;
   }
 
-  .comm-info, .container-fluid h3, .official-title, .container-fluid p{
+  .comm-info,
+  .container-fluid h3,
+  .official-title,
+  .container-fluid p {
     font-size: 10px;
   }
 
-  #title, #quote {
+  #title,
+  #quote {
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -1769,7 +1856,7 @@ li {
   .service {
     padding-bottom: 1000px;
   }
-  
+
   .service__box {
     width: 200px;
   }
@@ -1783,7 +1870,8 @@ li {
 
   /* evacuation */
 
-  #contingency-card, .warning-title {
+  #contingency-card,
+  .warning-title {
     margin-right: 140px;
   }
 
@@ -1796,7 +1884,8 @@ li {
     margin-right: 140px;
   }
 
-  .emergency-section-content th, .emergency-section-content td {
+  .emergency-section-content th,
+  .emergency-section-content td {
     font-size: 10px;
   }
 
@@ -1817,11 +1906,11 @@ li {
 }
 
 /* For large devices */
-@media screen and (max-width: 768px){
+@media screen and (max-width: 768px) {
   .card {
     padding-bottom: 5%;
   }
-  
+
   #save_btn {
     margin-left: 360px;
     background: transparent;
@@ -1845,21 +1934,27 @@ li {
     justify-content: center;
     align-items: center;
   }
-  #feedback, #products, #footer-contact {
+
+  #feedback,
+  #products,
+  #footer-contact {
     width: 400px;
     height: 100px;
   }
-  #products, #footer-contact {
+
+  #products,
+  #footer-contact {
     padding-top: 30%;
   }
+
   #footer-contact {
     margin-bottom: 10%;
   }
 
 }
 
-@media screen and (max-width: 968px){
-  
+@media screen and (max-width: 968px) {
+
   .service__box {
     width: 300px;
     margin-right: 70%;
@@ -1871,14 +1966,14 @@ li {
 
   /* profile */
 
-  
+
 }
 
 /*For x-large devices */
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 1024px) {
   .card {
     padding-bottom: 5%;
   }
 
- 
+
 }

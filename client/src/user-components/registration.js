@@ -71,8 +71,8 @@ const RegistrationComponent = () => {
   const [confirmPasswordValid, setConfirmPasswordValid] = useState(true);
   const navigate = useNavigate();
 
-   const register = () => {
-  
+  const register = () => {
+
 
     // Validate the first name
     if (firstName.trim() === '') {
@@ -185,41 +185,41 @@ const RegistrationComponent = () => {
       setConfirmPasswordValid(false);
       return;
     }
-      const formData = new FormData();
-      formData.append('firstName', firstName)
-      formData.append('middleName', middleName)
-      formData.append('lastName', lastName)
-      formData.append('suffix', suffix)
-      formData.append('houseNumber', houseNumber)
-      formData.append('barangay', barangay)
-      formData.append('district', district)
-      formData.append('cityMunicipality', cityMunicipality)
-      formData.append('province', province)
-      formData.append('region', region)
-      formData.append('email', email)
-      formData.append('phoneNumber', phoneNumber)
-      formData.append('nationality', nationality)
-      formData.append('sex', sex)
-      formData.append('civilStatus', civilStatus)
-      formData.append('employmentStatus', employmentStatus)
-      formData.append('homeOwnership', homeOwnership)
-      formData.append('dateOfBirth', dateOfBirth)
-      formData.append('birthPlace', birthPlace)
-      formData.append('age', age)
-      formData.append('highestEducation', highestEducation)
-      formData.append('residenceClass', residenceClass)
-      formData.append('voterRegistration',voterRegistration)
-      formData.append('password', password)
-      formData.append('companyName', companyName)
-      formData.append('position', position)
-      formData.append('file', file)
-     axios.post("http://localhost:8000/signup", 
-      formData) .then(res => {
+    const formData = new FormData();
+    formData.append('firstName', firstName)
+    formData.append('middleName', middleName)
+    formData.append('lastName', lastName)
+    formData.append('suffix', suffix)
+    formData.append('houseNumber', houseNumber)
+    formData.append('barangay', barangay)
+    formData.append('district', district)
+    formData.append('cityMunicipality', cityMunicipality)
+    formData.append('province', province)
+    formData.append('region', region)
+    formData.append('email', email)
+    formData.append('phoneNumber', phoneNumber)
+    formData.append('nationality', nationality)
+    formData.append('sex', sex)
+    formData.append('civilStatus', civilStatus)
+    formData.append('employmentStatus', employmentStatus)
+    formData.append('homeOwnership', homeOwnership)
+    formData.append('dateOfBirth', dateOfBirth)
+    formData.append('birthPlace', birthPlace)
+    formData.append('age', age)
+    formData.append('highestEducation', highestEducation)
+    formData.append('residenceClass', residenceClass)
+    formData.append('voterRegistration', voterRegistration)
+    formData.append('password', password)
+    formData.append('companyName', companyName)
+    formData.append('position', position)
+    formData.append('file', file)
+    axios.post("http://localhost:8000/signup",
+      formData).then(res => {
         if (res.data === 'Error saving data to MongoDB and Cloudinary') {
           alert("Announcement Already Exist!");
-        } else if (res.data === 'File and text data saved to MongoDB and Cloudinary') {
+        } else if (res.data === 'Yes') {
           // After successful upload to MongoDB, reset the form
-          alert("Registered Successfully")   
+          alert("Registered Successfully")
           navigate("/login");
 
           // If you're using Cloudinary, you can also reset the Cloudinary widget here
@@ -229,7 +229,7 @@ const RegistrationComponent = () => {
       })
       .catch(er => console.log(er))
   };
-      
+
 
   const handleFirstNameChange = (e) => {
     const value = e.target.value;
@@ -526,17 +526,29 @@ const RegistrationComponent = () => {
                       />
                     </div>
 
-                    {/* DISTRICT */}
-                    <div className={`form-group d-flex flex-column ${!districtValid ? 'has-error' : ''}`}>
-                      <label className="label" htmlFor="district">District</label>
-                      <input
-                        type="text"
-                        className={`input-field form-control ${!districtValid ? 'is-invalid' : ''}`}
-                        id="district"
-                        name="district"
-                        onChange={handleDistrictChange}
-                        required
-                      />
+                    {/* REGION AND DISTRICT */}
+                    <div className="row">
+                      <div className={`form-group d-flex flex-column ${!regionValid ? 'has-error' : ''} col-6`}>
+                        <label className="label" htmlFor="region">Region</label>
+                        <input
+                          type="text" className={`input-field form-control ${!regionValid ? 'is-invalid' : ''}`}
+                          id="region"
+                          name="region"
+                          onChange={handleRegionChange}
+                          required
+                        />
+                      </div>
+                      <div className={`form-group d-flex flex-column ${!districtValid ? 'has-error' : ''} col-6`}>
+                        <label className="label" htmlFor="district">District</label>
+                        <input
+                          type="text"
+                          className={`input-field form-control ${!districtValid ? 'is-invalid' : ''}`}
+                          id="district"
+                          name="district"
+                          onChange={handleDistrictChange}
+                          required
+                        />
+                      </div>
                     </div>
 
                     {/* CITY/MUNICIPALITY */}
@@ -568,18 +580,6 @@ const RegistrationComponent = () => {
 
                   {/* SECOND COLUMN REGISTER PAGE */}
                   <div className="col-12 col-md-4 reg-row2 p-3">
-
-                    {/* REgion */}
-                    <div className={`form-group d-flex flex-column ${!regionValid ? 'has-error' : ''}`}>
-                      <label className="label" htmlFor="region">Region</label>
-                      <input
-                        type="text" className={`input-field form-control ${!regionValid ? 'is-invalid' : ''}`}
-                        id="region"
-                        name="region"
-                        onChange={handleRegionChange}
-                        required
-                      />
-                    </div>
 
                     {/* EMAIL ADDRESS*/}
                     <div className={`form-group d-flex flex-column ${!emailValid ? 'has-error' : ''}`}>
@@ -669,6 +669,23 @@ const RegistrationComponent = () => {
                       </select>
                     </div>
 
+                    {/* Home Ownership */}
+                    <div className={`form-group d-flex flex-column ${!homeOwnershipValid ? 'has-error' : ''}`}>
+                      <label className="label" htmlFor="homeOwnership">Home Ownership</label>
+                      <select
+                        id="homeOwnership"
+                        name="homeOwnership"
+                        onChange={handleHomeOwnershipChange}
+                        className={`option form-control ${!homeOwnershipValid ? 'is-invalid' : ''}`}
+                        required
+                        style={{ fontSize: '14px', marginBottom: '10px' }}
+                      >
+                        <option value="">Select Ownership</option>
+                        <option value="Owner">Owner</option>
+                        <option value="Renting">Renting</option>
+                      </select>
+                    </div>
+
                     {employmentStatus === 'Employed' && (
                       <>
                         <div className={`form-group d-flex flex-column ${!companyNameValid ? 'has-error' : ''}`}>
@@ -697,28 +714,13 @@ const RegistrationComponent = () => {
                             required
                           />
                         </div>
+
                       </>
                     )}
                   </div>
 
                   {/* THIRD COLUMN REGISTER PAGE */}
                   <div className="col-12 col-md-4 reg-row3 p-3">
-                    {/* Home Ownership */}
-                    <div className={`form-group d-flex flex-column ${!homeOwnershipValid ? 'has-error' : ''}`}>
-                      <label className="label" htmlFor="homeOwnership">Home Ownership</label>
-                      <select
-                        id="homeOwnership"
-                        name="homeOwnership"
-                        onChange={handleHomeOwnershipChange}
-                        className={`option form-control ${!homeOwnershipValid ? 'is-invalid' : ''}`}
-                        required
-                        style={{ fontSize: '14px', marginBottom: '10px' }}
-                      >
-                        <option value="">Select Ownership</option>
-                        <option value="Owner">Owner</option>
-                        <option value="Renting">Renting</option>
-                      </select>
-                    </div>
 
                     {/* DATE OF BIRTH */}
                     <div className={`form-group d-flex flex-column ${!dateOfBirthValid ? 'has-error' : ''}`}>
@@ -813,20 +815,20 @@ const RegistrationComponent = () => {
                     </div>
 
                     <div className="form-group">
-                            <label className="label" htmlFor="voterRegistration">Profile Picture</label>
-                            <input
-                              type="file"
-                              id="file"
-                              name="file"
-                              accept="image/*"
-                              onChange={(e) => setFile(e.target.files[0])}
-                              className="form-control"
-                              required
-                            />
-                            {/* Cloudinary upload widget */}
-                            <CloudinaryContext cloudName="dwevzsrnz">
-                            </CloudinaryContext>
-                          </div>
+                      <label className="label" htmlFor="voterRegistration">Profile Picture</label>
+                      <input
+                        type="file"
+                        id="file"
+                        name="file"
+                        accept="image/*"
+                        onChange={(e) => setFile(e.target.files[0])}
+                        className="form-control"
+                        required
+                      />
+                      {/* Cloudinary upload widget */}
+                      <CloudinaryContext cloudName="dwevzsrnz">
+                      </CloudinaryContext>
+                    </div>
 
 
                     {/* Password */}
