@@ -532,11 +532,11 @@ return (
                             <td>{item.defendant}</td>
                             <td>{item.type}</td>
                             <td>{item.address}</td>
-                            <td>
+                            {/* <td>
                               <a href={require(`../../../server/uploads/blotter/${item.filename}`)} download={item.filename}>
                                 {item.filename}
                               </a>
-                            </td>
+                            </td> */}
                             <td>{item.kind}</td>
                             <td>{item.status}</td>
                             <td>

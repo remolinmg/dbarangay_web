@@ -524,11 +524,11 @@ return (
                             <td>{item.respondents}</td>
                             <td>{item.type}</td>
                             <td>{item.address}</td>
-                            <td>
+                            {/* <td>
                               <a href={require(`../../../server/uploads/medical/${item.filename}`)} download={item.filename}>
                                 {item.filename}
                               </a>
-                            </td>
+                            </td> */}
                             <td>{item.status}</td>
                             <td>
                               <button className="btn btn-primary btn-sm" onClick={() => showEditFormHandler(item)}>Edit</button>

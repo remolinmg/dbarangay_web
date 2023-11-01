@@ -523,14 +523,14 @@ function BofficialsAdmin() {
                               <td>{val.lastName}</td>
                               <td>{val.contact}</td>
                               <td>{val.address}</td>
-                              <td>
+                              {/* <td>
                                 <img
                                   style={{ width: "100px", height: "100px" }}
                                   src={require(`../../../server/uploads/official/${val.filename}`)}
                                   alt=""
                                   className="business-picture"
                                 />
-                              </td>
+                              </td> */}
                               <td>{val.startTerm}</td>
                               <td>{val.endTerm}</td>
                               <td>
