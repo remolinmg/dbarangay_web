@@ -4,7 +4,7 @@ import './assets/css/user-style.css';
 import Footer from './footer';
 import UserNav from './user-navbar';
 import ScrollToTopButton from './scrolltotop';
-import Bot from './faqbot';
+import Faq from './faq'
 
 class Promotebusiness extends Component {
   constructor() {
@@ -88,7 +88,7 @@ class Promotebusiness extends Component {
         </div>
         <ScrollToTopButton />
         <Footer />
-        <Bot />
+        <Faq/>
       </>
     );
   }

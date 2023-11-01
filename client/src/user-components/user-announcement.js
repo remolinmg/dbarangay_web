@@ -4,7 +4,7 @@ import './assets/css/user-style.css';
 import Footer from "./footer";
 import UserNav from './user-navbar';
 import ScrollToTopButton from "./scrolltotop";
-import Bot from "./faqbot";
+import Faq from './faq'
 
 class Announcement extends Component {
   constructor() {
@@ -84,7 +84,7 @@ class Announcement extends Component {
         </div>
         <ScrollToTopButton />
         <Footer />
-        <Bot />
+        <Faq/>
       </>
     );
   }

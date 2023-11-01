@@ -24,7 +24,7 @@ const Login = () => {
   // const isValidPassword = (password) => password.length >= 8;
 
   const maxLoginAttempts = 2; // Define the maximum login attempts
-  const lockoutDuration = 300000; // 30 minutes in milliseconds
+  const lockoutDuration = 1000; // 30 minutes in milliseconds
 
   useEffect(() => {
     // Check if the user is still locked out
@@ -100,19 +100,7 @@ const Login = () => {
       setPasswordValid('Please input data');
       return;
     }
-  
-    if (!email.includes('@gmail')) {
-      setEmailValid('Wrong credentials');
-      setLoginAttempts(loginAttempts + 1);
-      return;
-    }
-  
-    if (password.length < 8 || !/[!@#]+/.test(password) || !/[a-z]+/.test(password) || !/[A-Z]+/.test(password)) {
-      setPasswordValid('Wrong password format');
-      setLoginAttempts(loginAttempts + 1);
-      return;
-    }
-  
+
     try {
       const response = await axios.post("http://localhost:8000/login", {
         email,
@@ -127,14 +115,17 @@ const Login = () => {
         setEmailValid('');
         setPasswordValid('');
         setLoginAttempts(0);
+      } else if (response.status === 401) {
+        setPasswordValid('Wrong password');
+        setLoginAttempts(loginAttempts + 1);
       } else {
-        setEmailValid('Invalid data');
-        setPasswordValid('Invalid data');
+        setEmailValid('Invalid Email');
+        setPasswordValid('Invalid Password');
         setLoginAttempts(loginAttempts + 1);
       }
     } catch (error) {
-      setEmailValid('Invalid data');
-      setPasswordValid('Invalid data');
+      setEmailValid('Invalid Email');
+      setPasswordValid('Invalid Password');
       setLoginAttempts(loginAttempts + 1);
     }
   }

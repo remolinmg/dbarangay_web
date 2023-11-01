@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import logo from '../user-components/assets/img/MANDALUYONG-Logo.png';
 import brgy from '../user-components/assets/img/brgy.png';
-import Bot from './faqbot.js';
 import { Link, NavLink, Route, useNavigate } from 'react-router-dom';
 import ScrollToTopButton from "./scrolltotop";
 import { BiChevronDown } from 'react-icons/bi';
