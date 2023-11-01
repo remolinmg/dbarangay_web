@@ -4,7 +4,8 @@ import './assets/css/style.css';
 import { useRef, useState, useEffect } from 'react';
 import { FaUserCircle } from "react-icons/fa";
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+
 import Cookies from 'js-cookie';
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { Link, NavLink, Route, useNavigate } from 'react-router-dom';
@@ -38,7 +39,7 @@ function Admindetails() {
         try {
             const token = Cookies.get('access_token');
             if (token) {
-                const decoded = jwt_decode(token);
+                const decoded =jwtDecode(token);
                 const _id = decoded.id;
                 const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
                 setUserData(response.data);
@@ -130,7 +131,7 @@ function Admindetails() {
         try {
             const token = Cookies.get('access_token');
             if (token) {
-                const decoded = jwt_decode(token);
+                const decoded =jwtDecode(token);
                 const _id = decoded.id;
 
                 const brgyCertData = await axios.get(`http://localhost:8000/get/barangaycertificate/${_id}`);
@@ -161,7 +162,7 @@ function Admindetails() {
         try {
             const token = Cookies.get('access_token');
             if (token) {
-                const decoded = jwt_decode(token);
+                const decoded =jwtDecode(token);
                 const _id = decoded.id;
                 const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
                 setData(response.data);
@@ -205,7 +206,7 @@ function Admindetails() {
 
     const updateRowData = async () => {
         const token = Cookies.get('access_token');
-        const decoded = jwt_decode(token);
+        const decoded =jwtDecode(token);
         const _id = decoded.id;
         try {
             const formData = new FormData();

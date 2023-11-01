@@ -15,7 +15,8 @@ import Faq from "./faq"
 import logo from '../user-components/assets/img/MANDALUYONG-Logo.png';
 import brgy from '../user-components/assets/img/brgy.png';
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+
 import Cookies from 'js-cookie';
 import { FaUserCircle } from "react-icons/fa";
 import '../user-components/assets/css/user-style.css';
@@ -127,7 +128,7 @@ const Landpage = () => {
      try {
        const token = Cookies.get('access_token');
        if (token) { 
-       const decoded = jwt_decode(token);
+       const decoded =jwtDecode(token);
          const _id = decoded.id;
          const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
          setData(response.data);

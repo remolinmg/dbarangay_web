@@ -8,7 +8,8 @@ import { RiFolderWarningFill, } from "react-icons/ri";
 import axios from 'axios';
 import { parse, format } from 'date-fns';
 import { FaUserCircle } from "react-icons/fa";
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+
 import Cookies from 'js-cookie';
 import {
   BsPersonFill,
@@ -263,7 +264,7 @@ function BofficialsAdmin() {
      try {
        const token = Cookies.get('access_token');
        if (token) { 
-       const decoded = jwt_decode(token);
+       const decoded =jwtDecode(token);
          const _id = decoded.id;
          const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
          setUserData(response.data);
