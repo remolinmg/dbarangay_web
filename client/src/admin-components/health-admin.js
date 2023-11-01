@@ -8,7 +8,8 @@ import { BiLogOut, BiCog } from "react-icons/bi";
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { format } from 'date-fns';
 import { FiUser } from 'react-icons/fi';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+
 import Cookies from 'js-cookie';
 import {
   BsPersonFill,
@@ -251,7 +252,7 @@ const fetchUser = async () => {
   try {
     const token = Cookies.get('access_token');
     if (token) { 
-    const decoded = jwt_decode(token);
+    const decoded =jwtDecode(token);
       const _id = decoded.id;
       const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
       setUserData(response.data);
@@ -524,11 +525,11 @@ return (
                             <td>{item.respondents}</td>
                             <td>{item.type}</td>
                             <td>{item.address}</td>
-                            <td>
+                            {/* <td>
                               <a href={require(`../../../server/uploads/medical/${item.filename}`)} download={item.filename}>
                                 {item.filename}
                               </a>
-                            </td>
+                            </td> */}
                             <td>{item.status}</td>
                             <td>
                               <button className="btn btn-primary btn-sm" onClick={() => showEditFormHandler(item)}>Edit</button>

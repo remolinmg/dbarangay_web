@@ -33,32 +33,32 @@ class BrgyOfficial extends Component {
       });
   }
   render() {
-  return (
-    <div className='officials' id='officials'>
+    return (
+      <div className='officials' id='officials'>
 
-    <div style={{ padding: '20px' }}>
-      <h2 style={{ textAlign: 'center', color: '#0060AD', fontWeight: 'bold' }}>
-        BARANGAY HARAPIN ANG BUKAS COUNCIL
-      </h2>
-      <p style={{ textAlign: 'center', color: '#0060AD', fontWeight: 'bold' }}>
-        Description about barangay officials goes here.
-      </p>
+        <div style={{ padding: '20px' }}>
+          <h2 style={{ textAlign: 'center', color: '#0060AD', fontWeight: 'bold' }}>
+            BARANGAY HARAPIN ANG BUKAS COUNCIL
+          </h2>
+          <p style={{ textAlign: 'center', color: '#0060AD', fontWeight: 'bold' }}>
+            Description about barangay officials goes here.
+          </p>
 
- 
- <div className="d-flex flex-wrap justify-content-evenly">
-  {this.state.posts.map((post, index) => (
-    <div key={post._id} className={`official-lists text-center ${index === 0 ? 'first-row' : 'other-rows'}`}>
-      <img className="rounded-circle official-list" src={require(`../../../server/uploads/official/${post.filename}`)} />
-      <h4 className="official-name">{post.firstName} {post.middleName} {post.lastName}</h4>
-      <p className="official-title">{post.position}</p>
-    </div>
-  ))}
-</div>
-      
-    </div>
-    </div>
-  );
-      }
+
+          {/* <div className="d-flex flex-wrap justify-content-evenly">
+            {this.state.posts.map((post, index) => (
+              <div key={post._id} className={`official-lists text-center ${index === 0 ? 'first-row' : 'other-rows'}`}>
+                <img className="rounded-circle official-list" src={require(`../../../server/uploads/official/${post.filename}`)} />
+                <h4 className="official-name">{post.firstName} {post.middleName} {post.lastName}</h4>
+                <p className="official-title">{post.position}</p>
+              </div>
+            ))}
+          </div> */}
+
+        </div>
+      </div>
+    );
+  }
 };
 
 export default BrgyOfficial;

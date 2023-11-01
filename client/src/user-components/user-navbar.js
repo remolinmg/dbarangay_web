@@ -7,7 +7,8 @@ import { Link, NavLink, Route, useNavigate } from 'react-router-dom';
 import ScrollToTopButton from "./scrolltotop";
 import { BiChevronDown } from 'react-icons/bi';
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+
 import Cookies from 'js-cookie';
 
 function UserNav() {
@@ -115,7 +116,7 @@ function UserNav() {
      try {
        const token = Cookies.get('access_token');
        if (token) { 
-       const decoded = jwt_decode(token);
+       const decoded =jwtDecode(token);
          const _id = decoded.id;
          const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
          setData(response.data);

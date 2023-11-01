@@ -9,6 +9,7 @@ cloudinary.config({
     secure: true
   });
 
+
   module.exports= cloudinary;
 
 // // Log the configuration

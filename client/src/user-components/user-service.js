@@ -7,7 +7,8 @@ import UserNav from './user-navbar';
 import Faq from './faq'
 import axios from 'axios';
 import Footer from "./footer"
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+
 import Cookies from 'js-cookie';
 
 
@@ -175,7 +176,7 @@ function UserService() {
     try {
       const token = Cookies.get('access_token');
       if (token) {
-        const decoded = jwt_decode(token);
+        const decoded =jwtDecode(token);
         const userId = decoded.id;
 
         const response = await axios.post("http://localhost:8000/barangaycertificate", {
@@ -261,7 +262,7 @@ function UserService() {
     try {
       const token = Cookies.get('access_token');
       if (token) {
-        const decoded = jwt_decode(token);
+        const decoded =jwtDecode(token);
         const userId = decoded.id;
         await axios.post("http://localhost:8000/businessclearance", {
           businessName, address, residentName, userId, type, reasonOfRequest, pickUpDate, modeOfPayment, reference
@@ -330,7 +331,7 @@ function UserService() {
     try {
       const token = Cookies.get('access_token');
       if (token) {
-        const decoded = jwt_decode(token);
+        const decoded =jwtDecode(token);
         const userId = decoded.id;
 
         await axios.post("http://localhost:8000/barangayid", {
@@ -406,7 +407,7 @@ function UserService() {
     try {
       const token = Cookies.get('access_token');
       if (token) {
-        const decoded = jwt_decode(token);
+        const decoded =jwtDecode(token);
 
         const userId = decoded.id;
         await axios.post("http://localhost:8000/installation", {
@@ -480,7 +481,7 @@ function UserService() {
     try {
       const token = Cookies.get('access_token');
       if (token) {
-        const decoded = jwt_decode(token);
+        const decoded =jwtDecode(token);
         const userId = decoded.id;
         await axios.post("http://localhost:8000/construction", {
           residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
@@ -555,7 +556,7 @@ function UserService() {
     try {
       const token = Cookies.get('access_token');
       if (token) {
-        const decoded = jwt_decode(token);
+        const decoded =jwtDecode(token);
         const userId = decoded.id;
 
         await axios.post("http://localhost:8000/barangayindigency", {

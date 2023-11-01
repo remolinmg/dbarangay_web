@@ -4,7 +4,8 @@ import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown } from 'react-icons/bi';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+
 import Cookies from 'js-cookie';
 import {
     BsPersonFill,
@@ -158,7 +159,7 @@ const fetchUser = async () => {
   try {
     const token = Cookies.get('access_token');
     if (token) { 
-    const decoded = jwt_decode(token);
+    const decoded =jwtDecode(token);
       const _id = decoded.id;
       const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
       setUserData(response.data);

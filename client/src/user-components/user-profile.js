@@ -12,7 +12,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaUserCircle } from "react-icons/fa";
 import "./assets/css/user-style.css";
 import Footer from './footer';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+
 import Cookies from 'js-cookie';
 
 function UserProfile() {
@@ -75,7 +76,7 @@ function UserProfile() {
         try {
             const token = Cookies.get('access_token');
             if (token) {
-                const decoded = jwt_decode(token);
+                const decoded =jwtDecode(token);
                 const _id = decoded.id;
                 const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
                 setData(response.data);
@@ -106,7 +107,7 @@ function UserProfile() {
         try {
             const token = Cookies.get('access_token');
             if (token) {
-                const decoded = jwt_decode(token);
+                const decoded =jwtDecode(token);
                 const _id = decoded.id;
 
                 const brgyCertData = await axios.get(`http://localhost:8000/get/barangaycertificate/${_id}`);
@@ -140,7 +141,7 @@ function UserProfile() {
 
     const updateRowData = async () => {
         const token = Cookies.get('access_token');
-        const decoded = jwt_decode(token);
+        const decoded =jwtDecode(token);
         const _id = decoded.id;
         try {
             const formData = new FormData();
