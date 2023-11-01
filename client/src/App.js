@@ -52,7 +52,7 @@ import ScrollToTopButton from "./user-components/scrolltotop";
 import ProtectedRoute from "./utils/protectedRoutes";
 import AdminRoute from "./utils/adminRoutes";
 import SuperRoute from "./utils/superRoutes";
-
+import Landpage from "./user-components/landingpage";
 import Sample from "./admin-components/sample"
 import Usersample from "./user-components/usersample";
 
@@ -79,7 +79,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="admin" element={<Admin />} />
             <Route path="registration" element={<Registration />} />
-
+            <Route path="/" element={<Landpage />}/>
             <Route path="forgotpass" element={<ForgotPassword />} />
             <Route path="resetpass" element={<ResetPassword />} />
             <Route path="recoveredpass" element={<RecoveredPassword />} />
@@ -118,7 +118,7 @@ function App() {
             </Route>
             {/* User */}
             <Route element={<ProtectedRoute />}>
-              <Route path="/" element={<Homepage />} isAuthenticated={isAuthenticated} />
+              <Route path="homepage" element={<Homepage />} isAuthenticated={isAuthenticated} />
               <Route path="stats" element={<Stats />} isAuthenticated={isAuthenticated} />
               <Route path="brgy-official" element={<BrgyOfficial />} isAuthenticated={isAuthenticated} />
               <Route path="community" element={<Community />} isAuthenticated={isAuthenticated} />

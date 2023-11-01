@@ -24,10 +24,10 @@ exports.createPromoteBusiness = async (req, res) => {
 
 
     await newPromoteBusiness.save();
-    res.status(201).send('File and text data saved to MongoDB');
+    res.status(201).send('File and text data saved to MongoDB and Cloudinary');
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error saving data to MongoDB');
+    res.status(500).send('Error saving data to MongoDB and Cloudinary');
   }
 };
 

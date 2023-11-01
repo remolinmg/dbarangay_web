@@ -13,10 +13,10 @@ exports.createAnnouncement = async (req, res) => {
     });
 
     const newAnnouncement = new announcement({
-      what,
-      where,
-      when,
-      who,
+      what:what,
+      where:where,
+      when:when,
+      who:who,
       filename: {
         url: result.secure_url, 
         public_id: result.public_id,

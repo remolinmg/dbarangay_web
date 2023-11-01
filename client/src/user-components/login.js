@@ -123,7 +123,7 @@ const Login = () => {
         const result = response.data.token;
         setCookie('access_token', result);
         window.localStorage.setItem('accountType', response.data.type);
-        navigate("/");
+        navigate("/homepage")
         setEmailValid('');
         setPasswordValid('');
         setLoginAttempts(0);

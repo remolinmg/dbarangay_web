@@ -175,10 +175,10 @@ function BpromotionAdmin() {
     formData.append('residentName', residentName);
     formData.append('file', file);
     axios.post('http://localhost:8000/promotebusiness', formData).then(res => {
-      if (res.data === "Error saving data to MongoDB") {
+      if (res.data === "Error saving data to MongoDB and Cloudinary") {
         alert("Business Already Exist!");
       }
-      else if (res.data === "File and text data saved to MongoDB") {
+      else if (res.data === "File and text data saved to MongoDB and Cloudinary") {
         // After successful upload to MongoDB, reset the form
         setBusinessName('');
         setAddress('');
