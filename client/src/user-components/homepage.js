@@ -11,12 +11,10 @@ import ScrollToTopButton from "./scrolltotop"
 import bhall from './assets/img/Rooftop.jpg'
 import court from './assets/img/MagalonaCourt.jpg'
 import playground from './assets/img/BarangayPlayground.png'
-import Bot from "./faqbot"
 import logo from '../user-components/assets/img/MANDALUYONG-Logo.png';
 import brgy from '../user-components/assets/img/brgy.png';
-
 import '../user-components/assets/css/user-style.css';
-
+import Faq from './faq'
 
 const Homepage = () => {
   const homeRef = useRef(null);
@@ -138,7 +136,7 @@ const Homepage = () => {
       <MissionVision />
       <ScrollToTopButton />
       <Footer />
-      <Bot />
+      <Faq/>
     </>
 
   );

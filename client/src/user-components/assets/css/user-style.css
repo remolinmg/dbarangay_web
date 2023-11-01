@@ -64,7 +64,6 @@
   color: #fff;
   border: none;
   border-radius: 50px;
-  padding-bottom: 8px;
   cursor: pointer;
   transition: opacity 0.3s;
   height: 50px;
@@ -1594,6 +1593,98 @@ li {
 }
 
 
+
+
+/*  */
+
+/* faq popup */
+.faq-popup-container {
+  position: fixed;
+  bottom: 35px;
+  right: 35px;
+  z-index: 9999;
+}
+
+.faq-popup-button {
+  background-color: #4287f5;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+  height: 50px;
+  width: 50px;
+}
+
+
+.faq-popup {
+  position: absolute;
+  width: 300px;
+  max-height: 400px;
+  min-height: 400px;
+  bottom: 0;
+  right: 0;
+  background: #e8f8f6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 20px;
+}
+
+.faq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+
+.close-button {
+  background-color: #ddd;
+  color: #000;
+  border: none;
+  border-radius: 20%;
+  padding: 5px 10px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px; 
+  font-size: 20px;
+}
+
+h3 {
+  margin: 0;
+}
+
+.faqcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; 
+}
+
+.faqcontainer p {
+  margin: 0;
+}
+
+.faqbutton {
+  background-color: #4287f5;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  width: 200px;
+  margin: 10px;
+  max-height: 100px;
+}
+
+
+
+/*  */
 
 /*  AYAW GUMANA EDI DONT
 .form-column {

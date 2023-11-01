@@ -16,7 +16,7 @@ import { auto } from '@popperjs/core';
 import Footer from "./footer"
 import UserNav from './user-navbar';
 import ScrollToTopButton from "./scrolltotop";
-import Bot from "./faqbot"
+import Faq from './faq'
 import React, { useState, useEffect } from 'react';
 import { FaLocationDot } from "react-icons/fa6";
 
@@ -316,7 +316,7 @@ function UserEvacuation() {
             </section>
             <ScrollToTopButton />
             <Footer />
-            <Bot />
+            <Faq/>
         </>
     );
 }

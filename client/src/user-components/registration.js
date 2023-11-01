@@ -213,21 +213,17 @@ const RegistrationComponent = () => {
     formData.append('companyName', companyName)
     formData.append('position', position)
     formData.append('file', file)
-    axios.post("http://localhost:8000/signup",
-      formData).then(res => {
+    axios.post("http://localhost:8000/signup", formData)
+      .then(res => {
         if (res.data === 'Error saving data to MongoDB and Cloudinary') {
           alert("Announcement Already Exist!");
-        } else if (res.data === 'Yes') {
+        } else if (res.data === 'true') {
           // After successful upload to MongoDB, reset the form
-          alert("Registered Successfully")
+          alert("Registered Successfully");
           navigate("/login");
-
-          // If you're using Cloudinary, you can also reset the Cloudinary widget here
-          // cloudinaryWidgetRef.current.uploadWidget().close();
-
         }
       })
-      .catch(er => console.log(er))
+      .catch(err => console.log(err));
   };
 
 
@@ -650,6 +646,24 @@ const RegistrationComponent = () => {
                         <option value="separated">Separated</option>
                       </select>
                     </div>
+
+                    {/* Home Ownership */}
+                    <div className={`form-group d-flex flex-column ${!homeOwnershipValid ? 'has-error' : ''}`}>
+                      <label className="label" htmlFor="homeOwnership">Home Ownership</label>
+                      <select
+                        id="homeOwnership"
+                        name="homeOwnership"
+                        onChange={handleHomeOwnershipChange}
+                        className={`option form-control ${!homeOwnershipValid ? 'is-invalid' : ''}`}
+                        required
+                        style={{ fontSize: '14px', marginBottom: '10px' }}
+                      >
+                        <option value="">Select Ownership</option>
+                        <option value="Owner">Owner</option>
+                        <option value="Renting">Renting</option>
+                      </select>
+                    </div>
+
                     {/* EMPLOYMENT STATUS */}
                     <div className={`form-group d-flex flex-column ${!employmentStatusValid ? 'has-error' : ''}`}>
                       <label className="label" htmlFor="employmentStatus">
@@ -666,23 +680,6 @@ const RegistrationComponent = () => {
                         <option value="Employed">Employed</option>
                         <option value="Unemployed">Unemployed</option>
                         <option value="Student">Student</option>
-                      </select>
-                    </div>
-
-                    {/* Home Ownership */}
-                    <div className={`form-group d-flex flex-column ${!homeOwnershipValid ? 'has-error' : ''}`}>
-                      <label className="label" htmlFor="homeOwnership">Home Ownership</label>
-                      <select
-                        id="homeOwnership"
-                        name="homeOwnership"
-                        onChange={handleHomeOwnershipChange}
-                        className={`option form-control ${!homeOwnershipValid ? 'is-invalid' : ''}`}
-                        required
-                        style={{ fontSize: '14px', marginBottom: '10px' }}
-                      >
-                        <option value="">Select Ownership</option>
-                        <option value="Owner">Owner</option>
-                        <option value="Renting">Renting</option>
                       </select>
                     </div>
 

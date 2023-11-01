@@ -4,7 +4,7 @@ import { IoMdFiling } from "react-icons/io";
 import { MdConstruction, MdOutlineInstallDesktop, MdOutlineFactCheck, MdOutlineAddBusiness } from "react-icons/md";
 import { HiOutlineIdentification } from "react-icons/hi";
 import UserNav from './user-navbar';
-import Bot from "./faqbot"
+import Faq from './faq'
 import axios from 'axios';
 import Footer from "./footer"
 import jwt_decode from 'jwt-decode';
@@ -1309,7 +1309,7 @@ function UserService() {
           </div>
         )}
       </div>
-      <Bot />
+      <Faq/>
       <Footer />
     </body >
 

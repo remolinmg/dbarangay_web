@@ -4,7 +4,7 @@ import './assets/css/user-style.css';
 import Footer from "./footer";
 import UserNav from './user-navbar';
 import ScrollToTopButton from "./scrolltotop";
-import Bot from "./faqbot";
+import Faq from './faq'
 class Livelihood extends Component {
   constructor() {
     super();
@@ -85,7 +85,7 @@ class Livelihood extends Component {
         </div>
         <ScrollToTopButton />
         <Footer />
-        <Bot />
+        <Faq/>
       </>
     );
   }
