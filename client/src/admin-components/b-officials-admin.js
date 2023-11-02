@@ -103,14 +103,14 @@ function BofficialsAdmin() {
     const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
     return reversedData.slice(startIndex, endIndex);
   };
-// stay on first page
+  // stay on first page
   const filteredAndSortedData = data
-  .filter((item) => {
-    const itemValues = Object.values(item).map((value) =>
-      value.toString().toLowerCase()
-    );
-    return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
-  })
+    .filter((item) => {
+      const itemValues = Object.values(item).map((value) =>
+        value.toString().toLowerCase()
+      );
+      return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+    })
 
   // Function to go to the next page ------------------------------------------
   const nextPage = () => {
@@ -181,6 +181,17 @@ function BofficialsAdmin() {
         alert("Barangay Official Already Exist!");
       }
       else if (res.data === "File and text data saved to MongoDB and Cloudinary") {
+        setPosition('');
+        setFirstName('');
+        setMiddleName('');
+        setLastName('');
+        setContact('');
+        setAddress('');
+        setFile(null);
+        setStartTerm('');
+        setEndTerm('');
+
+        fetchData(); // Fetch the updated data
       }
     })
       .catch(er => console.log(er))
@@ -229,9 +240,13 @@ function BofficialsAdmin() {
       formData.append('lastName', editLastName);
       formData.append('contact', editContact);
       formData.append('address', editAddress);
-      formData.append('file', editFile);
       formData.append('startTerm', editStartTerm);
       formData.append('endTerm', editEndTerm);
+
+      if (editFile) {
+        formData.append('file', editFile);
+      }
+
       const response = await axios.put(
         `http://localhost:8000/update/official/${selectedRowData}`,
         formData
@@ -244,7 +259,7 @@ function BofficialsAdmin() {
     }
   };
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     document.cookie = 'access_token=; ';
@@ -254,85 +269,85 @@ function BofficialsAdmin() {
   };
 
 
-   // User FETCHING
-   const [userData, setUserData] = useState([]);
-   useEffect(() => {
-     fetchUser(); 
-   }, []);
-  
-   const fetchUser = async () => {
-     try {
-       const token = Cookies.get('access_token');
-       if (token) { 
-       const decoded =jwtDecode(token);
-         const _id = decoded.id;
-         const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
-         setUserData(response.data);
-       }
-     } catch (error) {
-       console.error(error);
-     }
-   };
+  // User FETCHING
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    try {
+      const token = Cookies.get('access_token');
+      if (token) {
+        const decoded = jwtDecode(token);
+        const _id = decoded.id;
+        const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+        setUserData(response.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
-    
-      <div className="topbarsection">
-      {Array.isArray(userData) ? (
-                            userData.map((item, index) => (
-                                <div key={index}>
-        <div className="topnavbar d-flex justify-content-between align-items-center">
-          <div className="topnavleft">
-            <button className="collapse-button" onClick={handleSidebarCollapse}>
-              <BiMenu />
-            </button>
-          </div>
-          <div className="topnavmid">
-            <h3>Barangay Harapin Ang Bukas</h3>
-          </div>
-          <div className="topnavright">
-            <div ref={profileRef}>
-              <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-              {ProfilesubmenuVisible && (
-                <div className="Profilesubmenuadmin">
-                  <div className="admininfo">
-                    <div className="rightprofile">
-                      <FaUserCircle className="adminprofile" />
-                    </div>
-                    <div className="leftprofile">
-                      <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
-                      <h5>{item.email}</h5>
-                    </div>
-                  </div>
-                  <div className="lowerprofile">
-                    <div className="button-profile1">
-                      <NavLink to="/admin-profile" activeClassName="active">
-                        <div href="#" className="profilebuttons">
-                          <BiCog className="profileicons" /> Settings
-                        </div>
-                      </NavLink>
-                    </div>
-                    <hr />
-                    <div className="button-profile1">
 
-                      
-                        <div onClick={handleSignOut} className="profilebuttons">
-                          <BiLogOut className="profileicons" /> Log out
+      <div className="topbarsection">
+        {Array.isArray(userData) ? (
+          userData.map((item, index) => (
+            <div key={index}>
+              <div className="topnavbar d-flex justify-content-between align-items-center">
+                <div className="topnavleft">
+                  <button className="collapse-button" onClick={handleSidebarCollapse}>
+                    <BiMenu />
+                  </button>
+                </div>
+                <div className="topnavmid">
+                  <h3>Barangay Harapin Ang Bukas</h3>
+                </div>
+                <div className="topnavright">
+                  <div ref={profileRef}>
+                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                    {ProfilesubmenuVisible && (
+                      <div className="Profilesubmenuadmin">
+                        <div className="admininfo">
+                          <div className="rightprofile">
+                            <FaUserCircle className="adminprofile" />
+                          </div>
+                          <div className="leftprofile">
+                            <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
+                            <h5>{item.email}</h5>
+                          </div>
                         </div>
-                      
-                    </div>
+                        <div className="lowerprofile">
+                          <div className="button-profile1">
+                            <NavLink to="/admin-profile" activeClassName="active">
+                              <div href="#" className="profilebuttons">
+                                <BiCog className="profileicons" /> Settings
+                              </div>
+                            </NavLink>
+                          </div>
+                          <hr />
+                          <div className="button-profile1">
+
+
+                            <div onClick={handleSignOut} className="profilebuttons">
+                              <BiLogOut className="profileicons" /> Log out
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
-              )}
-            </div>
-          </div>
 
-        </div>
-        </div>
-                            ))
-                        ) : (
-                            <p>No data to display.</p>
-                        )}
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No data to display.</p>
+        )}
       </div>
       <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">
@@ -524,14 +539,14 @@ function BofficialsAdmin() {
                               <td>{val.lastName}</td>
                               <td>{val.contact}</td>
                               <td>{val.address}</td>
-                              {/* <td>
+                              <td>
                                 <img
                                   style={{ width: "100px", height: "100px" }}
-                                  src={require(`../../../server/uploads/official/${val.filename}`)}
+                                  src={val.filename.url}
                                   alt=""
-                                  className="business-picture"
+                                  className="officials-picture"
                                 />
-                              </td> */}
+                              </td>
                               <td>{val.startTerm}</td>
                               <td>{val.endTerm}</td>
                               <td>

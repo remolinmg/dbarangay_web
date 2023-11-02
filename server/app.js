@@ -3,8 +3,8 @@ mongoose.connect("mongodb+srv://dbarangay:dIgrzUEvSPjrUWxu@dbarangay.nszcm1t.mon
 .then(()=>{
     console.log("mongodb connected");
 })
-.catch(()=>{
-    console.log('failed');
+.catch((e)=>{
+    console.log(e);
 });
 const express = require("express")
 const bodyParser = require("body-parser")

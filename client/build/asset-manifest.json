@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.43f63601.css",
-    "main.js": "/static/js/main.dca40481.js",
+    "main.js": "/static/js/main.5a4d0d9a.js",
     "static/js/787.c4e7f8f9.chunk.js": "/static/js/787.c4e7f8f9.chunk.js",
     "static/media/BarangayPlayground.png": "/static/media/BarangayPlayground.bd7c9063ecdbd67ab4c2.png",
     "static/media/evac-map2.png": "/static/media/evac-map2.c30e7f1fa5c1656bb63c.png",
@@ -36,11 +36,11 @@
     "static/media/Rooftop.jpg": "/static/media/Rooftop.bcea2fb9085e8b7625c4.jpg",
     "index.html": "/index.html",
     "main.43f63601.css.map": "/static/css/main.43f63601.css.map",
-    "main.dca40481.js.map": "/static/js/main.dca40481.js.map",
+    "main.5a4d0d9a.js.map": "/static/js/main.5a4d0d9a.js.map",
     "787.c4e7f8f9.chunk.js.map": "/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.43f63601.css",
-    "static/js/main.dca40481.js"
+    "static/js/main.5a4d0d9a.js"
   ]
 }

@@ -45,15 +45,15 @@ class BrgyOfficial extends Component {
           </p>
 
 
-          {/* <div className="d-flex flex-wrap justify-content-evenly">
+          <div className="d-flex flex-wrap justify-content-evenly">
             {this.state.posts.map((post, index) => (
               <div key={post._id} className={`official-lists text-center ${index === 0 ? 'first-row' : 'other-rows'}`}>
-                <img className="rounded-circle official-list" src={require(`../../../server/uploads/official/${post.filename}`)} />
+                <img className="rounded-circle official-list" src={post.filename.url} />
                 <h4 className="official-name">{post.firstName} {post.middleName} {post.lastName}</h4>
                 <p className="official-title">{post.position}</p>
               </div>
             ))}
-          </div> */}
+          </div>
 
         </div>
       </div>

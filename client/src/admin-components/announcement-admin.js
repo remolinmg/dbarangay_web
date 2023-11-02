@@ -7,7 +7,6 @@ import { BiMenu, BiChevronDown } from 'react-icons/bi';
 import { BiLogOut, BiCog } from "react-icons/bi";
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { jwtDecode } from "jwt-decode";
-
 import Cookies from 'js-cookie';
 
 import {
@@ -29,9 +28,6 @@ import {
 
 import 'bootstrap/dist/css/bootstrap.css';
 import { FaUserCircle } from "react-icons/fa";
-
-
-import { CloudinaryContext, Image } from "cloudinary-react";
 
 
 function AnnouncementAdmin() {
@@ -625,9 +621,6 @@ function AnnouncementAdmin() {
                               onChange={(e) => setFile(e.target.files[0])}
                               className="form-control"
                             />
-                            {/* Cloudinary upload widget */}
-                            <CloudinaryContext cloudName="dwevzsrnz">
-                            </CloudinaryContext>
                           </div>
                           <div className="form-buttons">
                             <button type="submit" className="btn btn-primary" onClick={announcement}>
