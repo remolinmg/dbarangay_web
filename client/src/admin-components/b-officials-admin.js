@@ -466,9 +466,6 @@ function BofficialsAdmin() {
                 value={searchQuery}
                 onChange={handleSearchChange}
               />
-              <button className="btn btn-outline-secondary" type="button">
-                <i className="bi bi-search"></i>
-              </button>
             </div>
           </div>
         </div>

@@ -512,7 +512,7 @@ return (
                           <th scope="col">RESPONDENTS</th>
                           <th scope="col">MEDICAL TYPE</th>
                           <th scope="col">INCIDENT ADDRESS</th>
-                          <th scope="col">DOCUMENTATION</th>
+                         
                           <th scope="col">Status</th>
                           <th scope="col">Actions</th>
                         </tr>
@@ -525,11 +525,6 @@ return (
                             <td>{item.respondents}</td>
                             <td>{item.type}</td>
                             <td>{item.address}</td>
-                            {/* <td>
-                              <a href={require(`../../../server/uploads/medical/${item.filename}`)} download={item.filename}>
-                                {item.filename}
-                              </a>
-                            </td> */}
                             <td>{item.status}</td>
                             <td>
                               <button className="btn btn-primary btn-sm" onClick={() => showEditFormHandler(item)}>Edit</button>
@@ -610,13 +605,7 @@ return (
                             onChange={(e) => { setAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-                        <div className="form-group">
-                          <label htmlFor="file">DOCUMENTATION</label>
-                          <input
-                            type="file"
-                            id="file"
-                            name="file" onChange={(e) => setFile(e.target.files[0])}
-                            className="form-control" required /></div>
+                     
 
                         <div className="form-group">
                           <label htmlFor="status">STATUS</label>
@@ -711,13 +700,6 @@ return (
                             onChange={(e) => { setEditAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-                        <div className="form-group">
-                          <label htmlFor="file">DOCUMENTATION</label>
-                          <input
-                            type="file"
-                            id="file"
-                            name="file" onChange={(e) => setEditFile(e.target.files[0])}
-                            className="form-control" /></div>
                         <div className="form-group">
                           <label htmlFor="status">STATUS</label>
                           <select
