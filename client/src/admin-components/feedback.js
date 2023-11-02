@@ -203,29 +203,40 @@ function FeedbackAdmin() {
                                     <h3>Barangay Harapin Ang Bukas</h3>
                                 </div>
                                 <div className="topnavright">
-                                    <div ref={profileRef}>
-                                        <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-                                        {ProfilesubmenuVisible && (
-                                            <div className="adminiconprofile">
-                                                <ul className="Profilesubmenuadmin">
-                                                    <li className="profile-info-admin">
-                                                        <img src={item.filename.url} calt="Profile Picture" className="profile-pic" id="profile-pic" />
-                                                    </li>
-                                                    <li>
-                                                        <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
-                                                    </li>
-                                                    <li>
-                                                        <NavLink className="link" to="/UserProfile" activeClassName="active">
-                                                            <a href="#" className="button">Settings</a>
-                                                        </NavLink>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/login" className="button" onClick={handleSignOut}>Sign Out</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        )}
-                                    </div>
+                                <div ref={profileRef}>
+                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                    {ProfilesubmenuVisible && (
+                        <div className="Profilesubmenuadmin">
+               <div className="admininfo">
+                 <div className="rightprofile">
+                <img src={item.filename.url} style={{ width:"80px",height:"80px", borderRadius:"50px"}}calt="Profile Picture" className="profile-pic" id="profile-pic" />       
+                 </div>
+                 <div className="leftprofile">
+                   <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
+                   <h5>{item.email}</h5>
+                 </div>
+               </div>
+               <div className="lowerprofile">
+                 <div className="button-profile1">
+                   <NavLink to="/admin-profile" activeClassName="active">
+                     <div href="#" className="profilebuttons">
+                       <BiCog className="profileicons" /> Settings
+                     </div>
+                   </NavLink>
+                 </div>
+                 <hr />
+                 <div className="button-profile1">
+
+                   
+                     <div onClick={handleSignOut} className="profilebuttons">
+                       <BiLogOut className="profileicons" /> Log out
+                     </div>
+                   
+                 </div>
+               </div>
+             </div>
+                    )}
+                  </div>
                                 </div>
 
                             </div>

@@ -166,7 +166,7 @@ function UserNav() {
                       {ProfilesubmenuVisible && (
                         <ul className="Profilesubmenu">
                           <li className="profile-info">
-                            <img src={item.filename.url} calt="Profile Picture" className="profile-pic" id="profile-pic" />
+                            <img src={item.filename.url} style={{ width:"100px",height:"100px", borderRadius:"50px"}}calt="Profile Picture" className="profile-pic" id="profile-pic" />
                           </li>
                           <li>
                             <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
