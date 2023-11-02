@@ -72,19 +72,19 @@ function App() {
           <Routes>
 
 
-            <Route path="login" element={<Login />} />
-            <Route path="admin" element={<Admin />} />
-            <Route path="registration" element={<Registration />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/registration" element={<Registration />} />
             <Route path="/" element={<Landpage />}/>
-            <Route path="forgotpass" element={<ForgotPassword />} />
-            <Route path="resetpass" element={<ResetPassword />} />
-            <Route path="recoveredpass" element={<RecoveredPassword />} />
+            <Route path="/forgotpass" element={<ForgotPassword />} />
+            <Route path="/resetpass" element={<ResetPassword />} />
+            <Route path="/recoveredpass" element={<RecoveredPassword />} />
 
 
             {/* SUPERADMIN */}
             <Route element={<SuperRoute />}>
-              <Route path="admin-accounts" element={<Adminaccounts />} isAuthenticated={isAuthenticated} />
-              <Route path="staff-logs-admin" element={<StafflogsAdmin />} isAuthenticated={isAuthenticated} />
+              <Route path="/admin-accounts" element={<Adminaccounts />} isAuthenticated={isAuthenticated} />
+              <Route path="/staff-logs-admin" element={<StafflogsAdmin />} isAuthenticated={isAuthenticated} />
             </Route>
 
 
@@ -114,19 +114,19 @@ function App() {
             </Route>
             {/* User */}
             <Route element={<ProtectedRoute />}>
-              <Route path="homepage" element={<Homepage />} isAuthenticated={isAuthenticated} />
-              <Route path="stats" element={<Stats />} isAuthenticated={isAuthenticated} />
-              <Route path="brgy-official" element={<BrgyOfficial />} isAuthenticated={isAuthenticated} />
-              <Route path="community" element={<Community />} isAuthenticated={isAuthenticated} />
-              <Route path="mission-vision" element={<MissionVision />} isAuthenticated={isAuthenticated} />
-              <Route path="footer" element={<Footer />} isAuthenticated={isAuthenticated} />
-              <Route path="announcement" element={<Announcement />} isAuthenticated={isAuthenticated} />
-              <Route path="livelihood" element={<Livelihood />} isAuthenticated={isAuthenticated} />
-              <Route path="evacuation" element={<Evacuation />} isAuthenticated={isAuthenticated} />
-              <Route path="service" element={<UserService />} isAuthenticated={isAuthenticated} />
-              <Route path="business" element={<UserBusiness />} isAuthenticated={isAuthenticated} />
-              <Route path="userprofile" element={<UserProfile />} isAuthenticated={isAuthenticated} />
-              <Route path="scrollup" element={<ScrollToTopButton />} isAuthenticated={isAuthenticated} />
+              <Route path="/homepage" element={<Homepage />} isAuthenticated={isAuthenticated} />
+              <Route path="/stats" element={<Stats />} isAuthenticated={isAuthenticated} />
+              <Route path="/brgy-official" element={<BrgyOfficial />} isAuthenticated={isAuthenticated} />
+              <Route path="/community" element={<Community />} isAuthenticated={isAuthenticated} />
+              <Route path="/mission-vision" element={<MissionVision />} isAuthenticated={isAuthenticated} />
+              <Route path="/footer" element={<Footer />} isAuthenticated={isAuthenticated} />
+              <Route path="/announcement" element={<Announcement />} isAuthenticated={isAuthenticated} />
+              <Route path="/livelihood" element={<Livelihood />} isAuthenticated={isAuthenticated} />
+              <Route path="/evacuation" element={<Evacuation />} isAuthenticated={isAuthenticated} />
+              <Route path="/service" element={<UserService />} isAuthenticated={isAuthenticated} />
+              <Route path="/business" element={<UserBusiness />} isAuthenticated={isAuthenticated} />
+              <Route path="/userprofile" element={<UserProfile />} isAuthenticated={isAuthenticated} />
+              <Route path="/scrollup" element={<ScrollToTopButton />} isAuthenticated={isAuthenticated} />
             </Route>
 
           </Routes>
