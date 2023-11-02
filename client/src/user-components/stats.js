@@ -94,20 +94,7 @@ const Stats = () => {
         Harapin Ang Bukas is a barangay in the city of Mandaluyong,
         <span style={spanStyle}>National Capital Region (NCR), Philippines.</span>
       </h2>
-      <div style={statContainerStyle}>
-        <div id="stats" style={statItemStyle}>
-          <h3 style={countStyle}>{voters}</h3>
-          <p>Voters</p>
-        </div>
-        <div id="stats" style={statItemStyle}>
-          <h3 style={countStyle}>{population}</h3>
-          <p>Population</p>
-        </div>
-        <div id="stats" style={statItemStyle}>
-          <h3 style={countStyle}>4.89 has</h3>
-          <p>Land Area</p>
-        </div>
-      </div>
+     
     </div>
   );
 };
