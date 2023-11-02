@@ -78,7 +78,7 @@ function BpermitAdmin() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/get/businessclearance');
+            const response = await axios.get('https://dbarangay.onrender.com/get/businessclearance');
             setData(response.data);
         } catch (error) {
             console.error(error);
@@ -153,7 +153,7 @@ function BpermitAdmin() {
     //  DELETE  
     const deleteRow = async (id) => {
         try {
-            await axios.delete(`http://localhost:8000/delete/businessclearance/${id}`);
+            await axios.delete(`https://dbarangay.onrender.com/delete/businessclearance/${id}`);
             fetchData();
         } catch (error) {
             console.error(error);
@@ -213,7 +213,7 @@ function BpermitAdmin() {
 
         try {
 
-            await axios.post("http://localhost:8000/businessclearance", {
+            await axios.post("https://dbarangay.onrender.com/businessclearance", {
                 businessName, address, residentName, userId, type, reasonOfRequest, pickUpDate, modeOfPayment, reference
             })
                 .then(res => {
@@ -275,7 +275,7 @@ function BpermitAdmin() {
 
 
             const response = await axios.put(
-                `http://localhost:8000/update/businessclearance/${selectedRowData}`,
+                `https://dbarangay.onrender.com/update/businessclearance/${selectedRowData}`,
                 updatedData
             );
             console.log(response.data);
@@ -307,7 +307,7 @@ function BpermitAdmin() {
             if (token) {
                 const decoded =jwtDecode(token);
                 const _id = decoded.id;
-                const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+                const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
                 setUserData(response.data);
             }
         } catch (error) {

@@ -179,7 +179,7 @@ function UserService() {
         const decoded =jwtDecode(token);
         const userId = decoded.id;
 
-        const response = await axios.post("http://localhost:8000/barangaycertificate", {
+        const response = await axios.post("https://dbarangay.onrender.com/barangaycertificate", {
           residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
         });
 
@@ -264,7 +264,7 @@ function UserService() {
       if (token) {
         const decoded =jwtDecode(token);
         const userId = decoded.id;
-        await axios.post("http://localhost:8000/businessclearance", {
+        await axios.post("https://dbarangay.onrender.com/businessclearance", {
           businessName, address, residentName, userId, type, reasonOfRequest, pickUpDate, modeOfPayment, reference
         })
           .then(res => {
@@ -334,7 +334,7 @@ function UserService() {
         const decoded =jwtDecode(token);
         const userId = decoded.id;
 
-        await axios.post("http://localhost:8000/barangayid", {
+        await axios.post("https://dbarangay.onrender.com/barangayid", {
           residentName,
           userId,
           address,
@@ -410,7 +410,7 @@ function UserService() {
         const decoded =jwtDecode(token);
 
         const userId = decoded.id;
-        await axios.post("http://localhost:8000/installation", {
+        await axios.post("https://dbarangay.onrender.com/installation", {
           residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
         })
           .then(res => {
@@ -483,7 +483,7 @@ function UserService() {
       if (token) {
         const decoded =jwtDecode(token);
         const userId = decoded.id;
-        await axios.post("http://localhost:8000/construction", {
+        await axios.post("https://dbarangay.onrender.com/construction", {
           residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
         })
           .then(res => {
@@ -559,7 +559,7 @@ function UserService() {
         const decoded =jwtDecode(token);
         const userId = decoded.id;
 
-        await axios.post("http://localhost:8000/barangayindigency", {
+        await axios.post("https://dbarangay.onrender.com/barangayindigency", {
           residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
         })
           .then(res => {

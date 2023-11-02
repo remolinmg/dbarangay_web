@@ -16,7 +16,7 @@ class Announcement extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:8000/get/announcement')
+    axios.get('https://dbarangay.onrender.com/get/announcement')
       .then((response) => {
         this.setState({ posts: response.data });
       })

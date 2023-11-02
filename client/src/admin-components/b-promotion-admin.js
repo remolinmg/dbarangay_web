@@ -78,7 +78,7 @@ function BpromotionAdmin() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get/promotebusiness');
+      const response = await axios.get('https://dbarangay.onrender.com/get/promotebusiness');
       setData(response.data);
     } catch (error) {
       console.error(error);
@@ -149,7 +149,7 @@ function BpromotionAdmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/delete/promotebusiness/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/promotebusiness/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -175,7 +175,7 @@ function BpromotionAdmin() {
     formData.append('category', category);
     formData.append('residentName', residentName);
     formData.append('file', file);
-    axios.post('http://localhost:8000/promotebusiness', formData).then(res => {
+    axios.post('https://dbarangay.onrender.com/promotebusiness', formData).then(res => {
       if (res.data === "Error saving data to MongoDB and Cloudinary") {
         alert("Business Already Exist!");
       }
@@ -240,7 +240,7 @@ function BpromotionAdmin() {
       }
 
       const response = await axios.put(
-        `http://localhost:8000/update/promotebusiness/${selectedRowData}`,
+        `https://dbarangay.onrender.com/update/promotebusiness/${selectedRowData}`,
         formData
       );
       console.log(response.data);
@@ -272,7 +272,7 @@ function BpromotionAdmin() {
       if (token) {
         const decoded =jwtDecode(token);
         const _id = decoded.id;
-        const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+        const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
         setUserData(response.data);
       }
     } catch (error) {

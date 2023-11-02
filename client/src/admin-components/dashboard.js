@@ -76,7 +76,7 @@ function Dashboard() {
     });
     // top cards ---------------------------------------------------
     useEffect(() => {
-        axios.get('http://localhost:8000/get/user')
+        axios.get('https://dbarangay.onrender.com/get/user')
             .then((response) => {
                 const userData = response.data;
 
@@ -109,7 +109,7 @@ function Dashboard() {
 
     // BAR GRAPH EMPLOYMENT STATUS
     useEffect(() => {
-        axios.get('http://localhost:8000/get/user')
+        axios.get('https://dbarangay.onrender.com/get/user')
             .then((response) => {
                 const userData = response.data;
 
@@ -156,7 +156,7 @@ function Dashboard() {
     // BAR GRAPH CIVIL STATUS 
     useEffect(() => {
         // Make an HTTP request to the API endpoint to get user data
-        axios.get('http://localhost:8000/get/user')
+        axios.get('https://dbarangay.onrender.com/get/user')
             .then(response => {
                 // Count the number of users with different civil statuses
                 const singleCount = response.data.filter(user => user.civilStatus === 'Single').length;
@@ -213,7 +213,7 @@ function Dashboard() {
 
     // Doughnut Educational Attainment
     useEffect(() => {
-        axios.get('http://localhost:8000/get/user')
+        axios.get('https://dbarangay.onrender.com/get/user')
             .then((response) => {
                 const userData = response.data;
 
@@ -282,7 +282,7 @@ function Dashboard() {
 
     // Age Distribution
     useEffect(() => {
-        axios.get('http://localhost:8000/get/user')
+        axios.get('https://dbarangay.onrender.com/get/user')
             .then((response) => {
                 const userData = response.data;
 
@@ -380,7 +380,7 @@ function Dashboard() {
     // profile ------------------
     useEffect(() => {
         // Make an HTTP request to fetch user information
-        axios.get('http://localhost:8000/get/user')
+        axios.get('https://dbarangay.onrender.com/get/user')
             .then((response) => {
                 console.log('Response data:', response.data); // Log the entire response data
                 const userData = response.data;
@@ -414,7 +414,7 @@ const fetchUser = async () => {
     if (token) { 
     const decoded =jwtDecode(token);
       const _id = decoded.id;
-      const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+      const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
       setUserData(response.data);
     }
   } catch (error) {

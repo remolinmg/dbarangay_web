@@ -132,7 +132,7 @@ function StafflogsAdmin() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/get/stafflogs');
+            const response = await axios.get('https://dbarangay.onrender.com/get/stafflogs');
             setData(response.data);
         } catch (error) {
             console.error(error);
@@ -161,7 +161,7 @@ function StafflogsAdmin() {
             if (token) {
                 const decoded =jwtDecode(token);
                 const _id = decoded.id;
-                const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+                const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
                 setUserData(response.data);
             }
         } catch (error) {

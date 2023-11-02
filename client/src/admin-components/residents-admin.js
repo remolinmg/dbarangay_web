@@ -80,7 +80,7 @@ function ResidentsAdmin() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get/user');
+      const response = await axios.get('https://dbarangay.onrender.com/get/user');
       setData(response.data);
     } catch (error) {
       console.error(error);
@@ -159,7 +159,7 @@ const fetchUser = async () => {
     if (token) { 
     const decoded =jwtDecode(token);
       const _id = decoded.id;
-      const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+      const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
       setUserData(response.data);
     }
   } catch (error) {

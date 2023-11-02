@@ -78,7 +78,7 @@ function BconstuctionAdmin() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get/construction');
+      const response = await axios.get('https://dbarangay.onrender.com/get/construction');
       setData(response.data);
     } catch (error) {
       console.error(error);
@@ -147,7 +147,7 @@ function BconstuctionAdmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/delete/construction/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/construction/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -205,7 +205,7 @@ function BconstuctionAdmin() {
 
     try {
 
-      await axios.post("http://localhost:8000/construction", {
+      await axios.post("https://dbarangay.onrender.com/construction", {
         residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
       })
         .then(res => {
@@ -262,7 +262,7 @@ function BconstuctionAdmin() {
 
 
       const response = await axios.put(
-        `http://localhost:8000/update/construction/${selectedRowData}`,
+        `https://dbarangay.onrender.com/update/construction/${selectedRowData}`,
         updatedData
       );
       console.log(response.data);
@@ -295,7 +295,7 @@ function BconstuctionAdmin() {
       if (token) {
         const decoded =jwtDecode(token);
         const _id = decoded.id;
-        const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+        const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
         setUserData(response.data);
       }
     } catch (error) {

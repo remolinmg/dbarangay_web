@@ -29,7 +29,7 @@ const ForgotPassword = () => {
       setOTP(OTP);
       setEmail(email);
       // Send a POST request to your Node.js server to initiate the password reset process
-      await axios.post('http://localhost:8000/forgotpass', { OTP, email });
+      await axios.post('https://dbarangay.onrender.com/forgotpass', { OTP, email });
       alert('Email sent successfully.');
 
       navigate("/resetpass")

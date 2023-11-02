@@ -15,7 +15,7 @@ class Livelihood extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:8000/get/livelihood')
+    axios.get('https://dbarangay.onrender.com/get/livelihood')
       .then((response) => {
         this.setState({ livelihoodData: response.data });
       })

@@ -30,7 +30,7 @@ const Footer = () => {
 
     try {
 
-      await axios.post("http://localhost:8000/feedback", {
+      await axios.post("https://dbarangay.onrender.com/feedback", {
         date,feedback
       })
         .then(res => {

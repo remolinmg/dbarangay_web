@@ -44,7 +44,7 @@ function Dashboard2() {
 
     useEffect(() => {
         // Fetch emergency data
-        axios.get('http://localhost:8000/get/health')
+        axios.get('https://dbarangay.onrender.com/get/health')
             .then((response) => {
                 const emergencyData = response.data;
 
@@ -66,7 +66,7 @@ function Dashboard2() {
         // Fetch health data with a 12-month limit
         const twelveMonthsAgo = moment().subtract(12, 'months').format('YYYY-MM-DD');
         axios
-            .get(`http://localhost:8000/get/health?fromDate=${twelveMonthsAgo}`)
+            .get(`https://dbarangay.onrender.com/get/health?fromDate=${twelveMonthsAgo}`)
             .then((response) => {
                 const healthData = response.data;
                 setHealthData(healthData);
@@ -207,7 +207,7 @@ const fetchUser = async () => {
     if (token) { 
     const decoded =jwtDecode(token);
       const _id = decoded.id;
-      const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+      const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
       setUserData(response.data);
     }
   } catch (error) {

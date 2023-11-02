@@ -133,7 +133,7 @@ function Usersample() {
   
       try {
   
-        await axios.post("http://localhost:8000/barangaycertificate", {
+        await axios.post("https://dbarangay.onrender.com/barangaycertificate", {
           residentName, address, reasonOfRequest, pickUpDate,modeOfPayment,reference
         })
           .then(res => {
@@ -163,7 +163,7 @@ function Usersample() {
   
       try {
   
-        await axios.post("http://localhost:8000/businessclearance", {
+        await axios.post("https://dbarangay.onrender.com/businessclearance", {
           businessName, address, residentName, type, reasonOfRequest, pickUpDate,modeOfPayment,reference
         })
           .then(res => {
@@ -192,7 +192,7 @@ function Usersample() {
   
       try {
   
-        await axios.post("http://localhost:8000/barangayindigency", {
+        await axios.post("https://dbarangay.onrender.com/barangayindigency", {
           residentName, address, reasonOfRequest, pickUpDate,modeOfPayment,reference
         })
           .then(res => {
@@ -222,7 +222,7 @@ function Usersample() {
   
       try {
   
-        await axios.post("http://localhost:8000/barangayid", {
+        await axios.post("https://dbarangay.onrender.com/barangayid", {
           residentName, address, pickUpDate,modeOfPayment,reference
         })
           .then(res => {
@@ -251,7 +251,7 @@ function Usersample() {
   
       try {
   
-        await axios.post("http://localhost:8000/installation", {
+        await axios.post("https://dbarangay.onrender.com/installation", {
           residentName, address, reasonOfRequest, pickUpDate,modeOfPayment,reference
         })
           .then(res => {
@@ -280,7 +280,7 @@ function Usersample() {
   
       try {
   
-        await axios.post("http://localhost:8000/construction", {
+        await axios.post("https://dbarangay.onrender.com/construction", {
           residentName, address, reasonOfRequest, pickUpDate,modeOfPayment,reference
         })
           .then(res => {

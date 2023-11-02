@@ -27,7 +27,7 @@ function Residentsaccounts() {
             if (token) {
                 const decoded =jwtDecode(token);
                 const _id = decoded.id;
-                const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+                const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
                 setUserData(response.data);
             }
         } catch (error) {
@@ -94,7 +94,7 @@ function Residentsaccounts() {
     const fetchData = async () => {
         try {
             const accountId = localStorage.getItem('account');
-            const response = await axios.get(`http://localhost:8000/get/useredit/${accountId}`);
+            const response = await axios.get(`https://dbarangay.onrender.com/get/useredit/${accountId}`);
             setData(response.data);
         } catch (error) {
             console.error(error);
@@ -166,7 +166,7 @@ function Residentsaccounts() {
             formData.append('status', editStatus);
             formData.append('file', selectedFile);
             const response = await axios.put(
-                `http://localhost:8000/update/user/${accountId}`,
+                `https://dbarangay.onrender.com/update/user/${accountId}`,
                 formData
             );
             console.log(response.data);

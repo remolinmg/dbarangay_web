@@ -24,7 +24,7 @@ class BrgyOfficial extends Component {
 
   componentDidMount() {
     // Fetch posts from your API using Axios
-    axios.get('http://localhost:8000/get/official') // Update the endpoint
+    axios.get('https://dbarangay.onrender.com/get/official') // Update the endpoint
       .then((response) => {
         this.setState({ posts: response.data });
       })
