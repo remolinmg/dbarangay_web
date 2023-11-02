@@ -193,7 +193,7 @@ const Login = () => {
                 Login
               </button>
               <p id="register-btn" className="register-link text-center text-dark">
-                New user? <a href="registration">Register here</a>
+                New user? <a href="/registration">Register here</a>
               </p>
               <p id="forgotpass-btn" className="register-link text-center text-dark">
                 <a href="/forgotpass">Forgot Password</a>
