@@ -519,7 +519,7 @@ return (
                           <th scope="col">DEFENDANT</th>
                           <th scope="col">COMPLAINT TYPE</th>
                           <th scope="col">INCIDENT ADDRESS</th>
-                          <th scope="col">DOCUMENTATION</th>
+                        
                           <th scope="col">TYPE</th>
                           <th scope="col">STATUS</th>
                           <th scope="col">ACTIONS</th>
@@ -533,11 +533,6 @@ return (
                             <td>{item.defendant}</td>
                             <td>{item.type}</td>
                             <td>{item.address}</td>
-                            {/* <td>
-                              <a href={require(`../../../server/uploads/blotter/${item.filename}`)} download={item.filename}>
-                                {item.filename}
-                              </a>
-                            </td> */}
                             <td>{item.kind}</td>
                             <td>{item.status}</td>
                             <td>
@@ -600,7 +595,6 @@ return (
                             <option value="Missing Person">MISSING PERSON</option>
                             <option value="Missing Property">MISSING PROPERTY</option>
                             <option value="Missing Animal">MISSING ANIMAL</option>
-                            <option value="Body Found">BODY FOUND</option>
                             <option value="Injury">INJURY</option>
                             <option value="Damage to Property">DAMAGE TO PROPERTY</option>
                             <option value="Sexual Harrasment">SEXUAL HARRASMENT</option>
@@ -616,14 +610,7 @@ return (
                             onChange={(e) => { setAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-                        <div className="form-group">
-                          <label htmlFor="file">DOCUMENTATION</label>
-                          <input
-                            type="file"
-                            id="file"
-                            name="file" onChange={(e) => setFile(e.target.files[0])}
-                            className="form-control" required /></div>
-
+                       
                         <div className="form-group">
                           <label htmlFor="kind">TYPE</label>
                           <select
@@ -712,7 +699,6 @@ return (
                             <option value="Missing Person">MISSING PERSON</option>
                             <option value="Missing Property">MISSING PROPERTY</option>
                             <option value="Missing Animal">MISSING ANIMAL</option>
-                            <option value="Body Found">BODY FOUND</option>
                             <option value="Injury">INJURY</option>
                             <option value="Damage to Property">DAMAGE TO PROPERTY</option>
                             <option value="Sexual Harrasment">SEXUAL HARRASMENT</option>
@@ -729,13 +715,7 @@ return (
                             onChange={(e) => { setEditAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-                        <div className="form-group">
-                          <label htmlFor="file">DOCUMENTATION</label>
-                          <input
-                            type="file"
-                            id="file"
-                            name="file" onChange={(e) => setEditFile(e.target.files[0])}
-                            className="form-control" /></div>
+                       
 
                         <div className="form-group">
                           <label htmlFor="kind">TYPE</label>
