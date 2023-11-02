@@ -8,7 +8,7 @@ const ProtectedRoute = () => {
   const isAuthenticated = !!cookies.access_token;
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/visitor" />;
   } else {
     return <Outlet />;
   }
