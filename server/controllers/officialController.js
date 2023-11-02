@@ -12,7 +12,7 @@ exports.createOfficial = async (req, res) => {
   try {
     // Upload the image to Cloudinary
     const result = await cloudinary.uploader.upload(path, {
-      folder: 'annoucement',
+      folder: 'official',
     });
 
     const newOfficial = new official({
