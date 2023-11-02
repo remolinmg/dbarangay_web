@@ -214,10 +214,10 @@ const RegistrationComponent = () => {
     formData.append('position', position)
     formData.append('file', file)
     axios.post("https://dbarangay.onrender.com/signup", formData)
-      .then(res => {
+    .then(res => {
         if (res.data === 'Error saving data to MongoDB and Cloudinary') {
-          alert("Announcement Already Exist!");
-        } else if (res.data === 'true') {
+          alert("User Already Exist!");
+        } else if (res.data === 'File and text data saved to MongoDB and Cloudinary') {
           // After successful upload to MongoDB, reset the form
           alert("Registered Successfully");
           navigate("/login");

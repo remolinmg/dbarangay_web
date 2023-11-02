@@ -160,7 +160,7 @@ exports.signup = async (req, res) => {
         },
       });
       await newCustomData.save();
-      res.send('Yes');
+      res.send('File and text data saved to MongoDB and Cloudinary');
     } catch (err) {
       console.error(err);
       res.status(500).send('Error saving data to MongoDB and Cloudinary');
