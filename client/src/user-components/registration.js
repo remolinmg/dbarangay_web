@@ -436,11 +436,11 @@ const RegistrationComponent = () => {
     <div className="container-fluid main-reg">
       <div className="row">
         <div className="col-12 col-md-8 left-side-reg">
-          <div className="registration-container" id="registration-container">
-            <form id="register">
+          <div className="registration-container p-4" id="registration-container">
+            <form id="register p-2">
 
               <h2 className="registration-heading"> REGISTRATION</h2>
-              <p><b>Note:</b>Put N/A if required information is not applicable. Password must contain a combination of uppercase and lowercase letters, symbols and special characters.</p>
+              <p><b className="pe-2">Note:</b>Put N/A if required information is not applicable. Password must contain a combination of uppercase and lowercase letters, symbols and special characters.</p>
 
               <div className="container form-container d-flex flex-column">
                 {/*--------------- BASIC INFORMATION --------------- */}
