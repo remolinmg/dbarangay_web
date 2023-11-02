@@ -9,7 +9,16 @@ const officialSchema = new mongoose.Schema({
   address: String,
   startTerm: String,
   endTerm: String,
-  filename: String,
+  filename: {
+    public_id: {
+      type: String,
+      required: true
+    },
+    url:{
+      type: String,
+      required: true
+    }
+  },
 });
 
 const official = mongoose.model('official', officialSchema);
