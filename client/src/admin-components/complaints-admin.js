@@ -105,14 +105,14 @@ function Complaintsadmin() {
     const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
     return reversedData.slice(startIndex, endIndex);
   };
-// stay on first page
+  // stay on first page
   const filteredAndSortedData = data
-  .filter((item) => {
-    const itemValues = Object.values(item).map((value) =>
-      value.toString().toLowerCase()
-    );
-    return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
-  })
+    .filter((item) => {
+      const itemValues = Object.values(item).map((value) =>
+        value.toString().toLowerCase()
+      );
+      return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+    })
 
   // Function to go to the next page ------------------------------------------
   const nextPage = () => {
@@ -239,7 +239,7 @@ function Complaintsadmin() {
     }
   };
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     document.cookie = 'access_token=; ';
@@ -248,86 +248,95 @@ function Complaintsadmin() {
     navigate('/admin')
   };
 
-// User FETCHING
-const [userData, setUserData] = useState([]);
-useEffect(() => {
-  fetchUser(); 
-}, []);
+  // User FETCHING
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
-const fetchUser = async () => {
-  try {
-    const token = Cookies.get('access_token');
-    if (token) { 
-    const decoded =jwtDecode(token);
-      const _id = decoded.id;
-      const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
-      setUserData(response.data);
+  const fetchUser = async () => {
+    try {
+      const token = Cookies.get('access_token');
+      if (token) {
+        const decoded = jwtDecode(token);
+        const _id = decoded.id;
+        const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
+        setUserData(response.data);
+      }
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
-  }
-};
+  };
 
-return (
- <>
- 
-   <div className="topbarsection">
-   {Array.isArray(userData) ? (
-                         userData.map((item, index) => (
-                             <div key={index}>
-     <div className="topnavbar d-flex justify-content-between align-items-center">
-       <div className="topnavleft">
-         <button className="collapse-button" onClick={handleSidebarCollapse}>
-           <BiMenu />
-         </button>
-       </div>
-       <div className="topnavmid">
-         <h3>Barangay Harapin Ang Bukas</h3>
-       </div>
-       <div className="topnavright">
-         <div ref={profileRef}>
-           <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-           {ProfilesubmenuVisible && (
-             <div className="Profilesubmenuadmin">
-               <div className="admininfo">
-                 <div className="rightprofile">
-                   <FaUserCircle className="adminprofile" />
-                 </div>
-                 <div className="leftprofile">
-                   <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
-                   <h5>{item.email}</h5>
-                 </div>
-               </div>
-               <div className="lowerprofile">
-                 <div className="button-profile1">
-                   <NavLink to="/admin-profile" activeClassName="active">
-                     <div href="#" className="profilebuttons">
-                       <BiCog className="profileicons" /> Settings
-                     </div>
-                   </NavLink>
-                 </div>
-                 <hr />
-                 <div className="button-profile1">
+  return (
+    <>
 
-                   
-                     <div onClick={handleSignOut} className="profilebuttons">
-                       <BiLogOut className="profileicons" /> Log out
-                     </div>
-                   
-                 </div>
-               </div>
-             </div>
-           )}
-         </div>
-       </div>
+      <div className="topbarsection">
+        {Array.isArray(userData) ? (
+          userData.map((item, index) => (
+            <div key={index}>
+              <div className="topnavbar d-flex justify-content-between align-items-center">
+                <div className="topnavleft">
+                  <button className="collapse-button" onClick={handleSidebarCollapse}>
+                    <BiMenu />
+                  </button>
+                </div>
+                <div className="topnavmid">
+                  <h3>Barangay Harapin Ang Bukas</h3>
+                </div>
+                <div className="topnavright">
+                  <div ref={profileRef}>
+                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                    {ProfilesubmenuVisible && (
+                      <div className="Profilesubmenuadmin">
+                        <div className="adminiconprofile">
+                          <ul className="Profilesubmenuadmin">
+                            <li className="profile-info-admin">
+                              <img src={item.filename.url} calt="Profile Picture" className="profile-pic" id="profile-pic" />
+                            </li>
+                            <li>
+                              <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
+                            </li>
+                            <li>
+                              <NavLink className="link" to="/UserProfile" activeClassName="active">
+                                <a href="#" className="button">Settings</a>
+                              </NavLink>
+                            </li>
+                            <li>
+                              <a href="/login" className="button" onClick={handleSignOut}>Sign Out</a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="lowerprofile">
+                          <div className="button-profile1">
+                            <NavLink to="/admin-profile" activeClassName="active">
+                              <div href="#" className="profilebuttons">
+                                <BiCog className="profileicons" /> Settings
+                              </div>
+                            </NavLink>
+                          </div>
+                          <hr />
+                          <div className="button-profile1">
 
-     </div>
-     </div>
-                         ))
-                     ) : (
-                         <p>No data to display.</p>
-                     )}
-   </div>
+
+                            <div onClick={handleSignOut} className="profilebuttons">
+                              <BiLogOut className="profileicons" /> Log out
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No data to display.</p>
+        )}
+      </div>
       <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">
           <div className="text-center">
@@ -434,7 +443,7 @@ return (
       </div>
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
-        <div className="toppart-table border row w-75 d-flex align-items-center">
+          <div className="toppart-table border row w-75 d-flex align-items-center">
             <div className="col-4">
               <div className="input-group">
                 <input
@@ -457,7 +466,7 @@ return (
                 </ul>
               </div>
             </div>
-            
+
             <div className="col-4">
               <div className="dropdown-tablenumbers">
                 <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
@@ -518,7 +527,7 @@ return (
                           <th scope="col">DEFENDANT</th>
                           <th scope="col">COMPLAINT TYPE</th>
                           <th scope="col">INCIDENT ADDRESS</th>
-                          
+
                           <th scope="col">TYPE</th>
                           <th scope="col">STATUS</th>
                           <th scope="col">ACTIONS</th>
@@ -532,7 +541,7 @@ return (
                             <td>{item.defendant}</td>
                             <td>{item.complainttype}</td>
                             <td>{item.address}</td>
-                           
+
 
                             <td>{item.kind}</td>
                             <td>{item.status}</td>
@@ -559,14 +568,14 @@ return (
                       <h2 className="certificate-title">ADD COMPLAINT INFO</h2>
                       <div className="certificate-content">
 
-                      <div className="form-group">
+                        <div className="form-group">
                           <label htmlFor="date">COMPLAINT DATE </label>
                           <input
                             type="date"
                             id="date"
                             name="date" onChange={(e) => { setDate(e.target.value); }}
                             className="form-control" required /> </div>
-                         
+
 
                         <div className="form-group">
                           <label htmlFor="complainant">COMPLAINANT </label>
@@ -612,9 +621,9 @@ return (
                             onChange={(e) => { setAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-                      
 
-                             <div className="form-group">
+
+                        <div className="form-group">
                           <label htmlFor="kind">TYPE</label>
                           <select
                             id="kind"
@@ -719,7 +728,7 @@ return (
                             className="form-control" required /></div>
 
 
-                          <div className="form-group">
+                        <div className="form-group">
                           <label htmlFor="kind">TYPE</label>
                           <select
                             id="kind"
