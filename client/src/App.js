@@ -72,13 +72,13 @@ function App() {
           <Routes>
 
 
-            <Route path="login" element={<Login />} />
-            <Route path="admin" element={<Admin />} />
-            <Route path="registration" element={<Registration />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/registration" element={<Registration />} />
             <Route path="/" element={<Landpage />}/>
-            <Route path="forgotpass" element={<ForgotPassword />} />
-            <Route path="resetpass" element={<ResetPassword />} />
-            <Route path="recoveredpass" element={<RecoveredPassword />} />
+            <Route path="/forgotpass" element={<ForgotPassword />} />
+            <Route path="/resetpass" element={<ResetPassword />} />
+            <Route path="/recoveredpass" element={<RecoveredPassword />} />
 
 
             {/* SUPERADMIN */}
