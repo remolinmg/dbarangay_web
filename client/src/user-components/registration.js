@@ -440,6 +440,7 @@ const RegistrationComponent = () => {
             <form id="register">
 
               <h2 className="registration-heading"> REGISTRATION</h2>
+              <p><b>Note:</b>Put N/A if required information is not applicable. Password must contain a combination of uppercase and lowercase letters, symbols and special characters.</p>
 
               <div className="container form-container d-flex flex-column">
                 {/*--------------- BASIC INFORMATION --------------- */}
@@ -872,7 +873,6 @@ const RegistrationComponent = () => {
         </div>
         <div className="col-12 col-md-4 right-side-reg text-light p-3">
           <div className="reg-desc p-5">
-            <h3 style={{ color: 'red' }}>if you dont have something like middle name put N/A</h3>
             <h3>Disclaimer:</h3>
             <p className="reg-p">This website (or organization) takes your privacy seriously. Any information collected through this platform will be treated with the utmost confidentiality and care. We are committed to ensuring that your personal information is kept secure and used only for the purposes of verification, as stated in our Privacy Policy.</p>
             <h5>Privacy Assurance:</h5>
