@@ -20,16 +20,14 @@ const MissionVision = () => {
           <div className="text-sm-small card-body text-center p-4">
             <img src={mis} style={iconStyle} alt="Mission Icon" />
             <h1>Mission</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+            <p>We are committed to delivering efficient and transparent public service, promoting community engagement, and fostering sustainable development for the benefit of all our residents. Through collaboration, innovation, and inclusivity, we strive to create a barangay that is safe, resilient, and offers opportunities for growth and well-being </p>
           </div>
         </div>
         <div id="mission-vision" className="col-12 col-md-6 card m-3">
           <div className="text-sm-small card-body text-center p-4">
             <img  src={vis} style={iconStyle} alt="Vision Icon" />
             <h1>Vision</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+            <p>To be a safe, thriving, and inclusive community that empowers our residents to lead happy and fulfilled lives. </p>
           </div>
         </div>
       </div>

@@ -40,9 +40,6 @@ class BrgyOfficial extends Component {
           <h2 style={{ textAlign: 'center', color: '#0060AD', fontWeight: 'bold' }}>
             BARANGAY HARAPIN ANG BUKAS COUNCIL
           </h2>
-          <p style={{ textAlign: 'center', color: '#0060AD', fontWeight: 'bold' }}>
-            Description about barangay officials goes here.
-          </p>
 
 
           <div className="d-flex flex-wrap justify-content-evenly">
