@@ -138,8 +138,8 @@ function ResidentsAdmin() {
   const toggleForm = () => { setShowForm(!showForm); }; // SHOW FORMS
 
 
-  
-  const navigate = useNavigate();  
+
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     document.cookie = 'access_token=; ';
@@ -147,86 +147,75 @@ function ResidentsAdmin() {
     window.localStorage.clear();
     navigate('/admin')
   };
-// User FETCHING
-const [userData, setUserData] = useState([]);
-useEffect(() => {
-  fetchUser(); 
-}, []);
+  // User FETCHING
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
-const fetchUser = async () => {
-  try {
-    const token = Cookies.get('access_token');
-    if (token) { 
-    const decoded =jwtDecode(token);
-      const _id = decoded.id;
-      const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
-      setUserData(response.data);
+  const fetchUser = async () => {
+    try {
+      const token = Cookies.get('access_token');
+      if (token) {
+        const decoded = jwtDecode(token);
+        const _id = decoded.id;
+        const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
+        setUserData(response.data);
+      }
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
-  }
-};
+  };
 
-return (
- <>
- 
-   <div className="topbarsection">
-   {Array.isArray(userData) ? (
-                         userData.map((item, index) => (
-                             <div key={index}>
-     <div className="topnavbar d-flex justify-content-between align-items-center">
-       <div className="topnavleft">
-         <button className="collapse-button" onClick={handleSidebarCollapse}>
-           <BiMenu />
-         </button>
-       </div>
-       <div className="topnavmid">
-         <h3>Barangay Harapin Ang Bukas</h3>
-       </div>
-       <div className="topnavright">
-         <div ref={profileRef}>
-           <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-           {ProfilesubmenuVisible && (
-             <div className="Profilesubmenuadmin">
-               <div className="admininfo">
-                 <div className="rightprofile">
-                   <FaUserCircle className="adminprofile" />
-                 </div>
-                 <div className="leftprofile">
-                   <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
-                   <h5>{item.email}</h5>
-                 </div>
-               </div>
-               <div className="lowerprofile">
-                 <div className="button-profile1">
-                   <NavLink to="/admin-profile" activeClassName="active">
-                     <div href="#" className="profilebuttons">
-                       <BiCog className="profileicons" /> Settings
-                     </div>
-                   </NavLink>
-                 </div>
-                 <hr />
-                 <div className="button-profile1">
+  return (
+    <>
 
-                   
-                     <div onClick={handleSignOut} className="profilebuttons">
-                       <BiLogOut className="profileicons" /> Log out
-                     </div>
-                   
-                 </div>
-               </div>
-             </div>
-           )}
-         </div>
-       </div>
+      <div className="topbarsection">
+        {Array.isArray(userData) ? (
+          userData.map((item, index) => (
+            <div key={index}>
+              <div className="topnavbar d-flex justify-content-between align-items-center">
+                <div className="topnavleft">
+                  <button className="collapse-button" onClick={handleSidebarCollapse}>
+                    <BiMenu />
+                  </button>
+                </div>
+                <div className="topnavmid">
+                  <h3>Barangay Harapin Ang Bukas</h3>
+                </div>
+                <div className="topnavright">
+                  <div ref={profileRef}>
+                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                    {ProfilesubmenuVisible && (
+                      <div className="adminiconprofile">
+                        <ul className="Profilesubmenuadmin">
+                          <li className="profile-info-admin">
+                            <img src={item.filename.url} calt="Profile Picture" className="profile-pic" id="profile-pic" />
+                          </li>
+                          <li>
+                            <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
+                          </li>
+                          <li>
+                            <NavLink className="link" to="/UserProfile" activeClassName="active">
+                              <a href="#" className="button">Settings</a>
+                            </NavLink>
+                          </li>
+                          <li>
+                            <a href="/login" className="button" onClick={handleSignOut}>Sign Out</a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
 
-     </div>
-     </div>
-                         ))
-                     ) : (
-                         <p>No data to display.</p>
-                     )}
-   </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No data to display.</p>
+        )}
+      </div>
       <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">
           <div className="text-center">
@@ -349,7 +338,7 @@ return (
             </div>
             <div className="col-4">
               <div className="dropdown-tablenumbers">
-              <select
+                <select
                   type="text"
                   className="form-control"
                   placeholder="Search"
@@ -358,12 +347,12 @@ return (
                   value={searchQuery}
                   onChange={handleSearchChange}
                 >
-                   <option value="active">Active</option>
+                  <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
-              </select>
+                </select>
               </div>
             </div>
-           
+
             <div className="col-4">
               <div className="dropdown-tablenumbers">
                 <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
@@ -431,10 +420,10 @@ return (
 
                     <tbody>
                       {getCurrentPageData().map((item, index) => (
-                        <tr key={item._id} onClick={() => { 
+                        <tr key={item._id} onClick={() => {
                           window.localStorage.setItem('account', item._id);
                           window.location.href = "/residents-accounts"; // Redirect to a URL
-                          
+
                         }}>
                           <td>{item._id}</td>
                           <td>{item.lastName}</td>

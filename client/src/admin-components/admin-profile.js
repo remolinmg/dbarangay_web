@@ -39,7 +39,7 @@ function Admindetails() {
         try {
             const token = Cookies.get('access_token');
             if (token) {
-                const decoded =jwtDecode(token);
+                const decoded = jwtDecode(token);
                 const _id = decoded.id;
                 const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
                 setUserData(response.data);
@@ -131,7 +131,7 @@ function Admindetails() {
         try {
             const token = Cookies.get('access_token');
             if (token) {
-                const decoded =jwtDecode(token);
+                const decoded = jwtDecode(token);
                 const _id = decoded.id;
 
                 const brgyCertData = await axios.get(`https://dbarangay.onrender.com/get/barangaycertificate/${_id}`);
@@ -162,7 +162,7 @@ function Admindetails() {
         try {
             const token = Cookies.get('access_token');
             if (token) {
-                const decoded =jwtDecode(token);
+                const decoded = jwtDecode(token);
                 const _id = decoded.id;
                 const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
                 setData(response.data);
@@ -206,7 +206,7 @@ function Admindetails() {
 
     const updateRowData = async () => {
         const token = Cookies.get('access_token');
-        const decoded =jwtDecode(token);
+        const decoded = jwtDecode(token);
         const _id = decoded.id;
         try {
             const formData = new FormData();
@@ -267,24 +267,23 @@ function Admindetails() {
                                     <div ref={profileRef}>
                                         <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
                                         {ProfilesubmenuVisible && (
-                                            <div className="Profilesubmenuadmin">
-                                                <div className="admininfo">
-                                                    <div className="rightprofile">
-                                                        <FaUserCircle className="adminprofile" />
-                                                    </div>
-                                                    <div className="leftprofile">
-                                                        <h5>{val.firstName} {val.middleName} {val.lastName}</h5>
-                                                        <h5>{val.email}</h5>
-                                                    </div>
-                                                </div>
-                                                <div className="lowerprofile">
-                                                    <hr />
-                                                    <div className="button-profile1">
-                                                        <div onClick={handleSignOut} className="profilebuttons">
-                                                            <BiLogOut className="profileicons" /> Log out
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                              <div className="adminiconprofile">
+                                              <ul className="Profilesubmenuadmin">
+                                                <li className="profile-info-admin">
+                                                  <img src={val.filename.url} calt="Profile Picture" className="profile-pic" id="profile-pic" />
+                                                </li>
+                                                <li>
+                                                  <h5>{val.firstName} {val.middleName} {val.lastName}</h5>
+                                                </li>
+                                                <li>
+                                                  <NavLink className="link" to="/UserProfile" activeClassName="active">
+                                                    <a href="#" className="button">Settings</a>
+                                                  </NavLink>
+                                                </li>
+                                                <li>
+                                                  <a href="/login" className="button" onClick={handleSignOut}>Sign Out</a>
+                                                </li>
+                                              </ul>
                                             </div>
                                         )}
                                     </div>

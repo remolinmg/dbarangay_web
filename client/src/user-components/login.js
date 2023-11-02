@@ -78,6 +78,10 @@ const Login = () => {
     e.preventDefault();
     setFormSubmitted(true);
   
+    // Clear the email and password fields
+    setEmail('');
+    setPassword('');
+  
     if (loginAttempts >= maxLoginAttempts) {
       setIsLockedOut(true);
       localStorage.setItem('lastLockoutTime', Date.now());
@@ -100,7 +104,7 @@ const Login = () => {
       setPasswordValid('Please input data');
       return;
     }
-
+  
     try {
       const response = await axios.post("https://dbarangay.onrender.com/login", {
         email,
@@ -111,7 +115,7 @@ const Login = () => {
         const result = response.data.token;
         setCookie('access_token', result);
         window.localStorage.setItem('accountType', response.data.type);
-        navigate("/")
+        navigate("/");
         setEmailValid('');
         setPasswordValid('');
         setLoginAttempts(0);
@@ -129,6 +133,7 @@ const Login = () => {
       setLoginAttempts(loginAttempts + 1);
     }
   }
+  
   
   
 
@@ -193,7 +198,7 @@ const Login = () => {
                 Login
               </button>
               <p id="register-btn" className="register-link text-center text-dark">
-                New user? <a href="/registration">Register here</a>
+                New user? <a href="registration">Register here</a>
               </p>
               <p id="forgotpass-btn" className="register-link text-center text-dark">
                 <a href="/forgotpass">Forgot Password</a>

@@ -171,22 +171,22 @@ function LivelihoodAdmin() {
     formData.append('who', who);
     formData.append('file', file);
     axios.post('https://dbarangay.onrender.com/livelihood', formData)
-    .then(res => {
-      if (res.data === "Error saving data to MongoDB and Cloudinary") {
-        alert("Livelihood Already Exist!");
-      }
-      else if (res.data === "File and text data saved to MongoDB and Cloudinary") {
-        // After successful upload to MongoDB, reset the form
-        setWhat('');
-        setWhere('');
-        setWhen('');
-        setWho('');
-        setFile(null);
+      .then(res => {
+        if (res.data === "Error saving data to MongoDB and Cloudinary") {
+          alert("Livelihood Already Exist!");
+        }
+        else if (res.data === "File and text data saved to MongoDB and Cloudinary") {
+          // After successful upload to MongoDB, reset the form
+          setWhat('');
+          setWhere('');
+          setWhen('');
+          setWho('');
+          setFile(null);
 
 
-        fetchData(); // Fetch the updated data
-      }
-    })
+          fetchData(); // Fetch the updated data
+        }
+      })
       .catch(er => console.log(er))
   };
 
@@ -218,12 +218,12 @@ function LivelihoodAdmin() {
       formData.append('where', editWhere);
       formData.append('when', editWhen);
       formData.append('who', editWho);
-  
+
       // Check if a new image is selected
       if (editFile) {
         formData.append('file', editFile);
       }
-  
+
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/livelihood/${selectedRowData}`,
         formData
@@ -255,7 +255,7 @@ function LivelihoodAdmin() {
     try {
       const token = Cookies.get('access_token');
       if (token) {
-        const decoded =jwtDecode(token);
+        const decoded = jwtDecode(token);
         const _id = decoded.id;
         const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
         setUserData(response.data);
@@ -285,34 +285,23 @@ function LivelihoodAdmin() {
                   <div ref={profileRef}>
                     <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
                     {ProfilesubmenuVisible && (
-                      <div className="Profilesubmenuadmin">
-                        <div className="admininfo">
-                          <div className="rightprofile">
-                            <FaUserCircle className="adminprofile" />
-                          </div>
-                          <div className="leftprofile">
+                      <div className="adminiconprofile">
+                        <ul className="Profilesubmenuadmin">
+                          <li className="profile-info-admin">
+                            <img src={item.filename.url} calt="Profile Picture" className="profile-pic" id="profile-pic" />
+                          </li>
+                          <li>
                             <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
-                            <h5>{item.email}</h5>
-                          </div>
-                        </div>
-                        <div className="lowerprofile">
-                          <div className="button-profile1">
-                            <NavLink to="/admin-profile" activeClassName="active">
-                              <div href="#" className="profilebuttons">
-                                <BiCog className="profileicons" /> Settings
-                              </div>
+                          </li>
+                          <li>
+                            <NavLink className="link" to="/UserProfile" activeClassName="active">
+                              <a href="#" className="button">Settings</a>
                             </NavLink>
-                          </div>
-                          <hr />
-                          <div className="button-profile1">
-
-
-                            <div onClick={handleSignOut} className="profilebuttons">
-                              <BiLogOut className="profileicons" /> Log out
-                            </div>
-
-                          </div>
-                        </div>
+                          </li>
+                          <li>
+                            <a href="/login" className="button" onClick={handleSignOut}>Sign Out</a>
+                          </li>
+                        </ul>
                       </div>
                     )}
                   </div>
