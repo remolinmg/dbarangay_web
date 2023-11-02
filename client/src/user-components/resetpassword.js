@@ -17,7 +17,7 @@ const ResetPassword = () => {
     const OTP = Math.floor(100000 + Math.random() * 900000);
     console.log(OTP);
     setOTP(OTP);
-    await axios.post('http://localhost:8000/forgotpass', { OTP, email })
+    await axios.post('https://dbarangay.onrender.com/forgotpass', { OTP, email })
       .then(() => setDisable(true))
       .then(() => alert("A new otp has been sent successfully."))
       .then(() => setTimer(60))

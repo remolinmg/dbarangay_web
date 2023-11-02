@@ -76,7 +76,7 @@ function Binstallation() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get/installation');
+      const response = await axios.get('https://dbarangay.onrender.com/get/installation');
       setData(response.data);
     } catch (error) {
       console.error(error);
@@ -145,7 +145,7 @@ function Binstallation() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/delete/installation/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/installation/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -203,7 +203,7 @@ function Binstallation() {
 
     try {
 
-      await axios.post("http://localhost:8000/installation", {
+      await axios.post("https://dbarangay.onrender.com/installation", {
         residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
       })
         .then(res => {
@@ -259,7 +259,7 @@ function Binstallation() {
       };
 
       const response = await axios.put(
-        `http://localhost:8000/update/installation/${selectedRowData}`,
+        `https://dbarangay.onrender.com/update/installation/${selectedRowData}`,
         updatedData
       );
       console.log(response.data);
@@ -291,7 +291,7 @@ function Binstallation() {
       if (token) {
         const decoded =jwtDecode(token);
         const _id = decoded.id;
-        const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+        const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
         setUserData(response.data);
       }
     } catch (error) {

@@ -77,7 +77,7 @@ function EmergencyAdmin() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get/emergency');
+      const response = await axios.get('https://dbarangay.onrender.com/get/emergency');
       setData(response.data);
     } catch (error) {
       console.error(error);
@@ -147,7 +147,7 @@ function EmergencyAdmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/delete/emergency/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/emergency/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -175,7 +175,7 @@ function EmergencyAdmin() {
 
 
       const response = await axios.put(
-        `http://localhost:8000/update/emergency/${selectedRowData}`,
+        `https://dbarangay.onrender.com/update/emergency/${selectedRowData}`,
         updatedData
       );
       console.log(response.data);
@@ -208,7 +208,7 @@ const fetchUser = async () => {
     if (token) { 
     const decoded =jwtDecode(token);
       const _id = decoded.id;
-      const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+      const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
       setUserData(response.data);
     }
   } catch (error) {

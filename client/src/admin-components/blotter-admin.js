@@ -79,7 +79,7 @@ function BlotterAdmin() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get/blotter');
+      const response = await axios.get('https://dbarangay.onrender.com/get/blotter');
       setData(response.data);
     } catch (error) {
       console.error(error);
@@ -151,7 +151,7 @@ function BlotterAdmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/delete/blotter/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/blotter/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -179,7 +179,7 @@ function BlotterAdmin() {
     formData.append('kind', kind);
     formData.append('status', status);
     formData.append('file', file);
-    axios.post('http://localhost:8000/blotter', formData).then(res => {
+    axios.post('https://dbarangay.onrender.com/blotter', formData).then(res => {
       if (res.data === "Error saving data to MongoDB") {
         alert("Blotter Already Exist!");
       }
@@ -228,7 +228,7 @@ function BlotterAdmin() {
       formData.append('status', editStatus);
       formData.append('file', editFile);
       const response = await axios.put(
-        `http://localhost:8000/update/blotter/${selectedRowData}`,
+        `https://dbarangay.onrender.com/update/blotter/${selectedRowData}`,
         formData
       );
       console.log(response.data);
@@ -260,7 +260,7 @@ const fetchUser = async () => {
     if (token) { 
     const decoded =jwtDecode(token);
       const _id = decoded.id;
-      const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+      const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
       setUserData(response.data);
     }
   } catch (error) {

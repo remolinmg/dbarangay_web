@@ -213,7 +213,7 @@ const RegistrationComponent = () => {
     formData.append('companyName', companyName)
     formData.append('position', position)
     formData.append('file', file)
-    axios.post("http://localhost:8000/signup", formData)
+    axios.post("https://dbarangay.onrender.com/signup", formData)
       .then(res => {
         if (res.data === 'Error saving data to MongoDB and Cloudinary') {
           alert("Announcement Already Exist!");

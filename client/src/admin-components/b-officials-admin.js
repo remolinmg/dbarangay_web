@@ -75,7 +75,7 @@ function BofficialsAdmin() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get/official');
+      const response = await axios.get('https://dbarangay.onrender.com/get/official');
       setData(response.data);
     } catch (error) {
       console.error(error);
@@ -146,7 +146,7 @@ function BofficialsAdmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/delete/official/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/official/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -176,7 +176,7 @@ function BofficialsAdmin() {
     formData.append('file', file);
     formData.append('startTerm', startTerm);
     formData.append('endTerm', endTerm);
-    axios.post('http://localhost:8000/official', formData).then(res => {
+    axios.post('https://dbarangay.onrender.com/official', formData).then(res => {
       if (res.data === "Error saving data to MongoDB and Cloudinary") {
         alert("Barangay Official Already Exist!");
       }
@@ -248,7 +248,7 @@ function BofficialsAdmin() {
       }
 
       const response = await axios.put(
-        `http://localhost:8000/update/official/${selectedRowData}`,
+        `https://dbarangay.onrender.com/update/official/${selectedRowData}`,
         formData
       );
       console.log(response.data);
@@ -281,7 +281,7 @@ function BofficialsAdmin() {
       if (token) {
         const decoded = jwtDecode(token);
         const _id = decoded.id;
-        const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+        const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
         setUserData(response.data);
       }
     } catch (error) {

@@ -78,7 +78,7 @@ function UserProfile() {
             if (token) {
                 const decoded =jwtDecode(token);
                 const _id = decoded.id;
-                const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+                const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
                 setData(response.data);
             }
         } catch (error) {
@@ -110,23 +110,23 @@ function UserProfile() {
                 const decoded =jwtDecode(token);
                 const _id = decoded.id;
 
-                const brgyCertData = await axios.get(`http://localhost:8000/get/barangaycertificate/${_id}`);
+                const brgyCertData = await axios.get(`https://dbarangay.onrender.com/get/barangaycertificate/${_id}`);
                 setBarangayCertificateData(brgyCertData.data);
                 console.log(barangayCertificateData);
 
-                const brgyIdData = await axios.get(`http://localhost:8000/get/barangayid/${_id}`);
+                const brgyIdData = await axios.get(`https://dbarangay.onrender.com/get/barangayid/${_id}`);
                 setBarangayIdData(brgyIdData.data);
 
-                const brgyIndigencyData = await axios.get(`http://localhost:8000/get/barangayindigency/${_id}`);
+                const brgyIndigencyData = await axios.get(`https://dbarangay.onrender.com/get/barangayindigency/${_id}`);
                 setBarangayIndigencyData(brgyIndigencyData.data);
 
-                const bPermitData = await axios.get(`http://localhost:8000/get/businessclearance/${_id}`);
+                const bPermitData = await axios.get(`https://dbarangay.onrender.com/get/businessclearance/${_id}`);
                 setBusinessPermitData(bPermitData.data);
 
-                const constPermitData = await axios.get(`http://localhost:8000/get/construction/${_id}`);
+                const constPermitData = await axios.get(`https://dbarangay.onrender.com/get/construction/${_id}`);
                 setBarangayConstructionData(constPermitData.data);
 
-                const installPermitData = await axios.get(`http://localhost:8000/get/installation/${_id}`);
+                const installPermitData = await axios.get(`https://dbarangay.onrender.com/get/installation/${_id}`);
                 setBarangayInstallationData(installPermitData.data);
             }
         } catch (error) {
@@ -147,7 +147,7 @@ function UserProfile() {
             const formData = new FormData();
             formData.append('file', selectedFile);
             const response = await axios.put(
-                `http://localhost:8000/update/user/${_id}`,
+                `https://dbarangay.onrender.com/update/user/${_id}`,
                 formData
             );
             console.log(response.data);

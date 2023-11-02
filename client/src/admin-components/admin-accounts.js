@@ -5,7 +5,6 @@ import { BiMenu, BiChevronDown } from 'react-icons/bi';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
-
 import Cookies from 'js-cookie';
 import {
     BsPersonFill,
@@ -82,7 +81,7 @@ function Adminaccounts() {
 
  const fetchData = async () => {
    try {
-     const response = await axios.get('http://localhost:8000/get/useradmin');
+     const response = await axios.get('https://dbarangay.onrender.com/get/useradmin');
      setData(response.data);
    } catch (error) {
      console.error(error);
@@ -161,7 +160,7 @@ const fetchUser = async () => {
     if (token) { 
     const decoded =jwtDecode(token);
       const _id = decoded.id;
-      const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+      const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
       setUserData(response.data);
     }
   } catch (error) {

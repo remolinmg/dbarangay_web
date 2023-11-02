@@ -78,7 +78,7 @@ function AnnouncementAdmin() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get/announcement');
+      const response = await axios.get('https://dbarangay.onrender.com/get/announcement');
       setData(response.data);
     } catch (error) {
       console.error(error);
@@ -154,7 +154,7 @@ function AnnouncementAdmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/delete/announcement/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/announcement/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -177,7 +177,7 @@ function AnnouncementAdmin() {
     formData.append('who', who);
     formData.append('file', file);
 
-    axios.post('http://localhost:8000/announcement', formData)
+    axios.post('https://dbarangay.onrender.com/announcement', formData)
       .then(res => {
         if (res.data === "Error saving data to MongoDB and Cloudinary") {
           alert("Announcement Already Exist!");
@@ -232,7 +232,7 @@ function AnnouncementAdmin() {
       }
   
       const response = await axios.put(
-        `http://localhost:8000/update/announcement/${selectedRowData}`,
+        `https://dbarangay.onrender.com/update/announcement/${selectedRowData}`,
         formData
       );
       console.log(response.data);
@@ -265,7 +265,7 @@ function AnnouncementAdmin() {
       if (token) {
         const decoded =jwtDecode(token);
         const _id = decoded.id;
-        const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+        const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
         setUserData(response.data);
       }
     } catch (error) {

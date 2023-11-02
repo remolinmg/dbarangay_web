@@ -57,7 +57,7 @@ function Dashboard1() {
 
     // Blotter card -------------------------------------------------
     useEffect(() => {
-        axios.get('http://localhost:8000/get/blotter')
+        axios.get('https://dbarangay.onrender.com/get/blotter')
             .then((response) => {
                 const blotterData = response.data;
 
@@ -74,7 +74,7 @@ function Dashboard1() {
 
     // blotter charts ---------------------------------
     useEffect(() => {
-        axios.get('http://localhost:8000/get/blotter')
+        axios.get('https://dbarangay.onrender.com/get/blotter')
             .then((response) => {
                 const blotterData = response.data;
                 setBlotterData(blotterData);
@@ -154,7 +154,7 @@ function Dashboard1() {
 
     // complaints --------------------------------
     useEffect(() => {
-        axios.get('http://localhost:8000/get/complaint')
+        axios.get('https://dbarangay.onrender.com/get/complaint')
             .then((response) => {
                 const complaintData = response.data;
                 const totalComplaints = complaintData.length;
@@ -169,7 +169,7 @@ function Dashboard1() {
     }, []);
 
     useEffect(() => {
-        axios.get('http://localhost:8000/get/complaint')
+        axios.get('https://dbarangay.onrender.com/get/complaint')
             .then((response) => {
                 const complaintData = response.data;
                 setComplaintData(complaintData);
@@ -285,7 +285,7 @@ function Dashboard1() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:8000/get/user')
+        axios.get('https://dbarangay.onrender.com/get/user')
             .then((response) => {
                 const userData = response.data;
                 setName(userData.name);
@@ -316,7 +316,7 @@ const fetchUser = async () => {
     if (token) { 
     const decoded =jwtDecode(token);
       const _id = decoded.id;
-      const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+      const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
       setUserData(response.data);
     }
   } catch (error) {

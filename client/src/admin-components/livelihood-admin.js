@@ -78,7 +78,7 @@ function LivelihoodAdmin() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get/livelihood');
+      const response = await axios.get('https://dbarangay.onrender.com/get/livelihood');
       setData(response.data);
     } catch (error) {
       console.error(error);
@@ -148,7 +148,7 @@ function LivelihoodAdmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/delete/livelihood/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/livelihood/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -170,7 +170,7 @@ function LivelihoodAdmin() {
     formData.append('when', when);
     formData.append('who', who);
     formData.append('file', file);
-    axios.post('http://localhost:8000/livelihood', formData)
+    axios.post('https://dbarangay.onrender.com/livelihood', formData)
     .then(res => {
       if (res.data === "Error saving data to MongoDB and Cloudinary") {
         alert("Livelihood Already Exist!");
@@ -225,7 +225,7 @@ function LivelihoodAdmin() {
       }
   
       const response = await axios.put(
-        `http://localhost:8000/update/livelihood/${selectedRowData}`,
+        `https://dbarangay.onrender.com/update/livelihood/${selectedRowData}`,
         formData
       );
       console.log(response.data);
@@ -257,7 +257,7 @@ function LivelihoodAdmin() {
       if (token) {
         const decoded =jwtDecode(token);
         const _id = decoded.id;
-        const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+        const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
         setUserData(response.data);
       }
     } catch (error) {

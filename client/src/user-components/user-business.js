@@ -16,7 +16,7 @@ class Promotebusiness extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:8000/get/promotebusiness')
+    axios.get('https://dbarangay.onrender.com/get/promotebusiness')
       .then((response) => {
         this.setState({ posts: response.data });
       })

@@ -78,7 +78,7 @@ function Biddmin() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/get/barangayid');
+            const response = await axios.get('https://dbarangay.onrender.com/get/barangayid');
             setData(response.data);
         } catch (error) {
             console.error(error);
@@ -147,7 +147,7 @@ function Biddmin() {
     //  DELETE  
     const deleteRow = async (id) => {
         try {
-            await axios.delete(`http://localhost:8000/delete/barangayid/${id}`);
+            await axios.delete(`https://dbarangay.onrender.com/delete/barangayid/${id}`);
             fetchData();
         } catch (error) {
             console.error(error);
@@ -205,7 +205,7 @@ function Biddmin() {
 
         try {
 
-            await axios.post("http://localhost:8000/barangayid", {
+            await axios.post("https://dbarangay.onrender.com/barangayid", {
                 residentName, userId, address, pickUpDate, modeOfPayment, reference
             })
                 .then(res => {
@@ -259,7 +259,7 @@ function Biddmin() {
 
 
             const response = await axios.put(
-                `http://localhost:8000/update/barangayid/${selectedRowData}`,
+                `https://dbarangay.onrender.com/update/barangayid/${selectedRowData}`,
                 updatedData
             );
             console.log(response.data);
@@ -291,7 +291,7 @@ function Biddmin() {
             if (token) {
                 const decoded =jwtDecode(token);
                 const _id = decoded.id;
-                const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+                const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
                 setUserData(response.data);
             }
         } catch (error) {

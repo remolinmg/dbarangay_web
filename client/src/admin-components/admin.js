@@ -15,7 +15,7 @@ const Admin = () => {
     e.preventDefault();
 
     try{
-        const response = await axios.post("http://localhost:8000/adminlogin",{
+        const response = await axios.post("https://dbarangay.onrender.com/adminlogin",{
             email,password
         })
         if (response.status===201) {

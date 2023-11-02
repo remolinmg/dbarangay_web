@@ -78,7 +78,7 @@ function BclearanceAdmin() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get/barangaycertificate');
+      const response = await axios.get('https://dbarangay.onrender.com/get/barangaycertificate');
       setData(response.data);
     } catch (error) {
       console.error(error);
@@ -158,7 +158,7 @@ function BclearanceAdmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/delete/barangaycertificate/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/barangaycertificate/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -217,7 +217,7 @@ function BclearanceAdmin() {
 
     try {
 
-      await axios.post("http://localhost:8000/barangaycertificate", {
+      await axios.post("https://dbarangay.onrender.com/barangaycertificate", {
         residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
       })
         .then(res => {
@@ -273,7 +273,7 @@ function BclearanceAdmin() {
 
 
       const response = await axios.put(
-        `http://localhost:8000/update/barangaycertificate/${selectedRowData}`,
+        `https://dbarangay.onrender.com/update/barangaycertificate/${selectedRowData}`,
         updatedData
       );
       console.log(response.data);
@@ -306,7 +306,7 @@ function BclearanceAdmin() {
       if (token) {
         const decoded =jwtDecode(token);
         const _id = decoded.id;
-        const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+        const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
         setUserData(response.data);
       }
     } catch (error) {

@@ -130,7 +130,7 @@ const Landpage = () => {
        if (token) { 
        const decoded =jwtDecode(token);
          const _id = decoded.id;
-         const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+         const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
          setData(response.data);
        }
      } catch (error) {

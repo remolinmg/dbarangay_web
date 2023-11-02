@@ -34,7 +34,7 @@ const ForgotPassword = () => {
 
     try {
 
-      await axios.put("http://localhost:8000/updatepass", {
+      await axios.put("https://dbarangay.onrender.com/updatepass", {
         email,
         password
       });

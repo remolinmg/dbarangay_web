@@ -79,7 +79,7 @@ function Healthadmin() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get/health');
+      const response = await axios.get('https://dbarangay.onrender.com/get/health');
       setData(response.data);
     } catch (error) {
       console.error(error);
@@ -150,7 +150,7 @@ function Healthadmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/delete/health/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/health/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -176,7 +176,7 @@ function Healthadmin() {
     formData.append('address', address);
     formData.append('status', status);
     formData.append('file', file);
-    axios.post('http://localhost:8000/health', formData).then(res => {
+    axios.post('https://dbarangay.onrender.com/health', formData).then(res => {
       if (res.data === "Error saving data to MongoDB") {
         alert("Health Already Exist!");
       }
@@ -222,7 +222,7 @@ function Healthadmin() {
       formData.append('status', editStatus);
       formData.append('file', editFile);
       const response = await axios.put(
-        `http://localhost:8000/update/health/${selectedRowData}`,
+        `https://dbarangay.onrender.com/update/health/${selectedRowData}`,
         formData
       );
       console.log(response.data);
@@ -254,7 +254,7 @@ const fetchUser = async () => {
     if (token) { 
     const decoded =jwtDecode(token);
       const _id = decoded.id;
-      const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+      const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
       setUserData(response.data);
     }
   } catch (error) {

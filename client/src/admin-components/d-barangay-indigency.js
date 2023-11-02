@@ -77,7 +77,7 @@ function Bindigency() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get/barangayindigency');
+      const response = await axios.get('https://dbarangay.onrender.com/get/barangayindigency');
       setData(response.data);
     } catch (error) {
       console.error(error);
@@ -147,7 +147,7 @@ function Bindigency() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/delete/barangayindigency/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/barangayindigency/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -205,7 +205,7 @@ function Bindigency() {
 
     try {
 
-      await axios.post("http://localhost:8000/barangayindigency", {
+      await axios.post("https://dbarangay.onrender.com/barangayindigency", {
         residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
       })
         .then(res => {
@@ -262,7 +262,7 @@ function Bindigency() {
 
 
       const response = await axios.put(
-        `http://localhost:8000/update/barangayindigency/${selectedRowData}`,
+        `https://dbarangay.onrender.com/update/barangayindigency/${selectedRowData}`,
         updatedData
       );
       console.log(response.data);
@@ -293,7 +293,7 @@ const fetchUser = async () => {
     if (token) { 
     const decoded =jwtDecode(token);
       const _id = decoded.id;
-      const response = await axios.get(`http://localhost:8000/get/userprofile/${_id}`);
+      const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
       setUserData(response.data);
     }
   } catch (error) {
