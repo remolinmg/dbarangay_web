@@ -167,20 +167,10 @@ function Complaintsadmin() {
   const [kind, setKind] = useState('');
   const [status, setStatus] = useState('');
   const [documentation, setDocumentation] = useState('');
-  const [file, setFile] = useState();
   //-------------------------- ADD FUNCTION -----------------------------------
 
   const complaint = () => {
-    const formData = new FormData();
-    formData.append('date', date);
-    formData.append('complainant', complainant);
-    formData.append('defendant', defendant);
-    formData.append('complainttype', complainttype);
-    formData.append('address', address);
-    formData.append('kind', kind);
-    formData.append('status', status);
-    formData.append('documentation', documentation);
-    formData.append('file', file);
+    const formData = {date,complainant,defendant,complainttype,address,kind,status,documentation}
     axios.post('https://dbarangay.onrender.com/complaint', formData).then(res => {
       if (res.data === "Error saving data to MongoDB") {
         alert("Complaint Already Exist!");
@@ -201,7 +191,6 @@ function Complaintsadmin() {
   const [editKind, setEditKind] = useState('');
   const [editStatus, setEditStatus] = useState('');
   const [editDocumentation, setEditDocumentation] = useState('');
-  const [editFile, setEditFile] = useState('');
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const handleEditDiscard = () => { setShowEditForm(false); };
@@ -212,7 +201,7 @@ function Complaintsadmin() {
     setEditDate(rowData.date);
     setEditComplainant(rowData.complainant);
     setEditDefendant(rowData.defendant);
-    setEditType(rowData.type);
+    setEditType(rowData.complainttype);
     setEditAddress(rowData.address);
     setEditKind(rowData.kind);
     setEditStatus(rowData.status);
@@ -222,16 +211,7 @@ function Complaintsadmin() {
 
   const updateRowData = async () => {
     try {
-      const formData = new FormData();
-      formData.append('date', editDate);
-      formData.append('complainant', editComplainant);
-      formData.append('defendant', editDefendant);
-      formData.append('type', editType);
-      formData.append('address', editAddress);
-      formData.append('kind', editKind);
-      formData.append('status', editStatus);
-      formData.append('documentation', editDocumentation);
-      formData.append('file', editFile);
+      const formData = {date:editDate,complainant:editComplainant,defendant:editDefendant,complainttype:editType,address:editAddress,kind:editKind,status:editStatus,documentation:editDocumentation}
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/complaint/${selectedRowData}`,
         formData

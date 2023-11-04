@@ -167,25 +167,16 @@ function BlotterAdmin() {
   const [kind, setKind] = useState('');
   const [status, setStatus] = useState('');
   const [documentation, setDocumentation] = useState('');
-  const [file, setFile] = useState();
   //-------------------------- ADD FUNCTION -----------------------------------
 
   const blotter = () => {
-    const formData = new FormData();
-    formData.append('date', date);
-    formData.append('complainant', complainant);
-    formData.append('defendant', defendant);
-    formData.append('type', type);
-    formData.append('address', address);
-    formData.append('kind', kind);
-    formData.append('status', status);
-    formData.append('documentation', documentation);
-    formData.append('file',file);
+    const formData ={date,complainant,defendant,type,address,kind,status,documentation} 
     axios.post('https://dbarangay.onrender.com/blotter', formData).then(res => {
       if (res.data === "Error saving data to MongoDB") {
         alert("Blotter Already Exist!");
       }
       else if (res.data === "File and text data saved to MongoDB") {
+        fetchData();
       }
     })
       .catch(er => console.log(er))
@@ -201,7 +192,6 @@ function BlotterAdmin() {
   const [editKind, setEditKind] = useState('');
   const [editStatus, setEditStatus] = useState('');
   const [editDocumentation, setEditDocumentation] = useState('');
-  const [editFile, setEditFile] = useState();
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const handleEditDiscard = () => { setShowEditForm(false); };
@@ -216,21 +206,13 @@ function BlotterAdmin() {
     setEditAddress(rowData.address);
     setEditKind(rowData.kind);
     setEditStatus(rowData.status);
+    setEditDocumentation(rowData.documentation)
     setShowEditForm(true);
   };
 
   const updateRowData = async () => {
     try {
-      const formData = new FormData();
-      formData.append('date', editDate);
-      formData.append('complainant', editComplainant);
-      formData.append('defendant', editDefendant);
-      formData.append('type', editType);
-      formData.append('address', editAddress);
-      formData.append('kind', editKind);
-      formData.append('status', editStatus);
-      formData.append('documentation', editDocumentation);
-      formData.append('file', editFile);
+      const formData = {date:editDate,complainant:editComplainant,defendant:editDefendant,type:editType,address:editAddress,kind:editKind,status:editStatus, documentation:editDocumentation}
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/blotter/${selectedRowData}`,
         formData
