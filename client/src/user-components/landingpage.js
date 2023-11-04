@@ -203,9 +203,9 @@ const Landpage = () => {
             <ul className={click ? "nav-menu active" : "nav-menu"}>
 
               <li className="link">
-                <Link to="/homepage"> <span>BARANGAY HARAPIN ANG BUKAS</span> </Link>
+                <Link to="/"> <span>BARANGAY HARAPIN ANG BUKAS</span> </Link>
               </li>
-              <li className="link"> <NavLink className="link" to="/homepage" activeClassName="active"> Home  </NavLink> </li>
+              <li className="link"> <NavLink className="link" to="/" activeClassName="active"> Home  </NavLink> </li>
               <li onClick={toggleSubmenu} className="link" ref={announceRef}>
                 Announcement <BiChevronDown />
                 {submenuVisible && (

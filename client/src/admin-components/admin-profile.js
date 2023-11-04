@@ -39,7 +39,7 @@ function Admindetails() {
         try {
             const token = Cookies.get('access_token');
             if (token) {
-                const decoded =jwtDecode(token);
+                const decoded = jwtDecode(token);
                 const _id = decoded.id;
                 const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
                 setUserData(response.data);
@@ -131,7 +131,7 @@ function Admindetails() {
         try {
             const token = Cookies.get('access_token');
             if (token) {
-                const decoded =jwtDecode(token);
+                const decoded = jwtDecode(token);
                 const _id = decoded.id;
 
                 const brgyCertData = await axios.get(`https://dbarangay.onrender.com/get/barangaycertificate/${_id}`);
@@ -162,7 +162,7 @@ function Admindetails() {
         try {
             const token = Cookies.get('access_token');
             if (token) {
-                const decoded =jwtDecode(token);
+                const decoded = jwtDecode(token);
                 const _id = decoded.id;
                 const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
                 setData(response.data);
@@ -206,7 +206,7 @@ function Admindetails() {
 
     const updateRowData = async () => {
         const token = Cookies.get('access_token');
-        const decoded =jwtDecode(token);
+        const decoded = jwtDecode(token);
         const _id = decoded.id;
         try {
             const formData = new FormData();
@@ -264,30 +264,33 @@ function Admindetails() {
                                     <h3>Barangay Harapin Ang Bukas</h3>
                                 </div>
                                 <div className="topnavright">
-                                    <div ref={profileRef}>
-                                        <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-                                        {ProfilesubmenuVisible && (
-                                            <div className="Profilesubmenuadmin">
-                                                <div className="admininfo">
-                                                    <div className="rightprofile">
-                                                        <FaUserCircle className="adminprofile" />
-                                                    </div>
-                                                    <div className="leftprofile">
-                                                        <h5>{val.firstName} {val.middleName} {val.lastName}</h5>
-                                                        <h5>{val.email}</h5>
-                                                    </div>
-                                                </div>
-                                                <div className="lowerprofile">
-                                                    <hr />
-                                                    <div className="button-profile1">
-                                                        <div onClick={handleSignOut} className="profilebuttons">
-                                                            <BiLogOut className="profileicons" /> Log out
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
+                                <div ref={profileRef}>
+                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                    {ProfilesubmenuVisible && (
+                        <div className="Profilesubmenuadmin">
+               <div className="admininfo">
+                 <div className="rightprofile">
+                <img src={val.filename.url} style={{ width:"80px",height:"80px", borderRadius:"50px"}}calt="Profile Picture" className="profile-pic" id="profile-pic" />       
+                 </div>
+                 <div className="leftprofile">
+                   <h5>{val.firstName} {val.middleName} {val.lastName}</h5>
+                   <h5>{val.email}</h5>
+                 </div>
+               </div>
+               <div className="lowerprofile">
+                 <hr />
+                 <div className="button-profile1">
+
+                   
+                     <div onClick={handleSignOut} className="profilebuttons">
+                       <BiLogOut className="profileicons" /> Log out
+                     </div>
+                   
+                 </div>
+               </div>
+             </div>
+                    )}
+                  </div>
                                 </div>
 
                             </div>
@@ -314,9 +317,6 @@ function Admindetails() {
                                                 <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
                                                     <input type="radio" onClick={() => showEditFormHandler(item) & showContent(1)} className="btn-check" name="btnradio" id="btnradio1" autoComplete="off" checked={activeContent === 1} />
                                                     <label className="btn btn-outline-primary" id="settings_btn" htmlFor="btnradio1">View Information</label>
-
-                                                    <input type="radio" onClick={() => showContent(2)} className="btn-check" name="btnradio" id="btnradio2" autoComplete="off" checked={activeContent === 2} />
-                                                    <label className="btn btn-outline-primary" id="viewrequest_btn" htmlFor="btnradio2">View Requests</label>
                                                 </div>
                                                 <div id="line"></div>
 
@@ -664,187 +664,6 @@ function Admindetails() {
                                                                 Save Changes
                                                             </label>
                                                         </div>
-                                                    </section>
-                                                </div>
-
-                                                {/* View Request */}
-                                                <div id="content2" className={`view_request content ${activeContent === 2 ? 'active' : ''}`}>
-                                                    <section>
-                                                        <Tabs className="pt-3" onSelect={handleTabSelect} selectedIndex={selectedTab}>
-                                                            <TabList>
-                                                                <Tab className="custom-tab">Barangay Certificate</Tab>
-                                                                <Tab className="custom-tab">Barangay ID</Tab>
-                                                                <Tab className="custom-tab">Indigency</Tab>
-                                                                <Tab className="custom-tab">Business Permit</Tab>
-                                                                <Tab className="custom-tab">Construction Permit</Tab>
-                                                                <Tab className="custom-tab">Installation Permit</Tab>
-                                                            </TabList>
-
-                                                            <TabPanel>
-                                                                <div id="table1">
-                                                                    <h2 id="form_name">Barangay Certificate</h2>
-                                                                    <table className="table text-center">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th scope="col">#</th>
-                                                                                <th scope="col">Reason of Request</th>
-                                                                                <th scope="col">Pickup Date</th>
-                                                                                <th scope="col">Mode of Payment</th>
-                                                                                <th scope="col">Reference No.</th>
-                                                                                <th scope="col">Status</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        {barangayCertificateData.map((item, index) => (
-                                                                            <tr key={index}>
-                                                                                <th scope="row">{index + 1}</th>
-                                                                                <td>{item.reasonOfRequest}</td>
-                                                                                <td>{item.pickUpDate}</td>
-                                                                                <td>{item.modeOfPayment}</td>
-                                                                                <td>{item.reference}</td>
-                                                                                <td>{item.status}</td>
-                                                                            </tr>
-                                                                        ))}
-                                                                    </table>
-                                                                </div>
-                                                            </TabPanel>
-                                                            <TabPanel>
-                                                                <div id="table2">
-                                                                    <h2 id="form_name">Barangay ID</h2>
-                                                                    <table class="table text-center">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th scope="col">#</th>
-                                                                                <th scope="col">Pickup Date</th>
-                                                                                <th scope="col">Mode of Payment</th>
-                                                                                <th scope="col">Reference No.</th>
-                                                                                <th scope="col">Status</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        {barangayIdData.map((item, index) => (
-                                                                            <tr key={index}>
-                                                                                <th scope="row">{index + 1}</th>
-                                                                                <td>{item.pickUpDate}</td>
-                                                                                <td>{item.modeOfPayment}</td>
-                                                                                <td>{item.reference}</td>
-                                                                                <td>{item.status}</td>
-                                                                            </tr>
-                                                                        ))}
-                                                                    </table>
-                                                                </div>
-                                                            </TabPanel>
-                                                            <TabPanel>
-                                                                <div id="table3">
-                                                                    <h2 id="form_name">Barangay Indigency</h2>
-                                                                    <table class="table text-center">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th scope="col">#</th>
-                                                                                <th scope="col">Reason of Request</th>
-                                                                                <th scope="col">Pickup Date</th>
-                                                                                <th scope="col">Mode of Payment</th>
-                                                                                <th scope="col">Reference No.</th>
-                                                                                <th scope="col">Status</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        {barangayIndigencyData.map((item, index) => (
-                                                                            <tr key={index}>
-                                                                                <th scope="row">{index + 1}</th>
-                                                                                <td>{item.reasonOfRequest}</td>
-                                                                                <td>{item.pickUpDate}</td>
-                                                                                <td>{item.modeOfPayment}</td>
-                                                                                <td>{item.reference}</td>
-                                                                                <td>{item.status}</td>
-                                                                            </tr>
-                                                                        ))}
-                                                                    </table>
-                                                                </div>
-                                                            </TabPanel>
-                                                            <TabPanel>
-                                                                <div id="table4">
-                                                                    <h2 id="form_name">Business Permit</h2>
-                                                                    <table className="table text-center">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th scope="col">#</th>
-                                                                                <th scope="col">Business Name</th>
-                                                                                <th scope="col">Address</th>
-                                                                                <th scope="col">Business Type</th>
-                                                                                <th scope="col">Pickup Date</th>
-                                                                                <th scope="col">Mode of Payment</th>
-                                                                                <th scope="col">Reference No.</th>
-                                                                                <th scope="col">Status</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        {businessPermitData.map((item, index) => (
-                                                                            <tr key={index}>
-                                                                                <th scope="row">{index + 1}</th>
-                                                                                <td>{item.businessName}</td>
-                                                                                <td>{item.address}</td>
-                                                                                <td>{item.type}</td>
-                                                                                <td>{item.pickUpDate}</td>
-                                                                                <td>{item.modeOfPayment}</td>
-                                                                                <td>{item.reference}</td>
-                                                                                <td>{item.status}</td>
-                                                                                {/* Render the data for Business Permit */}
-                                                                            </tr>
-                                                                        ))}
-                                                                    </table>
-                                                                </div>
-                                                            </TabPanel>
-                                                            <TabPanel>
-                                                                <div id="table5">
-                                                                    <h2 id="form_name">Barangay Construction</h2>
-                                                                    <table class="table text-center">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th scope="col">#</th>
-                                                                                <th scope="col">Reason of Request</th>
-                                                                                <th scope="col">Pickup Date</th>
-                                                                                <th scope="col">Mode of Payment</th>
-                                                                                <th scope="col">Reference No.</th>
-                                                                                <th scope="col">Status</th>                                                        </tr>
-                                                                        </thead>
-                                                                        {barangayConstructionData.map((item, index) => (
-                                                                            <tr key={index}>
-                                                                                <th scope="row">{index + 1}</th>
-                                                                                <td>{item.reasonOfRequest}</td>
-                                                                                <td>{item.pickUpDate}</td>
-                                                                                <td>{item.modeOfPayment}</td>
-                                                                                <td>{item.reference}</td>
-                                                                                <td>{item.status}</td>
-                                                                            </tr>
-                                                                        ))}
-                                                                    </table>
-                                                                </div>
-                                                            </TabPanel>
-                                                            <TabPanel>
-                                                                <div id="table6">
-                                                                    <h2 id="form_name">Business Installation</h2>
-                                                                    <table class="table text-center">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th scope="col">#</th>
-                                                                                <th scope="col">Reason of Request</th>
-                                                                                <th scope="col">Pickup Date</th>
-                                                                                <th scope="col">Mode of Payment</th>
-                                                                                <th scope="col">Reference No.</th>
-                                                                                <th scope="col">Status</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        {barangayInstallationData.map((item, index) => (
-                                                                            <tr key={index}>
-                                                                                <th scope="row">{index + 1}</th>
-                                                                                <td>{item.reasonOfRequest}</td>
-                                                                                <td>{item.pickUpDate}</td>
-                                                                                <td>{item.modeOfPayment}</td>
-                                                                                <td>{item.reference}</td>
-                                                                                <td>{item.status}</td>
-                                                                            </tr>
-                                                                        ))}
-                                                                    </table>
-                                                                </div>
-                                                            </TabPanel>
-                                                        </Tabs>
                                                     </section>
                                                 </div>
                                             </div>

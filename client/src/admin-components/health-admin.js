@@ -105,14 +105,14 @@ function Healthadmin() {
     const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
     return reversedData.slice(startIndex, endIndex);
   };
-// stay on first page
+  // stay on first page
   const filteredAndSortedData = data
-  .filter((item) => {
-    const itemValues = Object.values(item).map((value) =>
-      value.toString().toLowerCase()
-    );
-    return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
-  })
+    .filter((item) => {
+      const itemValues = Object.values(item).map((value) =>
+        value.toString().toLowerCase()
+      );
+      return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+    })
   // Function to go to the next page ------------------------------------------
   const nextPage = () => {
     if (currentPage < Math.ceil(filteredData.length / rowCount)) {
@@ -233,7 +233,7 @@ function Healthadmin() {
     }
   };
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     document.cookie = 'access_token=; ';
@@ -242,50 +242,50 @@ function Healthadmin() {
     navigate('/admin')
   };
 
-// User FETCHING
-const [userData, setUserData] = useState([]);
-useEffect(() => {
-  fetchUser(); 
-}, []);
+  // User FETCHING
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
-const fetchUser = async () => {
-  try {
-    const token = Cookies.get('access_token');
-    if (token) { 
-    const decoded =jwtDecode(token);
-      const _id = decoded.id;
-      const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
-      setUserData(response.data);
+  const fetchUser = async () => {
+    try {
+      const token = Cookies.get('access_token');
+      if (token) {
+        const decoded = jwtDecode(token);
+        const _id = decoded.id;
+        const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
+        setUserData(response.data);
+      }
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
-  }
-};
+  };
 
-return (
- <>
- 
-   <div className="topbarsection">
-   {Array.isArray(userData) ? (
-                         userData.map((item, index) => (
-                             <div key={index}>
-     <div className="topnavbar d-flex justify-content-between align-items-center">
-       <div className="topnavleft">
-         <button className="collapse-button" onClick={handleSidebarCollapse}>
-           <BiMenu />
-         </button>
-       </div>
-       <div className="topnavmid">
-         <h3>Barangay Harapin Ang Bukas</h3>
-       </div>
-       <div className="topnavright">
-         <div ref={profileRef}>
-           <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-           {ProfilesubmenuVisible && (
-             <div className="Profilesubmenuadmin">
+  return (
+    <>
+
+      <div className="topbarsection">
+        {Array.isArray(userData) ? (
+          userData.map((item, index) => (
+            <div key={index}>
+              <div className="topnavbar d-flex justify-content-between align-items-center">
+                <div className="topnavleft">
+                  <button className="collapse-button" onClick={handleSidebarCollapse}>
+                    <BiMenu />
+                  </button>
+                </div>
+                <div className="topnavmid">
+                  <h3>Barangay Harapin Ang Bukas</h3>
+                </div>
+                <div className="topnavright">
+                <div ref={profileRef}>
+                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                    {ProfilesubmenuVisible && (
+                        <div className="Profilesubmenuadmin">
                <div className="admininfo">
                  <div className="rightprofile">
-                   <FaUserCircle className="adminprofile" />
+                <img src={item.filename.url} style={{ width:"80px",height:"80px", borderRadius:"50px"}}calt="Profile Picture" className="profile-pic" id="profile-pic" />       
                  </div>
                  <div className="leftprofile">
                    <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
@@ -311,17 +311,17 @@ return (
                  </div>
                </div>
              </div>
-           )}
-         </div>
-       </div>
+                    )}
+                  </div>
+                </div>
 
-     </div>
-     </div>
-                         ))
-                     ) : (
-                         <p>No data to display.</p>
-                     )}
-   </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No data to display.</p>
+        )}
+      </div>
       <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">
           <div className="text-center">
@@ -428,7 +428,7 @@ return (
       </div>
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
-        <div className="toppart-table border row w-75 d-flex align-items-center">
+          <div className="toppart-table border row w-75 d-flex align-items-center">
             <div className="col-4">
               <div className="input-group">
                 <input
@@ -512,7 +512,7 @@ return (
                           <th scope="col">RESPONDENTS</th>
                           <th scope="col">MEDICAL TYPE</th>
                           <th scope="col">INCIDENT ADDRESS</th>
-                         
+
                           <th scope="col">Status</th>
                           <th scope="col">Actions</th>
                         </tr>
@@ -594,7 +594,7 @@ return (
                             <option value="COVID-19">COVID-19</option>
                             <option value="Others">OTHERS</option>
                           </select>
-                          </div>
+                        </div>
 
                         <div className="form-group">
                           <label htmlFor="address">INCIDENT ADDRESS </label>
@@ -605,7 +605,7 @@ return (
                             onChange={(e) => { setAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-                     
+
 
                         <div className="form-group">
                           <label htmlFor="status">STATUS</label>

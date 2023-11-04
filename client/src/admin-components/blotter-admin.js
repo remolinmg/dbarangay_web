@@ -248,50 +248,50 @@ function BlotterAdmin() {
     navigate('/admin')
   };
 
-// User FETCHING
-const [userData, setUserData] = useState([]);
-useEffect(() => {
-  fetchUser(); 
-}, []);
+  // User FETCHING
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
-const fetchUser = async () => {
-  try {
-    const token = Cookies.get('access_token');
-    if (token) { 
-    const decoded =jwtDecode(token);
-      const _id = decoded.id;
-      const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
-      setUserData(response.data);
+  const fetchUser = async () => {
+    try {
+      const token = Cookies.get('access_token');
+      if (token) {
+        const decoded = jwtDecode(token);
+        const _id = decoded.id;
+        const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
+        setUserData(response.data);
+      }
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
-  }
-};
+  };
 
-return (
- <>
- 
-   <div className="topbarsection">
-   {Array.isArray(userData) ? (
-                         userData.map((item, index) => (
-                             <div key={index}>
-     <div className="topnavbar d-flex justify-content-between align-items-center">
-       <div className="topnavleft">
-         <button className="collapse-button" onClick={handleSidebarCollapse}>
-           <BiMenu />
-         </button>
-       </div>
-       <div className="topnavmid">
-         <h3>Barangay Harapin Ang Bukas</h3>
-       </div>
-       <div className="topnavright">
-         <div ref={profileRef}>
-           <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-           {ProfilesubmenuVisible && (
-             <div className="Profilesubmenuadmin">
+  return (
+    <>
+
+      <div className="topbarsection">
+        {Array.isArray(userData) ? (
+          userData.map((item, index) => (
+            <div key={index}>
+              <div className="topnavbar d-flex justify-content-between align-items-center">
+                <div className="topnavleft">
+                  <button className="collapse-button" onClick={handleSidebarCollapse}>
+                    <BiMenu />
+                  </button>
+                </div>
+                <div className="topnavmid">
+                  <h3>Barangay Harapin Ang Bukas</h3>
+                </div>
+                <div className="topnavright">
+                <div ref={profileRef}>
+                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                    {ProfilesubmenuVisible && (
+                        <div className="Profilesubmenuadmin">
                <div className="admininfo">
                  <div className="rightprofile">
-                   <FaUserCircle className="adminprofile" />
+                <img src={item.filename.url} style={{ width:"80px",height:"80px", borderRadius:"50px"}}calt="Profile Picture" className="profile-pic" id="profile-pic" />       
                  </div>
                  <div className="leftprofile">
                    <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
@@ -317,17 +317,17 @@ return (
                  </div>
                </div>
              </div>
-           )}
-         </div>
-       </div>
+                    )}
+                  </div>
+                </div>
 
-     </div>
-     </div>
-                         ))
-                     ) : (
-                         <p>No data to display.</p>
-                     )}
-   </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No data to display.</p>
+        )}
+      </div>
       <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="newsidebar">
           <div className="text-center">
@@ -458,7 +458,7 @@ return (
                 </ul>
               </div>
             </div>
-            
+
             <div className="col-4">
               <div className="dropdown-tablenumbers">
                 <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
@@ -519,7 +519,7 @@ return (
                           <th scope="col">DEFENDANT</th>
                           <th scope="col">COMPLAINT TYPE</th>
                           <th scope="col">INCIDENT ADDRESS</th>
-                        
+
                           <th scope="col">TYPE</th>
                           <th scope="col">STATUS</th>
                           <th scope="col">ACTIONS</th>
@@ -610,7 +610,7 @@ return (
                             onChange={(e) => { setAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-                       
+
                         <div className="form-group">
                           <label htmlFor="kind">TYPE</label>
                           <select
@@ -715,7 +715,7 @@ return (
                             onChange={(e) => { setEditAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-                       
+
 
                         <div className="form-group">
                           <label htmlFor="kind">TYPE</label>

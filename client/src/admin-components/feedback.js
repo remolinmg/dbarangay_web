@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import './assets/css/style.css';
-import {  Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown, BiLogOut, BiCog } from 'react-icons/bi';
 import { AiOutlineDashboard } from 'react-icons/ai';
@@ -82,8 +82,8 @@ function FeedbackAdmin() {
             console.error(error);
         }
     };
-     //  DELETE  
-     const deleteRow = async (id) => {
+    //  DELETE  
+    const deleteRow = async (id) => {
         try {
             await axios.delete(`https://dbarangay.onrender.com/delete/feedback/${id}`);
             fetchData();
@@ -111,15 +111,15 @@ function FeedbackAdmin() {
         const endIndex = startIndex + rowCount;
         const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
         return reversedData.slice(startIndex, endIndex);
-      };
+    };
     // stay on first page
-      const filteredAndSortedData = data
-      .filter((item) => {
-        const itemValues = Object.values(item).map((value) =>
-          value.toString().toLowerCase()
-        );
-        return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
-      })
+    const filteredAndSortedData = data
+        .filter((item) => {
+            const itemValues = Object.values(item).map((value) =>
+                value.toString().toLowerCase()
+            );
+            return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+        })
 
     // Function to go to the next page ------------------------------------------
     const nextPage = () => {
@@ -157,59 +157,59 @@ function FeedbackAdmin() {
             [id]: !prevState[id],
         }));
     };
-    const navigate = useNavigate();  
+    const navigate = useNavigate();
 
-  const handleSignOut = () => {
-    document.cookie = 'access_token=; ';
-    localStorage.removeItem('jwtToken');
-    window.localStorage.clear();
-    navigate('/admin')
-  };
+    const handleSignOut = () => {
+        document.cookie = 'access_token=; ';
+        localStorage.removeItem('jwtToken');
+        window.localStorage.clear();
+        navigate('/admin')
+    };
 
-// User FETCHING
-const [userData, setUserData] = useState([]);
-useEffect(() => {
-  fetchUser(); 
-}, []);
+    // User FETCHING
+    const [userData, setUserData] = useState([]);
+    useEffect(() => {
+        fetchUser();
+    }, []);
 
-const fetchUser = async () => {
-  try {
-    const token = Cookies.get('access_token');
-    if (token) { 
-    const decoded =jwtDecode(token);
-      const _id = decoded.id;
-      const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
-      setUserData(response.data);
-    }
-  } catch (error) {
-    console.error(error);
-  }
-};
+    const fetchUser = async () => {
+        try {
+            const token = Cookies.get('access_token');
+            if (token) {
+                const decoded = jwtDecode(token);
+                const _id = decoded.id;
+                const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
+                setUserData(response.data);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-return (
- <>
- 
-   <div className="topbarsection">
-   {Array.isArray(userData) ? (
-                         userData.map((item, index) => (
-                             <div key={index}>
-     <div className="topnavbar d-flex justify-content-between align-items-center">
-       <div className="topnavleft">
-         <button className="collapse-button" onClick={handleSidebarCollapse}>
-           <BiMenu />
-         </button>
-       </div>
-       <div className="topnavmid">
-         <h3>Barangay Harapin Ang Bukas</h3>
-       </div>
-       <div className="topnavright">
-         <div ref={profileRef}>
-           <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-           {ProfilesubmenuVisible && (
-             <div className="Profilesubmenuadmin">
+    return (
+        <>
+
+            <div className="topbarsection">
+                {Array.isArray(userData) ? (
+                    userData.map((item, index) => (
+                        <div key={index}>
+                            <div className="topnavbar d-flex justify-content-between align-items-center">
+                                <div className="topnavleft">
+                                    <button className="collapse-button" onClick={handleSidebarCollapse}>
+                                        <BiMenu />
+                                    </button>
+                                </div>
+                                <div className="topnavmid">
+                                    <h3>Barangay Harapin Ang Bukas</h3>
+                                </div>
+                                <div className="topnavright">
+                                <div ref={profileRef}>
+                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                    {ProfilesubmenuVisible && (
+                        <div className="Profilesubmenuadmin">
                <div className="admininfo">
                  <div className="rightprofile">
-                   <FaUserCircle className="adminprofile" />
+                <img src={item.filename.url} style={{ width:"80px",height:"80px", borderRadius:"50px"}}calt="Profile Picture" className="profile-pic" id="profile-pic" />       
                  </div>
                  <div className="leftprofile">
                    <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
@@ -235,17 +235,17 @@ return (
                  </div>
                </div>
              </div>
-           )}
-         </div>
-       </div>
+                    )}
+                  </div>
+                                </div>
 
-     </div>
-     </div>
-                         ))
-                     ) : (
-                         <p>No data to display.</p>
-                     )}
-   </div>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p>No data to display.</p>
+                )}
+            </div>
             <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
                 <div className="newsidebar">
                     <div className="text-center">

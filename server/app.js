@@ -36,6 +36,7 @@ const complaintRoutes = require('./routes/complaintRoutes');
 const emergencyRoutes = require('./routes/emergencyRoutes');
 const StaffLogsRoutes = require('./routes/staffLogsRoutes');
 const healthRoutes = require('./routes/healthRoutes');
+const { frameguard, referrerPolicy } = require("helmet");
 
 
 /********USER*******/
@@ -134,6 +135,46 @@ app.use('/delete/emergency',emergencyRoutes); //delete emergency
 
 /*******STAFFLOGS*******/
 app.use('/get/stafflogs', StaffLogsRoutes) // get stafflogs
+
+
+// app.use(helmet());
+
+// // Add more specific CSP rules if needed
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       scriptSrc: ["'self'"],
+//       styleSrc: ["'self'"],
+//     },
+//   })
+// );
+
+// // X-Frame-Options
+// app.use(
+//   helmet.frameguard({
+//     action: 'deny',
+//   })
+// );
+
+// // Referrer-Policy
+// app.use(
+//   helmet.referrerPolicy({
+//     policy: 'same-origin',
+//   })
+// );
+
+// // Permissions-Policy
+// app.use(
+//   helmet.permissionsPolicy({
+//     features: {
+//       geolocation: ["'self'"],
+//     },
+//   })
+// );
+
+
+
 
 app.listen(8000,()=>{
   console.log("port connected");
