@@ -25,7 +25,7 @@ const RegisterA = () => {
                         </div>
                     </div>
                     <div className="register-age row mb-3">
-                    <div className="col">
+                        <div className="col">
                             <label For="Age">Age</label>
                             <input type="Age" className="form-control" id="Age" placeholder="Enter Age" />
                         </div>
