@@ -165,19 +165,11 @@ function Healthadmin() {
   const [address, setAddress] = useState('');
   const [status, setStatus] = useState('');
   const [documentation, setDocumentation] = useState('');
-  const [file, setFile] = useState();
   //-------------------------- ADD FUNCTION -----------------------------------
 
   const health = () => {
-    const formData = new FormData();
-    formData.append('date', date);
-    formData.append('reporter', reporter);
-    formData.append('respondents', respondents);
-    formData.append('type', type);
-    formData.append('address', address);
-    formData.append('status', status);
-    formData.append('documentation', documentation);
-    formData.append('file', file);
+    const formData = {date,reporter,respondents,type,address,status,documentation}
+   
     axios.post('https://dbarangay.onrender.com/health', formData).then(res => {
       if (res.data === "Error saving data to MongoDB") {
         alert("Health Already Exist!");
@@ -197,7 +189,6 @@ function Healthadmin() {
   const [editAddress, setEditAddress] = useState('');
   const [editStatus, setEditStatus] = useState('');
   const [editDocumentation, setEditDocumentation] = useState('');
-  const [editFile, setEditFile] = useState('');
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const handleEditDiscard = () => { setShowEditForm(false); };
@@ -211,21 +202,13 @@ function Healthadmin() {
     setEditType(rowData.type);
     setEditAddress(rowData.address);
     setEditStatus(rowData.status);
-    setEditStatus(rowData.documentation);
+    setEditDocumentation(rowData.documentation);
     setShowEditForm(true);
   };
 
   const updateRowData = async () => {
     try {
-      const formData = new FormData();
-      formData.append('date', editDate);
-      formData.append('reporter', editReporter);
-      formData.append('respondents', editRespondents);
-      formData.append('type', editType);
-      formData.append('address', editAddress);
-      formData.append('status', editStatus);
-      formData.append('documentation', editDocumentation);
-      formData.append('file', editFile);
+      const formData = {date:editDate,reporter:editReporter,respondents:editRespondents,type:editType,address:editAddress,status:editStatus,documentation:editDocumentation}
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/health/${selectedRowData}`,
         formData
@@ -518,7 +501,7 @@ function Healthadmin() {
                           <th scope="col">RESPONDENTS</th>
                           <th scope="col">MEDICAL TYPE</th>
                           <th scope="col">INCIDENT ADDRESS</th>
-
+                          <th scope="col">DOCUMENTATION</th>
                           <th scope="col">Status</th>
                           <th scope="col">Actions</th>
                         </tr>
@@ -531,6 +514,7 @@ function Healthadmin() {
                             <td>{item.respondents}</td>
                             <td>{item.type}</td>
                             <td>{item.address}</td>
+                            <td>{item.documentation}</td>
                             <td>{item.status}</td>
                             <td>
                               <button className="btn btn-primary btn-sm" onClick={() => showEditFormHandler(item)}>Edit</button>

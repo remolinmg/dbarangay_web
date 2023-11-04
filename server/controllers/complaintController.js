@@ -1,16 +1,14 @@
 const complaint = require('../models/complaintModel');
-const fs = require('fs');
 
 // Function to create a new complaint
 exports.createComplaint = async (req, res) => {
   const {
     date,complainant,defendant,complainttype,address,kind,status, documentation
   } = req.body;
-  const { filename } = req.file;
 
   try {
     const newComplaint = new complaint({
-      date,complainant,defendant,complainttype,address,kind,status, filename, documentation
+      date,complainant,defendant,complainttype,address,kind,status, documentation
     });
     await newComplaint.save();
     res.status(201).send('File and text data saved to MongoDB');
@@ -40,14 +38,7 @@ exports.deleteComplaint = async (req, res) => {
     if (!deletedDocument) {
       return res.status(404).json({ message: 'Document not found' });
     }
-    const filename = `./uploads/complaint/${deletedDocument.filename}`;
-    fs.unlink(filename, (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Error deleting file' });
-      }
       res.json({ message: 'Document and file deleted successfully' });
-    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
@@ -58,7 +49,6 @@ exports.deleteComplaint = async (req, res) => {
 exports.updateComplaint = async (req, res) => {
   const id = req.params.id;
   const formData = req.body;
-  const newFile = req.file;
 
   try {
     // First, find the existing complaint
@@ -67,28 +57,8 @@ exports.updateComplaint = async (req, res) => {
     if (!existingComplaint) {
       return res.status(404).json({ message: 'Complaint not found' });
     }
-
-    // Check if a new file was uploaded
-    if (newFile) {
-      // Delete the old file if it exists
-      if (existingComplaint.filename) {
-        const filepath = `./uploads/complaint/${existingComplaint.filename}`;
-        fs.unlink(filepath, (err) => {
-          if (err) {
-            console.error('Error deleting old file:', err);
-          }
-        });
-      }
-
-      // Update the complaint with the new file
-      existingComplaint.filename = newFile.filename;
-    }
-
-    // Update the complaint with new data (excluding the file)
     existingComplaint.set(formData);
-
     const updatedComplaint = await existingComplaint.save();
-
     res.status(200).json(updatedComplaint);
   } catch (error) {
     console.error(error);
