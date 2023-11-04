@@ -169,18 +169,31 @@ function BlotterAdmin() {
   const [documentation, setDocumentation] = useState('');
   //-------------------------- ADD FUNCTION -----------------------------------
 
-  const blotter = () => {
-    const formData ={date,complainant,defendant,type,address,kind,status,documentation} 
-    axios.post('https://dbarangay.onrender.com/blotter', formData).then(res => {
+  async function blotter(e) {
+    e.preventDefault();
+    try {
+    await  axios.post('https://dbarangay.onrender.com/blotter', {date,complainant,defendant,type,address,kind,status,documentation
+    }).then(res =>{
       if (res.data === "Error saving data to MongoDB") {
-        alert("Blotter Already Exist!");
+        alert("Blotter Already Exist!") 
       }
       else if (res.data === "File and text data saved to MongoDB") {
+        setShowForm(false);
         fetchData();
       }
     })
-      .catch(er => console.log(er))
-  };
+    .catch(e => {
+      alert("Failed!")
+      console.log(e);
+    })
+}
+catch (e) {
+  console.log(e);
+
+}
+
+}
+  
 
   // EDIT FORM STATES (ShowForms) ------------------------------
 
@@ -210,9 +223,10 @@ function BlotterAdmin() {
     setShowEditForm(true);
   };
 
-  const updateRowData = async () => {
+  const updateRowData = async (id) => {
     try {
-      const formData = {date:editDate,complainant:editComplainant,defendant:editDefendant,type:editType,address:editAddress,kind:editKind,status:editStatus, documentation:editDocumentation}
+      const formData = {date:editDate,complainant:editComplainant,defendant:editDefendant,type:editType,address:editAddress,kind:editKind,status:editStatus, documentation:editDocumentation};
+
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/blotter/${selectedRowData}`,
         formData

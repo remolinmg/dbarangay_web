@@ -2,18 +2,34 @@ const complaint = require('../models/complaintModel');
 
 // Function to create a new complaint
 exports.createComplaint = async (req, res) => {
+  
+
   const {
-    date,complainant,defendant,complainttype,address,kind,status, documentation
-  } = req.body;
+    date,complainant,defendant,complainttype,address,kind,status,documentation
+  } =req.body=req.body
+  const data = 
+  {
+   date:date,
+   complainant:complainant,
+   defendant:defendant,
+   complainttype:complainttype,
+   address:address,
+   kind:kind,
+   status:status,
+   documentation:documentation
+    }
 
   try {
-    const newComplaint = new complaint({
-      date,complainant,defendant,complainttype,address,kind,status, documentation
-    });
-    await newComplaint.save();
-    res.status(201).send('File and text data saved to MongoDB');
-  } catch (error) {
-    console.error(error);
+    const check=await complaint.findOne({$and:[{date:date},{complainant:complainant},{defendant:defendant},{complainttype:complainttype}]})
+    if(check){
+      res.status(400).json('Error saving data to MongoDB')
+    }
+    else{
+      res.status(201).send('File and text data saved to MongoDB');
+      await complaint.insertMany([data])
+    }
+  }
+  catch(e){
     res.status(500).send('Error saving data to MongoDB');
   }
 };
@@ -52,13 +68,13 @@ exports.updateComplaint = async (req, res) => {
 
   try {
     // First, find the existing complaint
-    const existingComplaint = await complaint.findById(id);
+    const updatedComplaint = await complaint.findByIdAndUpdate(
+      id,formData,{ new: true } 
+    );
 
-    if (!existingComplaint) {
+    if (!updatedComplaint) {
       return res.status(404).json({ message: 'Complaint not found' });
     }
-    existingComplaint.set(formData);
-    const updatedComplaint = await existingComplaint.save();
     res.status(200).json(updatedComplaint);
   } catch (error) {
     console.error(error);
