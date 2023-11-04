@@ -166,7 +166,7 @@ function BlotterAdmin() {
   const [address, setAddress] = useState('');
   const [kind, setKind] = useState('');
   const [status, setStatus] = useState('');
-  const [file, setFile] = useState();
+  const [documentation, setDocumentation] = useState('');
   //-------------------------- ADD FUNCTION -----------------------------------
 
   const blotter = () => {
@@ -178,7 +178,7 @@ function BlotterAdmin() {
     formData.append('address', address);
     formData.append('kind', kind);
     formData.append('status', status);
-    formData.append('file', file);
+    formData.append('documentation', documentation);
     axios.post('https://dbarangay.onrender.com/blotter', formData).then(res => {
       if (res.data === "Error saving data to MongoDB") {
         alert("Blotter Already Exist!");
@@ -198,7 +198,7 @@ function BlotterAdmin() {
   const [editAddress, setEditAddress] = useState('');
   const [editKind, setEditKind] = useState('');
   const [editStatus, setEditStatus] = useState('');
-  const [editFile, setEditFile] = useState('');
+  const [editDocumentation, setEditDocumentation] = useState('');
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const handleEditDiscard = () => { setShowEditForm(false); };
@@ -226,7 +226,7 @@ function BlotterAdmin() {
       formData.append('address', editAddress);
       formData.append('kind', editKind);
       formData.append('status', editStatus);
-      formData.append('file', editFile);
+      formData.append('documentation', editDocumentation);
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/blotter/${selectedRowData}`,
         formData
@@ -519,7 +519,7 @@ function BlotterAdmin() {
                           <th scope="col">DEFENDANT</th>
                           <th scope="col">COMPLAINT TYPE</th>
                           <th scope="col">INCIDENT ADDRESS</th>
-
+                          <th scope="col">Documentation</th>
                           <th scope="col">TYPE</th>
                           <th scope="col">STATUS</th>
                           <th scope="col">ACTIONS</th>
@@ -533,6 +533,7 @@ function BlotterAdmin() {
                             <td>{item.defendant}</td>
                             <td>{item.type}</td>
                             <td>{item.address}</td>
+                            <td>{item.documentation}</td>
                             <td>{item.kind}</td>
                             <td>{item.status}</td>
                             <td>
@@ -608,6 +609,14 @@ function BlotterAdmin() {
                             id="address"
                             name="address"
                             onChange={(e) => { setAddress(e.target.value); }}
+                            className="form-control" required /></div>
+
+                             <div className="form-group">
+                          <label htmlFor="documentation">DOCUMENTATION </label>
+                          <input
+                            type="text"
+                            id="documentation"
+                            name="documentation" onChange={(e) => { setDocumentation(e.target.value); }}
                             className="form-control" required /></div>
 
 
@@ -715,8 +724,14 @@ function BlotterAdmin() {
                             onChange={(e) => { setEditAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-
-
+                             <div className="form-group">
+                          <label htmlFor="documentation">DOCUMENTATION </label>
+                          <input
+                            type="text"
+                            id="documentation"
+                            value={editDocumentation}
+                            name="documentation" onChange={(e) => { setEditDocumentation(e.target.value); }}
+                            className="form-control" required /></div>
                         <div className="form-group">
                           <label htmlFor="kind">TYPE</label>
                           <select
