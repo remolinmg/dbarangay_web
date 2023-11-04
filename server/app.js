@@ -150,28 +150,28 @@ app.use(
   })
 );
 
-// X-Frame-Options
-app.use(
-  helmet.frameguard({
-    action: 'deny',
-  })
-);
+// // X-Frame-Options
+// app.use(
+//   helmet.frameguard({
+//     action: 'deny',
+//   })
+// );
 
-// Referrer-Policy
-app.use(
-  helmet.referrerPolicy({
-    policy: 'same-origin',
-  })
-);
+// // Referrer-Policy
+// app.use(
+//   helmet.referrerPolicy({
+//     policy: 'same-origin',
+//   })
+// );
 
-// Permissions-Policy
-app.use(
-  helmet.permissionsPolicy({
-    features: {
-      geolocation: ["'self'"],
-    },
-  })
-);
+// // Permissions-Policy
+// app.use(
+//   helmet.permissionsPolicy({
+//     features: {
+//       geolocation: ["'self'"],
+//     },
+//   })
+// );
 
 
 
