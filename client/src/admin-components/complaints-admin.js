@@ -169,17 +169,29 @@ function Complaintsadmin() {
   const [documentation, setDocumentation] = useState('');
   //-------------------------- ADD FUNCTION -----------------------------------
 
-  const complaint = () => {
-    const formData = {date,complainant,defendant,complainttype,address,kind,status,documentation}
-    axios.post('https://dbarangay.onrender.com/complaint', formData).then(res => {
-      if (res.data === "Error saving data to MongoDB") {
-        alert("Complaint Already Exist!");
-      }
-      else if (res.data === "File and text data saved to MongoDB") {
-      }
-    })
-      .catch(er => console.log(er))
-  };
+  async function complaint(e) {
+    e.preventDefault();
+    try {
+      await axios.post('https://dbarangay.onrender.com/complaint',{date,complainant,defendant,complainttype,address,kind,status,documentation
+
+      }).then(res =>{
+        if (res.data === "Error saving data to MongoDB") {
+          alert("Complaint Already Exist!") 
+        }
+        else if (res.data === "File and text data saved to MongoDB") {
+          setShowForm(false);
+          fetchData();
+        }
+      })
+      .catch(e => {
+        alert("Failed!")
+        console.log(e);
+      })
+  }
+  catch (e) {
+    console.log(e);
+  }
+  }
 
   // EDIT FORM STATES (ShowForms) ------------------------------
 
@@ -209,9 +221,10 @@ function Complaintsadmin() {
     setShowEditForm(true);
   };
 
-  const updateRowData = async () => {
+  const updateRowData = async (id) => {
     try {
-      const formData = {date:editDate,complainant:editComplainant,defendant:editDefendant,complainttype:editType,address:editAddress,kind:editKind,status:editStatus,documentation:editDocumentation}
+      const formData = {date:editDate,complainant:editComplainant,defendant:editDefendant,complainttype:editType,address:editAddress,kind:editKind,status:editStatus,documentation:editDocumentation};
+
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/complaint/${selectedRowData}`,
         formData

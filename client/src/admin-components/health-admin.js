@@ -167,19 +167,27 @@ function Healthadmin() {
   const [documentation, setDocumentation] = useState('');
   //-------------------------- ADD FUNCTION -----------------------------------
 
-  const health = () => {
-    const formData = {date,reporter,respondents,type,address,status,documentation}
-   
-    axios.post('https://dbarangay.onrender.com/health', formData).then(res => {
+  async function health(e) {
+    e.preventDefault();
+    try{
+     await axios.post('https://dbarangay.onrender.com/health',{date,reporter,respondents,type,address,status,documentation}).then(res =>{
       if (res.data === "Error saving data to MongoDB") {
-        alert("Health Already Exist!");
+        alert("Medical Already Exist!") 
       }
       else if (res.data === "File and text data saved to MongoDB") {
+        setShowForm(false);
+        fetchData();
       }
     })
-      .catch(er => console.log(er))
-  };
-
+    .catch(e => {
+      alert("Failed!")
+      console.log(e);
+    })
+}
+catch (e) {
+  console.log(e);
+}
+}
   // EDIT FORM STATES (ShowForms) ------------------------------
 
   const [editDate, setEditDate] = useState('');

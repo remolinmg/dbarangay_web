@@ -4,16 +4,30 @@ const blotter = require('../models/blotterModel');
 exports.createBlotter = async (req, res) => {
   const {
     date,complainant,defendant,type,address,kind,status,documentation
-  } = req.body;
+  } =req.body=req.body
+  const data = 
+  {
+   date:date,
+   complainant:complainant,
+   defendant:defendant,
+   type:type,
+   address:address,
+   kind:kind,
+   status:status,
+   documentation:documentation
+    }
 
   try {
-    const newBlotter = new blotter({
-      date,complainant,defendant,type,address,kind,status,documentation
-    });
-    await newBlotter.save();
-    res.status(201).send('File and text data saved to MongoDB');
-  } catch (error) {
-    console.error(error);
+    const check=await blotter.findOne({$and:[{date:date},{complainant:complainant},{defendant:defendant},{type:type}]})
+    if(check){
+      res.status(400).json('Error saving data to MongoDB')
+    }
+    else{
+      res.status(201).send('File and text data saved to MongoDB');
+      await blotter.insertMany([data])
+    }
+  }
+  catch(e){
     res.status(500).send('Error saving data to MongoDB');
   }
 };
@@ -52,13 +66,13 @@ exports.updateBlotter = async (req, res) => {
 
   try {
     // First, find the existing blotter
-    const existingBlotter = await blotter.findById(id);
+    const updatedBlotter = await blotter.findByIdAndUpdate(
+      id,formData,{ new: true } 
+    );
 
-    if (!existingBlotter) {
+    if (!updatedBlotter) {
       return res.status(404).json({ message: 'Blotter not found' });
     }
-    existingBlotter.set(formData);
-    const updatedBlotter = await existingBlotter.save();
     res.status(200).json(updatedBlotter);
   } catch (error) {
     console.error(error);
