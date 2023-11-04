@@ -214,7 +214,7 @@ const RegistrationComponent = () => {
     formData.append('position', position)
     formData.append('file', file)
     axios.post("https://dbarangay.onrender.com/signup", formData)
-    .then(res => {
+      .then(res => {
         if (res.data === 'Error saving data to MongoDB and Cloudinary') {
           alert("User Already Exist!");
         } else if (res.data === 'File and text data saved to MongoDB and Cloudinary') {
@@ -411,26 +411,23 @@ const RegistrationComponent = () => {
 
 
 
-  //PASSWORD VALIDATION----------------------------------------------------
-  const isPasswordValid = (password) => {
-    const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    return passwordRegex.test(password);
-  };
+// PASSWORD VALIDATION----------------------------------------------------
+const isPasswordValid = (password) => {
+  const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  return passwordRegex.test(password) && password.length >= 8; // Added length check
+};
 
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-    setPasswordValid(isPasswordValid(value));
-  };
+const handlePasswordChange = (e) => {
+  const value = e.target.value;
+  setPassword(value);
+  setPasswordValid(isPasswordValid(value));
+};
 
-  const handleConfirmPasswordChange = (e) => {
-    const value = e.target.value;
-    setConfirmPassword(value);
-    setConfirmPasswordValid(value === password);
-
-
-  };
-
+const handleConfirmPasswordChange = (e) => {
+  const value = e.target.value;
+  setConfirmPassword(value);
+  setConfirmPasswordValid(value === password);
+};
 
   return (
     <div className="container-fluid main-reg">
