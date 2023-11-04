@@ -137,18 +137,18 @@ app.use('/delete/emergency',emergencyRoutes); //delete emergency
 app.use('/get/stafflogs', StaffLogsRoutes) // get stafflogs
 
 
-app.use(helmet());
+// app.use(helmet());
 
-// Add more specific CSP rules if needed
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      styleSrc: ["'self'"],
-    },
-  })
-);
+// // Add more specific CSP rules if needed
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       scriptSrc: ["'self'"],
+//       styleSrc: ["'self'"],
+//     },
+//   })
+// );
 
 // // X-Frame-Options
 // app.use(
