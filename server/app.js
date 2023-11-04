@@ -195,7 +195,7 @@ app.use('/get/stafflogs', StaffLogsRoutes) // get stafflogs
 
 
 
-
-app.listen(8000, () => {
+const port = process.env.PORT || 8000;
+app.listen(port, () => {
   console.log("port connected");
 })
