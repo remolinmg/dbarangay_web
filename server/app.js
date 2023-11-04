@@ -36,7 +36,7 @@ const complaintRoutes = require('./routes/complaintRoutes');
 const emergencyRoutes = require('./routes/emergencyRoutes');
 const StaffLogsRoutes = require('./routes/staffLogsRoutes');
 const healthRoutes = require('./routes/healthRoutes');
-const { frameguard, referrerPolicy } = require("helmet");
+// const { frameguard, referrerPolicy } = require("helmet");
 
 
 /********USER*******/
