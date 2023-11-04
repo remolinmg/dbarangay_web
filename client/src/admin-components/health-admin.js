@@ -164,6 +164,7 @@ function Healthadmin() {
   const [type, setType] = useState('');
   const [address, setAddress] = useState('');
   const [status, setStatus] = useState('');
+  const [documentation, setDocumentation] = useState('');
   const [file, setFile] = useState();
   //-------------------------- ADD FUNCTION -----------------------------------
 
@@ -175,6 +176,7 @@ function Healthadmin() {
     formData.append('type', type);
     formData.append('address', address);
     formData.append('status', status);
+    formData.append('documentation', documentation);
     formData.append('file', file);
     axios.post('https://dbarangay.onrender.com/health', formData).then(res => {
       if (res.data === "Error saving data to MongoDB") {
@@ -194,6 +196,7 @@ function Healthadmin() {
   const [editType, setEditType] = useState('');
   const [editAddress, setEditAddress] = useState('');
   const [editStatus, setEditStatus] = useState('');
+  const [editDocumentation, setEditDocumentation] = useState('');
   const [editFile, setEditFile] = useState('');
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -208,6 +211,7 @@ function Healthadmin() {
     setEditType(rowData.type);
     setEditAddress(rowData.address);
     setEditStatus(rowData.status);
+    setEditStatus(rowData.documentation);
     setShowEditForm(true);
   };
 
@@ -220,6 +224,7 @@ function Healthadmin() {
       formData.append('type', editType);
       formData.append('address', editAddress);
       formData.append('status', editStatus);
+      formData.append('documentation', editDocumentation);
       formData.append('file', editFile);
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/health/${selectedRowData}`,
@@ -605,7 +610,13 @@ function Healthadmin() {
                             onChange={(e) => { setAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-
+                            <div className="form-group">
+                          <label htmlFor="documentation">DOCUMENTATION </label>
+                          <input
+                            type="text"
+                            id="documentation"
+                            name="documentation" onChange={(e) => { setDocumentation(e.target.value); }}
+                            className="form-control" required /></div>
 
                         <div className="form-group">
                           <label htmlFor="status">STATUS</label>
@@ -698,6 +709,15 @@ function Healthadmin() {
                             name="address"
                             value={editAddress}
                             onChange={(e) => { setEditAddress(e.target.value); }}
+                            className="form-control" required /></div>
+
+                            <div className="form-group">
+                          <label htmlFor="documentation">DOCUMENTATION </label>
+                          <input
+                            type="text"
+                            id="documentation"
+                            value={editDocumentation}
+                            name="documentation" onChange={(e) => { setEditDocumentation(e.target.value); }}
                             className="form-control" required /></div>
 
                         <div className="form-group">

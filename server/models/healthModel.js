@@ -8,6 +8,7 @@ const healthSchema = new mongoose.Schema({
   address: String,
   status: String,
   filename: String,
+  documentation: String,
 });
 
 const health = mongoose.model('health', healthSchema);
