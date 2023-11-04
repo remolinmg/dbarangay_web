@@ -39,12 +39,20 @@ const healthRoutes = require('./routes/healthRoutes');
 const helmet = require('helmet');
 
 
+// SECURITY
+app.use(
+  helmet.hsts({
+    maxAge: 31536000,
+    includeSubDomains: true,
+    preload: true,
+  })
+);
+
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", 'https://example.com'],
-      // Add more directives as needed
     },
   })
 );
