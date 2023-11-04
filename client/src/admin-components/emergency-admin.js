@@ -8,6 +8,7 @@ import { BiLogOut, BiCog } from "react-icons/bi";
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { format } from 'date-fns';
 import { jwtDecode } from "jwt-decode";
+import Notification from './notifications';
 
 import Cookies from 'js-cookie';
 import {
@@ -116,7 +117,7 @@ function EmergencyAdmin() {
           return "";
         }
       });
-      
+
 
       return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
     })
@@ -146,7 +147,7 @@ function EmergencyAdmin() {
         return "";
       }
     });
-    
+
     return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
   });
 
@@ -392,6 +393,7 @@ function EmergencyAdmin() {
         </div>
       </div>
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
+      <Notification emergencyData={data} />
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
             <div className="col-6">

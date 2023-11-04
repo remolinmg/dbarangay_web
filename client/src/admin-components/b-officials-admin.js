@@ -9,7 +9,7 @@ import axios from 'axios';
 import { parse, format } from 'date-fns';
 import { FaUserCircle } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
-
+import Notification from './notifications';
 import Cookies from 'js-cookie';
 import {
   BsPersonFill,
@@ -454,6 +454,7 @@ function BofficialsAdmin() {
         </div>
       </div>
       <div className={`bofficials-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
+        <Notification/>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-50 d-flex align-items-center">
             <div className="input-group">
