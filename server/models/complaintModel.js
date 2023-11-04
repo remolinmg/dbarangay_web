@@ -9,6 +9,7 @@ const complaintSchema = new mongoose.Schema({
   kind: String,
   status: String,
   filename: String,
+  documentation: String,
 });
 
 const complaint = mongoose.model('complaint', complaintSchema);

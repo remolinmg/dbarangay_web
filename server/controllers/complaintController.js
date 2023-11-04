@@ -4,13 +4,13 @@ const fs = require('fs');
 // Function to create a new complaint
 exports.createComplaint = async (req, res) => {
   const {
-    date,complainant,defendant,complainttype,address,kind,status
+    date,complainant,defendant,complainttype,address,kind,status, documentation
   } = req.body;
   const { filename } = req.file;
 
   try {
     const newComplaint = new complaint({
-      date,complainant,defendant,complainttype,address,kind,status, filename
+      date,complainant,defendant,complainttype,address,kind,status, filename, documentation
     });
     await newComplaint.save();
     res.status(201).send('File and text data saved to MongoDB');

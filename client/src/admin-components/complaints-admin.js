@@ -166,6 +166,7 @@ function Complaintsadmin() {
   const [address, setAddress] = useState('');
   const [kind, setKind] = useState('');
   const [status, setStatus] = useState('');
+  const [documentation, setDocumentation] = useState('');
   const [file, setFile] = useState();
   //-------------------------- ADD FUNCTION -----------------------------------
 
@@ -178,6 +179,7 @@ function Complaintsadmin() {
     formData.append('address', address);
     formData.append('kind', kind);
     formData.append('status', status);
+    formData.append('documentation', documentation);
     formData.append('file', file);
     axios.post('https://dbarangay.onrender.com/complaint', formData).then(res => {
       if (res.data === "Error saving data to MongoDB") {
@@ -198,6 +200,7 @@ function Complaintsadmin() {
   const [editAddress, setEditAddress] = useState('');
   const [editKind, setEditKind] = useState('');
   const [editStatus, setEditStatus] = useState('');
+  const [editDocumentation, setEditDocumentation] = useState('');
   const [editFile, setEditFile] = useState('');
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -213,6 +216,7 @@ function Complaintsadmin() {
     setEditAddress(rowData.address);
     setEditKind(rowData.kind);
     setEditStatus(rowData.status);
+    setEditDocumentation(rowData.documentation);
     setShowEditForm(true);
   };
 
@@ -226,6 +230,7 @@ function Complaintsadmin() {
       formData.append('address', editAddress);
       formData.append('kind', editKind);
       formData.append('status', editStatus);
+      formData.append('documentation', editDocumentation);
       formData.append('file', editFile);
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/complaint/${selectedRowData}`,
@@ -518,7 +523,7 @@ function Complaintsadmin() {
                           <th scope="col">DEFENDANT</th>
                           <th scope="col">COMPLAINT TYPE</th>
                           <th scope="col">INCIDENT ADDRESS</th>
-
+                          <th scope="col">DOCUMENTATION</th>
                           <th scope="col">TYPE</th>
                           <th scope="col">STATUS</th>
                           <th scope="col">ACTIONS</th>
@@ -532,8 +537,7 @@ function Complaintsadmin() {
                             <td>{item.defendant}</td>
                             <td>{item.complainttype}</td>
                             <td>{item.address}</td>
-
-
+                            <td>{item.documentation}</td>
                             <td>{item.kind}</td>
                             <td>{item.status}</td>
                             <td>
@@ -612,7 +616,13 @@ function Complaintsadmin() {
                             onChange={(e) => { setAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-
+                             <div className="form-group">
+                          <label htmlFor="documentation">DOCUMENTATION </label>
+                          <input
+                            type="text"
+                            id="documentation"
+                            name="documentation" onChange={(e) => { setDocumentation(e.target.value); }}
+                            className="form-control" required /></div>
 
                         <div className="form-group">
                           <label htmlFor="kind">TYPE</label>
@@ -716,6 +726,15 @@ function Complaintsadmin() {
                             name="address"
                             value={editAddress}
                             onChange={(e) => { setEditAddress(e.target.value); }}
+                            className="form-control" required /></div>
+
+                             <div className="form-group">
+                          <label htmlFor="documentation">DOCUMENTATION </label>
+                          <input
+                            type="text"
+                            id="documentation"
+                            value={editDocumentation}
+                            name="documentation" onChange={(e) => { setEditDocumentation(e.target.value); }}
                             className="form-control" required /></div>
 
 

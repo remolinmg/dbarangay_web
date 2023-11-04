@@ -4,13 +4,13 @@ const fs = require('fs');
 // Function to create a new health
 exports.createHealth = async (req, res) => {
   const {
-    date,reporter,respondents,type,address,status
+    date,reporter,respondents,type,address,status,documentation
   } = req.body;
   const { filename } = req.file;
 
   try {
     const newHealth = new health({
-      date,reporter,respondents,type,address,status, filename
+      date,reporter,respondents,type,address,status, filename,documentation
     });
     await newHealth.save();
     res.status(201).send('File and text data saved to MongoDB');

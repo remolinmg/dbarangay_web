@@ -167,6 +167,7 @@ function BlotterAdmin() {
   const [kind, setKind] = useState('');
   const [status, setStatus] = useState('');
   const [documentation, setDocumentation] = useState('');
+  const [file, setFile] = useState();
   //-------------------------- ADD FUNCTION -----------------------------------
 
   const blotter = () => {
@@ -179,6 +180,7 @@ function BlotterAdmin() {
     formData.append('kind', kind);
     formData.append('status', status);
     formData.append('documentation', documentation);
+    formData.append('file',file);
     axios.post('https://dbarangay.onrender.com/blotter', formData).then(res => {
       if (res.data === "Error saving data to MongoDB") {
         alert("Blotter Already Exist!");
@@ -199,6 +201,7 @@ function BlotterAdmin() {
   const [editKind, setEditKind] = useState('');
   const [editStatus, setEditStatus] = useState('');
   const [editDocumentation, setEditDocumentation] = useState('');
+  const [editFile, setEditFile] = useState();
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const handleEditDiscard = () => { setShowEditForm(false); };
@@ -227,6 +230,7 @@ function BlotterAdmin() {
       formData.append('kind', editKind);
       formData.append('status', editStatus);
       formData.append('documentation', editDocumentation);
+      formData.append('file', editFile);
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/blotter/${selectedRowData}`,
         formData

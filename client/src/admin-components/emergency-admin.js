@@ -463,7 +463,7 @@ function EmergencyAdmin() {
                           <tr key={index}>
                             <td>{item.userId}</td>
                             <td>{item.currentLocation}</td>
-                            <td>{item.contactNum}</td>
+                            <td>{item.phoneNumber}</td>
                             <td>{item.emergencyType}</td>
                             <td>{item.date}</td>
                             <td>{item.status}</td>
