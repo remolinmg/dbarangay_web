@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
   FaTwitter,
@@ -18,7 +18,7 @@ const Footer = () => {
   // Database Feedback
   const [date, setDate] = useState('');
   const [feedback, setFeedback] = useState('');
-   useEffect(() => {
+  useEffect(() => {
     const currentDate = new Date();
     const currentDateStr = currentDate.toISOString().slice(0, 10);
     setDate(currentDateStr);
@@ -31,7 +31,7 @@ const Footer = () => {
     try {
 
       await axios.post("https://dbarangay.onrender.com/feedback", {
-        date,feedback
+        date, feedback
       })
         .then(res => {
           if (res.data == "exist") {
@@ -53,7 +53,7 @@ const Footer = () => {
 
     }
   }
-
+  const apkUrl = 'https://p-def5.pcloud.com/cBZEgBwREZqtWTB07ZZZFn7qykZ2ZZSfpZkZBSeRXZORZEHZvzZn7ZkLZNLZeFZcLZm8Zu8ZNzZ68Z24Z9JZcD2cVZSuenRLUvoH0aXMSTHHXHyY5niAgk/dbarangay_mobile.apk';
 
 
 
@@ -83,7 +83,7 @@ const Footer = () => {
                           name="issuedDate"
                           value={date}
                           className="form-control"
-                          viewOnly/>
+                          viewOnly />
                       </div>
                       <div className="form-group  w-75  m-auto">
                         <label htmlFor="suggestion">Your Suggestion/Feedback:</label>
@@ -132,22 +132,23 @@ const Footer = () => {
                   <a >Services</a>
                 </Link>
               </p>
-              </div>
-              
-              <div id="footer-contact" class="footer-contact col-6 col-md-2 mx-auto mt-3">         
-                <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
-                <p><i class="mr-3"><FaHome /></i> 204 Daang Bakal Street, Harapin Ang Bukas, Mandaluyong City</p>
-                <p><i class="mr-3"><FaEnvelope /></i>  <a href="mailto:harapinangbukas@gmail.com" style={emailLinkStyle}>harapinangbukas@gmail.com</a></p>
+              <a href={apkUrl} download="YourApp.apk" class="text-decoration-none">Download Application</a>
+            </div>
 
-                  <h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
-                  <a
-                    class="btn btn-primary btn-floating m-1"
-                    style={{backgroundColor: "#3b5998"}}
-                    href="https://www.facebook.com/harapinangbukas"
-                    target="_blank"
-                    role="button"
-                    ><i><FaFacebook /></i></a>
-              </div>
+            <div id="footer-contact" class="footer-contact col-6 col-md-2 mx-auto mt-3">
+              <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+              <p><i class="mr-3"><FaHome /></i> 204 Daang Bakal Street, Harapin Ang Bukas, Mandaluyong City</p>
+              <p><i class="mr-3"><FaEnvelope /></i>  <a href="mailto:harapinangbukas@gmail.com" style={emailLinkStyle}>harapinangbukas@gmail.com</a></p>
+
+              <h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
+              <a
+                class="btn btn-primary btn-floating m-1"
+                style={{ backgroundColor: "#3b5998" }}
+                href="https://www.facebook.com/harapinangbukas"
+                target="_blank"
+                role="button"
+              ><i><FaFacebook /></i></a>
+            </div>
           </div>
 
         </section>
