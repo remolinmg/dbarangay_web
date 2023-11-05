@@ -1,31 +1,31 @@
 const mongoose = require('mongoose');
 
 const barangayEmergencySchema = new mongoose.Schema({
-userId: {type: String}, //used UserID to show  data request in the flutter app
+  userId: { type: String }, //used UserID to show  data request in the flutter app
 
-currentLocation:{
+  currentLocation: {
     type: String,
     required: true,
     index: true,
-},
-
-phoneNumber:{
-    type: String,
-    required: true,
-    index: true, 
   },
 
-  emergencyType:{
+  phoneNumber: {
     type: String,
     required: true,
-    index: true, 
+    index: true,
   },
 
-  date:{
+  emergencyType: {
+    type: String,
+    required: true,
+    index: true,
+  },
+
+  date: {
     type: Date,
     required: true,
     index: true,
-},
+  },
 
 
   status: {

@@ -83,16 +83,7 @@ function UserEvacuation() {
                         <div className="popup-overlay">
                             <div className="popup-content w-100 h-100 d-flex flex-column justify-content-center align-content-center">
                                 <div className="popup-image image-1 h-75 m-auto mb-0">
-                                    <div className={`popup-image2 h-75 m-auto mb-0 ${showImages ? 'showImages' : ''}`}>
-                                        <img src={bhall1} alt="Image 1" />
-                                    </div>
-                                    <div className={`popup-image2 h-75 m-auto mb-0 ${showImages ? 'showImages' : ''}`}>
-                                        <img src={bhall2} alt="Image 2" />
-                                    </div>
-                                    <div className={`popup-image2 h-75 m-auto mb-0 ${showImages ? 'showImages' : ''}`}>
-                                        <img src={bhall3} alt="Image 3" />
-                                    </div>
-                                    <FaLocationDot className="text-danger w-100 h-100 loc-marker opacity-0" onClick={toggleBHallCont} />
+                                    <img src={map1} className="w-100 h-100 map" />
                                 </div>
                                 <div className="h-auto m-auto mt-0" id="mapBtn" >
                                     <div className="mapBtn-cont-close w-50">
@@ -117,8 +108,8 @@ function UserEvacuation() {
                     {showCourt && (
                         <div className="popup-overlay">
                             <div className="popup-content w-100 h-100 d-flex flex-column justify-content-center align-content-center">
-                                <div className="popup-image image-2 h-75 m-auto mb-0">
-                                    <FaLocationDot className="text-danger loc-marker loc-marker-2" onClick={toggleBHallCont} />
+                                <div className="popup-image image-1 h-75 m-auto mb-0">
+                                    <img src={map2} className="w-100 h-100 map" />
                                 </div>
                                 <div className="h-auto m-auto mt-0" id="mapBtn" >
                                     <div className="mapBtn-cont-close w-50">
@@ -143,8 +134,8 @@ function UserEvacuation() {
                     {showPlayground && (
                         <div className="popup-overlay">
                             <div className="popup-content w-100 h-100 d-flex flex-column justify-content-center align-content-center">
-                                <div className="popup-image image-3 h-75 m-auto mb-0">
-                                    <FaLocationDot className="text-danger loc-marker loc-marker-3" onClick={toggleBHallCont} />
+                                <div className="popup-image image-1 h-75 m-auto mb-0">
+                                    <img src={map3} className="w-100 h-100 map" />
                                 </div>
                                 <div className="h-auto m-auto mt-0" id="mapBtn" >
                                     <div className="mapBtn-cont-close w-50">
