@@ -1787,6 +1787,7 @@ h3 {
 
   #forgotpass-btn {
     padding: 25%;
+    margin-top: 100px;
   }
 
   /* homepage */
@@ -1837,7 +1838,10 @@ h3 {
     width: 100px;
     height: 100px;
   }
-
+  .left-side-reg {
+    padding-top: 50px;
+    margin-bottom: 50px;
+  }
   /* services */
 
   .service {
@@ -1922,9 +1926,15 @@ h3 {
   }
 
   #forgotpass-btn {
-    margin-top: -150px;
+    margin-top: 120px;
     padding: 25%;
   }
+
+  .left-side-reg {
+    padding-top: 50px;
+    margin-bottom: 50px;
+  }
+
 
   /* homepage */
   #title {

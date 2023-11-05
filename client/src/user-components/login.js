@@ -24,7 +24,7 @@ const Login = () => {
   // const isValidPassword = (password) => password.length >= 8;
 
   const maxLoginAttempts = 2; // Define the maximum login attempts
-  const lockoutDuration = 1000; // 30 minutes in milliseconds
+  const lockoutDuration = 1000; // 30 minutes in milliseconds        1800000
 
   useEffect(() => {
     // Check if the user is still locked out
