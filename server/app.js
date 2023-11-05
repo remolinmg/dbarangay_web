@@ -157,9 +157,9 @@ app.use('/delete/feedback', feedbackRoutes); //delete feedback
 
 
 /********EMERGENCY*******/
-app.use('/emergency', emergencyRoutes); //add emergency
-app.use('/get/emergency', emergencyRoutes); //get emergency
-app.use('/delete/emergency', emergencyRoutes); //delete emergency
+app.use('/update/emergency',emergencyRoutes); //edit emergency
+app.use('/get/emergency',emergencyRoutes); //get emergency
+app.use('/delete/emergency',emergencyRoutes); //delete emergency
 
 /*******STAFFLOGS*******/
 app.use('/get/stafflogs', StaffLogsRoutes) // get stafflogs

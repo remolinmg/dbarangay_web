@@ -21,7 +21,7 @@ exports.updateEmergency = async (req, res) => {
       );
   
       if (!updatedUserEmergency) {
-        return res.status(404).json({ message: 'Request not found' });
+        return res.status(404).json({ message: 'Emergency not found' });
       }
   
       res.status(200).json(updatedUserEmergency);
