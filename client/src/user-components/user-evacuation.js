@@ -26,13 +26,18 @@ function UserEvacuation() {
     const [showCourt, setShowCourt] = useState(false);
     const [showPlayground, setShowPlayground] = useState(false);
     const [showBHallCont, setShowBHallCont] = useState(false);
+    const [showImages, setShowImages] = useState(false);
+
+    const toggleBHallCont = () => {
+        setShowImages(!showImages);
+    }
 
     const toggleBHall = () => {
         setShowBHall(!showBHall);
     };
-    const toggleBHallCont = () => {
-        setShowBHallCont(!showBHallCont);
-    };
+    // const toggleBHallCont = () => {
+    //     setShowBHallCont(!showBHallCont);
+    // };
 
     const toggleCourt = () => {
         setShowCourt(!showCourt);
@@ -78,7 +83,16 @@ function UserEvacuation() {
                         <div className="popup-overlay">
                             <div className="popup-content w-100 h-100 d-flex flex-column justify-content-center align-content-center">
                                 <div className="popup-image image-1 h-75 m-auto mb-0">
-                                    <FaLocationDot className="text-danger loc-marker loc-marker-1" onClick={toggleBHallCont} />
+                                    <div className={`popup-image2 h-75 m-auto mb-0 ${showImages ? 'showImages' : ''}`}>
+                                        <img src={bhall1} alt="Image 1" />
+                                    </div>
+                                    <div className={`popup-image2 h-75 m-auto mb-0 ${showImages ? 'showImages' : ''}`}>
+                                        <img src={bhall2} alt="Image 2" />
+                                    </div>
+                                    <div className={`popup-image2 h-75 m-auto mb-0 ${showImages ? 'showImages' : ''}`}>
+                                        <img src={bhall3} alt="Image 3" />
+                                    </div>
+                                    <FaLocationDot className="text-danger w-100 h-100 loc-marker opacity-0" onClick={toggleBHallCont} />
                                 </div>
                                 <div className="h-auto m-auto mt-0" id="mapBtn" >
                                     <div className="mapBtn-cont-close w-50">
@@ -103,7 +117,7 @@ function UserEvacuation() {
                     {showCourt && (
                         <div className="popup-overlay">
                             <div className="popup-content w-100 h-100 d-flex flex-column justify-content-center align-content-center">
-                                <div className="popup-image image-1 h-75 m-auto mb-0">
+                                <div className="popup-image image-2 h-75 m-auto mb-0">
                                     <FaLocationDot className="text-danger loc-marker loc-marker-2" onClick={toggleBHallCont} />
                                 </div>
                                 <div className="h-auto m-auto mt-0" id="mapBtn" >
@@ -129,7 +143,7 @@ function UserEvacuation() {
                     {showPlayground && (
                         <div className="popup-overlay">
                             <div className="popup-content w-100 h-100 d-flex flex-column justify-content-center align-content-center">
-                                <div className="popup-image image-1 h-75 m-auto mb-0">
+                                <div className="popup-image image-3 h-75 m-auto mb-0">
                                     <FaLocationDot className="text-danger loc-marker loc-marker-3" onClick={toggleBHallCont} />
                                 </div>
                                 <div className="h-auto m-auto mt-0" id="mapBtn" >
@@ -146,7 +160,7 @@ function UserEvacuation() {
 
                     {showBHallCont && (
                         <div className="popup-overlay">
-                            <div className="popup-content w-100 h-100 d-flex justify-content-center align-content-end">
+                            <div className="popup-content w-100 h-100 d-flex justify-content-betweem align-content-end">
                                 <span><img src={bhall1} /></span>
                                 <span><img src={bhall2} /></span>
                                 <span><img src={bhall3} /></span>
@@ -206,7 +220,7 @@ function UserEvacuation() {
 
                         </div>
                     </div>
-                
+
                     <h1 className="warning-title mt-5 mb-5 text-center">EARLY WARNING SYSTEM</h1>
 
                     <table class="table ps-5 pe-5">
@@ -310,13 +324,13 @@ function UserEvacuation() {
                             </tr>
                         </tbody>
                     </table>
-                
-            </div>
+
+                </div>
 
             </section>
             <ScrollToTopButton />
             <Footer />
-            <Faq/>
+            <Faq />
         </>
     );
 }

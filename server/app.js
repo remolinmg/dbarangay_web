@@ -52,7 +52,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", 'https://example.com'],
+      scriptSrc: ["'self'"],
     },
   })
 );
@@ -60,7 +60,7 @@ app.use(
 app.use(helmet.frameguard({ action: 'sameorigin' }));
 
 app.use((req, res, next) => {
-  res.setHeader('Permissions-Policy', 'geolocation=(), microphone=()');
+  res.setHeader('Permissions-Policy', 'geolocation=(maps.google.com)');
   next();
 });
 
