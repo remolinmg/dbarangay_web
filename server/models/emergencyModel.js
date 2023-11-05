@@ -9,7 +9,7 @@ currentLocation:{
     index: true,
 },
 
-contactNum:{
+phoneNumber:{
     type: String,
     required: true,
     index: true, 

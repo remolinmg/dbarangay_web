@@ -166,28 +166,34 @@ function BlotterAdmin() {
   const [address, setAddress] = useState('');
   const [kind, setKind] = useState('');
   const [status, setStatus] = useState('');
-  const [file, setFile] = useState();
+  const [documentation, setDocumentation] = useState('');
   //-------------------------- ADD FUNCTION -----------------------------------
 
-  const blotter = () => {
-    const formData = new FormData();
-    formData.append('date', date);
-    formData.append('complainant', complainant);
-    formData.append('defendant', defendant);
-    formData.append('type', type);
-    formData.append('address', address);
-    formData.append('kind', kind);
-    formData.append('status', status);
-    formData.append('file', file);
-    axios.post('https://dbarangay.onrender.com/blotter', formData).then(res => {
+  async function blotter(e) {
+    e.preventDefault();
+    try {
+    await  axios.post('https://dbarangay.onrender.com/blotter', {date,complainant,defendant,type,address,kind,status,documentation
+    }).then(res =>{
       if (res.data === "Error saving data to MongoDB") {
-        alert("Blotter Already Exist!");
+        alert("Blotter Already Exist!") 
       }
       else if (res.data === "File and text data saved to MongoDB") {
+        setShowForm(false);
+        fetchData();
       }
     })
-      .catch(er => console.log(er))
-  };
+    .catch(e => {
+      alert("Failed!")
+      console.log(e);
+    })
+}
+catch (e) {
+  console.log(e);
+
+}
+
+}
+  
 
   // EDIT FORM STATES (ShowForms) ------------------------------
 
@@ -198,7 +204,7 @@ function BlotterAdmin() {
   const [editAddress, setEditAddress] = useState('');
   const [editKind, setEditKind] = useState('');
   const [editStatus, setEditStatus] = useState('');
-  const [editFile, setEditFile] = useState('');
+  const [editDocumentation, setEditDocumentation] = useState('');
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const handleEditDiscard = () => { setShowEditForm(false); };
@@ -213,20 +219,14 @@ function BlotterAdmin() {
     setEditAddress(rowData.address);
     setEditKind(rowData.kind);
     setEditStatus(rowData.status);
+    setEditDocumentation(rowData.documentation)
     setShowEditForm(true);
   };
 
-  const updateRowData = async () => {
+  const updateRowData = async (id) => {
     try {
-      const formData = new FormData();
-      formData.append('date', editDate);
-      formData.append('complainant', editComplainant);
-      formData.append('defendant', editDefendant);
-      formData.append('type', editType);
-      formData.append('address', editAddress);
-      formData.append('kind', editKind);
-      formData.append('status', editStatus);
-      formData.append('file', editFile);
+      const formData = {date:editDate,complainant:editComplainant,defendant:editDefendant,type:editType,address:editAddress,kind:editKind,status:editStatus, documentation:editDocumentation};
+
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/blotter/${selectedRowData}`,
         formData
@@ -520,7 +520,7 @@ function BlotterAdmin() {
                           <th scope="col">DEFENDANT</th>
                           <th scope="col">COMPLAINT TYPE</th>
                           <th scope="col">INCIDENT ADDRESS</th>
-
+                          <th scope="col">Documentation</th>
                           <th scope="col">TYPE</th>
                           <th scope="col">STATUS</th>
                           <th scope="col">ACTIONS</th>
@@ -534,6 +534,7 @@ function BlotterAdmin() {
                             <td>{item.defendant}</td>
                             <td>{item.type}</td>
                             <td>{item.address}</td>
+                            <td>{item.documentation}</td>
                             <td>{item.kind}</td>
                             <td>{item.status}</td>
                             <td>
@@ -609,6 +610,14 @@ function BlotterAdmin() {
                             id="address"
                             name="address"
                             onChange={(e) => { setAddress(e.target.value); }}
+                            className="form-control" required /></div>
+
+                             <div className="form-group">
+                          <label htmlFor="documentation">DOCUMENTATION </label>
+                          <input
+                            type="text"
+                            id="documentation"
+                            name="documentation" onChange={(e) => { setDocumentation(e.target.value); }}
                             className="form-control" required /></div>
 
 
@@ -716,8 +725,14 @@ function BlotterAdmin() {
                             onChange={(e) => { setEditAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-
-
+                             <div className="form-group">
+                          <label htmlFor="documentation">DOCUMENTATION </label>
+                          <input
+                            type="text"
+                            id="documentation"
+                            value={editDocumentation}
+                            name="documentation" onChange={(e) => { setEditDocumentation(e.target.value); }}
+                            className="form-control" required /></div>
                         <div className="form-group">
                           <label htmlFor="kind">TYPE</label>
                           <select

@@ -9,6 +9,7 @@ const blotterSchema = new mongoose.Schema({
   kind: String,
   status: String,
   filename: String,
+  documentation: String,
 });
 
 const blotter = mongoose.model('blotter', blotterSchema);
