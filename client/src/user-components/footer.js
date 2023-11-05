@@ -53,7 +53,7 @@ const Footer = () => {
 
     }
   }
-  const apkUrl = 'https://p-def5.pcloud.com/cBZEgBwREZqtWTB07ZZZFn7qykZ2ZZSfpZkZBSeRXZORZEHZvzZn7ZkLZNLZeFZcLZm8Zu8ZNzZ68Z24Z9JZcD2cVZSuenRLUvoH0aXMSTHHXHyY5niAgk/dbarangay_mobile.apk';
+  const apkUrl = 'https://u.pcloud.link/publink/show?code=XZcD2cVZM1m3WeaR63F9hSlnjyvwWznFzBXX#returl=https%3A//u.pcloud.link/publink/show%3Fcode%3DXZcD2cVZM1m3WeaR63F9hSlnjyvwWznFzBXX&page=login';
 
 
 
