@@ -6,7 +6,7 @@ import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown, BiLogOut, BiCog } from 'react-icons/bi';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { jwtDecode } from "jwt-decode";
-
+import Notification from './notifications';
 import Cookies from 'js-cookie';
 import {
     BsPersonFill,
@@ -232,40 +232,40 @@ function Dashboard2() {
                                     <h3>Barangay Harapin Ang Bukas</h3>
                                 </div>
                                 <div className="topnavright">
-                                <div ref={profileRef}>
-                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
-                    {ProfilesubmenuVisible && (
-                        <div className="Profilesubmenuadmin">
-               <div className="admininfo">
-                 <div className="rightprofile">
-                <img src={item.filename.url} style={{ width:"80px",height:"80px", borderRadius:"50px"}}calt="Profile Picture" className="profile-pic" id="profile-pic" />       
-                 </div>
-                 <div className="leftprofile">
-                   <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
-                   <h5>{item.email}</h5>
-                 </div>
-               </div>
-               <div className="lowerprofile">
-                 <div className="button-profile1">
-                   <NavLink to="/admin-profile" activeClassName="active">
-                     <div href="#" className="profilebuttons">
-                       <BiCog className="profileicons" /> Settings
-                     </div>
-                   </NavLink>
-                 </div>
-                 <hr />
-                 <div className="button-profile1">
+                                    <div ref={profileRef}>
+                                        <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                                        {ProfilesubmenuVisible && (
+                                            <div className="Profilesubmenuadmin">
+                                                <div className="admininfo">
+                                                    <div className="rightprofile">
+                                                        <img src={item.filename.url} style={{ width: "80px", height: "80px", borderRadius: "50px" }} calt="Profile Picture" className="profile-pic" id="profile-pic" />
+                                                    </div>
+                                                    <div className="leftprofile">
+                                                        <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
+                                                        <h5>{item.email}</h5>
+                                                    </div>
+                                                </div>
+                                                <div className="lowerprofile">
+                                                    <div className="button-profile1">
+                                                        <NavLink to="/admin-profile" activeClassName="active">
+                                                            <div href="#" className="profilebuttons">
+                                                                <BiCog className="profileicons" /> Settings
+                                                            </div>
+                                                        </NavLink>
+                                                    </div>
+                                                    <hr />
+                                                    <div className="button-profile1">
 
-                   
-                     <div onClick={handleSignOut} className="profilebuttons">
-                       <BiLogOut className="profileicons" /> Log out
-                     </div>
-                   
-                 </div>
-               </div>
-             </div>
-                    )}
-                  </div>
+
+                                                        <div onClick={handleSignOut} className="profilebuttons">
+                                                            <BiLogOut className="profileicons" /> Log out
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
 
                             </div>
@@ -382,6 +382,7 @@ function Dashboard2() {
 
 
             <div className={`dashboard-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
+            <Notification/>
                 <ul class="nav justify-content-evenly">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="dashboard">Residents</a>

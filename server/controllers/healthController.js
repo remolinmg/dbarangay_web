@@ -1,21 +1,33 @@
 const health = require('../models/healthModel');
-const fs = require('fs');
 
 // Function to create a new health
 exports.createHealth = async (req, res) => {
   const {
-    date,reporter,respondents,type,address,status
-  } = req.body;
-  const { filename } = req.file;
+    date,reporter,respondents,type,address,status,documentation
+  } =req.body=req.body
+  const data = 
+  {
+   date:date,
+   reporter:reporter,
+   respondents:respondents,
+   type:type,
+   address:address,
+   status:status,
+   documentation:documentation
+    }
+
 
   try {
-    const newHealth = new health({
-      date,reporter,respondents,type,address,status, filename
-    });
-    await newHealth.save();
-    res.status(201).send('File and text data saved to MongoDB');
-  } catch (error) {
-    console.error(error);
+    const check=await health.findOne({$and:[{date:date},{reporter:reporter},{respondents:respondents},{type:type}]})
+    if(check){
+      res.status(400).json('Error saving data to MongoDB')
+    }
+    else{
+      res.status(201).send('File and text data saved to MongoDB');
+      await health.insertMany([data])
+    }
+  }
+  catch(e){
     res.status(500).send('Error saving data to MongoDB');
   }
 };
@@ -40,14 +52,7 @@ exports.deleteHealth= async (req, res) => {
     if (!deletedDocument) {
       return res.status(404).json({ message: 'Document not found' });
     }
-    const filename = `./uploads/medical/${deletedDocument.filename}`;
-    fs.unlink(filename, (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Error deleting file' });
-      }
       res.json({ message: 'Document and file deleted successfully' });
-    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
@@ -58,37 +63,16 @@ exports.deleteHealth= async (req, res) => {
 exports.updateHealth = async (req, res) => {
   const id = req.params.id;
   const formData = req.body;
-  const newFile = req.file;
 
   try {
     // First, find the existing health
-    const existingHealth = await health.findById(id);
+    const updatedHealth = await health.findByIdAndUpdate(
+      id,formData,{ new: true } 
+    );
 
-    if (!existingHealth) {
+    if (!updatedHealth) {
       return res.status(404).json({ message: 'Health not found' });
     }
-
-    // Check if a new file was uploaded
-    if (newFile) {
-      // Delete the old file if it exists
-      if (existingHealth.filename) {
-        const filepath = `./uploads/medical/${existingHealth.filename}`;
-        fs.unlink(filepath, (err) => {
-          if (err) {
-            console.error('Error deleting old file:', err);
-          }
-        });
-      }
-
-      // Update the health with the new file
-      existingHealth.filename = newFile.filename;
-    }
-
-    // Update the health with new data (excluding the file)
-    existingHealth.set(formData);
-
-    const updatedHealth = await existingHealth.save();
-
     res.status(200).json(updatedHealth);
   } catch (error) {
     console.error(error);

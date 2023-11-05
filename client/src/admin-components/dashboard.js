@@ -6,7 +6,7 @@ import logo from '../admin-components/assets/img/brgy.png';
 import { BiMenu, BiChevronDown, BiLogOut, BiCog } from 'react-icons/bi';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { jwtDecode } from "jwt-decode";
-
+import Notification from './notifications';
 import Cookies from 'js-cookie';
 import {
     BsPersonFill,
@@ -589,6 +589,7 @@ function Dashboard() {
 
 
             <div className={`dashboard-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
+            <Notification/>
                 <ul class="nav justify-content-evenly">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/dashboard">Residents</a>

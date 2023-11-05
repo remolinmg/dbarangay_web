@@ -9,7 +9,7 @@ import { AiOutlineDashboard } from 'react-icons/ai';
 import { format } from 'date-fns';
 import { FiUser } from 'react-icons/fi';
 import { jwtDecode } from "jwt-decode";
-
+import Notification from './notifications';
 import Cookies from 'js-cookie';
 import {
   BsPersonFill,
@@ -164,28 +164,30 @@ function Healthadmin() {
   const [type, setType] = useState('');
   const [address, setAddress] = useState('');
   const [status, setStatus] = useState('');
-  const [file, setFile] = useState();
+  const [documentation, setDocumentation] = useState('');
   //-------------------------- ADD FUNCTION -----------------------------------
 
-  const health = () => {
-    const formData = new FormData();
-    formData.append('date', date);
-    formData.append('reporter', reporter);
-    formData.append('respondents', respondents);
-    formData.append('type', type);
-    formData.append('address', address);
-    formData.append('status', status);
-    formData.append('file', file);
-    axios.post('https://dbarangay.onrender.com/health', formData).then(res => {
+  async function health(e) {
+    e.preventDefault();
+    try{
+     await axios.post('https://dbarangay.onrender.com/health',{date,reporter,respondents,type,address,status,documentation}).then(res =>{
       if (res.data === "Error saving data to MongoDB") {
-        alert("Health Already Exist!");
+        alert("Medical Already Exist!") 
       }
       else if (res.data === "File and text data saved to MongoDB") {
+        setShowForm(false);
+        fetchData();
       }
     })
-      .catch(er => console.log(er))
-  };
-
+    .catch(e => {
+      alert("Failed!")
+      console.log(e);
+    })
+}
+catch (e) {
+  console.log(e);
+}
+}
   // EDIT FORM STATES (ShowForms) ------------------------------
 
   const [editDate, setEditDate] = useState('');
@@ -194,7 +196,7 @@ function Healthadmin() {
   const [editType, setEditType] = useState('');
   const [editAddress, setEditAddress] = useState('');
   const [editStatus, setEditStatus] = useState('');
-  const [editFile, setEditFile] = useState('');
+  const [editDocumentation, setEditDocumentation] = useState('');
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const handleEditDiscard = () => { setShowEditForm(false); };
@@ -208,19 +210,13 @@ function Healthadmin() {
     setEditType(rowData.type);
     setEditAddress(rowData.address);
     setEditStatus(rowData.status);
+    setEditDocumentation(rowData.documentation);
     setShowEditForm(true);
   };
 
   const updateRowData = async () => {
     try {
-      const formData = new FormData();
-      formData.append('date', editDate);
-      formData.append('reporter', editReporter);
-      formData.append('respondents', editRespondents);
-      formData.append('type', editType);
-      formData.append('address', editAddress);
-      formData.append('status', editStatus);
-      formData.append('file', editFile);
+      const formData = {date:editDate,reporter:editReporter,respondents:editRespondents,type:editType,address:editAddress,status:editStatus,documentation:editDocumentation}
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/health/${selectedRowData}`,
         formData
@@ -279,38 +275,38 @@ function Healthadmin() {
                   <h3>Barangay Harapin Ang Bukas</h3>
                 </div>
                 <div className="topnavright">
-                <div ref={profileRef}>
+                  <div ref={profileRef}>
                     <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
                     {ProfilesubmenuVisible && (
-                        <div className="Profilesubmenuadmin">
-               <div className="admininfo">
-                 <div className="rightprofile">
-                <img src={item.filename.url} style={{ width:"80px",height:"80px", borderRadius:"50px"}}calt="Profile Picture" className="profile-pic" id="profile-pic" />       
-                 </div>
-                 <div className="leftprofile">
-                   <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
-                   <h5>{item.email}</h5>
-                 </div>
-               </div>
-               <div className="lowerprofile">
-                 <div className="button-profile1">
-                   <NavLink to="/admin-profile" activeClassName="active">
-                     <div href="#" className="profilebuttons">
-                       <BiCog className="profileicons" /> Settings
-                     </div>
-                   </NavLink>
-                 </div>
-                 <hr />
-                 <div className="button-profile1">
+                      <div className="Profilesubmenuadmin">
+                        <div className="admininfo">
+                          <div className="rightprofile">
+                            <img src={item.filename.url} style={{ width: "80px", height: "80px", borderRadius: "50px" }} calt="Profile Picture" className="profile-pic" id="profile-pic" />
+                          </div>
+                          <div className="leftprofile">
+                            <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
+                            <h5>{item.email}</h5>
+                          </div>
+                        </div>
+                        <div className="lowerprofile">
+                          <div className="button-profile1">
+                            <NavLink to="/admin-profile" activeClassName="active">
+                              <div href="#" className="profilebuttons">
+                                <BiCog className="profileicons" /> Settings
+                              </div>
+                            </NavLink>
+                          </div>
+                          <hr />
+                          <div className="button-profile1">
 
-                   
-                     <div onClick={handleSignOut} className="profilebuttons">
-                       <BiLogOut className="profileicons" /> Log out
-                     </div>
-                   
-                 </div>
-               </div>
-             </div>
+
+                            <div onClick={handleSignOut} className="profilebuttons">
+                              <BiLogOut className="profileicons" /> Log out
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -427,6 +423,7 @@ function Healthadmin() {
         </div>
       </div>
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
+      <Notification/>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
             <div className="col-4">
@@ -512,7 +509,7 @@ function Healthadmin() {
                           <th scope="col">RESPONDENTS</th>
                           <th scope="col">MEDICAL TYPE</th>
                           <th scope="col">INCIDENT ADDRESS</th>
-
+                          <th scope="col">DOCUMENTATION</th>
                           <th scope="col">Status</th>
                           <th scope="col">Actions</th>
                         </tr>
@@ -525,6 +522,7 @@ function Healthadmin() {
                             <td>{item.respondents}</td>
                             <td>{item.type}</td>
                             <td>{item.address}</td>
+                            <td>{item.documentation}</td>
                             <td>{item.status}</td>
                             <td>
                               <button className="btn btn-primary btn-sm" onClick={() => showEditFormHandler(item)}>Edit</button>
@@ -605,7 +603,13 @@ function Healthadmin() {
                             onChange={(e) => { setAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-
+                            <div className="form-group">
+                          <label htmlFor="documentation">DOCUMENTATION </label>
+                          <input
+                            type="text"
+                            id="documentation"
+                            name="documentation" onChange={(e) => { setDocumentation(e.target.value); }}
+                            className="form-control" required /></div>
 
                         <div className="form-group">
                           <label htmlFor="status">STATUS</label>
@@ -698,6 +702,15 @@ function Healthadmin() {
                             name="address"
                             value={editAddress}
                             onChange={(e) => { setEditAddress(e.target.value); }}
+                            className="form-control" required /></div>
+
+                            <div className="form-group">
+                          <label htmlFor="documentation">DOCUMENTATION </label>
+                          <input
+                            type="text"
+                            id="documentation"
+                            value={editDocumentation}
+                            name="documentation" onChange={(e) => { setEditDocumentation(e.target.value); }}
                             className="form-control" required /></div>
 
                         <div className="form-group">
