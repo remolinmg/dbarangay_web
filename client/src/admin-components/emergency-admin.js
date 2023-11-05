@@ -167,6 +167,12 @@ function EmergencyAdmin() {
   };
 
   //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
+  const [editCurrentLocation, setEditCurrentLocation] = useState('');
+  const [editUserId, setEditUserId] = useState('');
+  const [editPhoneNumber, setEditPhoneNumber] = useState('');
+  const [editEmergencyType, setEditEmergencyType] = useState('');
+  const [editDate, setEditDate] = useState(Date);
+  const [editResidentName, setEditResidentName] = useState('');
   const [editStatus, setEditStatus] = useState('');
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -175,7 +181,12 @@ function EmergencyAdmin() {
   // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
   const showEditFormHandler = (rowData) => {
     setSelectedRowData(rowData._id);
-
+    setEditUserId(rowData.userId);
+    setEditPhoneNumber(rowData.phoneNumber);
+    setEditEmergencyType(rowData.emergencyType);
+    setEditCurrentLocation(rowData.currentLocation);
+    setEditDate(rowData.date);
+    setEditResidentName(rowData.residentName);
     setEditStatus(rowData.status);
     setShowEditForm(true);
   };
@@ -183,6 +194,12 @@ function EmergencyAdmin() {
     try {
       const updatedData = {
         status: editStatus,
+        userId: editUserId,
+        residentName: editResidentName,
+        phoneNumber: editPhoneNumber,
+        emergencyType: editEmergencyType,
+        currentLocation: editCurrentLocation,
+        date: editDate
       };
 
 
@@ -191,8 +208,8 @@ function EmergencyAdmin() {
         updatedData
       );
       console.log(response.data);
-      fetchData();
       setShowEditForm(false);
+      fetchData();
     } catch (error) {
       console.error(error);
       // Handle error, show an error message to the user
@@ -474,7 +491,7 @@ function EmergencyAdmin() {
                       <tbody>
                         {getCurrentPageData().map((item, index) => (
                           <tr key={index}>
-                            <td>{item.userId}</td>
+                            <td>{item.residentName}</td>
                             <td>{item.currentLocation}</td>
                             <td>{item.phoneNumber}</td>
                             <td>{item.emergencyType}</td>

@@ -5,32 +5,24 @@ userId: {type: String}, //used UserID to show  data request in the flutter app
 
 currentLocation:{
     type: String,
-    required: true,
-    index: true,
+},
+
+residentName:{
+  type: String,
 },
 
 phoneNumber:{
     type: String,
-    required: true,
-    index: true, 
   },
 
   emergencyType:{
     type: String,
-    required: true,
-    index: true, 
   },
-
   date:{
     type: Date,
-    required: true,
-    index: true,
 },
-
-
   status: {
     type: String,
-    default: 'New',
   },
 });
 
