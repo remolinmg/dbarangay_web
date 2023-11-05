@@ -51,7 +51,7 @@ app.use(
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'", 'https://dbarangay-app-3nrw.onrender.com'],
+      connectSrc: ["'self'", 'https://dbarangay-app-3nrw.onrender.com'],
       scriptSrc: ["'self'", 'https://dbarangay-app-3nrw.onrender.com'],
     },
   })
