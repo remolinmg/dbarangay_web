@@ -20,7 +20,7 @@ class Notification extends Component {
         }));
 
         // Filter new data with a status of "new"
-        const newData = extractedData.filter((item) => item.status === 'NEW');
+        const newData = extractedData.filter((item) => item.status === 'New');
 
         if (newData.length > 0 && !this.state.notificationShown) {
           // Show a toast notification with a red background, red icon, and red progress bar when new data with status "new" arrives
