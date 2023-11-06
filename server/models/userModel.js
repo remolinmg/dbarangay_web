@@ -94,7 +94,7 @@ highestEducation:{
     type:String,
     required: true,
 },
-residenceClass:{
+residentClass:{
     type:String,
 },
 votersRegistration:{
