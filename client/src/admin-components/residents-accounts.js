@@ -125,10 +125,10 @@ function Residentsaccounts() {
         setEditBirthPlace(rowData.birthPlace)
         setEditAge(rowData.age)
         setEditHighestEducation(rowData.highestEducation)
-        setEditResidenceClass(rowData.residenceClass)
+        setEditResidenceClass(rowData.residentClass)
         setEditStatus(rowData.status)
         setEditType(rowData.type)
-        setEditVoterRegistration(rowData.voterRegistration)
+        setEditVoterRegistration(rowData.votersRegistration)
         setProfilePicSrc(rowData.filename.url)
     };
 
@@ -160,8 +160,8 @@ function Residentsaccounts() {
             formData.append('birthPlace', editBirthPlace);
             formData.append('age', editAge);
             formData.append('highestEducation', editHighestEducation);
-            formData.append('residenceClass', editResidenceClass);
-            formData.append('voterRegistration', editVoterRegistration);
+            formData.append('residentClass', editResidenceClass);
+            formData.append('votersRegistration', editVoterRegistration);
             formData.append('type', editType);
             formData.append('status', editStatus);
             formData.append('file', selectedFile);
@@ -431,7 +431,7 @@ function Residentsaccounts() {
                                                                             <option value="">Select Civil Status</option>
                                                                             <option value="Single">Single</option>
                                                                             <option value="Married">Married</option>
-                                                                            <option value="Widow">Widow/er</option>
+                                                                            <option value="Widowed">Widow</option>
                                                                             <option value="Separated">Separated</option>
                                                                         </select>
                                                                     </div>
@@ -448,8 +448,8 @@ function Residentsaccounts() {
                                                                             required
                                                                         >
                                                                             <option value="">Select Ownership</option>
-                                                                            <option value="Owner">Owner</option>
-                                                                            <option value="Renting">Renting</option>
+                                                                            <option value="Own">Owner</option>
+                                                                            <option value="Rent">Renting</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col">
@@ -537,7 +537,9 @@ function Residentsaccounts() {
                                                                             required
                                                                         >
                                                                             <option value="">Select Highest Educational Attainment</option>
+                                                                            <option value="No Formal Education">No Formal Education</option>
                                                                             <option value="Undergraduate">Undergraduate</option>
+                                                                            <option value="No Formal Education">No Formal Education</option>
                                                                             <option value="Elementary">Elementary</option>
                                                                             <option value="Highschool">High School</option>
                                                                             <option value="Bachelor">Bachelor's Degree</option>
@@ -553,8 +555,8 @@ function Residentsaccounts() {
                                                                     <div class="col">
                                                                         <label for="residenceclass" class="form-label">Class:</label>
                                                                         <select
-                                                                            id="residenceClass"
-                                                                            name="residenceClass"
+                                                                            id="residentClass"
+                                                                            name="residentClass"
                                                                             className="form-control"
                                                                             value={editResidenceClass}
                                                                             onChange={(e) => {
@@ -563,16 +565,16 @@ function Residentsaccounts() {
                                                                         >
                                                                             <option value="">Select Residence Class</option>
                                                                             <option value="PWD">Person with Disability (PWD)</option>
-                                                                            <option value="soloParent">Solo Parent</option>
-                                                                            <option value="outOfSchoolYouth">Out of School Youth</option>
+                                                                            <option value="Solo Parent">Solo Parent</option>
+                                                                            <option value="Out of School Youth">Out of School Youth</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col">
                                                                     <label for="voter" class="form-label">Voter:</label>
                                                                     <select
-                                                                        id="voterRegistartion"
-                                                                        name="voterRegistartion"
+                                                                        id="votersRegistartion"
+                                                                        name="votersRegistartion"
                                                                         class="form-control"
                                                                         required
                                                                         value={editVoterRegistration
@@ -582,8 +584,8 @@ function Residentsaccounts() {
                                                                         }}
                                                                     >
                                                                         <option value="">Select Voter's Registration</option>
-                                                                        <option value="Registeredvoter">Registered</option>
-                                                                        <option value="Unregisteredvoter">Not Registered</option>
+                                                                        <option value="Registered">Registered</option>
+                                                                        <option value="Unregistered">Not Registered</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="col">
