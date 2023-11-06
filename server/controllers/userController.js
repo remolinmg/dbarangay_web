@@ -133,7 +133,7 @@ exports.updatepass = async (req, res) => {
 exports.signup = async (req, res) => {
 
     const {
-      firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residenceClass, voterRegistration, password, companyName, position, status, type
+      firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residentClass, votersRegistration, password, companyName, position, status, type
     } = req.body;
     const { path } = req.file;
     const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, '');
@@ -153,7 +153,7 @@ exports.signup = async (req, res) => {
   
       const newCustomData = new User({
       _id: newCustomId,
-      firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residenceClass, voterRegistration, password:hashedPassword, companyName, position, status, type,
+      firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residentClass, votersRegistration, password:hashedPassword, companyName, position, status, type,
         filename: {
           url: result.secure_url, 
           public_id: result.public_id,
