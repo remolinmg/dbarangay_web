@@ -96,7 +96,7 @@ function Dashboard() {
                 setMalePercentage((maleUsersCount / activeResidents.length) * 100);
                 setFemalePercentage((femaleUsersCount / activeResidents.length) * 100);
 
-                const registeredVotersCount = activeResidents.filter((user) => user.voterRegistration === 'Registeredvoter').length;
+                const registeredVotersCount = activeResidents.filter((user) => user.votersRegistration === 'Registered').length;
                 setRegisteredVoters(registeredVotersCount);
 
                 const registeredStudentsCount = activeResidents.filter((user) => user.employmentStatus === 'Student').length;
@@ -161,7 +161,7 @@ function Dashboard() {
                 // Count the number of users with different civil statuses
                 const singleCount = response.data.filter(user => user.civilStatus === 'Single').length;
                 const marriedCount = response.data.filter(user => user.civilStatus === 'Married').length;
-                const widowCount = response.data.filter(user => user.civilStatus === 'Widow').length;
+                const widowCount = response.data.filter(user => user.civilStatus === 'Widowed').length;
                 const separatedCount = response.data.filter(user => user.civilStatus === 'Separated').length;
 
                 setCivilStatusChartData({ singleCount, marriedCount, widowCount, separatedCount });
@@ -188,7 +188,7 @@ function Dashboard() {
                 data: [civilStatusChartData.marriedCount],
             },
             {
-                label: 'Widow',
+                label: 'Widowed',
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1,
@@ -227,6 +227,7 @@ function Dashboard() {
                 const bachelorCount = activeResidents.filter((user) => user.highestEducation === 'Bachelor').length;
                 const postgraduateCount = activeResidents.filter((user) => user.highestEducation === 'Postgrad').length;
                 const doctoralCount = activeResidents.filter((user) => user.highestEducation === 'Doctoral').length;
+                const noFormalCount = activeResidents.filter((user) => user.highestEducation === 'No Formal Education').length;
 
                 setEducationChartData({
                     undergraduateCount,
@@ -235,6 +236,7 @@ function Dashboard() {
                     bachelorCount,
                     postgraduateCount,
                     doctoralCount,
+                    noFormalCount
                 });
             })
             .catch((error) => {
@@ -244,6 +246,7 @@ function Dashboard() {
 
     const educationData = {
         labels: [
+            'No Formal Education',
             'Undergraduate',
             'Elementary',
             'High School',
@@ -260,8 +263,10 @@ function Dashboard() {
                     educationChartData.bachelorCount,
                     educationChartData.postgraduateCount,
                     educationChartData.doctoralCount,
+                    educationChartData.noFormalCount
                 ],
                 backgroundColor: [
+                    'rgba(50, 100, 220, 0.6)',
                     'rgba(255, 99, 132, 0.6)',
                     'rgba(75, 192, 192, 0.6)',
                     'rgba(54, 162, 235, 0.6)',

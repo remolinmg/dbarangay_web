@@ -207,14 +207,14 @@ const RegistrationComponent = () => {
     formData.append('birthPlace', birthPlace)
     formData.append('age', age)
     formData.append('highestEducation', highestEducation)
-    formData.append('residenceClass', residenceClass)
-    formData.append('voterRegistration', voterRegistration)
+    formData.append('residentClass', residenceClass)
+    formData.append('votersRegistration', voterRegistration)
     formData.append('password', password)
     formData.append('companyName', companyName)
     formData.append('position', position)
     formData.append('file', file)
     axios.post("https://dbarangay.onrender.com/signup", formData)
-      .then(res => {
+    .then(res => {
         if (res.data === 'Error saving data to MongoDB and Cloudinary') {
           alert("User Already Exist!");
         } else if (res.data === 'File and text data saved to MongoDB and Cloudinary') {
@@ -411,33 +411,36 @@ const RegistrationComponent = () => {
 
 
 
-// PASSWORD VALIDATION----------------------------------------------------
-const isPasswordValid = (password) => {
-  const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-  return passwordRegex.test(password) && password.length >= 8; // Added length check
-};
+  //PASSWORD VALIDATION----------------------------------------------------
+  const isPasswordValid = (password) => {
+    const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    return passwordRegex.test(password);
+  };
 
-const handlePasswordChange = (e) => {
-  const value = e.target.value;
-  setPassword(value);
-  setPasswordValid(isPasswordValid(value));
-};
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    setPasswordValid(isPasswordValid(value));
+  };
 
-const handleConfirmPasswordChange = (e) => {
-  const value = e.target.value;
-  setConfirmPassword(value);
-  setConfirmPasswordValid(value === password);
-};
+  const handleConfirmPasswordChange = (e) => {
+    const value = e.target.value;
+    setConfirmPassword(value);
+    setConfirmPasswordValid(value === password);
+
+
+  };
+
 
   return (
     <div className="container-fluid main-reg">
       <div className="row">
         <div className="col-12 col-md-8 left-side-reg">
-          <div className="registration-container p-4" id="registration-container">
-            <form id="register p-2">
+          <div className="registration-container" id="registration-container">
+            <form id="register">
 
               <h2 className="registration-heading"> REGISTRATION</h2>
-              <p><b className="pe-2">Note:</b>Put N/A if required information is not applicable. Password must contain a combination of uppercase and lowercase letters, symbols and special characters.</p>
+              <p><b>Note:</b>Put N/A if required information is not applicable. Password must contain a combination of uppercase and lowercase letters, symbols and special characters.</p>
 
               <div className="container form-container d-flex flex-column">
                 {/*--------------- BASIC INFORMATION --------------- */}
@@ -622,8 +625,8 @@ const handleConfirmPasswordChange = (e) => {
                         style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Sex</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
                       </select>
                     </div>
 
@@ -638,10 +641,10 @@ const handleConfirmPasswordChange = (e) => {
                         style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Civil Status</option>
-                        <option value="single">Single</option>
-                        <option value="married">Married</option>
-                        <option value="widow">Widow/er</option>
-                        <option value="separated">Separated</option>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Widowed">Widowed</option>
+                        <option value="Separated">Separated</option>
                       </select>
                     </div>
 
@@ -657,8 +660,8 @@ const handleConfirmPasswordChange = (e) => {
                         style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Ownership</option>
-                        <option value="Owner">Owner</option>
-                        <option value="Renting">Renting</option>
+                        <option value="Own">Owner</option>
+                        <option value="Rent">Renting</option>
                       </select>
                     </div>
 
@@ -765,6 +768,7 @@ const handleConfirmPasswordChange = (e) => {
                         style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Highest Educational Attainment</option>
+                        <option value="No Formal Education">No Formal Education</option>
                         <option value="Undergraduate">Undergraduate</option>
                         <option value="Elementary">Elementary</option>
                         <option value="Highschool">High School</option>
@@ -776,36 +780,36 @@ const handleConfirmPasswordChange = (e) => {
 
                     {/* Residence Class */}
                     <div className={`form-group d-flex flex-column  'has-error' : ''}`}>
-                      <label className="label" htmlFor="residenceClass"> Residence Class</label>
+                      <label className="label" htmlFor="residentClass"> Residence Class</label>
                       <select
-                        id="residenceClass"
-                        name="residenceClass"
+                        id="residentClass"
+                        name="residentClass"
                         onChange={(e) => setresidenceClass(e.target.value)}
                         className={`option2 form-control `}
                         style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Residence Class</option>
                         <option value="PWD">Person with Disability (PWD)</option>
-                        <option value="soloParent">Solo Parent</option>
-                        <option value="outOfSchoolYouth">Out of School Youth</option>
+                        <option value="Solo Parent">Solo Parent</option>
+                        <option value="OUT OF SCHOOL YOUTH">Out of School Youth</option>
                       </select>
                     </div>
 
 
                     {/* Voter's Registration */}
                     <div className={`form-group d-flex flex-column ${!voterRegistrationValid ? 'has-error' : ''}`}>
-                      <label className="label" htmlFor="voterRegistration">Voter's Registration</label>
+                      <label className="label" htmlFor="votersRegistration">Voter's Registration</label>
                       <select
-                        id="voterRegistration"
-                        name="voterRegistration"
+                        id="votersRegistration"
+                        name="votersRegistration"
                         onChange={handleVoterRegistrationChange}
                         className={`option2 form-control ${!voterRegistrationValid ? 'is-invalid' : ''}`}
                         required
                         style={{ fontSize: '14px', marginBottom: '10px' }}
                       >
                         <option value="">Select Voter's Registration</option>
-                        <option value="registeredvoter">Registered</option>
-                        <option value="unregisteredvoter">Not Registered</option>
+                        <option value="Registered">Registered</option>
+                        <option value="Unregistered">Not Register</option>
                       </select>
                     </div>
 
