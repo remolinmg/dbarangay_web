@@ -53,7 +53,7 @@ const Footer = () => {
 
     }
   }
-  const apkUrl = 'https://u.pcloud.link/publink/show?code=XZcD2cVZM1m3WeaR63F9hSlnjyvwWznFzBXX#returl=https%3A//u.pcloud.link/publink/show%3Fcode%3DXZcD2cVZM1m3WeaR63F9hSlnjyvwWznFzBXX&page=login';
+  const apkUrl = 'https://u.pcloud.link/publink/show?code=XZDL1cVZXHqwvSuTpjRo5oQ1OvADAYvSJMuX';
 
 
 
