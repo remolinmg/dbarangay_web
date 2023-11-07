@@ -536,7 +536,7 @@ function EmergencyAdmin() {
                             value={editStatus}
                             onChange={(e) => setEditStatus(e.target.value)}
                             style={{ fontSize: '20px', marginBottom: '10px' }} >
-                            <option value="New" >New</option>
+                            <option value="NEW" >New</option>
                             <option value="On Process">On Process</option>
                             <option value="Processed">Processed</option>
                           </select>

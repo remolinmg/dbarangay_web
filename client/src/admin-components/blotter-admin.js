@@ -561,7 +561,7 @@ catch (e) {
                       <div className="certificate-content">
 
                         <div className="form-group">
-                          <label htmlFor="date">COMPLAINT DATE </label>
+                          <label htmlFor="date">BLOTTER DATE </label>
                           <input
                             type="date"
                             id="date"
