@@ -94,10 +94,10 @@ highestEducation:{
     type:String,
     required: true,
 },
-residenceClass:{
+residentClass:{
     type:String,
 },
-voterRegistration:{
+votersRegistration:{
     type:String,
     required: true,
 },

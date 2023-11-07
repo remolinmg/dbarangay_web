@@ -330,30 +330,6 @@ function UserProfile() {
                                                         </div>
                                                     </div>
                                                 </form>
-                                                <form class="form8 mt-3">
-                                                    <h2 id="form_name">Residence Class</h2>
-                                                    <div class="row g-3">
-                                                        <div class="col">
-                                                            <label for="residenceclass" class="form-label">Class:</label>
-                                                            <input type="text" id="residenceclass" class="form-control" aria-label="Residence Class" value={item.residenceClass} disabled />
-                                                        </div>
-                                                        <div class="col">
-                                                            <label for="voter" class="form-label">Voter:</label>
-                                                            <select
-                                                                id="voter"
-                                                                class="form-control"
-                                                                required
-                                                                value={item.voterRegistration
-                                                                }
-                                                                disabled
-                                                            >
-                                                                <option value="">Select Voter's Registration</option>
-                                                                <option value="Registeredvoter">Registered</option>
-                                                                <option value="Unregisteredvoter">Not Registered</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </form>
                                                 <form class="form7 mt-3">
                                                     <h2 id="form_name">Educational Attainment</h2>
                                                     <div class="row g-3">
@@ -368,7 +344,7 @@ function UserProfile() {
                                                     <div class="row g-3">
                                                         <div class="col">
                                                             <label for="residenceclass" class="form-label">Class:</label>
-                                                            <input type="text" id="residenceclass" class="form-control" aria-label="Residence Class" value={item.residenceClass} disabled />
+                                                            <input type="text" id="residenceclass" class="form-control" aria-label="Residence Class" value={item.residentClass} disabled />
                                                         </div>
                                                     </div>
                                                 </form>
@@ -381,13 +357,13 @@ function UserProfile() {
                                                                 id="voter"
                                                                 class="form-control"
                                                                 required
-                                                                value={item.voterRegistration
+                                                                value={item.votersRegistration
                                                                 }
                                                                 disabled
                                                             >
                                                                 <option value="">Select Voter's Registration</option>
-                                                                <option value="Registeredvoter">Registered</option>
-                                                                <option value="Unregisteredvoter">Not Registered</option>
+                                                                <option value="Registered">Registered</option>
+                                                                <option value="Unregistered">Not Registered</option>
                                                             </select>
                                                         </div>
                                                     </div>
