@@ -72,7 +72,9 @@ function Dashboard() {
         age13to19Count: 0,
         age20to30Count: 0,
         age31to40Count: 0,
-        age41AboveCount: 0,
+        age41to50Count: 0,
+        age51to59Count: 0,
+        age60AboveCount: 0,
     });
     // top cards ---------------------------------------------------
     useEffect(() => {
@@ -299,14 +301,18 @@ function Dashboard() {
                 const age13to19Count = activeResidents.filter((user) => user.age >= 13 && user.age <= 19).length;
                 const age20to30Count = activeResidents.filter((user) => user.age >= 20 && user.age <= 30).length;
                 const age31to40Count = activeResidents.filter((user) => user.age >= 31 && user.age <= 40).length;
-                const age41AboveCount = activeResidents.filter((user) => user.age >= 41).length;
+                const age41to50Count = activeResidents.filter((user) => user.age >= 41 && user.age <= 50).length;
+                const age51to59Count = activeResidents.filter((user) => user.age >= 51 && user.age <= 59).length;
+                const age60AboveCount = activeResidents.filter((user) => user.age >= 60).length;
 
                 setAgeChartData({
                     age1to12Count,
                     age13to19Count,
                     age20to30Count,
                     age31to40Count,
-                    age41AboveCount,
+                    age41to50Count,
+                    age51to59Count,
+                    age60AboveCount,
                 });
             })
             .catch((error) => {
@@ -315,11 +321,13 @@ function Dashboard() {
     }, []);
     const ageData = {
         labels: [
-            '1-12',
+            '12 below',
             '13-19',
             '20-30',
             '31-40',
-            '41 Above',
+            '41-50',
+            '51-59',
+            '60 Above',
         ],
         datasets: [
             {
@@ -328,7 +336,9 @@ function Dashboard() {
                     ageChartData.age13to19Count,
                     ageChartData.age20to30Count,
                     ageChartData.age31to40Count,
-                    ageChartData.age41AboveCount,
+                    ageChartData.age41to50Count,
+                    ageChartData.age51to59Count,
+                    ageChartData.age60AboveCount,
                 ],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.6)',
@@ -336,6 +346,8 @@ function Dashboard() {
                     'rgba(54, 162, 235, 0.6)',
                     'rgba(255, 206, 86, 0.6)',
                     'rgba(153, 102, 255, 0.6)',
+                    'rgba(0, 204, 102, 0.6)' ,
+                    'rgba(255, 128, 0, 0.6)',
                 ],
             },
         ],
