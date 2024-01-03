@@ -375,18 +375,19 @@ function StafflogsAdmin() {
                                         <table class="table">
                                             <thead>
                                                 <tr>
-
-                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Name</th>
                                                     <th scope="col">Date of Access</th>
                                                     <th scope="col">Time of Access</th>
+                                                    <th scope="col">Activity</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {getCurrentPageData().map((item) => (
                                                     <tr key={item._id}>
-                                                        <td>{item.email}</td>
+                                                        <td>{item.name}</td>
                                                         <td>{item.accessDate}</td>
                                                         <td>{item.accessTime}</td>
+                                                        <td>{item.activity}</td>
                                                     </tr>
                                                 ))}
                                             </tbody>

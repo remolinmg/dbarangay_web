@@ -20,10 +20,14 @@ exports.adminLogin = async (req, res) => {
           token: jwt.sign({ id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName }, 'y7y9u92348y5789yye789yq234785y78q34y78oghio', { expiresIn: '1d' }), type: user.type
         })
 
+        console.log(user.firstName);
+        console.log(user.lastName);
+
         const date = new Date();
         const accessDate = date.toISOString().slice(0, 10);
         const accessTime = date.getHours() + ':' + date.getMinutes() + ":" + date.getSeconds();
         const name = user.firstName + user.lastName;
+        console.log(name);
 
         const newCustomData = new StaffLogs({
           name: name,
