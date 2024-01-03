@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const staffLogsSchema = new mongoose.Schema({
 
+    name: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
         required: true
@@ -11,6 +15,10 @@ const staffLogsSchema = new mongoose.Schema({
         required: true
     },
     accessTime: {
+        type: String,
+        required: true
+    },
+    activity: {
         type: String,
         required: true
     },

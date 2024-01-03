@@ -17,17 +17,20 @@ exports.adminLogin = async (req, res) => {
         res.status(400).json({ message: 'user is not an admin' })
       } else if (await bcrypt.compare(password, user.password)) {
         res.status(201).json({
-          token: jwt.sign({ id: user.id, email: user.email }, 'y7y9u92348y5789yye789yq234785y78q34y78oghio', { expiresIn: '1d' }), type: user.type
+          token: jwt.sign({ id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName }, 'y7y9u92348y5789yye789yq234785y78q34y78oghio', { expiresIn: '1d' }), type: user.type
         })
 
         const date = new Date();
         const accessDate = date.toISOString().slice(0, 10);
         const accessTime = date.getHours() + ':' + date.getMinutes() + ":" + date.getSeconds();
+        const name = user.firstName + user.lastName;
 
         const newCustomData = new StaffLogs({
+          name: name,
           email: email,
           accessDate: accessDate,
-          accessTime: accessTime
+          accessTime: accessTime,
+          activity: "Logged In"
         });
         await newCustomData.save();
 
