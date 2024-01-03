@@ -33,7 +33,7 @@ const Faq = () => {
     setShowAyudaInfo(!showAyudaInfo);
   };
 
-  const apkUrl = 'https://u.pcloud.link/publink/show?code=XZXQTcVZD7jmqr3J1hbe16eUJFKWPSY4rAl7';
+  const apkUrl = 'https://u.pcloud.link/publink/show?code=XZ22KcVZ9bcgm3wjdgQT2CkfXdH2yk8jSMS7';
 
   return (
     <div className="faq-popup-container">
