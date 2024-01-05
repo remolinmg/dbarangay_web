@@ -26,7 +26,8 @@ exports.adminLogin = async (req, res) => {
         const date = new Date();
         const accessDate = date.toISOString().slice(0, 10);
         const accessTime = date.getHours() + ':' + date.getMinutes() + ":" + date.getSeconds();
-        const name = user.firstName + user.lastName;
+        const name = user.firstName + " " + user.lastName;
+        const activity = "Logged in";
         console.log(name);
 
         const newCustomData = new StaffLogs({
@@ -34,7 +35,7 @@ exports.adminLogin = async (req, res) => {
           email: email,
           accessDate: accessDate,
           accessTime: accessTime,
-          activity: "Logged In"
+          activity: activity,
         });
         await newCustomData.save();
 
