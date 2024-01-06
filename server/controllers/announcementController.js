@@ -1,37 +1,80 @@
 const announcement = require('../models/announcementModel');
 const fs = require('fs');
 const cloudinary = require('../uploads/cloudinary')
+const StaffLogs = require('../models/staffLogsModel');
+const User = require('../models/userModel');
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
 
 exports.createAnnouncement = async (req, res) => {
   const { what, where, when, who } = req.body;
   const { path } = req.file;
 
+  const token = 'access_token';
+  const secretKey = 'y7y9u92348y5789yye789yq234785y78q34y78oghio';
+
   try {
+    jwt.verify(token, secretKey, async (err, decoded) => {
+      if (err) {
+        console.error('Token verification failed:', err);
+      } else {
+        const userId = decoded.id;
+        const userEmail = decoded.email;
+        const userFirstName = decoded.firstName;
+        const userLastName = decoded.lastName;
+        const userType = decoded.type;
+
+        const date = new Date();
+        const accessDate = date.toISOString().slice(0, 10);
+        const accessTime =
+          date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+        const name = userFirstName + ' ' + userLastName;
+        const activity = 'Created an announcement';
+
+        console.log(name);
+
+        // Here, you can perform operations that use the decoded data
+        const newCustomData = new StaffLogs({
+          name: name,
+          email: userEmail,
+          accessDate: accessDate,
+          accessTime: accessTime,
+          activity: activity,
+        });
+
+        // Save the new staff log data
+        await newCustomData.save();
+      }
+    });
+
+
+
     // Upload the image to Cloudinary
     const result = await cloudinary.uploader.upload(path, {
       folder: 'annoucement',
     });
 
     const newAnnouncement = new announcement({
-      what:what,
-      where:where,
-      when:when,
-      who:who,
+      what: what,
+      where: where,
+      when: when,
+      who: who,
       filename: {
-        url: result.secure_url, 
+        url: result.secure_url,
         public_id: result.public_id,
       },
     });
 
     await newAnnouncement.save();
+
+
+
     res.send('File and text data saved to MongoDB and Cloudinary');
   } catch (err) {
     console.error(err);
     res.status(500).send('Error saving data to MongoDB and Cloudinary');
   }
 };
-
-
 
 exports.getAllAnnouncements = async (req, res) => {
   try {
