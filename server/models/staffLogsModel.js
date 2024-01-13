@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const staffLogsSchema = new mongoose.Schema({
-
     name: {
         type: String,
         required: true
@@ -23,6 +22,7 @@ const staffLogsSchema = new mongoose.Schema({
         required: true
     },
 });
+
 
 const StaffLogs = mongoose.model("stafflogs", staffLogsSchema);
 module.exports = StaffLogs;
