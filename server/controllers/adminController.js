@@ -30,25 +30,6 @@ exports.adminLogin = async (req, res) => {
           type: user.type,
         });
 
-        // console.log(user.firstName);
-        // console.log(user.lastName);
-
-        // const date = new Date();
-        // const accessDate = date.toISOString().slice(0, 10);
-        // const accessTime =
-        //   date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-        // const name = user.firstName + " " + user.lastName;
-        // const activity = "Logged in";
-        // console.log(name);
-
-        // const newCustomData = new StaffLogs({
-        //   name: name,
-        //   email: email,
-        //   accessDate: accessDate,
-        //   accessTime: accessTime,
-        //   activity: activity,
-        // });
-        // await newCustomData.save();
       }
     } else {
       res.status(400);
@@ -98,25 +79,6 @@ exports.adminLogin = async (req, res) => {
           type: user.type,
         });
 
-        // console.log(user.firstName);
-        // console.log(user.lastName);
-
-        // const date = new Date();
-        // const accessDate = date.toISOString().slice(0, 10);
-        // const accessTime =
-        //   date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-        // const name = user.firstName + " " + user.lastName;
-        // const activity = "Logged in";
-        // console.log(name);
-
-        // const newCustomData = new StaffLogs({
-        //   name: name,
-        //   email: email,
-        //   accessDate: accessDate,
-        //   accessTime: accessTime,
-        //   activity: activity,
-        // });
-        // await newCustomData.save();
       }
     } else {
       res.status(400);
