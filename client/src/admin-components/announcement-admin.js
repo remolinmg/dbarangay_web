@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import './assets/css/style.css';
-import axios from 'axios';
-import { useNavigate, Link, NavLink } from 'react-router-dom';
-import logo from '../admin-components/assets/img/brgy.png';
-import { BiMenu, BiChevronDown } from 'react-icons/bi';
+import "./assets/css/style.css";
+import axios from "axios";
+import { useNavigate, Link, NavLink } from "react-router-dom";
+import logo from "../admin-components/assets/img/brgy.png";
+import { BiMenu, BiChevronDown } from "react-icons/bi";
 import { BiLogOut, BiCog } from "react-icons/bi";
-import { AiOutlineDashboard } from 'react-icons/ai';
+import { AiOutlineDashboard } from "react-icons/ai";
 import { jwtDecode } from "jwt-decode";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import Notification from "./notifications";
 import {
   BsPersonFill,
@@ -20,15 +20,12 @@ import {
   BsFillPeopleFill,
   BsEnvelopePaper,
   BsBuildingFillUp,
-  BsMailbox
+  BsMailbox,
 } from "react-icons/bs";
-import {
-  RiFolderWarningFill,
-} from "react-icons/ri";
+import { RiFolderWarningFill } from "react-icons/ri";
 
-import 'bootstrap/dist/css/bootstrap.css';
+import "bootstrap/dist/css/bootstrap.css";
 import { FaUserCircle } from "react-icons/fa";
-
 
 function AnnouncementAdmin() {
   //  ------------------------------ SIDEBAR TOPBAR ------------------------------
@@ -54,10 +51,10 @@ function AnnouncementAdmin() {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -72,18 +69,35 @@ function AnnouncementAdmin() {
 
   // DATA ---------------------------------------------------------------
   const [data, setData] = useState([]);
+  const [tFirstName, setTFirstName] = useState();
+  const [tLastName, setTLastName] = useState();
+
   useEffect(() => {
     fetchData(); // Fetch initial data when the component mounts
+    fetchName(); //Fetch email
   }, []);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('https://dbarangay.onrender.com/get/announcement');
+      const response = await axios.get(
+        "https://dbarangay.onrender.com/get/announcement"
+      );
       setData(response.data);
     } catch (error) {
       console.error(error);
     }
   };
+
+  const fetchName = async () => {
+    // Access Token
+    const token = Cookies.get("access_token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      setTFirstName(decoded.firstName);
+      setTLastName(decoded.lastName);
+    }
+  };
+
   // Event handler for dropdown change ----------------------------------------
   const handleRowCountChange = (e) => {
     const selectedRowCount = parseInt(e.target.value);
@@ -110,7 +124,9 @@ function AnnouncementAdmin() {
       const itemValues = Object.values(item).map((value) =>
         value.toString().toLowerCase()
       );
-      return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+      return itemValues.some((value) =>
+        value.includes(searchQuery.toLowerCase())
+      );
     })
     .sort((a, b) => {
       // Sort by a relevant property (e.g., creation time) in descending order
@@ -141,20 +157,26 @@ function AnnouncementAdmin() {
     const itemValues = Object.values(item).map((value) =>
       value.toString().toLowerCase()
     );
-    return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+    return itemValues.some((value) =>
+      value.includes(searchQuery.toLowerCase())
+    );
   });
-
-
 
   // Forms ----------------------------------------------
   const [showForm, setShowForm] = useState(false);
-  const toggleForm = () => { setShowForm(!showForm); }; // SHOW FORMS
-  const handleDiscard = () => { setShowForm(false); }; // DISCARD FUNCTION
+  const toggleForm = () => {
+    setShowForm(!showForm);
+  }; // SHOW FORMS
+  const handleDiscard = () => {
+    setShowForm(false);
+  }; // DISCARD FUNCTION
 
-  //  DELETE  
+  //  DELETE
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`https://dbarangay.onrender.com/delete/announcement/${id}`);
+      await axios.delete(
+        `https://dbarangay.onrender.com/delete/announcement/${id}`
+      );
       fetchData();
     } catch (error) {
       console.error(error);
@@ -162,31 +184,37 @@ function AnnouncementAdmin() {
   };
 
   //------------------------------------------------ Database ----------------------------
-  const [what, setWhat] = useState('');
-  const [where, setWhere] = useState('');
-  const [when, setWhen] = useState('');
-  const [who, setWho] = useState('');
+  const [what, setWhat] = useState("");
+  const [where, setWhere] = useState("");
+  const [when, setWhen] = useState("");
+  const [who, setWho] = useState("");
   const [file, setFile] = useState();
+
   //-------------------------- ADD FUNCTION -----------------------------------
 
   const announcement = () => {
     const formData = new FormData();
-    formData.append('what', what);
-    formData.append('where', where);
-    formData.append('when', when);
-    formData.append('who', who);
-    formData.append('file', file);
+    formData.append("what", what);
+    formData.append("where", where);
+    formData.append("when", when);
+    formData.append("who", who);
+    formData.append("file", file);
+    formData.append("tFirstName", tFirstName);
+    formData.append("tLastName", tLastName);
 
-    axios.post('https://dbarangay.onrender.com/announcement', formData)
-      .then(res => {
+    axios
+      .post("https://dbarangay.onrender.com/announcement", formData)
+      .then((res) => {
         if (res.data === "Error saving data to MongoDB and Cloudinary") {
           alert("Announcement Already Exist!");
-        } else if (res.data === "File and text data saved to MongoDB and Cloudinary") {
+        } else if (
+          res.data === "File and text data saved to MongoDB and Cloudinary"
+        ) {
           // After successful upload to MongoDB, reset the form
-          setWhat('');
-          setWhere('');
-          setWhen('');
-          setWho('');
+          setWhat("");
+          setWhere("");
+          setWhen("");
+          setWho("");
           setFile(null);
 
           // If you're using Cloudinary, you can also reset the Cloudinary widget here
@@ -195,18 +223,20 @@ function AnnouncementAdmin() {
           fetchData(); // Fetch the updated data
         }
       })
-      .catch(er => console.log(er))
+      .catch((er) => console.log(er));
   };
   // EDIT FORM STATES (ShowForms) ------------------------------
 
-  const [editWhat, setEditWhat] = useState('');
-  const [editWhere, setEditWhere] = useState('');
-  const [editWhen, setEditWhen] = useState('');
-  const [editWho, setEditWho] = useState('');
-  const [editFile, setEditFile] = useState('');
+  const [editWhat, setEditWhat] = useState("");
+  const [editWhere, setEditWhere] = useState("");
+  const [editWhen, setEditWhen] = useState("");
+  const [editWho, setEditWho] = useState("");
+  const [editFile, setEditFile] = useState("");
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
-  const handleEditDiscard = () => { setShowEditForm(false); };
+  const handleEditDiscard = () => {
+    setShowEditForm(false);
+  };
 
   // Function to show the edit form with the default data of the selected row
   const showEditFormHandler = (rowData) => {
@@ -221,14 +251,14 @@ function AnnouncementAdmin() {
   const updateRowData = async () => {
     try {
       const formData = new FormData();
-      formData.append('what', editWhat);
-      formData.append('where', editWhere);
-      formData.append('when', editWhen);
-      formData.append('who', editWho);
+      formData.append("what", editWhat);
+      formData.append("where", editWhere);
+      formData.append("when", editWhen);
+      formData.append("who", editWho);
 
       // Check if a new image is selected
       if (editFile) {
-        formData.append('file', editFile);
+        formData.append("file", editFile);
       }
 
       const response = await axios.put(
@@ -246,12 +276,11 @@ function AnnouncementAdmin() {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    document.cookie = 'access_token=; ';
-    localStorage.removeItem('jwtToken');
+    document.cookie = "access_token=; ";
+    localStorage.removeItem("jwtToken");
     window.localStorage.clear();
-    navigate('/admin')
+    navigate("/admin");
   };
-
 
   // User FETCHING
   const [userData, setUserData] = useState([]);
@@ -261,11 +290,13 @@ function AnnouncementAdmin() {
 
   const fetchUser = async () => {
     try {
-      const token = Cookies.get('access_token');
+      const token = Cookies.get("access_token");
       if (token) {
         const decoded = jwtDecode(token);
         const _id = decoded.id;
-        const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
+        const response = await axios.get(
+          `https://dbarangay.onrender.com/get/userprofile/${_id}`
+        );
         setUserData(response.data);
       }
     } catch (error) {
@@ -275,14 +306,16 @@ function AnnouncementAdmin() {
 
   return (
     <>
-
       <div className="topbarsection">
         {Array.isArray(userData) ? (
           userData.map((item, index) => (
             <div key={index}>
               <div className="topnavbar d-flex justify-content-between align-items-center">
                 <div className="topnavleft">
-                  <button className="collapse-button" onClick={handleSidebarCollapse}>
+                  <button
+                    className="collapse-button"
+                    onClick={handleSidebarCollapse}
+                  >
                     <BiMenu />
                   </button>
                 </div>
@@ -291,21 +324,39 @@ function AnnouncementAdmin() {
                 </div>
                 <div className="topnavright">
                   <div ref={profileRef}>
-                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                    <FaUserCircle
+                      className="adminicon"
+                      onClick={toggleProfileSubmenu}
+                    />
                     {ProfilesubmenuVisible && (
                       <div className="Profilesubmenuadmin">
                         <div className="admininfo">
                           <div className="rightprofile">
-                            <img src={item.filename.url} style={{ width: "80px", height: "80px", borderRadius: "50px" }} calt="Profile Picture" className="profile-pic" id="profile-pic" />
+                            <img
+                              src={item.filename.url}
+                              style={{
+                                width: "80px",
+                                height: "80px",
+                                borderRadius: "50px",
+                              }}
+                              calt="Profile Picture"
+                              className="profile-pic"
+                              id="profile-pic"
+                            />
                           </div>
                           <div className="leftprofile">
-                            <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
+                            <h5>
+                              {item.firstName} {item.middleName} {item.lastName}
+                            </h5>
                             <h5>{item.email}</h5>
                           </div>
                         </div>
                         <div className="lowerprofile">
                           <div className="button-profile1">
-                            <NavLink to="/admin-profile" activeClassName="active">
+                            <NavLink
+                              to="/admin-profile"
+                              activeClassName="active"
+                            >
                               <div href="#" className="profilebuttons">
                                 <BiCog className="profileicons" /> Settings
                               </div>
@@ -313,19 +364,18 @@ function AnnouncementAdmin() {
                           </div>
                           <hr />
                           <div className="button-profile1">
-
-
-                            <div onClick={handleSignOut} className="profilebuttons">
+                            <div
+                              onClick={handleSignOut}
+                              className="profilebuttons"
+                            >
                               <BiLogOut className="profileicons" /> Log out
                             </div>
-
                           </div>
                         </div>
                       </div>
                     )}
                   </div>
                 </div>
-
               </div>
             </div>
           ))
@@ -333,7 +383,9 @@ function AnnouncementAdmin() {
           <p>No data to display.</p>
         )}
       </div>
-      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+      <div
+        className={`containersidebar ${isSidebarCollapsed ? "collapsed" : ""}`}
+      >
         <div className="newsidebar">
           <div className="text-center">
             <Link className="navbar-brand" to="/dashboard">
@@ -341,23 +393,28 @@ function AnnouncementAdmin() {
             </Link>
           </div>
           <ul>
-
             <li>
               <Link to="/dashboard" className="nav-link ">
                 <AiOutlineDashboard className="sidebaricon " />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                  Dashboard
+                </span>
               </Link>
             </li>
             <li>
               <Link to="/announcement-admin" className="nav-link ">
                 <BsMegaphoneFill className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Announcement</span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                  Announcement
+                </span>
               </Link>
             </li>
             <li>
               <Link to="/emergency-admin" className="nav-link ">
                 <BsTelephoneFill className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Emergency</span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                  Emergency
+                </span>
               </Link>
             </li>
             {/* <li className={`dropdown-sidebar ${isDropdownOpen ? 'open' : ''}`}> */}
@@ -373,71 +430,89 @@ function AnnouncementAdmin() {
                 </div>
               </Link>
               {/* <ul className="sidebar-submenu"> */}
-              <ul className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? 'open' : ''}`}>
+              <ul
+                className={`sidebar-submenu w-100 ms-3 ${
+                  isDropdownOpen ? "open" : ""
+                }`}
+              >
                 {isDropdownOpen && (
                   <>
                     <li>
                       <Link to="/b-officials-admin" className="nav-link ">
                         <BsFillPersonBadgeFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Barangay Officials</span>
-
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                          {" "}
+                          Barangay Officials
+                        </span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/d-barangay-certificate" className="nav-lin">
                         <BsFillFileEarmarkArrowDownFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Document Requests</span>
-
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                          {" "}
+                          Document Requests
+                        </span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/blotter-admin" className="nav-link ">
                         <RiFolderWarningFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Incident Reports</span>
-
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                          {" "}
+                          Incident Reports
+                        </span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/residents-admin" className="nav-link">
                         <BsFillPeopleFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
-
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                          Residents Info
+                        </span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/b-promotion-admin" className="nav-link">
                         <BsBuildingFillUp className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Promotion</span>
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                          Business Promotion
+                        </span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/feedbacks-admin" className="nav-link">
                         <BsMailbox className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Feedbacks</span>
-
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                          Feedbacks
+                        </span>
                       </Link>
                     </li>
                   </>
                 )}
               </ul>
             </li>
-            <li className={`${isDropdownOpen ? 'hide' : ''}`}>
+            <li className={`${isDropdownOpen ? "hide" : ""}`}>
               <Link to="/staff-logs-admin" className="nav-link">
                 <BsTerminal className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Staff Logs</span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                  Staff Logs
+                </span>
               </Link>
             </li>
-            <li className={`${isDropdownOpen ? 'hide' : ''}`}>
+            <li className={`${isDropdownOpen ? "hide" : ""}`}>
               <Link to="/admin-accounts" className="nav-link">
                 <BsPersonFill className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Admin Accounts</span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                  Admin Accounts
+                </span>
               </Link>
             </li>
           </ul>
         </div>
       </div>
-      <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
-       <Notification/>
+      <div className={`business-body ${isSidebarCollapsed ? "expanded" : ""}`}>
+        <Notification />
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
             <div className="col-4">
@@ -455,16 +530,41 @@ function AnnouncementAdmin() {
             </div>
             <div className="col-4">
               <div className="tabsz dropdown-center">
-                <button className="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button>
+                <button
+                  className="btn btn-secondary dropdown-toggle w-100"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Category
+                </button>
                 <ul className="dropdown-menu dropdown-topcategory">
-                  <li><Link to="/announcement-admin" className="dropdown-item text-center">General</Link></li>
-                  <li><Link to="/livelihood-admin" className="dropdown-item text-center">Livelihood</Link></li>
+                  <li>
+                    <Link
+                      to="/announcement-admin"
+                      className="dropdown-item text-center"
+                    >
+                      General
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/livelihood-admin"
+                      className="dropdown-item text-center"
+                    >
+                      Livelihood
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>
             <div className="col-4">
               <div className="dropdown-tablenumbers">
-                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
+                <select
+                  className="Table-numbers form-control"
+                  value={rowCount}
+                  onChange={handleRowCountChange}
+                >
                   <option value="10">10</option>
                   <option value="20">20</option>
                   <option value="50">50</option>
@@ -476,7 +576,9 @@ function AnnouncementAdmin() {
         </div>
 
         <main id="main" className="main">
-          <div className="pagetitle"><h1> Announcements  </h1> </div>
+          <div className="pagetitle">
+            <h1> Announcements </h1>{" "}
+          </div>
           <section className="section">
             <div className="row">
               <div className="col-lg-12">
@@ -488,19 +590,45 @@ function AnnouncementAdmin() {
                           <nav aria-label="Page navigation example">
                             <ul className="pagination">
                               <li className="page-item">
-                                <a className="page-link" href="#" aria-label="Previous" onClick={prevPage}>
+                                <a
+                                  className="page-link"
+                                  href="#"
+                                  aria-label="Previous"
+                                  onClick={prevPage}
+                                >
                                   <span aria-hidden="true">&laquo;</span>
                                 </a>
                               </li>
-                              {Array.from({ length: Math.ceil(filteredData.length / rowCount) }, (_, i) => (
-                                <li className={`page-item ${i + 1 === currentPage ? 'active' : ''}`} key={i}>
-                                  <a className="page-link" href="#" onClick={() => setCurrentPage(i + 1)}>
-                                    {i + 1}
-                                  </a>
-                                </li>
-                              ))}
+                              {Array.from(
+                                {
+                                  length: Math.ceil(
+                                    filteredData.length / rowCount
+                                  ),
+                                },
+                                (_, i) => (
+                                  <li
+                                    className={`page-item ${
+                                      i + 1 === currentPage ? "active" : ""
+                                    }`}
+                                    key={i}
+                                  >
+                                    <a
+                                      className="page-link"
+                                      href="#"
+                                      onClick={() => setCurrentPage(i + 1)}
+                                    >
+                                      {i + 1}
+                                    </a>
+                                  </li>
+                                )
+                              )}
                               <li className="page-item">
-                                <a className="page-link" href="#" aria-label="Next" onClick={nextPage}>
+                                <a
+                                  className="page-link"
+                                  href="#"
+                                  aria-label="Next"
+                                  onClick={nextPage}
+                                >
                                   <span aria-hidden="true">&raquo;</span>
                                 </a>
                               </li>
@@ -509,7 +637,12 @@ function AnnouncementAdmin() {
                         </div>
                       </div>
                       <div className="col-4 text-end ">
-                        <button className="btn btn-primary float-end" onClick={toggleForm}>Add</button>
+                        <button
+                          className="btn btn-primary float-end"
+                          onClick={toggleForm}
+                        >
+                          Add
+                        </button>
                       </div>
                     </div>
                     <table className="table">
@@ -526,36 +659,49 @@ function AnnouncementAdmin() {
 
                       <tbody>
                         {getCurrentPageData().map((val) => {
-                          return <tr key={val._id}>
-                            <td>{val.what}</td>
-                            <td>{val.where}</td>
-                            <td>{val.when}</td>
-                            <td>{val.who}</td>
-                            <td>
-                              <img
-                                style={{ width: "100px", height: "100px" }}
-                                src={val.filename.url}
-                                alt=""
-                                className="business-picture"
-                              />
-                            </td>
-                            <td>
-                              <div className='gap-2 d-md-flex justify-content-start align-items-center'>
-                                <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(val)}> Edit</button>
-                                <form >
-                                  <input type='hidden' name='id' value="" />
+                          return (
+                            <tr key={val._id}>
+                              <td>{val.what}</td>
+                              <td>{val.where}</td>
+                              <td>{val.when}</td>
+                              <td>{val.who}</td>
+                              <td>
+                                <img
+                                  style={{ width: "100px", height: "100px" }}
+                                  src={val.filename.url}
+                                  alt=""
+                                  className="business-picture"
+                                />
+                              </td>
+                              <td>
+                                <div className="gap-2 d-md-flex justify-content-start align-items-center">
                                   <button
-                                    className="btn btn-outline-danger"
-                                    type="submit"
-                                    name="deleteRow"
-                                    onClick={() => { deleteRow(val._id); }}>Delete</button>
-                                </form>
-                              </div>
-                            </td>
-                          </tr>
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={() => showEditFormHandler(val)}
+                                  >
+                                    {" "}
+                                    Edit
+                                  </button>
+                                  <form>
+                                    <input type="hidden" name="id" value="" />
+                                    <button
+                                      className="btn btn-outline-danger"
+                                      type="submit"
+                                      name="deleteRow"
+                                      onClick={() => {
+                                        deleteRow(val._id);
+                                      }}
+                                    >
+                                      Delete
+                                    </button>
+                                  </form>
+                                </div>
+                              </td>
+                            </tr>
+                          );
                         })}
                       </tbody>
-
                     </table>
                   </div>
                 </div>
@@ -624,10 +770,18 @@ function AnnouncementAdmin() {
                             />
                           </div>
                           <div className="form-buttons">
-                            <button type="submit" className="btn btn-primary" onClick={announcement}>
+                            <button
+                              type="submit"
+                              className="btn btn-primary"
+                              onClick={announcement}
+                            >
                               Submit
                             </button>
-                            <button type="button" className="btn btn-secondary" onClick={handleDiscard}>
+                            <button
+                              type="button"
+                              className="btn btn-secondary"
+                              onClick={handleDiscard}
+                            >
                               Discard
                             </button>
                           </div>
@@ -710,10 +864,18 @@ function AnnouncementAdmin() {
                           </div>
 
                           <div className="form-buttons">
-                            <button type="submit" className="btn btn-primary" onClick={updateRowData}>
+                            <button
+                              type="submit"
+                              className="btn btn-primary"
+                              onClick={updateRowData}
+                            >
                               Submit
                             </button>
-                            <button type="button" className="btn btn-secondary" onClick={handleEditDiscard}>
+                            <button
+                              type="button"
+                              className="btn btn-secondary"
+                              onClick={handleEditDiscard}
+                            >
                               Discard
                             </button>
                           </div>
@@ -723,7 +885,6 @@ function AnnouncementAdmin() {
                   </div>
                 </div>
               )}
-
             </div>
           </section>
         </main>

@@ -1,57 +1,34 @@
-const announcement = require('../models/announcementModel');
-const fs = require('fs');
-const cloudinary = require('../uploads/cloudinary')
-const StaffLogs = require('../models/staffLogsModel');
-const User = require('../models/userModel');
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt');
+const announcement = require("../models/announcementModel");
+const fs = require("fs");
+const cloudinary = require("../uploads/cloudinary");
+const StaffLogs = require("../models/staffLogsModel");
+const User = require("../models/userModel");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 exports.createAnnouncement = async (req, res) => {
-  const { what, where, when, who } = req.body;
+  const { what, where, when, who, tFirstName, tLastName } = req.body;
   const { path } = req.file;
 
-  const token = 'access_token';
-  const secretKey = 'y7y9u92348y5789yye789yq234785y78q34y78oghio';
+  const date = new Date();
+  const accessDate = date.toISOString().slice(0, 10);
+  const accessTime =
+    date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+  const name = tFirstName + " " + tLastName;
+  const activity = "Created an Announcement";
+
+  const newCustomData = new StaffLogs({
+    name: name,
+    accessDate: accessDate,
+    accessTime: accessTime,
+    activity: activity,
+  });
+  await newCustomData.save();
 
   try {
-    jwt.verify(token, secretKey, async (err, decoded) => {
-      if (err) {
-        console.error('Token verification failed:', err);
-      } else {
-        const userId = decoded.id;
-        const userEmail = decoded.email;
-        const userFirstName = decoded.firstName;
-        const userLastName = decoded.lastName;
-        const userType = decoded.type;
-
-        const date = new Date();
-        const accessDate = date.toISOString().slice(0, 10);
-        const accessTime =
-          date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-        const name = userFirstName + ' ' + userLastName;
-        const activity = 'Created an announcement';
-
-        console.log(name);
-
-        // Here, you can perform operations that use the decoded data
-        const newCustomData = new StaffLogs({
-          name: name,
-          email: userEmail,
-          accessDate: accessDate,
-          accessTime: accessTime,
-          activity: activity,
-        });
-
-        // Save the new staff log data
-        await newCustomData.save();
-      }
-    });
-
-
-
     // Upload the image to Cloudinary
     const result = await cloudinary.uploader.upload(path, {
-      folder: 'annoucement',
+      folder: "annoucement",
     });
 
     const newAnnouncement = new announcement({
@@ -67,12 +44,10 @@ exports.createAnnouncement = async (req, res) => {
 
     await newAnnouncement.save();
 
-
-
-    res.send('File and text data saved to MongoDB and Cloudinary');
+    res.send("File and text data saved to MongoDB and Cloudinary");
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error saving data to MongoDB and Cloudinary');
+    res.status(500).send("Error saving data to MongoDB and Cloudinary");
   }
 };
 
@@ -82,7 +57,7 @@ exports.getAllAnnouncements = async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -91,21 +66,21 @@ exports.deleteAnnouncement = async (req, res) => {
   try {
     const deletedDocument = await announcement.findByIdAndDelete(id);
     if (!deletedDocument) {
-      return res.status(404).json({ message: 'Document not found' });
+      return res.status(404).json({ message: "Document not found" });
     }
 
     const filename = `./uploads/announcement/${deletedDocument.filename}`;
     fs.unlink(filename, (err) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Error deleting file' });
+        return res.status(500).json({ message: "Error deleting file" });
       }
 
-      res.json({ message: 'Document and file deleted successfully' });
+      res.json({ message: "Document and file deleted successfully" });
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -120,14 +95,14 @@ exports.updateAnnouncement = async (req, res) => {
     const existingAnnouncement = await announcement.findById(id);
 
     if (!existingAnnouncement) {
-      return res.status(404).json({ message: 'Announcement not found' });
+      return res.status(404).json({ message: "Announcement not found" });
     }
 
     // Check if a new file was uploaded
     if (newFile) {
       // Upload the new image to Cloudinary
       const result = await cloudinary.uploader.upload(newFile.path, {
-        folder: 'announcement', // The folder for new images
+        folder: "announcement", // The folder for new images
       });
 
       // Update the announcement data with the new image URL
@@ -145,6 +120,6 @@ exports.updateAnnouncement = async (req, res) => {
     res.status(200).json(updatedAnnouncement);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
