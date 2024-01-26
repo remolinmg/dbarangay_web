@@ -10,22 +10,22 @@ exports.createAnnouncement = async (req, res) => {
   const { what, where, when, who, tFirstName, tLastName } = req.body;
   const { path } = req.file;
 
-  const date = new Date();
-  const accessDate = date.toISOString().slice(0, 10);
-  const accessTime =
-    date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-  const name = tFirstName + " " + tLastName;
-  const activity = "Created an Announcement";
-
-  const newCustomData = new StaffLogs({
-    name: name,
-    accessDate: accessDate,
-    accessTime: accessTime,
-    activity: activity,
-  });
-  await newCustomData.save();
-
   try {
+    const date = new Date();
+    const accessDate = date.toISOString().slice(0, 10);
+    const accessTime =
+      date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    const name = tFirstName + " " + tLastName;
+    const activity = "Created an Announcement";
+
+    const newCustomData = new StaffLogs({
+      name: name,
+      accessDate: accessDate,
+      accessTime: accessTime,
+      activity: activity,
+    });
+    await newCustomData.save();
+
     // Upload the image to Cloudinary
     const result = await cloudinary.uploader.upload(path, {
       folder: "annoucement",
