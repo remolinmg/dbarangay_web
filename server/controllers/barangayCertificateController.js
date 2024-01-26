@@ -1,4 +1,5 @@
 const userCertificate = require('../models/barangayCertificateModel');
+const StaffLogs = require("../models/staffLogsModel");
 
 exports.createCertificate = async (req, res) => {
   const { residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference } = req.body = req.body
