@@ -72,8 +72,12 @@ function BclearanceAdmin() {
 
   // DATA ---------------------------------------------------------------
   const [data, setData] = useState([]);
+  const [tFirstName, setTFirstName] = useState();
+  const [tLastName, setTLastName] = useState();
+
   useEffect(() => {
     fetchData(); // Fetch initial data when the component mounts
+    fetchName(); //Fetch email
   }, []);
 
   const fetchData = async () => {
@@ -82,6 +86,16 @@ function BclearanceAdmin() {
       setData(response.data);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const fetchName = async () => {
+    // Access Token
+    const token = Cookies.get("access_token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      setTFirstName(decoded.firstName);
+      setTLastName(decoded.lastName);
     }
   };
 
@@ -150,7 +164,7 @@ function BclearanceAdmin() {
 
 
 
-  // Forms ----------------------------------------------
+  // Forms -------------------------------------------------------------------
   const [showForm, setShowForm] = useState(false);
   const toggleForm = () => { setShowForm(!showForm); }; //   SHOW FORMS 
   const handleDiscard = () => { setShowForm(false); }; //   DISCARD FUNCTION
@@ -184,6 +198,7 @@ function BclearanceAdmin() {
     setModeOfPayment('G-Cash');
     setIsCOPChecked(false);
   };
+
   const handleCheckboxChangeCash = () => {
     setIsCOPChecked(!isCOPChecked);
     setModeOfPayment('Cash On Pick-up');
@@ -214,11 +229,9 @@ function BclearanceAdmin() {
 
   async function barangayCertificate(e) {
     e.preventDefault();
-
     try {
-
       await axios.post("https://dbarangay.onrender.com/barangaycertificate", {
-        residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
+        residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference, tFirstName, tLastName
       })
         .then(res => {
           if (res.data === "exist") {
@@ -236,9 +249,7 @@ function BclearanceAdmin() {
     }
     catch (e) {
       console.log(e);
-
     }
-
   }
 
   //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
@@ -270,7 +281,6 @@ function BclearanceAdmin() {
         pickUpDate: editDate,
         status: editStatus,
       };
-
 
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/barangaycertificate/${selectedRowData}`,
@@ -316,7 +326,6 @@ function BclearanceAdmin() {
 
   return (
     <>
-
       <div className="topbarsection">
         {Array.isArray(userData) ? (
           userData.map((item, index) => (
@@ -354,7 +363,6 @@ function BclearanceAdmin() {
                           </div>
                           <hr />
                           <div className="button-profile1">
-
 
                             <div onClick={handleSignOut} className="profilebuttons">
                               <BiLogOut className="profileicons" /> Log out

@@ -1,36 +1,50 @@
 const userCertificate = require('../models/barangayCertificateModel');
 
 exports.createCertificate = async (req, res) => {
-  const{residentName,userId,address,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
-  const data = 
+  const { residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference } = req.body = req.body
+  const data =
   {
-    residentName:residentName,
-    userId:userId,
-    address:address,
-    reasonOfRequest:reasonOfRequest,
-    pickUpDate:pickUpDate,
-    modeOfPayment:modeOfPayment,
-    reference:reference
-    }
+    residentName: residentName,
+    userId: userId,
+    address: address,
+    reasonOfRequest: reasonOfRequest,
+    pickUpDate: pickUpDate,
+    modeOfPayment: modeOfPayment,
+    reference: reference
+  }
 
-  try{
-    const check=await userCertificate.findOne({$and:[{residentName:residentName},{reasonOfRequest:reasonOfRequest},{pickUpDate:pickUpDate}]})
-    if(check){
+  try {
+    const check = await userCertificate.findOne({ $and: [{ residentName: residentName }, { reasonOfRequest: reasonOfRequest }, { pickUpDate: pickUpDate }] })
+    if (check) {
       res.status(400).json("exist")
     }
-    else{
+    else {
       res.status(201).json("notexist")
       await userCertificate.insertMany([data])
+      const date = new Date();
+      const accessDate = date.toISOString().slice(0, 10);
+      const accessTime =
+        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+      const name = tFirstName + " " + tLastName;
+      const activity = "Created a Barangay Certificate Request";
+
+      const newCustomData = new StaffLogs({
+        name: name,
+        accessDate: accessDate,
+        accessTime: accessTime,
+        activity: activity,
+      });
+      await newCustomData.save();
     }
   }
-  catch(e){
+  catch (e) {
     res.json("notexist")
   }
 };
 
 exports.getCertificates = async (req, res) => {
   try {
-    const data = await userCertificate.find().sort({createdAt: -1});
+    const data = await userCertificate.find().sort({ createdAt: -1 });
     res.json(data);
   } catch (error) {
     console.error(error);
@@ -40,10 +54,10 @@ exports.getCertificates = async (req, res) => {
 
 exports.updateCertificate = async (req, res) => {
   const id = req.params.id;
-  const updatedData= req.body;
+  const updatedData = req.body;
   try {
     const updatedUserCertificate = await userCertificate.findByIdAndUpdate(
-      id,updatedData,{ new: true } 
+      id, updatedData, { new: true }
     );
 
     if (!updatedUserCertificate) {
