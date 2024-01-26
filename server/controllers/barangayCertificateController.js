@@ -2,7 +2,7 @@ const userCertificate = require('../models/barangayCertificateModel');
 const StaffLogs = require("../models/staffLogsModel");
 
 exports.createCertificate = async (req, res) => {
-  const { residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference } = req.body = req.body
+  const { residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference, tFirstName, tLastName } = req.body = req.body
   const data =
   {
     residentName: residentName,
@@ -21,7 +21,7 @@ exports.createCertificate = async (req, res) => {
     }
     else {
       res.status(201).json("notexist")
-      await userCertificate.insertMany([data])
+      await userCertificate.insertMany([data]);
       const date = new Date();
       const accessDate = date.toISOString().slice(0, 10);
       const accessTime =
