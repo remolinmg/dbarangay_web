@@ -99,8 +99,6 @@ function BclearanceAdmin() {
     }
   };
 
-
-
   // Event handler for dropdown change ----------------------------------------
   const handleRowCountChange = (e) => {
     const selectedRowCount = parseInt(e.target.value);
@@ -121,6 +119,7 @@ function BclearanceAdmin() {
     const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
     return reversedData.slice(startIndex, endIndex);
   };
+  
   // stay on first page
   const filteredAndSortedData = data
     .filter((item) => {
@@ -252,7 +251,7 @@ function BclearanceAdmin() {
     }
   }
 
-  //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
+  //  ------------------------------ EDIT FORM STATES (ShowForms) ------------------------------
   const [editResidentName, setEditResidentName] = useState('');
   const [editAddress, setEditAddress] = useState('');
   const [editReasonOfRequest, setEditReasonOfRequest] = useState('');

@@ -72,8 +72,11 @@ function Biddmin() {
 
     // DATA ---------------------------------------------------------------
     const [data, setData] = useState([]);
+    const [tFirstName, setTFirstName] = useState();
+    const [tLastName, setTLastName] = useState();
     useEffect(() => {
         fetchData(); // Fetch initial data when the component mounts
+        fetchName(); //Fetch email
     }, []);
 
     const fetchData = async () => {
@@ -82,6 +85,16 @@ function Biddmin() {
             setData(response.data);
         } catch (error) {
             console.error(error);
+        }
+    };
+
+    const fetchName = async () => {
+        // Access Token
+        const token = Cookies.get("access_token");
+        if (token) {
+            const decoded = jwtDecode(token);
+            setTFirstName(decoded.firstName);
+            setTLastName(decoded.lastName);
         }
     };
 
@@ -127,6 +140,7 @@ function Biddmin() {
             setCurrentPage(currentPage - 1);
         }
     };
+
     // Calculate the starting and ending indices for the current page -------------
     const startIndex = (currentPage - 1) * rowCount;
     const endIndex = startIndex + rowCount;
@@ -202,11 +216,9 @@ function Biddmin() {
 
     async function barangayID(e) {
         e.preventDefault();
-
         try {
-
             await axios.post("https://dbarangay.onrender.com/barangayid", {
-                residentName, userId, address, pickUpDate, modeOfPayment, reference
+                residentName, userId, address, pickUpDate, modeOfPayment, reference, tFirstName, tLastName
             })
                 .then(res => {
                     if (res.data === "exist") {
@@ -221,13 +233,10 @@ function Biddmin() {
                     alert("Failed!")
                     console.log(e);
                 })
-
         }
         catch (e) {
             console.log(e);
-
         }
-
     }
 
     //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
@@ -301,7 +310,6 @@ function Biddmin() {
 
     return (
         <>
-
             <div className="topbarsection">
                 {Array.isArray(userData) ? (
                     userData.map((item, index) => (
@@ -367,7 +375,6 @@ function Biddmin() {
                         </Link>
                     </div>
                     <ul>
-
                         <li>
                             <Link to="/dashboard" className="nav-link ">
                                 <AiOutlineDashboard className="sidebaricon " />
@@ -464,7 +471,7 @@ function Biddmin() {
                 </div>
             </div>
             <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
-            <Notification/>
+                <Notification />
                 <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
                     <div className="toppart-table border row w-75 d-flex align-items-center">
                         <div className="col-4">
@@ -551,12 +558,9 @@ function Biddmin() {
                                             </div>
                                         </div>
 
-
-
                                         <table id="b-id-table" class="table caption-top">
                                             <thead>
                                                 <tr>
-
                                                     <th scope="col">Resident Name</th>
                                                     <th scope="col">Address</th>
                                                     <th scope="col">Pick-up Date</th>

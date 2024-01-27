@@ -21,7 +21,6 @@ exports.createCertificate = async (req, res) => {
     }
     else {
       res.status(201).json("notexist")
-      await userCertificate.insertMany([data]);
       const date = new Date();
       const accessDate = date.toISOString().slice(0, 10);
       const accessTime =
@@ -36,6 +35,7 @@ exports.createCertificate = async (req, res) => {
         activity: activity,
       });
       await newCustomData.save();
+      await userCertificate.insertMany([data]);
     }
   }
   catch (e) {
