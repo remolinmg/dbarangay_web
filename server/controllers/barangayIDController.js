@@ -1,4 +1,5 @@
 const userBarangayID = require('../models/barangayIDModel');
+const StaffLogs = require("../models/staffLogsModel");
 
 // Controller functions
 
