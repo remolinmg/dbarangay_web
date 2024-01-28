@@ -1,8 +1,9 @@
 const userIndigency = require('../models/barangayIndigencyModel');
+const StaffLogs = require("../models/staffLogsModel");
 
 // POST /barangayindigency
 exports.createIndigency = async (req, res) => {
-  const { residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference } = req.body;
+  const { residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference, tFirstName, tLastName } = req.body;
 
   try {
     const check = await userIndigency.findOne({
@@ -13,6 +14,21 @@ exports.createIndigency = async (req, res) => {
       res.status(400).json('exist');
     } else {
       res.status(201).json('notexist');
+      const date = new Date();
+      const accessDate = date.toISOString().slice(0, 10);
+      const accessTime =
+        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+      const name = tFirstName + " " + tLastName;
+      const activity = "Created a Barangay Indigency Request";
+
+      const newCustomData = new StaffLogs({
+        name: name,
+        accessDate: accessDate,
+        accessTime: accessTime,
+        activity: activity,
+      });
+
+      await newCustomData.save();
       await userIndigency.create({
         residentName,
         userId,

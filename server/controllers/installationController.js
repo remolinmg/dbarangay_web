@@ -1,4 +1,5 @@
 const userInstallation = require('../models/installationModel');
+const StaffLogs = require("../models/staffLogsModel");
 
 const createInstallation = async (req, res) => {
   const {
@@ -9,6 +10,8 @@ const createInstallation = async (req, res) => {
     pickUpDate,
     modeOfPayment,
     reference,
+    tFirstName,
+    tLastName
   } = req.body;
 
   const data = {
@@ -31,6 +34,20 @@ const createInstallation = async (req, res) => {
     if (check) {
       res.status(400).json('exist');
     } else {
+      const date = new Date();
+      const accessDate = date.toISOString().slice(0, 10);
+      const accessTime =
+        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+      const name = tFirstName + " " + tLastName;
+      const activity = "Created a Barangay Installation Request";
+
+      const newCustomData = new StaffLogs({
+        name: name,
+        accessDate: accessDate,
+        accessTime: accessTime,
+        activity: activity,
+      });
+      await newCustomData.save();
       await userInstallation.create(data);
       res.status(201).json('notexist');
     }
@@ -84,7 +101,7 @@ const updateInstallation = async (req, res) => {
   }
 };
 
-async function getUserInstallationPermit (req, res) {
+async function getUserInstallationPermit(req, res) {
   try {
     const userId = req.params.id;
     const data = await userInstallation.find({ userId });

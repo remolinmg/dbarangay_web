@@ -28,7 +28,6 @@ import {
 import 'bootstrap/dist/css/bootstrap.css';
 import { FaUserCircle } from "react-icons/fa";
 
-
 function Bindigency() {
   //  ------------------------------ SIDEBAR TOPBAR ------------------------------
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -71,8 +70,12 @@ function Bindigency() {
 
   // DATA ---------------------------------------------------------------
   const [data, setData] = useState([]);
+  const [tFirstName, setTFirstName] = useState();
+  const [tLastName, setTLastName] = useState();
+
   useEffect(() => {
     fetchData(); // Fetch initial data when the component mounts
+    fetchName(); //Fetch name from token
   }, []);
 
   const fetchData = async () => {
@@ -83,6 +86,17 @@ function Bindigency() {
       console.error(error);
     }
   };
+
+  const fetchName = async () => {
+    // Access Token
+    const token = Cookies.get("access_token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      setTFirstName(decoded.firstName);
+      setTLastName(decoded.lastName);
+    }
+  };
+
 
 
   // Event handler for dropdown change ----------------------------------------
@@ -105,6 +119,7 @@ function Bindigency() {
     const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
     return reversedData.slice(startIndex, endIndex);
   };
+
   // stay on first page
   const filteredAndSortedData = data
     .filter((item) => {
@@ -206,7 +221,7 @@ function Bindigency() {
     try {
 
       await axios.post("https://dbarangay.onrender.com/barangayindigency", {
-        residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference
+        residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference, tFirstName, tLastName
       })
         .then(res => {
           if (res.data === "exist") {
@@ -466,7 +481,7 @@ function Bindigency() {
         </div>
       </div>
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
-      <Notification/>
+        <Notification />
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
             <div className="col-4">

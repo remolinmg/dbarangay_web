@@ -73,8 +73,11 @@ function Complaintsadmin() {
 
   // DATA ---------------------------------------------------------------
   const [data, setData] = useState([]);
+  const [tFirstName, setTFirstName] = useState();
+  const [tLastName, setTLastName] = useState();
   useEffect(() => {
     fetchData(); // Fetch initial data when the component mounts
+    fetchName(); // Fetch Name from token
   }, []);
 
   const fetchData = async () => {
@@ -85,6 +88,18 @@ function Complaintsadmin() {
       console.error(error);
     }
   };
+
+  const fetchName = async () => {
+    // Access Token
+    const token = Cookies.get("access_token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      setTFirstName(decoded.firstName);
+      setTLastName(decoded.lastName);
+    }
+  };
+
+
   // Event handler for dropdown change ----------------------------------------
   const handleRowCountChange = (e) => {
     const selectedRowCount = parseInt(e.target.value);
@@ -172,25 +187,25 @@ function Complaintsadmin() {
   async function complaint(e) {
     e.preventDefault();
     try {
-      await axios.post('https://dbarangay.onrender.com/complaint',{date,complainant,defendant,complainttype,address,kind,status,documentation
-
-      }).then(res =>{
+      await axios.post('https://dbarangay.onrender.com/complaint', {
+        date, complainant, defendant, complainttype, address, kind, status, documentation, tFirstName, tLastName
+      }).then(res => {
         if (res.data === "Error saving data to MongoDB") {
-          alert("Complaint Already Exist!") 
+          alert("Complaint Already Exist!")
         }
         else if (res.data === "File and text data saved to MongoDB") {
           setShowForm(false);
           fetchData();
         }
       })
-      .catch(e => {
-        alert("Failed!")
-        console.log(e);
-      })
-  }
-  catch (e) {
-    console.log(e);
-  }
+        .catch(e => {
+          alert("Failed!")
+          console.log(e);
+        })
+    }
+    catch (e) {
+      console.log(e);
+    }
   }
 
   // EDIT FORM STATES (ShowForms) ------------------------------
@@ -223,7 +238,7 @@ function Complaintsadmin() {
 
   const updateRowData = async (id) => {
     try {
-      const formData = {date:editDate,complainant:editComplainant,defendant:editDefendant,complainttype:editType,address:editAddress,kind:editKind,status:editStatus,documentation:editDocumentation};
+      const formData = { date: editDate, complainant: editComplainant, defendant: editDefendant, complainttype: editType, address: editAddress, kind: editKind, status: editStatus, documentation: editDocumentation };
 
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/complaint/${selectedRowData}`,
@@ -431,7 +446,7 @@ function Complaintsadmin() {
         </div>
       </div>
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
-      <Notification/>
+        <Notification />
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
             <div className="col-4">
@@ -610,7 +625,7 @@ function Complaintsadmin() {
                             onChange={(e) => { setAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-                             <div className="form-group">
+                        <div className="form-group">
                           <label htmlFor="documentation">DOCUMENTATION </label>
                           <input
                             type="text"
@@ -722,7 +737,7 @@ function Complaintsadmin() {
                             onChange={(e) => { setEditAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-                             <div className="form-group">
+                        <div className="form-group">
                           <label htmlFor="documentation">DOCUMENTATION </label>
                           <input
                             type="text"

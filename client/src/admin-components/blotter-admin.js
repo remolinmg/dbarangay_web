@@ -73,8 +73,12 @@ function BlotterAdmin() {
 
   // DATA ---------------------------------------------------------------
   const [data, setData] = useState([]);
+  const [tFirstName, setTFirstName] = useState();
+  const [tLastName, setTLastName] = useState();
+
   useEffect(() => {
     fetchData(); // Fetch initial data when the component mounts
+    fetchName(); // Fetch name from token
   }, []);
 
   const fetchData = async () => {
@@ -83,6 +87,16 @@ function BlotterAdmin() {
       setData(response.data);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const fetchName = async () => {
+    // Access Token
+    const token = Cookies.get("access_token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      setTFirstName(decoded.firstName);
+      setTLastName(decoded.lastName);
     }
   };
   // Event handler for dropdown change ----------------------------------------
@@ -172,7 +186,7 @@ function BlotterAdmin() {
   async function blotter(e) {
     e.preventDefault();
     try {
-    await  axios.post('https://dbarangay.onrender.com/blotter', {date,complainant,defendant,type,address,kind,status,documentation
+    await  axios.post('https://dbarangay.onrender.com/blotter', {date,complainant,defendant,type,address,kind,status,documentation,tFirstName,tLastName
     }).then(res =>{
       if (res.data === "Error saving data to MongoDB") {
         alert("Blotter Already Exist!") 

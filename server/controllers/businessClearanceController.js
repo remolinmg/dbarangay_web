@@ -1,32 +1,47 @@
 const userBusinessClearance = require('../models/businessClearanceModule');
+const StaffLogs = require("../models/staffLogsModel");
 
 // Handle POST request
 exports.createBusinessClearance = async (req, res) => {
-  const{businessName,address,residentName,userId,type,reasonOfRequest,pickUpDate,modeOfPayment,reference}=req.body=req.body
-  const data = 
+  const { businessName, address, residentName, userId, type, reasonOfRequest, pickUpDate, modeOfPayment, reference, tFirstName, tLastName } = req.body = req.body
+  const data =
   {
-    businessName:businessName,
-    address:address,
-    residentName:residentName,
-    userId:userId,
-    type:type,
-    reasonOfRequest:reasonOfRequest,
-    pickUpDate:pickUpDate,
-    modeOfPayment:modeOfPayment,
-    reference:reference
-    }
+    businessName: businessName,
+    address: address,
+    residentName: residentName,
+    userId: userId,
+    type: type,
+    reasonOfRequest: reasonOfRequest,
+    pickUpDate: pickUpDate,
+    modeOfPayment: modeOfPayment,
+    reference: reference
+  }
 
-  try{
-    const check=await userBusinessClearance.findOne({$and:[{businessName:businessName},{address:address},{pickUpDate:pickUpDate}]})
-    if(check){
+  try {
+    const check = await userBusinessClearance.findOne({ $and: [{ businessName: businessName }, { address: address }, { pickUpDate: pickUpDate }] })
+    if (check) {
       res.status(400).json("exist")
     }
-    else{
+    else {
       res.status(201).json("notexist")
+      const date = new Date();
+      const accessDate = date.toISOString().slice(0, 10);
+      const accessTime =
+        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+      const name = tFirstName + " " + tLastName;
+      const activity = "Created a Business Permit Request";
+
+      const newCustomData = new StaffLogs({
+        name: name,
+        accessDate: accessDate,
+        accessTime: accessTime,
+        activity: activity,
+      });
+      await newCustomData.save();
       await userBusinessClearance.insertMany([data])
     }
   }
-  catch(e){
+  catch (e) {
     res.json("notexist")
   }
 };
@@ -59,17 +74,17 @@ exports.deleteBusinessClearance = async (req, res) => {
 // Handle PUT request
 exports.updateBusinessClearance = async (req, res) => {
   const id = req.params.id;
-  const updatedData= req.body;
+  const updatedData = req.body;
   try {
     const updatedUserBusinessClearance = await userBusinessClearance.findByIdAndUpdate(
-      id,updatedData,{ new: true } 
+      id, updatedData, { new: true }
     );
 
-    if (!updatedUserBusinessClearance ) {
+    if (!updatedUserBusinessClearance) {
       return res.status(404).json({ message: 'Request not found' });
     }
 
-    res.status(200).json(updatedUserBusinessClearance );
+    res.status(200).json(updatedUserBusinessClearance);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });

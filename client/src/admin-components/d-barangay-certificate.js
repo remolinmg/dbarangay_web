@@ -77,7 +77,7 @@ function BclearanceAdmin() {
 
   useEffect(() => {
     fetchData(); // Fetch initial data when the component mounts
-    fetchName(); //Fetch email
+    fetchName(); //Fetch name from token
   }, []);
 
   const fetchData = async () => {
@@ -142,6 +142,7 @@ function BclearanceAdmin() {
       setCurrentPage(currentPage - 1);
     }
   };
+
   // Calculate the starting and ending indices for the current page -------------
   const startIndex = (currentPage - 1) * rowCount;
 

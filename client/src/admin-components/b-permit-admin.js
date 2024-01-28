@@ -1,4 +1,3 @@
-
 import './assets/css/style.css';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -72,8 +71,12 @@ function BpermitAdmin() {
 
     // DATA ---------------------------------------------------------------
     const [data, setData] = useState([]);
+    const [tFirstName, setTFirstName] = useState();
+    const [tLastName, setTLastName] = useState();
+
     useEffect(() => {
         fetchData(); // Fetch initial data when the component mounts
+        fetchName(); //Fetch name from token
     }, []);
 
     const fetchData = async () => {
@@ -84,6 +87,16 @@ function BpermitAdmin() {
             console.error(error);
         }
     };
+
+    const fetchName = async () => {
+        // Access Token
+        const token = Cookies.get("access_token");
+        if (token) {
+          const decoded = jwtDecode(token);
+          setTFirstName(decoded.firstName);
+          setTLastName(decoded.lastName);
+        }
+      };
 
     // Event handler for dropdown change ----------------------------------------
     const handleRowCountChange = (e) => {
@@ -133,7 +146,6 @@ function BpermitAdmin() {
     const startIndex = (currentPage - 1) * rowCount;
     const endIndex = startIndex + rowCount;
 
-
     // Function to filter data based on search query -----------------------------
     const filteredData = data.filter((item) => {
         const itemValues = Object.values(item).map((value) =>
@@ -147,8 +159,6 @@ function BpermitAdmin() {
     const [showForm, setShowForm] = useState(false);
     const toggleForm = () => { setShowForm(!showForm); }; //   SHOW FORMS 
     const handleDiscard = () => { setShowForm(false); }; //   DISCARD FUNCTION
-
-
 
     //  DELETE  
     const deleteRow = async (id) => {
@@ -214,7 +224,7 @@ function BpermitAdmin() {
         try {
 
             await axios.post("https://dbarangay.onrender.com/businessclearance", {
-                businessName, address, residentName, userId, type, reasonOfRequest, pickUpDate, modeOfPayment, reference
+                businessName, address, residentName, userId, type, reasonOfRequest, pickUpDate, modeOfPayment, reference, tFirstName, tLastName
             })
                 .then(res => {
                     if (res.data === "exist") {
