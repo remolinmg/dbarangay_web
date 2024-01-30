@@ -119,7 +119,7 @@ function BclearanceAdmin() {
     const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
     return reversedData.slice(startIndex, endIndex);
   };
-  
+
   // stay on first page
   const filteredAndSortedData = data
     .filter((item) => {
@@ -272,6 +272,7 @@ function BclearanceAdmin() {
     setEditStatus(rowData.status);
     setShowEditForm(true);
   };
+
   const updateRowData = async (id) => {
     try {
       const updatedData = {
@@ -281,10 +282,15 @@ function BclearanceAdmin() {
         pickUpDate: editDate,
         status: editStatus,
       };
+      const requestBody = {
+        ...updatedData,
+        tFirstName,
+        tLastName,
+      };
 
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/barangaycertificate/${selectedRowData}`,
-        updatedData
+        requestBody
       );
       console.log(response.data);
       fetchData();
@@ -486,7 +492,7 @@ function BclearanceAdmin() {
           </ul>
         </div>
       </div>
-      <Notification/>
+      <Notification />
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div id="services-selections-main" className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div id="services-selections" className="toppart-table border row w-75 d-flex align-items-center">

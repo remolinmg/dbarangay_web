@@ -55,7 +55,7 @@ exports.getCertificates = async (req, res) => {
 
 exports.updateCertificate = async (req, res) => {
   const id = req.params.id;
-  const updatedData = req.body;
+  const {updatedData, tFirstName, tLastName} = req.body;
   try {
     const updatedUserCertificate = await userCertificate.findByIdAndUpdate(
       id, updatedData, { new: true }
@@ -64,6 +64,21 @@ exports.updateCertificate = async (req, res) => {
     if (!updatedUserCertificate) {
       return res.status(404).json({ message: 'Request not found' });
     }
+
+    const date = new Date();
+    const accessDate = date.toISOString().slice(0, 10);
+    const accessTime =
+      date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    const name = tFirstName + " " + tLastName;
+    const activity = "Edited a Barangay Certificate Request";
+
+    const newCustomData = new StaffLogs({
+      name: name,
+      accessDate: accessDate,
+      accessTime: accessTime,
+      activity: activity,
+    });
+    await newCustomData.save();
 
     res.status(200).json(updatedUserCertificate);
   } catch (error) {

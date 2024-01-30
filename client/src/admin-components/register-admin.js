@@ -6,7 +6,6 @@ import './assets/css/style.css';
 const RegisterA = () => {
     return (
         <>
-
             <div className="form-container">
                 <div className="Register-form-container">
                     <div className="row mb-3">
@@ -43,7 +42,6 @@ const RegisterA = () => {
                             </select>
                         </div>
                     </div>
-
 
                     <div className="mb-3">
                         <label for="formGridAddress1">Address</label>

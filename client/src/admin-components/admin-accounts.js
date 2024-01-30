@@ -29,8 +29,8 @@ import React from 'react';
 import { FaUserCircle } from "react-icons/fa";
 
 
-function Adminaccounts(notification ) {
-  
+function Adminaccounts(notification) {
+
   //  ------------------------------ SIDEBAR TOPBAR ------------------------------
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -76,8 +76,12 @@ function Adminaccounts(notification ) {
 
   // DATA ---------------------------------------------------------------
   const [data, setData] = useState([]);
+  const [tFirstName, setTFirstName] = useState();
+  const [tLastName, setTLastName] = useState();
+
   useEffect(() => {
     fetchData(); // Fetch initial data when the component mounts
+    fetchName(); //Fetch name from token
   }, []);
 
   const fetchData = async () => {
@@ -86,6 +90,16 @@ function Adminaccounts(notification ) {
       setData(response.data);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const fetchName = async () => {
+    // Access Token
+    const token = Cookies.get("access_token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      setTFirstName(decoded.firstName);
+      setTLastName(decoded.lastName);
     }
   };
 
@@ -168,9 +182,9 @@ function Adminaccounts(notification ) {
       console.error(error);
     }
   };
-  
 
-    
+
+
   return (
     <>
 
@@ -354,7 +368,7 @@ function Adminaccounts(notification ) {
         </div>
       </div>
       <div className={`container-documents vh-100 h-100 ${isSidebarCollapsed ? 'expanded' : ''}`}>
-       <Notification />
+        <Notification />
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
             <div className="col-6">

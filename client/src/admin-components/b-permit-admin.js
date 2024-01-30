@@ -590,11 +590,9 @@ function BpermitAdmin() {
                                                     <th scope="col">Actions</th>
                                                 </tr>
                                             </thead>
-
                                             <tbody>
                                                 {getCurrentPageData().map((val) => {
                                                     return <tr key={val.id}>
-
                                                         <td>{val.businessName}</td>
                                                         <td>{val.address}</td>
                                                         <td>{val.residentName}</td>
@@ -607,8 +605,6 @@ function BpermitAdmin() {
                                                         <td>
                                                             <div className='gap-2 d-md-flex justify-content-start align-items-center'>
                                                                 <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(val)}> Edit</button>
-
-
                                                                 <button
                                                                     className="btn btn-outline-danger"
                                                                     onClick={() => { deleteRow(val._id); }}>Delete</button>
