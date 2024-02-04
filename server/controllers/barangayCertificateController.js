@@ -55,7 +55,7 @@ exports.getCertificates = async (req, res) => {
 
 exports.updateCertificate = async (req, res) => {
   const id = req.params.id;
-  const {updatedData, tFirstName, tLastName} = req.body;
+  const { updatedData, tFirstName, tLastName } = req.body;
   try {
     const updatedUserCertificate = await userCertificate.findByIdAndUpdate(
       id, updatedData, { new: true }
@@ -93,6 +93,22 @@ exports.deleteCertificate = async (req, res) => {
     if (!deletedDocument) {
       return res.status(404).json({ message: 'Document not found' });
     }
+    const { tFirstName, tLastName } = req.body = req.body
+    const date = new Date();
+    const accessDate = date.toISOString().slice(0, 10);
+    const accessTime =
+      date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    const name = tFirstName + " " + tLastName;
+    const activity = "Deleted a Barangay Certificate Request";
+
+    const newCustomData = new StaffLogs({
+      name: name,
+      accessDate: accessDate,
+      accessTime: accessTime,
+      activity: activity,
+    });
+    await newCustomData.save();
+
     res.json({ message: 'Document deleted successfully' });
   } catch (error) {
     console.error(error);

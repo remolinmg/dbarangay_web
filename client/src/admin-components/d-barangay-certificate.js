@@ -172,7 +172,7 @@ function BclearanceAdmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`https://dbarangay.onrender.com/delete/barangaycertificate/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/barangaycertificate/${id}`, tFirstName, tLastName);
       fetchData();
     } catch (error) {
       console.error(error);
