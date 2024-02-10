@@ -285,7 +285,7 @@ function Dashboard2() {
                     <ul>
 
                         <li>
-                            <Link to="/dashboard" className="nav-link ">
+                            <Link to="/dashboard3" className="nav-link ">
                                 <AiOutlineDashboard className="sidebaricon " />
                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
                             </Link>
@@ -381,40 +381,54 @@ function Dashboard2() {
             </div>
 
 
+
             <div className={`dashboard-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
-            <Notification/>
-                <ul class="nav justify-content-evenly">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="dashboard">Residents</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/dashboard1">Incidents Reports</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/dashboard2">Health</a>
-                    </li>
-                </ul>
+                <Notification />
+                <div className='dashboardlinktop d-flex justify-content-center'>
+                    <ul className="nav d-flex justify-content-center">
+                        <li className="nav-item">
+                            <a className="nav-link text-dark border text-center" style={{ width: '200px' }} aria-current="page" href="/dashboard3">Document Requests</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link text-dark border text-center" style={{ width: '200px' }} aria-current="page" href="/dashboard">Residents</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link text-dark border text-center" style={{ width: '200px' }} href="/dashboard1">Incidents Reports</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link text-dark border text-center" style={{ width: '200px', background: "rgba(54, 162, 235, 0.6)" }} href="/dashboard2">Health</a>
+                        </li>
+                    </ul>
+                </div>
                 <div className="row m-5 mt-0">
+
                     <div className="dashboard-topside d-flex justify-content-evenly w-100">
+
                         <div className="card topcard m-1 col-md-6 p-0 ">
-                            <div className="total-population card-body text-center">
-                                <h5 className="card-title">Total Emergencies</h5>
-                                <p className="card-text">Number of emergency cases recorded.</p>
-                                <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
-                                    Total Emergencies: {totalEmergencies}
-                                </p>
-                            </div>
+                            <Link to="/emergency-admin" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <div className="total-population card-body text-center">
+                                    <h5 className="card-title">Total Emergencies</h5>
+                                    <p className="card-text">Number of emergency cases recorded.</p>
+                                    <p className="card-text" style={{ fontSize: '24px' }}>
+                                        Total Emergencies: {totalEmergencies}
+                                    </p>
+                                </div>
+                            </Link>
                         </div>
+
                         <div className="card barangay-voters topcard m-1 col-md-6  p-0 ">
-                            <div className="card-body text-center">
-                                <h5 className="card-title">Pending Emergency </h5>
-                                <p className="card-text"> Percentage and Total</p>
-                                <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
-                                    {percentagePending}% (Pending: {pendingEmergencies})
-                                </p>
-                            </div>
+                            <Link to="/emergency-admin" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <div className="card-body text-center">
+                                    <h5 className="card-title">Pending Emergency </h5>
+                                    <p className="card-text"> Percentage and Total</p>
+                                    <p className="card-text" style={{ fontSize: '24px' }}>
+                                        {percentagePending}% (Pending: {pendingEmergencies})
+                                    </p>
+                                </div>
+                            </Link>
                         </div>
                     </div>
+
                     <div className="col-md-12 p-0">
                         <div className="row ">
                             <div className="col-12 col-md-12">

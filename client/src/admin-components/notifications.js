@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 
 class Notification extends Component {
   constructor(props) {
@@ -10,6 +11,13 @@ class Notification extends Component {
       notificationShown: false,
     };
   }
+
+  redirectToEmergencyAdmin = () => {
+    // Redirect to the "/emergency-admin" page
+    // You can use the Link component, or you can use history.push if this component is rendered within a Route
+    // Example using Link:
+    window.location.href = '/emergency-admin';
+  };
 
   componentDidMount() {
     axios.get('https://dbarangay.onrender.com/get/emergency')
@@ -36,6 +44,7 @@ class Notification extends Component {
             progressStyle: {
               background: 'red', // Set the progress bar background to red
             },
+            onClick: this.redirectToEmergencyAdmin, // Specify the function to be executed when the notification is clicked
           });
 
           // Set the state to indicate that the notification has been shown
