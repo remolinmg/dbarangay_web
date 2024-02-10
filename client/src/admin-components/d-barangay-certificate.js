@@ -162,8 +162,6 @@ function BclearanceAdmin() {
     return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
   });
 
-
-
   // Forms -------------------------------------------------------------------
   const [showForm, setShowForm] = useState(false);
   const toggleForm = () => { setShowForm(!showForm); }; //   SHOW FORMS 
@@ -178,7 +176,6 @@ function BclearanceAdmin() {
       console.error(error);
     }
   };
-
 
   //------------------------------------------------ Database ----------------------------
   const [residentName, setResidentName] = useState('');

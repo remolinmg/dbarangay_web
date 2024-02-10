@@ -162,7 +162,7 @@ function Bindigency() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`https://dbarangay.onrender.com/delete/barangayindigency/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/barangayindigency/${id}`, tFirstName, tLastName);
       fetchData();
     } catch (error) {
       console.error(error);
