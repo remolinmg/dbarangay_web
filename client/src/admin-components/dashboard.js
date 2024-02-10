@@ -346,7 +346,7 @@ function Dashboard() {
                     'rgba(54, 162, 235, 0.6)',
                     'rgba(255, 206, 86, 0.6)',
                     'rgba(153, 102, 255, 0.6)',
-                    'rgba(0, 204, 102, 0.6)' ,
+                    'rgba(0, 204, 102, 0.6)',
                     'rgba(255, 128, 0, 0.6)',
                 ],
             },
@@ -509,7 +509,7 @@ function Dashboard() {
                     <ul>
 
                         <li>
-                            <Link to="/dashboard" className="nav-link ">
+                            <Link to="/dashboard3" className="nav-link ">
                                 <AiOutlineDashboard className="sidebaricon " />
                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
                             </Link>
@@ -605,19 +605,25 @@ function Dashboard() {
             </div>
 
 
+
             <div className={`dashboard-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
-            <Notification/>
-                <ul class="nav justify-content-evenly">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/dashboard">Residents</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/dashboard1">Incidents Reports</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/dashboard2">Health</a>
-                    </li>
-                </ul>
+                <Notification />
+                <div className='dashboardlinktop d-flex justify-content-center'>
+                    <ul className="nav d-flex justify-content-center">
+                        <li className="nav-item">
+                            <a className="nav-link text-dark border text-center" style={{ width: '200px' }} aria-current="page" href="/dashboard3">Document Requests</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link text-dark border text-center" style={{ width: '200px' , background:"rgba(54, 162, 235, 0.6)"}} aria-current="page" href="/dashboard">Residents</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link text-dark border text-center" style={{ width: '200px' }} href="/dashboard1">Incidents Reports</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link text-dark border text-center" style={{ width: '200px' }} href="/dashboard2">Health</a>
+                        </li>
+                    </ul>
+                </div>
                 <div className="row m-5 mt-0">
                     <div className="dashboard-topside d-flex justify-content-evenly w-100">
                         <div className="card topcard m-1 col-md-3 p-0 ">

@@ -391,8 +391,9 @@ function Dashboard1() {
                         </Link>
                     </div>
                     <ul>
+
                         <li>
-                            <Link to="/dashboard" className="nav-link ">
+                            <Link to="/dashboard3" className="nav-link ">
                                 <AiOutlineDashboard className="sidebaricon " />
                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
                             </Link>
@@ -409,6 +410,7 @@ function Dashboard1() {
                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Emergency</span>
                             </Link>
                         </li>
+                        {/* <li className={`dropdown-sidebar ${isDropdownOpen ? 'open' : ''}`}> */}
                         <li className="dropdown-sidebar">
                             <Link to="" className="nav-link ">
                                 <div className="barangaymodule">
@@ -420,43 +422,50 @@ function Dashboard1() {
                                     </span>
                                 </div>
                             </Link>
+                            {/* <ul className="sidebar-submenu"> */}
                             <ul className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? 'open' : ''}`}>
                                 {isDropdownOpen && (
                                     <>
                                         <li>
                                             <Link to="/b-officials-admin" className="nav-link ">
                                                 <BsFillPersonBadgeFill className="sidebaricon" />
-                                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Barangay Officials</span>
+                                                <span className="sidebarlabel ms-1 d-none d-sm-inline"> Barangay Officials</span>
+
                                             </Link>
                                         </li>
                                         <li>
                                             <Link to="/d-barangay-certificate" className="nav-lin">
                                                 <BsFillFileEarmarkArrowDownFill className="sidebaricon" />
-                                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Document Requests</span>
+                                                <span className="sidebarlabel ms-1 d-none d-sm-inline"> Document Requests</span>
+
                                             </Link>
                                         </li>
                                         <li>
                                             <Link to="/blotter-admin" className="nav-link ">
                                                 <RiFolderWarningFill className="sidebaricon" />
-                                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Incident Reports</span>
+                                                <span className="sidebarlabel ms-1 d-none d-sm-inline"> Incident Reports</span>
+
                                             </Link>
                                         </li>
                                         <li>
                                             <Link to="/residents-admin" className="nav-link">
                                                 <BsFillPeopleFill className="sidebaricon" />
                                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
+
                                             </Link>
                                         </li>
                                         <li>
                                             <Link to="/b-promotion-admin" className="nav-link">
                                                 <BsBuildingFillUp className="sidebaricon" />
                                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Promotion</span>
+
                                             </Link>
                                         </li>
                                         <li>
                                             <Link to="/feedbacks-admin" className="nav-link">
                                                 <BsMailbox className="sidebaricon" />
                                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Feedbacks</span>
+
                                             </Link>
                                         </li>
                                     </>
@@ -479,59 +488,67 @@ function Dashboard1() {
                 </div>
             </div>
 
+
             <div className={`dashboard-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
-                <Notification/>
-                <ul class="nav justify-content-evenly">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/dashboard">
-                            Residents
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/dashboard1">
-                            Incidents Reports
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/dashboard2">
-                            Health
-                        </a>
-                    </li>
-                </ul>
+                <Notification />
+                <div className='dashboardlinktop d-flex justify-content-center'>
+                    <ul className="nav d-flex justify-content-center">
+                        <li className="nav-item">
+                            <a className="nav-link text-dark border text-center" style={{ width: '200px' }} aria-current="page" href="/dashboard3">Document Requests</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link text-dark border text-center" style={{ width: '200px' }} aria-current="page" href="/dashboard">Residents</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link text-dark border text-center" style={{ width: '200px', background: "rgba(54, 162, 235, 0.6)" }} href="/dashboard1">Incidents Reports</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link text-dark border text-center" style={{ width: '200px' }} href="/dashboard2">Health</a>
+                        </li>
+                    </ul>
+                </div>
                 <div className="row m-5 mt-0">
                     <div className="dashboard-topside d-flex justify-content-evenly w-100">
                         <div className="card topcard m-1 col-md-3 p-0">
-                            <div className="total-population card-body text-center">
-                                <h5 className="card-title">Total Blotter Recorded</h5>
-                                <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
-                                    Blotter Records: {blotterCount}
-                                </p>
-                            </div>
+                            <Link to="/blotter-admin" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <div className="total-population card-body text-center">
+                                    <h5 className="card-title" style={{ fontSize: '24px' }}>Total Blotter Recorded</h5>
+                                    <p className="card-text" style={{ fontSize: '24px' }}>
+                                        Blotter Records: {blotterCount}
+                                    </p>
+                                </div>
+                            </Link>
                         </div>
                         <div className="card barangay-voters topcard m-1 col-md-3 p-0">
-                            <div className="pending-blotter card-body text-center">
-                                <h5 className="card-title">Pending Blotter Percentage</h5>
-                                <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
-                                    {percentagePending}% (Pending: {pendingBlotterCount})
-                                </p>
-                            </div>
+                            <Link to="/blotter-admin" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <div className="pending-blotter card-body text-center">
+                                    <h5 className="card-title" style={{ fontSize: '24px' }}>Pending Blotter Percentage</h5>
+                                    <p className="card-text" style={{ fontSize: '24px' }}>
+                                        {percentagePending}% (Pending: {pendingBlotterCount})
+                                    </p>
+                                </div>
+                            </Link>
                         </div>
 
                         <div className="Total-students card topcard m-1 col-md-3 p-0">
-                            <div className="card-body text-center">
-                                <h5 className="card-title">Total Complaints</h5>
-                                <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
-                                    {complaintCount} Complaints
-                                </p>
-                            </div>
+                            <Link to="/complaints-admin" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <div className="card-body text-center">
+                                    <h5 className="card-title" style={{ fontSize: '24px' }}>Total Complaints</h5>
+                                    <p className="card-text" style={{ fontSize: '24px' }}>
+                                        {complaintCount} Complaints
+                                    </p>
+                                </div>
+                            </Link>
                         </div>
                         <div className="male-female-percentages card topcard m-1 col-md-3 p-0">
-                            <div className="card-body text-center">
-                                <h5 className="card-title">Pending Complaints Percentage</h5>
-                                <p className="card-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>
-                                    {percentagePendingComplaint}% (Pending: {pendingComplaintCount})
-                                </p>
-                            </div>
+                            <Link to="/complaints-admin" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <div className="card-body text-center">
+                                    <h5 className="card-title" style={{ fontSize: '24px' }}>Pending Complaints Percentage</h5>
+                                    <p className="card-text" style={{ fontSize: '24px' }}>
+                                        {percentagePendingComplaint}% (Pending: {pendingComplaintCount})
+                                    </p>
+                                </div>
+                            </Link>
                         </div>
                     </div>
                     <div className="col-lg-6 p-0">
