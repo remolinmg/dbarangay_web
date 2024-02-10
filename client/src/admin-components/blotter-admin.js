@@ -186,28 +186,29 @@ function BlotterAdmin() {
   async function blotter(e) {
     e.preventDefault();
     try {
-    await  axios.post('https://dbarangay.onrender.com/blotter', {date,complainant,defendant,type,address,kind,status,documentation,tFirstName,tLastName
-    }).then(res =>{
-      if (res.data === "Error saving data to MongoDB") {
-        alert("Blotter Already Exist!") 
-      }
-      else if (res.data === "File and text data saved to MongoDB") {
-        setShowForm(false);
-        fetchData();
-      }
-    })
-    .catch(e => {
-      alert("Failed!")
+      await axios.post('https://dbarangay.onrender.com/blotter', {
+        date, complainant, defendant, type, address, kind, status, documentation, tFirstName, tLastName
+      }).then(res => {
+        if (res.data === "Error saving data to MongoDB") {
+          alert("Blotter Already Exist!")
+        }
+        else if (res.data === "File and text data saved to MongoDB") {
+          setShowForm(false);
+          fetchData();
+        }
+      })
+        .catch(e => {
+          alert("Failed!")
+          console.log(e);
+        })
+    }
+    catch (e) {
       console.log(e);
-    })
-}
-catch (e) {
-  console.log(e);
 
-}
+    }
 
-}
-  
+  }
+
 
   // EDIT FORM STATES (ShowForms) ------------------------------
 
@@ -239,7 +240,7 @@ catch (e) {
 
   const updateRowData = async (id) => {
     try {
-      const formData = {date:editDate,complainant:editComplainant,defendant:editDefendant,type:editType,address:editAddress,kind:editKind,status:editStatus, documentation:editDocumentation};
+      const formData = { date: editDate, complainant: editComplainant, defendant: editDefendant, type: editType, address: editAddress, kind: editKind, status: editStatus, documentation: editDocumentation };
 
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/blotter/${selectedRowData}`,
@@ -285,7 +286,7 @@ catch (e) {
   return (
     <>
 
-      <div className="topbarsection">
+      <div className="topbarsection" style={{ background: "#034f84" }}>
         {Array.isArray(userData) ? (
           userData.map((item, index) => (
             <div key={index}>
@@ -342,7 +343,7 @@ catch (e) {
           <p>No data to display.</p>
         )}
       </div>
-      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`} style={{ background: "#0C356A" }}>
         <div className="newsidebar">
           <div className="text-center">
             <Link className="navbar-brand" to="/dashboard">
@@ -352,12 +353,12 @@ catch (e) {
           <ul>
 
             <li>
-              <Link to="/dashboard" className="nav-link ">
+              <Link to="/dashboard3" className="nav-link ">
                 <AiOutlineDashboard className="sidebaricon " />
                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
               </Link>
             </li>
-            <li>
+            <li >
               <Link to="/announcement-admin" className="nav-link ">
                 <BsMegaphoneFill className="sidebaricon" />
                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Announcement</span>
@@ -446,7 +447,7 @@ catch (e) {
           </ul>
         </div>
       </div>
-      <Notification/>
+      <Notification />
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
@@ -626,7 +627,7 @@ catch (e) {
                             onChange={(e) => { setAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-                             <div className="form-group">
+                        <div className="form-group">
                           <label htmlFor="documentation">DOCUMENTATION </label>
                           <input
                             type="text"
@@ -739,7 +740,7 @@ catch (e) {
                             onChange={(e) => { setEditAddress(e.target.value); }}
                             className="form-control" required /></div>
 
-                             <div className="form-group">
+                        <div className="form-group">
                           <label htmlFor="documentation">DOCUMENTATION </label>
                           <input
                             type="text"

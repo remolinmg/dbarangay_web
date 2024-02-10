@@ -306,16 +306,13 @@ function AnnouncementAdmin() {
 
   return (
     <>
-      <div className="topbarsection">
+      <div className="topbarsection" style={{ background: "#034f84" }}>
         {Array.isArray(userData) ? (
           userData.map((item, index) => (
             <div key={index}>
               <div className="topnavbar d-flex justify-content-between align-items-center">
                 <div className="topnavleft">
-                  <button
-                    className="collapse-button"
-                    onClick={handleSidebarCollapse}
-                  >
+                  <button className="collapse-button" onClick={handleSidebarCollapse}>
                     <BiMenu />
                   </button>
                 </div>
@@ -324,39 +321,21 @@ function AnnouncementAdmin() {
                 </div>
                 <div className="topnavright">
                   <div ref={profileRef}>
-                    <FaUserCircle
-                      className="adminicon"
-                      onClick={toggleProfileSubmenu}
-                    />
+                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
                     {ProfilesubmenuVisible && (
                       <div className="Profilesubmenuadmin">
                         <div className="admininfo">
                           <div className="rightprofile">
-                            <img
-                              src={item.filename.url}
-                              style={{
-                                width: "80px",
-                                height: "80px",
-                                borderRadius: "50px",
-                              }}
-                              calt="Profile Picture"
-                              className="profile-pic"
-                              id="profile-pic"
-                            />
+                            <img src={item.filename.url} style={{ width: "80px", height: "80px", borderRadius: "50px" }} calt="Profile Picture" className="profile-pic" id="profile-pic" />
                           </div>
                           <div className="leftprofile">
-                            <h5>
-                              {item.firstName} {item.middleName} {item.lastName}
-                            </h5>
+                            <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
                             <h5>{item.email}</h5>
                           </div>
                         </div>
                         <div className="lowerprofile">
                           <div className="button-profile1">
-                            <NavLink
-                              to="/admin-profile"
-                              activeClassName="active"
-                            >
+                            <NavLink to="/admin-profile" activeClassName="active">
                               <div href="#" className="profilebuttons">
                                 <BiCog className="profileicons" /> Settings
                               </div>
@@ -364,18 +343,19 @@ function AnnouncementAdmin() {
                           </div>
                           <hr />
                           <div className="button-profile1">
-                            <div
-                              onClick={handleSignOut}
-                              className="profilebuttons"
-                            >
+
+
+                            <div onClick={handleSignOut} className="profilebuttons">
                               <BiLogOut className="profileicons" /> Log out
                             </div>
+
                           </div>
                         </div>
                       </div>
                     )}
                   </div>
                 </div>
+
               </div>
             </div>
           ))
@@ -383,9 +363,7 @@ function AnnouncementAdmin() {
           <p>No data to display.</p>
         )}
       </div>
-      <div
-        className={`containersidebar ${isSidebarCollapsed ? "collapsed" : ""}`}
-      >
+      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`} style={{ background: "#0C356A" }}>
         <div className="newsidebar">
           <div className="text-center">
             <Link className="navbar-brand" to="/dashboard">
@@ -393,28 +371,23 @@ function AnnouncementAdmin() {
             </Link>
           </div>
           <ul>
+
             <li>
-              <Link to="/dashboard" className="nav-link ">
+              <Link to="/dashboard3" className="nav-link ">
                 <AiOutlineDashboard className="sidebaricon " />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">
-                  Dashboard
-                </span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
               </Link>
             </li>
-            <li>
+            <li style={{ background: "#d8a600" }}>
               <Link to="/announcement-admin" className="nav-link ">
                 <BsMegaphoneFill className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">
-                  Announcement
-                </span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">Announcement</span>
               </Link>
             </li>
             <li>
               <Link to="/emergency-admin" className="nav-link ">
                 <BsTelephoneFill className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">
-                  Emergency
-                </span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">Emergency</span>
               </Link>
             </li>
             {/* <li className={`dropdown-sidebar ${isDropdownOpen ? 'open' : ''}`}> */}
@@ -430,82 +403,65 @@ function AnnouncementAdmin() {
                 </div>
               </Link>
               {/* <ul className="sidebar-submenu"> */}
-              <ul
-                className={`sidebar-submenu w-100 ms-3 ${
-                  isDropdownOpen ? "open" : ""
-                }`}
-              >
+              <ul className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? 'open' : ''}`}>
                 {isDropdownOpen && (
                   <>
                     <li>
                       <Link to="/b-officials-admin" className="nav-link ">
                         <BsFillPersonBadgeFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
-                          {" "}
-                          Barangay Officials
-                        </span>
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Barangay Officials</span>
+
                       </Link>
                     </li>
                     <li>
                       <Link to="/d-barangay-certificate" className="nav-lin">
                         <BsFillFileEarmarkArrowDownFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
-                          {" "}
-                          Document Requests
-                        </span>
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Document Requests</span>
+
                       </Link>
                     </li>
                     <li>
                       <Link to="/blotter-admin" className="nav-link ">
                         <RiFolderWarningFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
-                          {" "}
-                          Incident Reports
-                        </span>
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Incident Reports</span>
+
                       </Link>
                     </li>
                     <li>
                       <Link to="/residents-admin" className="nav-link">
                         <BsFillPeopleFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
-                          Residents Info
-                        </span>
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
+
                       </Link>
                     </li>
                     <li>
                       <Link to="/b-promotion-admin" className="nav-link">
                         <BsBuildingFillUp className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
-                          Business Promotion
-                        </span>
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Promotion</span>
+
                       </Link>
                     </li>
                     <li>
                       <Link to="/feedbacks-admin" className="nav-link">
                         <BsMailbox className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
-                          Feedbacks
-                        </span>
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Feedbacks</span>
+
                       </Link>
                     </li>
                   </>
                 )}
               </ul>
             </li>
-            <li className={`${isDropdownOpen ? "hide" : ""}`}>
+            <li className={`${isDropdownOpen ? 'hide' : ''}`}>
               <Link to="/staff-logs-admin" className="nav-link">
                 <BsTerminal className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">
-                  Staff Logs
-                </span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">Staff Logs</span>
               </Link>
             </li>
-            <li className={`${isDropdownOpen ? "hide" : ""}`}>
+            <li className={`${isDropdownOpen ? 'hide' : ''}`}>
               <Link to="/admin-accounts" className="nav-link">
                 <BsPersonFill className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">
-                  Admin Accounts
-                </span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">Admin Accounts</span>
               </Link>
             </li>
           </ul>
@@ -607,9 +563,8 @@ function AnnouncementAdmin() {
                                 },
                                 (_, i) => (
                                   <li
-                                    className={`page-item ${
-                                      i + 1 === currentPage ? "active" : ""
-                                    }`}
+                                    className={`page-item ${i + 1 === currentPage ? "active" : ""
+                                      }`}
                                     key={i}
                                   >
                                     <a

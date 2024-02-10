@@ -172,7 +172,7 @@ function StafflogsAdmin() {
     return (
         <>
 
-            <div className="topbarsection">
+            <div className="topbarsection" style={{ background: "#034f84" }}>
                 {Array.isArray(userData) ? (
                     userData.map((item, index) => (
                         <div key={index}>
@@ -229,7 +229,7 @@ function StafflogsAdmin() {
                     <p>No data to display.</p>
                 )}
             </div>
-            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`} style={{ background: "#0C356A" }}>
                 <div className="newsidebar">
                     <div className="text-center">
                         <Link className="navbar-brand" to="/dashboard">
@@ -239,12 +239,12 @@ function StafflogsAdmin() {
                     <ul>
 
                         <li>
-                            <Link to="/dashboard" className="nav-link ">
+                            <Link to="/dashboard3" className="nav-link ">
                                 <AiOutlineDashboard className="sidebaricon " />
                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
                             </Link>
                         </li>
-                        <li>
+                        <li >
                             <Link to="/announcement-admin" className="nav-link ">
                                 <BsMegaphoneFill className="sidebaricon" />
                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Announcement</span>
@@ -334,7 +334,7 @@ function StafflogsAdmin() {
                 </div>
             </div>
             <div className={`container-documents vh-100 h-100 ${isSidebarCollapsed ? 'expanded' : ''}`}>
-            <Notification/>
+                <Notification />
                 <div class="pagetitle">
                     <h1> Staff Logs </h1>
                 </div>

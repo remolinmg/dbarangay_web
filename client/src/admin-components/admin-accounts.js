@@ -188,7 +188,7 @@ function Adminaccounts(notification) {
   return (
     <>
 
-      <div className="topbarsection">
+      <div className="topbarsection" style={{ background: "#034f84" }}>
         {Array.isArray(userData) ? (
           userData.map((item, index) => (
             <div key={index}>
@@ -234,24 +234,6 @@ function Adminaccounts(notification) {
                           </div>
                         </div>
                       </div>
-                      // <div className="adminiconprofile">
-                      //   <ul className="Profilesubmenuadmin">
-                      //     <li className="profile-info-admin">
-                      //       <img src={item.filename.url} calt="Profile Picture" className="profile-pic" id="profile-pic" />
-                      //     </li>
-                      //     <li>
-                      //       <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
-                      //     </li>
-                      //     <li>
-                      //       <NavLink className="link" to="/UserProfile" activeClassName="active">
-                      //         <a href="#" className="button">Settings</a>
-                      //       </NavLink>
-                      //     </li>
-                      //     <li>
-                      //       <a href="/login" className="button" onClick={handleSignOut}>Sign Out</a>
-                      //     </li>
-                      //   </ul>
-                      // </div>
                     )}
                   </div>
                 </div>
@@ -263,7 +245,7 @@ function Adminaccounts(notification) {
           <p>No data to display.</p>
         )}
       </div>
-      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`} style={{ background: "#0C356A" }}>
         <div className="newsidebar">
           <div className="text-center">
             <Link className="navbar-brand" to="/dashboard">
@@ -273,12 +255,12 @@ function Adminaccounts(notification) {
           <ul>
 
             <li>
-              <Link to="/dashboard" className="nav-link ">
+              <Link to="/dashboard3" className="nav-link ">
                 <AiOutlineDashboard className="sidebaricon " />
                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
               </Link>
             </li>
-            <li>
+            <li >
               <Link to="/announcement-admin" className="nav-link ">
                 <BsMegaphoneFill className="sidebaricon" />
                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Announcement</span>
@@ -323,7 +305,7 @@ function Adminaccounts(notification) {
                     <li>
                       <Link to="/blotter-admin" className="nav-link ">
                         <RiFolderWarningFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Incident Reports</span>
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Incident Reports</span>
 
                       </Link>
                     </li>

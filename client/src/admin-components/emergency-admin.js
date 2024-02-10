@@ -248,7 +248,7 @@ function EmergencyAdmin() {
   return (
     <>
 
-      <div className="topbarsection">
+      <div className="topbarsection" style={{ background: "#034f84" }}>
         {Array.isArray(userData) ? (
           userData.map((item, index) => (
             <div key={index}>
@@ -305,7 +305,7 @@ function EmergencyAdmin() {
           <p>No data to display.</p>
         )}
       </div>
-      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`} style={{ background: "#0C356A" }}>
         <div className="newsidebar">
           <div className="text-center">
             <Link className="navbar-brand" to="/dashboard">
@@ -326,7 +326,7 @@ function EmergencyAdmin() {
                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Announcement</span>
               </Link>
             </li>
-            <li>
+            <li  style={{ background: "#d8a600" }}>
               <Link to="/emergency-admin" className="nav-link ">
                 <BsTelephoneFill className="sidebaricon" />
                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Emergency</span>

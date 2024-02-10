@@ -442,7 +442,7 @@ function Dashboard() {
     return (
         <>
 
-            <div className="topbarsection">
+            <div className="topbarsection" style={{ background: "#034f84" }}>
                 {Array.isArray(userData) ? (
                     userData.map((item, index) => (
                         <div key={index}>
@@ -499,7 +499,7 @@ function Dashboard() {
                     <p>No data to display.</p>
                 )}
             </div>
-            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`} style={{ background: "#0C356A" }}>
                 <div className="newsidebar">
                     <div className="text-center">
                         <Link className="navbar-brand" to="/dashboard">
@@ -514,7 +514,7 @@ function Dashboard() {
                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
                             </Link>
                         </li>
-                        <li>
+                        <li >
                             <Link to="/announcement-admin" className="nav-link ">
                                 <BsMegaphoneFill className="sidebaricon" />
                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Announcement</span>
@@ -614,7 +614,7 @@ function Dashboard() {
                             <a className="nav-link text-dark border text-center" style={{ width: '200px' }} aria-current="page" href="/dashboard3">Document Requests</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link text-dark border text-center" style={{ width: '200px' , background:"rgba(54, 162, 235, 0.6)"}} aria-current="page" href="/dashboard">Residents</a>
+                            <a className="nav-link text-dark border text-center" style={{ width: '200px', background: "rgba(54, 162, 235, 0.6)" }} aria-current="page" href="/dashboard">Residents</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link text-dark border text-center" style={{ width: '200px' }} href="/dashboard1">Incidents Reports</a>
