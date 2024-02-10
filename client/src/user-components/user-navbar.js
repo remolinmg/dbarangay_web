@@ -24,7 +24,7 @@ function UserNav() {
     const currentPosition = window.pageYOffset;
     setScrollPosition(currentPosition);
     setNavbarVisible(currentPosition < 200);
-    setNavbarColored(currentPosition >= 200);
+    setNavbarColored(currentPosition >= 100);
   };
 
   const scrollToSection = (elementRef) => {
