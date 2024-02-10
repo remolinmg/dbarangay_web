@@ -218,7 +218,7 @@ function Dashboard2() {
     return (
         <>
 
-            <div className="topbarsection">
+            <div className="topbarsection" style={{ background: "#034f84" }}>
                 {Array.isArray(userData) ? (
                     userData.map((item, index) => (
                         <div key={index}>
@@ -275,7 +275,7 @@ function Dashboard2() {
                     <p>No data to display.</p>
                 )}
             </div>
-            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`} style={{ background: "#0C356A" }}>
                 <div className="newsidebar">
                     <div className="text-center">
                         <Link className="navbar-brand" to="/dashboard">
@@ -290,7 +290,7 @@ function Dashboard2() {
                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
                             </Link>
                         </li>
-                        <li>
+                        <li >
                             <Link to="/announcement-admin" className="nav-link ">
                                 <BsMegaphoneFill className="sidebaricon" />
                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Announcement</span>

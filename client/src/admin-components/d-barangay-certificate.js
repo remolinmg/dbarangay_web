@@ -332,7 +332,7 @@ function BclearanceAdmin() {
 
   return (
     <>
-      <div className="topbarsection">
+      <div className="topbarsection" style={{ background: "#034f84" }}>
         {Array.isArray(userData) ? (
           userData.map((item, index) => (
             <div key={index}>
@@ -370,6 +370,7 @@ function BclearanceAdmin() {
                           <hr />
                           <div className="button-profile1">
 
+
                             <div onClick={handleSignOut} className="profilebuttons">
                               <BiLogOut className="profileicons" /> Log out
                             </div>
@@ -388,7 +389,7 @@ function BclearanceAdmin() {
           <p>No data to display.</p>
         )}
       </div>
-      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`} style={{ background: "#0C356A" }}>
         <div className="newsidebar">
           <div className="text-center">
             <Link className="navbar-brand" to="/dashboard">
@@ -398,12 +399,12 @@ function BclearanceAdmin() {
           <ul>
 
             <li>
-              <Link to="/dashboard" className="nav-link ">
+              <Link to="/dashboard3" className="nav-link ">
                 <AiOutlineDashboard className="sidebaricon " />
                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
               </Link>
             </li>
-            <li>
+            <li >
               <Link to="/announcement-admin" className="nav-link ">
                 <BsMegaphoneFill className="sidebaricon" />
                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Announcement</span>

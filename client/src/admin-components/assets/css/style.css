@@ -92,11 +92,12 @@
 
 .sidebarlabel {
   padding-left: 5px;
+  color:white;
 }
 
 .newsidebar .sidebaricon {
   font-size: 20px;
-
+  color:white;
 }
 
 .sidebar-submenu li {
@@ -110,8 +111,8 @@
 
 .newsidebar ul li a:hover,
 .newsidebar ul li a.active {
-  background-color: #F4D160;
-  color: #0060AD;
+  background-color: #d8a600;
+  text-decoration: black;
 }
 
 

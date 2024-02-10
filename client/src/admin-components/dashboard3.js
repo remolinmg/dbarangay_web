@@ -546,8 +546,7 @@ function Dashboard3() {
 
     return (
         <>
-
-            <div className="topbarsection">
+            <div className="topbarsection" style={{ background: "#034f84" }}>
                 {Array.isArray(userData) ? (
                     userData.map((item, index) => (
                         <div key={index}>
@@ -604,7 +603,7 @@ function Dashboard3() {
                     <p>No data to display.</p>
                 )}
             </div>
-            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+            <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`} style={{ background: "#0C356A" }}>
                 <div className="newsidebar">
                     <div className="text-center">
                         <Link className="navbar-brand" to="/dashboard">
@@ -613,13 +612,13 @@ function Dashboard3() {
                     </div>
                     <ul>
 
-                        <li >
+                        <li>
                             <Link to="/dashboard3" className="nav-link ">
                                 <AiOutlineDashboard className="sidebaricon " />
-                                <span className="sidebarlabel ms-1 d-none d-sm-inline" >Dashboard</span>
+                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
                             </Link>
                         </li>
-                        <li>
+                        <li >
                             <Link to="/announcement-admin" className="nav-link ">
                                 <BsMegaphoneFill className="sidebaricon" />
                                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Announcement</span>
@@ -708,7 +707,6 @@ function Dashboard3() {
                     </ul>
                 </div>
             </div>
-
 
             <div className={`dashboard-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
                 <Notification />
