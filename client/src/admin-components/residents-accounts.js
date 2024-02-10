@@ -121,7 +121,7 @@ function Residentsaccounts() {
         setEditPosition(rowData.position)
         setEditCompanyName(rowData.companyName)
         setEditHomeOwnership(rowData.homeOwnership)
-        setEditDateOfBirth(rowData.dateOfBirth)
+        setEditDateOfBirth(rowData.dateOfBirth ? rowData.dateOfBirth.split('T')[0] : '')
         setEditBirthPlace(rowData.birthPlace)
         setEditAge(rowData.age)
         setEditHighestEducation(rowData.highestEducation)
@@ -210,6 +210,32 @@ function Residentsaccounts() {
         window.history.back()
     }
 
+
+    //handle Birth Date and Age
+    const handleDateOfBirthChange = (e) => {
+        const value = e.target.value;
+        const currentDate = new Date();
+        const birthDate = new Date(value);
+        const minDate = new Date();
+        minDate.setFullYear(minDate.getFullYear() - 12); // 12 years ago from the current date
+        
+        // Calculate age
+        let age = currentDate.getFullYear() - birthDate.getFullYear();
+    
+        // Adjust age if birthday hasn't occurred yet this year
+        if (currentDate.getMonth() < birthDate.getMonth() || 
+            (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() < birthDate.getDate())) {
+            age--;
+        }
+    
+        if (age < 12) {
+            alert('The user must be 12 years old or above');
+            e.target.value = 'null';
+        } else {
+            setEditDateOfBirth(value);
+            setEditAge(age);
+        }
+    };
 
     return (
         <>
@@ -500,9 +526,7 @@ function Residentsaccounts() {
                                                                             id="birthdate"
                                                                             name="birthdate"
                                                                             value={editDateOfBirth}
-                                                                            onChange={(e) => {
-                                                                                setEditDateOfBirth(e.target.value);
-                                                                            }}
+                                                                            onChange={handleDateOfBirthChange}
                                                                             required
                                                                         />
                                                                     </div>
@@ -514,10 +538,7 @@ function Residentsaccounts() {
                                                                     </div>
                                                                     <div class="col">
                                                                         <label for="age" class="form-label">Age:</label>
-                                                                        <input type="text" id="age" class="form-control" value={editAge} name="age"
-                                                                            onChange={(e) => {
-                                                                                setEditAge(e.target.value);
-                                                                            }} />
+                                                                        <input type="text" id="age" class="form-control" value={editAge} name="age" />
                                                                     </div>
                                                                 </div>
                                                             </form>

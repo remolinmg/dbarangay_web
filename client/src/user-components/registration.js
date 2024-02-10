@@ -64,7 +64,6 @@ const RegistrationComponent = () => {
   const [homeOwnershipValid, setHomeOwnershipValid] = useState(true);
   const [dateOfBirthValid, setDateOfBirthValid] = useState(true);
   const [birthPlaceValid, setBirthPlaceValid] = useState(true);
-  const [ageValid, setAgeValid] = useState(true);
   const [highestEducationValid, setHighestEducationValid] = useState(true);
   const [voterRegistrationValid, setVoterRegistrationValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
@@ -165,10 +164,6 @@ const RegistrationComponent = () => {
       setBirthPlaceValid(false);
       return;
     }
-    if (age.trim() === '') {
-      setAgeValid(false);
-      return;
-    }
     if (highestEducation.trim() === '') {
       setHighestEducationValid(false);
       return;
@@ -214,13 +209,13 @@ const RegistrationComponent = () => {
     formData.append('position', position)
     formData.append('file', file)
     axios.post("https://dbarangay.onrender.com/signup", formData)
-    .then(res => {
+      .then(res => {
         if (res.data === 'Error saving data to MongoDB and Cloudinary') {
           alert("User Already Exist!");
         } else if (res.data === 'File and text data saved to MongoDB and Cloudinary') {
           // After successful upload to MongoDB, reset the form
           alert("Registered Successfully");
-          navigate("/login");
+          navigate("/");
         }
       })
       .catch(err => console.log(err));
@@ -376,27 +371,40 @@ const RegistrationComponent = () => {
   };
   const handleDateOfBirthChange = (e) => {
     const value = e.target.value;
-    setDateOfBirth(value.charAt(0).toUpperCase() + value.slice(1));
-    setDateOfBirthValid(value.trim() !== '');
-  };
+    const currentDate = new Date();
+    const birthDate = new Date(value);
+    const minDate = new Date();
+    minDate.setFullYear(minDate.getFullYear() - 12); // 12 years ago from the current date
+
+    // Calculate age
+    let age = currentDate.getFullYear() - birthDate.getFullYear();
+
+    // Adjust age if birthday hasn't occurred yet this year
+    if (
+        currentDate.getMonth() < birthDate.getMonth() ||
+        (currentDate.getMonth() === birthDate.getMonth() &&
+            currentDate.getDate() < birthDate.getDate())
+    ) {
+        age--;
+    }
+
+    if (age <= 12) {
+        alert('The user must be 12 years old or above');
+        e.target.value = '';
+        setAge(null); // or setAge(0) depending on your needs
+        setDateOfBirthValid(false);
+    } else {
+        setDateOfBirthValid(value.trim() !== '');
+        setDateOfBirth(value);
+        setAge(age);
+    }
+};
+
   const handleBirthPlaceChange = (e) => {
     const value = e.target.value;
     setBirthPlace(value.charAt(0).toUpperCase() + value.slice(1));
     setBirthPlaceValid(value.trim() !== '');
   };
-  const handleAgeChange = (e) => {
-    const ageRegExp = /^\d*$/; // Allows only digits (numbers)
-    const value = e.target.value;
-    if (ageRegExp.test(value)) {
-      setAge(value);
-      // Clear the age error if it was previously marked as invalid
-      setAgeValid(true);
-    } else {
-      // Invalid age input
-      setAgeValid(false);
-    }
-  };
-
   const handleHighestEducationChange = (e) => {
     const value = e.target.value;
     setHighestEducation(value.charAt(0).toUpperCase() + value.slice(1));
@@ -740,18 +748,6 @@ const RegistrationComponent = () => {
                         id="placeOfBirth"
                         name="placeOfBirth"
                         onChange={handleBirthPlaceChange}
-                        required
-                      />
-                    </div>
-
-                    {/* Age */}
-                    <div className={`form-group d-flex flex-column ${!ageValid ? 'has-error' : ''}`}>
-                      <label className="label" htmlFor="Age">Age</label>
-                      <input
-                        type="text" className={`input-field form-control ${!ageValid ? 'is-invalid' : ''}`}
-                        id="age"
-                        name="age"
-                        onChange={handleAgeChange}
                         required
                       />
                     </div>
