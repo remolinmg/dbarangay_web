@@ -28,6 +28,7 @@ import Complaintsadmin from "./admin-components/complaints-admin";
 import Healthadmin from "./admin-components/health-admin";
 import Dashboard1 from "./admin-components/dashboard1";
 import Dashboard2 from "./admin-components/dashboard2";
+import Dashboard3 from "./admin-components/dashboard3";
 
 import UserNav from "./user-components/user-navbar";
 import Announcement from "./user-components/user-announcement";
@@ -96,6 +97,7 @@ function App() {
               <Route path="dashboard" element={<Dashboard />} isAuthenticated={isAuthenticated} />
               <Route path="dashboard1" element={<Dashboard1 />} isAuthenticated={isAuthenticated} />
               <Route path="dashboard2" element={<Dashboard2 />} isAuthenticated={isAuthenticated} />
+              <Route path="dashboard3" element={<Dashboard3 />} isAuthenticated={isAuthenticated} />
               <Route path="d-barangay-certificate" element={<Bceritificate />} isAuthenticated={isAuthenticated} />
               <Route path="d-barangay-indigency" element={<Bindigency />} isAuthenticated={isAuthenticated} />
               <Route path="d-barangay-installation" element={<Binstallation />} isAuthenticated={isAuthenticated} />
