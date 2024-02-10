@@ -627,107 +627,126 @@ function BpermitAdmin() {
                                                 <h2 className="certificate-title">Business Clearance Request Form</h2>
                                                 <div className="certificate-content">
 
-                                                    <div className="form-group">
-                                                        <label htmlFor="businessPermitField1">Business Name:</label>
-                                                        <input
-                                                            type="text"
-                                                            id="businessPermitField1"
-                                                            name="businessPermitField1"
-                                                            onChange={(e) => setBusinessName(e.target.value)}
-                                                            className="form-control"
-                                                            required /></div>
-
-                                                    <div className="form-group">
-                                                        <label htmlFor="Address"> Address</label>
-                                                        <input
-                                                            type="text"
-                                                            id="Address"
-                                                            name="Address"
-                                                            onChange={(e) => setAddress(e.target.value)}
-                                                            className="form-control"
-                                                            required /></div>
-
-                                                    <div className="form-group">
-                                                        <label htmlFor="residentsName">Owner's Name:</label>
-                                                        <input
-                                                            type="text"
-                                                            id="residentName"
-                                                            name="residentName"
-                                                            onChange={(e) => setResidentName(e.target.value)}
-                                                            className="form-control"
-                                                            required /></div>
-
-                                                    <div className="form-group">
-                                                        <label htmlFor="residentsName">Owner's Resident ID:</label>
-                                                        <input
-                                                            type="text"
-                                                            id="residentName"
-                                                            name="residentName"
-                                                            onChange={(e) => setUserId(e.target.value)}
-                                                            className="form-control"
-                                                            required /></div>
-
-                                                    <div className="form-group">
-                                                        <label htmlFor="ownertype">Ownership type</label>
-                                                        <select
-                                                            id="ownertype"
-                                                            className="form-control"
-                                                            onChange={(e) => setType(e.target.value)}
-                                                            style={{ fontSize: '20px', marginBottom: '10px' }}
-                                                        >
-                                                            <option value="????" ></option>
-                                                            <option value="sole">Sole Proprietorship</option>
-                                                            <option value="partnership">Partnership/Corporation</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div className="form-group">
-                                                        <label htmlFor="reasonOfRequest">Nature of Business</label>
-                                                        <input
-                                                            type="text"
-                                                            id="reasonOfRequest"
-                                                            name="reasonOfRequest"
-                                                            onChange={(e) => setReasonOfRequest(e.target.value)}
-                                                            className="form-control"
-                                                            required /></div>
-
-                                                    <div className="form-group">
-                                                        <label htmlFor="issuedDate">Pick-up Date:</label>
-                                                        <input
-                                                            type="date"
-                                                            id="issuedDate"
-                                                            name="issuedDate"
-                                                            onChange={(e) => setPickUpDate(e.target.value)}
-                                                            className="form-control"
-                                                            required /> </div>
-                                                    <div className="form-group">
-                                                        <label>Mode of Payment:</label>
-                                                        <div>
-                                                            <input
-                                                                className="ms-1 me-1"
-                                                                type="checkbox"
-                                                                checked={isCOPChecked}
-                                                                onChange={handleCheckboxChangeCash}
-                                                            />
-                                                            Cash on Pick-up
+                                                    <div className="row">
+                                                        <div className="col-12">
+                                                            <div className="form-group">
+                                                                <label htmlFor="businessPermitField1">Business Name:</label>
+                                                                <input
+                                                                    type="text"
+                                                                    id="businessPermitField1"
+                                                                    name="businessPermitField1"
+                                                                    onChange={(e) => setBusinessName(e.target.value)}
+                                                                    className="form-control"
+                                                                    required />
+                                                            </div>
                                                         </div>
 
-                                                        <div className="">
-                                                            <input
-                                                                className="ms-1 me-1"
-                                                                type="checkbox"
-                                                                checked={isGCashChecked}
-                                                                onChange={handleCheckboxChangeGcash}
-
-                                                            />
-                                                            GCash
+                                                        <div className="col-6">
+                                                            <div className="form-group">
+                                                                <label htmlFor="Address"> Address</label>
+                                                                <input
+                                                                    type="text"
+                                                                    id="Address"
+                                                                    name="Address"
+                                                                    onChange={(e) => setAddress(e.target.value)}
+                                                                    className="form-control"
+                                                                    required />
+                                                            </div>
                                                         </div>
+                                                        <div className="col-6">
+                                                            <div className="form-group">
+                                                                <label htmlFor="residentsName">Owner's Name:</label>
+                                                                <input
+                                                                    type="text"
+                                                                    id="residentName"
+                                                                    name="residentName"
+                                                                    onChange={(e) => setResidentName(e.target.value)}
+                                                                    className="form-control"
+                                                                    required />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <div className="form-group">
+                                                                <label htmlFor="residentsName">Owner's Resident ID:</label>
+                                                                <input
+                                                                    type="text"
+                                                                    id="residentName"
+                                                                    name="residentName"
+                                                                    onChange={(e) => setUserId(e.target.value)}
+                                                                    className="form-control"
+                                                                    required />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <div className="form-group">
+                                                                <label htmlFor="ownertype">Ownership type</label>
+                                                                <select
+                                                                    id="ownertype"
+                                                                    className="form-control"
+                                                                    onChange={(e) => setType(e.target.value)}
+                                                                   
+                                                                >
+                                                                    <option value="????" ></option>
+                                                                    <option value="sole">Sole Proprietorship</option>
+                                                                    <option value="partnership">Partnership/Corporation</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <div className="form-group">
+                                                                <label htmlFor="reasonOfRequest">Nature of Business</label>
+                                                                <input
+                                                                    type="text"
+                                                                    id="reasonOfRequest"
+                                                                    name="reasonOfRequest"
+                                                                    onChange={(e) => setReasonOfRequest(e.target.value)}
+                                                                    className="form-control"
+                                                                    required />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <div className="form-group">
+                                                                <label htmlFor="issuedDate">Pick-up Date:</label>
+                                                                <input
+                                                                    type="date"
+                                                                    id="issuedDate"
+                                                                    name="issuedDate"
+                                                                    onChange={(e) => setPickUpDate(e.target.value)}
+                                                                    className="form-control"
+                                                                    required />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-12">
+                                                            <div className="form-group">
+                                                                <label>Mode of Payment:</label>
+                                                                <div>
+                                                                    <input
+                                                                        className="ms-1 me-1"
+                                                                        type="checkbox"
+                                                                        checked={isCOPChecked}
+                                                                        onChange={handleCheckboxChangeCash}
+                                                                    />
+                                                                    Cash on Pick-up
+                                                                </div>
 
-                                                        {renderInputTextboxes()}
-                                                    </div>
-                                                    <div className="form-buttons">
-                                                        <button type="submit" className="btn btn-primary" onClick={businessClearance}>Submit</button>
-                                                        <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard</button>
+                                                                <div className="">
+                                                                    <input
+                                                                        className="ms-1 me-1"
+                                                                        type="checkbox"
+                                                                        checked={isGCashChecked}
+                                                                        onChange={handleCheckboxChangeGcash}
+
+                                                                    />
+                                                                    GCash
+                                                                </div>
+
+                                                                {renderInputTextboxes()}
+                                                            </div>
+                                                        </div>
+                                                        <div className="form-buttons">
+                                                            <button type="submit" className="btn btn-primary" onClick={businessClearance}>Submit</button>
+                                                            <button type="button" className="btn btn-secondary" onClick={handleDiscard}>Discard</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -744,94 +763,117 @@ function BpermitAdmin() {
                                             <div className='certificate'>
                                                 <h2 className='certificate-title'>Business Clearance Request Form</h2>
                                                 <div className='certificate-content'>
-                                                    <div className='form-group'>
-                                                        <label htmlFor='bname'> Business Name </label>
-                                                        <input
-                                                            type='text'
-                                                            id='bname'
-                                                            name='bname'
-                                                            value={editBusinessName}
-                                                            onChange={(e) => setEditBusinessName(e.target.value)}
-                                                            className='form-control' required />
-                                                    </div>
+                                                    <div className="row">
+                                                        <div className="col-12">
+                                                            <div className='form-group'>
+                                                                <label htmlFor='bname'> Business Name </label>
+                                                                <input
+                                                                    type='text'
+                                                                    id='bname'
+                                                                    name='bname'
+                                                                    value={editBusinessName}
+                                                                    onChange={(e) => setEditBusinessName(e.target.value)}
+                                                                    className='form-control' required
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <div className='form-group'>
+                                                                <label htmlFor='address'>Business Address </label>
+                                                                <input
+                                                                    type='text'
+                                                                    id='address'
+                                                                    name='address'
+                                                                    value={editAddress}
+                                                                    onChange={(e) => setEditAddress(e.target.value)}
+                                                                    className='form-control' required />
+                                                            </div>
+                                                        </div>
 
-                                                    <div className='form-group'>
-                                                        <label htmlFor='address'>Business Address </label>
-                                                        <input
-                                                            type='text'
-                                                            id='address'
-                                                            name='address'
-                                                            value={editAddress}
-                                                            onChange={(e) => setEditAddress(e.target.value)}
-                                                            className='form-control' required />
-                                                    </div>
 
-                                                    <div className='form-group'>
-                                                        <label htmlFor='owner'> Business Owner </label>
-                                                        <input
-                                                            type='text'
-                                                            id='owner'
-                                                            name='owner'
-                                                            value={editResidentName}
-                                                            onChange={(e) => setEditResidentName(e.target.value)}
-                                                            className='form-control' required />
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label htmlFor="ownertype">Ownership type</label>
-                                                        <select
-                                                            id="ownertype"
-                                                            className="form-control"
-                                                            value={editType}
-                                                            onChange={(e) => setEditType(e.target.value)}
-                                                            style={{ fontSize: '20px', marginBottom: '10px' }}
-                                                        >
-                                                            <option value="????" ></option>
-                                                            <option value="sole">Sole Proprietorship</option>
-                                                            <option value="partnership">Partnership/Corporation</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label htmlFor="EditReason">Reason of Request</label>
-                                                        <input
-                                                            type="text"
-                                                            id="EditReason"
-                                                            name="EditReason"
-                                                            value={editReasonOfRequest}
-                                                            onChange={(e) => setEditReasonOfRequest(e.target.value)}
-                                                            className="form-control"
-                                                            required
-                                                        />
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label htmlFor="EditIssuedDate">Issued Date:</label>
-                                                        <input
-                                                            type="date"
-                                                            id="EditIssuedDate"
-                                                            name="EditIssuedDate"
-                                                            value={editDate}
-                                                            onChange={(e) => setEditDate(e.target.value)}
-                                                            className="form-control"
-                                                            required
-                                                        />
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label htmlFor="status">Status</label>
-                                                        <select id="status"
-                                                            className="form-control"
-                                                            value={editStatus}
-                                                            onChange={(e) => setEditStatus(e.target.value)}
-                                                            style={{ fontSize: '20px', marginBottom: '10px' }} >
-                                                            <option value="New" >New</option>
-                                                            <option value="On Process">On Process</option>
-                                                            <option value="Processed">Processed</option>
-                                                            <option value="Declined">Declined</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className='form-buttons'>
-                                                        <button type='submit' className='btn btn-primary' onClick={updateRowData}> Submit  </button>
-                                                        <button type='button' className='btn btn-secondary' onClick={handleEditDiscard}> Discard </button>
+                                                        <div className="col-6">
+                                                            <div className='form-group'>
+                                                                <label htmlFor='owner'> Business Owner </label>
+                                                                <input
+                                                                    type='text'
+                                                                    id='owner'
+                                                                    name='owner'
+                                                                    value={editResidentName}
+                                                                    onChange={(e) => setEditResidentName(e.target.value)}
+                                                                    className='form-control' required />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <div className="form-group">
+                                                                <label htmlFor="ownertype">Ownership type</label>
+                                                                <select
+                                                                    id="ownertype"
+                                                                    className="form-control"
+                                                                    value={editType}
+                                                                    onChange={(e) => setEditType(e.target.value)}
+
+                                                                >
+                                                                    <option value="????" ></option>
+                                                                    <option value="sole">Sole Proprietorship</option>
+                                                                    <option value="partnership">Partnership/Corporation</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div className="col-6">
+                                                            <div className="form-group">
+                                                                <label htmlFor="EditReason">Reason of Request</label>
+                                                                <input
+                                                                    type="text"
+                                                                    id="EditReason"
+                                                                    name="EditReason"
+                                                                    value={editReasonOfRequest}
+                                                                    onChange={(e) => setEditReasonOfRequest(e.target.value)}
+                                                                    className="form-control"
+                                                                    required
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <div className="form-group">
+                                                                <label htmlFor="EditIssuedDate">Issued Date:</label>
+                                                                <input
+                                                                    type="date"
+                                                                    id="EditIssuedDate"
+                                                                    name="EditIssuedDate"
+                                                                    value={editDate}
+                                                                    onChange={(e) => setEditDate(e.target.value)}
+                                                                    className="form-control"
+                                                                    required
+                                                                />
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div className="col-6">
+                                                            <div className="form-group">
+                                                                <label htmlFor="status">Status</label>
+                                                                <select id="status"
+                                                                    className="form-control"
+                                                                    value={editStatus}
+                                                                    onChange={(e) => setEditStatus(e.target.value)}
+                                                                >
+                                                                    <option value="New" >New</option>
+                                                                    <option value="On Process">On Process</option>
+                                                                    <option value="Processed">Processed</option>
+                                                                    <option value="Declined">Declined</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className='form-buttons'>
+                                                            <button type='submit' className='btn btn-primary' onClick={updateRowData}> Submit  </button>
+                                                            <button type='button' className='btn btn-secondary' onClick={handleEditDiscard}> Discard </button>
+                                                        </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </form>
                                     </div>

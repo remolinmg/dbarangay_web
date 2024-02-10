@@ -572,121 +572,149 @@ function BofficialsAdmin() {
                   <div className="popup-form mt-4">
                     <form>
                       <div className="certificate">
-                        <h2 className="certificate-title">ADD OFFICALS INFO</h2>
+                        <h2 className="certificate-title">ADD OFFICIALS INFO</h2>
                         <div className="certificate-content">
-
-                          <div className="form-group">
-                            <label htmlFor="Position">POSITION</label>
-                            <input
-                              type="text"
-                              id="Position"
-                              name="Position"
-                              onChange={(e) => {
-                                setPosition(e.target.value);
-                              }}
-                              className="form-control"
-                              required /></div>
-
-                          <div className="form-group">
-                            <label htmlFor="name"> FIRST NAME </label>
-                            <input
-                              type="text"
-                              id="name"
-                              name="name"
-                              onChange={(e) => {
-                                setFirstName(e.target.value);
-                              }}
-                              className="form-control"
-                              required /> </div>
-
-                          <div className="form-group">
-                            <label htmlFor="name"> MIDDLE NAME </label>
-                            <input
-                              type="text"
-                              id="name"
-                              name="name"
-                              onChange={(e) => {
-                                setMiddleName(e.target.value);
-                              }}
-                              className="form-control"
-                              required /> </div>
-
-                          <div className="form-group">
-                            <label htmlFor="name">  LAST NAME </label>
-                            <input
-                              type="text"
-                              id="name"
-                              name="name"
-                              onChange={(e) => {
-                                setLastName(e.target.value);
-                              }}
-                              className="form-control"
-                              required /> </div>
-
-
-                          <div className="form-group">
-                            <label htmlFor="Contact">Contact </label>
-                            <input
-                              type="text"
-                              id="Contact"
-                              name="Contact"
-                              onChange={(e) => {
-                                setContact(e.target.value);
-                              }}
-                              className="form-control"
-                              required /></div>
-
-                          <div className="form-group">
-                            <label htmlFor="Address">Address</label>
-                            <input
-                              type="text"
-                              id="Address"
-                              name="Address"
-                              onChange={(e) => {
-                                setAddress(e.target.value);
-                              }}
-                              className="form-control"
-                              required /></div>
-
-                          <div className="form-group">
-                            <label htmlFor="file">IMAGE </label>
-                            <input
-                              type="file"
-                              id="file"
-                              name="file"
-                              accept="image/*"
-                              onChange={(e) => {
-                                setFile((e.target.files[0]));
-                              }}
-                              className="form-control"
-                              required /></div>
-
-                          <div className="form-group">
-                            <label htmlFor="Start-Term">START TERM </label>
-                            <input
-                              type="date"
-                              id="Start-Term"
-                              name="Start-Term"
-                              onChange={(e) => setStartTerm(e.target.value)}
-                              className="form-control"
-                              required
-                            /></div>
-
-
-
-                          <div className="form-group">
-                            <label htmlFor="End-Term">END TERM </label>
-                            <input
-                              type="date"
-                              id="End-Term"
-                              name="End-Term"
-                              onChange={(e) => setEndTerm(e.target.value)}
-                              className="form-control"
-                              required /></div>
-
+                          <div className="row">
+                            <div className="col-md-12">
+                              <div className="form-group">
+                                <label htmlFor="Position">POSITION</label>
+                                <input
+                                  type="text"
+                                  id="Position"
+                                  name="Position"
+                                  onChange={(e) => {
+                                    setPosition(e.target.value);
+                                  }}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="name">FIRST NAME</label>
+                                <input
+                                  type="text"
+                                  id="name"
+                                  name="name"
+                                  onChange={(e) => {
+                                    setFirstName(e.target.value);
+                                  }}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="name">MIDDLE NAME</label>
+                                <input
+                                  type="text"
+                                  id="name"
+                                  name="name"
+                                  onChange={(e) => {
+                                    setMiddleName(e.target.value);
+                                  }}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="name">LAST NAME</label>
+                                <input
+                                  type="text"
+                                  id="name"
+                                  name="name"
+                                  onChange={(e) => {
+                                    setLastName(e.target.value);
+                                  }}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="Contact">Contact</label>
+                                <input
+                                  type="text"
+                                  id="Contact"
+                                  name="Contact"
+                                  onChange={(e) => {
+                                    setContact(e.target.value);
+                                  }}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="Address">Address</label>
+                                <input
+                                  type="text"
+                                  id="Address"
+                                  name="Address"
+                                  onChange={(e) => {
+                                    setAddress(e.target.value);
+                                  }}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="file">IMAGE</label>
+                                <input
+                                  type="file"
+                                  id="file"
+                                  name="file"
+                                  accept="image/*"
+                                  onChange={(e) => {
+                                    setFile(e.target.files[0]);
+                                  }}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="Start-Term">START TERM</label>
+                                <input
+                                  type="date"
+                                  id="Start-Term"
+                                  name="Start-Term"
+                                  onChange={(e) => setStartTerm(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="End-Term">END TERM</label>
+                                <input
+                                  type="date"
+                                  id="End-Term"
+                                  name="End-Term"
+                                  onChange={(e) => setEndTerm(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                          </div>
                           <div className="form-buttons">
-                            <button type="submit" className="btn btn-primary" onClick={official}>Submit </button>
-                            <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
+                            <button type="submit" className="btn btn-primary" onClick={official}>
+                              Submit
+                            </button>
+                            <button type="button" className="btn btn-secondary" onClick={handleDiscard}>
+                              Discard
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -696,133 +724,145 @@ function BofficialsAdmin() {
               )}
 
 
+
               {/* ------------------------------------------------- EDIT FORMS --------------------------------------------------------- */}
               {showEditForm && selectedRowData && (
-                <div className='popup-overlay'>
-                  <div className='popup-form'>
-                    <form onSubmit={updateRowData}>
-                      <div className='certificate'>
-                        <h2 className="certificate-title">EDIT OFFICIALS INFO</h2>
+                <div className="popup-overlay">
+                  <div className="popup-form mt-4">
+                    <form>
+                      <div className="certificate">
+                        <h2 className="certificate-title">ADD OFFICIALS INFO</h2>
                         <div className="certificate-content">
-                          <div className="form-group">
-                            <label htmlFor="Position"> Position </label>
-                            <input
-                              type="text"
-                              id="Position"
-                              name="Position"
-                              value={editPosition}
-                              onChange={(e) => setEditPosition(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          <div className="form-group">
-                            <label htmlFor="fname">  FIRST NAME </label>
-                            <input
-                              type="text"
-                              id="fname"
-                              name="fname"
-                              value={editFirstName}
-                              onChange={(e) => setEditFirstName(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          <div className="form-group">
-                            <label htmlFor="Mname">  MIDDLE NAME </label>
-                            <input
-                              type="text"
-                              id="Mname"
-                              name="Mname"
-                              value={editMiddleName}
-                              onChange={(e) => setEditMiddleName(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          <div className="form-group">
-                            <label htmlFor="LastName">  LAST NAME </label>
-                            <input
-                              type="text"
-                              id="LastName"
-                              name="LastName"
-                              value={editLastName}
-                              onChange={(e) => setEditLastName(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          <div className="form-group">
-                            <label htmlFor="Contact">Contact </label>
-                            <input
-                              type="text"
-                              id="Contact"
-                              name="Contact"
-                              value={editContact}
-                              onChange={(e) => setEditContact(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          <div className="form-group">
-                            <label htmlFor="Address">Address</label>
-                            <input
-                              type="text"
-                              id="Address"
-                              name="Address"
-                              value={editAddress}
-                              onChange={(e) => setEditAddress(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          <div className="form-group">
-                            <label htmlFor="file">Edit Image</label>
-                            <input
-                              type="file"
-                              id="file"
-                              name="file"
-                              accept="image/*"
-                              onChange={(e) => setEditFile(e.target.files[0])}
-                              className='form-control'
-                            />
-                          </div>
-
-                          <div className='form-group'>
-                            <label htmlFor='EditStartTerm'>Start Term</label>
-                            <input
-                              type='date'
-                              id='EditStartTerm'
-                              name='EditStartTerm'
-                              value={editStartTerm}
-                              onChange={(e) => setEditStartTerm(e.target.value)}
-                              className='form-control'
-                              required
-                            />
-                          </div>
-
-                          <div className='form-group'>
-                            <label htmlFor='EditEndTerm'>End Term</label>
-                            <input
-                              type='date'
-                              id='EditEndTerm'
-                              name='EditEndTerm'
-                              value={editEndTerm}
-                              onChange={(e) => setEditEndTerm(e.target.value)}
-                              className='form-control'
-                              required
-                            />
-                          </div>
-
-                          <div className="form-buttons">
-                            <button type='submit' className='btn btn-primary'> Submit </button>
-                            <button type="button" className="btn btn-secondary" onClick={handleEditDiscard}> Discard </button>
+                          <div className="row">
+                            <div className="col-md-12">
+                              <div className="form-group">
+                                <label htmlFor="Position">POSITION</label>
+                                <input
+                                  type="text"
+                                  id="Position"
+                                  name="Position"
+                                  value={editPosition}
+                                  onChange={(e) => setEditPosition(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="fname">First Name</label>
+                                <input
+                                  type="text"
+                                  id="fname"
+                                  name="fname"
+                                  value={editFirstName}
+                                  onChange={(e) => setEditFirstName(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="Mname">Middle Name</label>
+                                <input
+                                  type="text"
+                                  id="Mname"
+                                  name="Mname"
+                                  value={editMiddleName}
+                                  onChange={(e) => setEditMiddleName(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="LastName">Last Name</label>
+                                <input
+                                  type="text"
+                                  id="LastName"
+                                  name="LastName"
+                                  value={editLastName}
+                                  onChange={(e) => setEditLastName(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="Contact">Contact</label>
+                                <input
+                                  type="text"
+                                  id="Contact"
+                                  name="Contact"
+                                  value={editContact}
+                                  onChange={(e) => setEditContact(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="Address">Address</label>
+                                <input
+                                  type="text"
+                                  id="Address"
+                                  name="Address"
+                                  value={editAddress}
+                                  onChange={(e) => setEditAddress(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="file">Edit Image</label>
+                                <input
+                                  type="file"
+                                  id="file"
+                                  name="file"
+                                  accept="image/*"
+                                  onChange={(e) => setEditFile(e.target.files[0])}
+                                  className='form-control'
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className='form-group'>
+                                <label htmlFor='EditStartTerm'>Start Term</label>
+                                <input
+                                  type='date'
+                                  id='EditStartTerm'
+                                  name='EditStartTerm'
+                                  value={editStartTerm}
+                                  onChange={(e) => setEditStartTerm(e.target.value)}
+                                  className='form-control'
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className='form-group'>
+                                <label htmlFor='EditEndTerm'>End Term</label>
+                                <input
+                                  type='date'
+                                  id='EditEndTerm'
+                                  name='EditEndTerm'
+                                  value={editEndTerm}
+                                  onChange={(e) => setEditEndTerm(e.target.value)}
+                                  className='form-control'
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="form-buttons">
+                              <button type='submit' className='btn btn-primary'>Submit</button>
+                              <button type="button" className="btn btn-secondary" onClick={handleEditDiscard}>Discard</button>
+                            </div>
                           </div>
                         </div>
                       </div>

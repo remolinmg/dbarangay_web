@@ -570,102 +570,109 @@ function BpromotionAdmin() {
                       <div className="certificate">
                         <h2 className="certificate-title">ADD BUSINESS INFORMATION</h2>
                         <div className="certificate-content">
-                          <div className="form-group">
-                            <label htmlFor="bname">Business Name</label>
-                            <input
-                              type="text"
-                              id="businessName"
-                              name="businessName"
-                              onChange={(e) => setBusinessName(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          <div className="form-group">
-                            <label htmlFor="address">Business Address</label>
-                            <input
-                              type="text"
-                              id="address"
-                              name="address"
-                              onChange={(e) => setAddress(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-
-
-
-                          <div className="form-group">
-                            <label htmlFor="bhours">Business Hours</label>
-                            <input
-                              type="text"
-                              id="hours"
-                              name="hours"
-                              onChange={(e) => setHours(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          <div className="form-group">
-                            <label htmlFor="owner">Business Category</label>
-                            <input
-                              type="text"
-                              id="category"
-                              name="category"
-                              onChange={(e) => setCategory(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
+                          <div className="row">
+                            <div className="col-md-12">
+                              <div className="form-group">
+                                <label htmlFor="bname">Business Name</label>
+                                <input
+                                  type="text"
+                                  id="businessName"
+                                  name="businessName"
+                                  onChange={(e) => setBusinessName(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="address">Business Address</label>
+                                <input
+                                  type="text"
+                                  id="address"
+                                  name="address"
+                                  onChange={(e) => setAddress(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
 
 
-                          <div className="form-group">
-                            <label htmlFor="bcontact">Contact Number</label>
-                            <input
-                              type="text"
-                              id="contact"
-                              name="contact"
-                              onChange={(e) => setContact(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          <div className="form-group">
-                            <label htmlFor="owner">Business Owner</label>
-                            <input
-                              type="text"
-                              id="residentName"
-                              name="residentName"
-                              onChange={(e) => setResidentName(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          {/* Add Business Picture */}
-                          <div className="form-group">
-                            <label htmlFor="picture">Business Picture</label>
-                            <input
-                              type="file"
-                              id="file"
-                              name="file"
-                              accept="image/*"
-                              onChange={(e) => setFile(e.target.files[0])}
-                              className="form-control"
-                            />
-                          </div>
-
-                          <div className="form-buttons">
-                            <button type="submit" className="btn btn-primary" onClick={promoteBusiness}>
-                              Submit
-                            </button>
-                            <button type="button" className="btn btn-secondary" onClick={handleDiscard}>
-                              Discard
-                            </button>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="bhours">Business Hours</label>
+                                <input
+                                  type="text"
+                                  id="hours"
+                                  name="hours"
+                                  onChange={(e) => setHours(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="owner">Business Category</label>
+                                <input
+                                  type="text"
+                                  id="category"
+                                  name="category"
+                                  onChange={(e) => setCategory(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="bcontact">Contact Number</label>
+                                <input
+                                  type="text"
+                                  id="contact"
+                                  name="contact"
+                                  onChange={(e) => setContact(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="owner">Business Owner</label>
+                                <input
+                                  type="text"
+                                  id="residentName"
+                                  name="residentName"
+                                  onChange={(e) => setResidentName(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              {/* Add Business Picture */}
+                              <div className="form-group">
+                                <label htmlFor="picture">Business Picture</label>
+                                <input
+                                  type="file"
+                                  id="file"
+                                  name="file"
+                                  accept="image/*"
+                                  onChange={(e) => setFile(e.target.files[0])}
+                                  className="form-control"
+                                />
+                              </div>
+                            </div>
+                            <div className="form-buttons">
+                              <button type="submit" className="btn btn-primary" onClick={promoteBusiness}>
+                                Submit
+                              </button>
+                              <button type="button" className="btn btn-secondary" onClick={handleDiscard}>
+                                Discard
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -683,108 +690,117 @@ function BpromotionAdmin() {
                       <div className="certificate">
                         <h2 className="certificate-title">EDIT BUSINESS INFORMATION</h2>
                         <div className="certificate-content">
-                          <div className="form-group">
-                            <label htmlFor="bname">Business Name</label>
-                            <input
-                              type="text"
-                              id="bname"
-                              name="bname"
-                              value={editBusinessName}
-                              onChange={(e) => setEditBusinessName(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
+                          <div className="row">
+                            <div className="col-md-12">
+                              <div className="form-group">
+                                <label htmlFor="bname">Business Name</label>
+                                <input
+                                  type="text"
+                                  id="bname"
+                                  name="bname"
+                                  value={editBusinessName}
+                                  onChange={(e) => setEditBusinessName(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="bhours">Address</label>
+                                <input
+                                  type="text"
+                                  id="address"
+                                  name="address"
+                                  value={editAddress}
+                                  onChange={(e) => setEditAddress(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
 
-                          <div className="form-group">
-                            <label htmlFor="bhours">Address</label>
-                            <input
-                              type="text"
-                              id="address"
-                              name="address"
-                              value={editAddress}
-                              onChange={(e) => setEditAddress(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-
-                          {/* Add Business Hours */}
-                          <div className="form-group">
-                            <label htmlFor="bhours">Business Hours</label>
-                            <input
-                              type="text"
-                              id="bhours"
-                              name="bhours"
-                              value={editHours}
-                              onChange={(e) => setEditHours(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          <div className="form-group">
-                            <label htmlFor="category">Business Category</label>
-                            <input
-                              type="text"
-                              id="category"
-                              name="category"
-                              value={editCategory}
-                              onChange={(e) => setEditCategory(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          {/* Add Contact Number */}
-                          <div className="form-group">
-                            <label htmlFor="bcontact">Contact Number</label>
-                            <input
-                              type="text"
-                              id="bcontact"
-                              name="bcontact"
-                              value={editContact}
-                              onChange={(e) => setEditContact(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          <div className="form-group">
-                            <label htmlFor="owner">Business Owner</label>
-                            <input
-                              type="text"
-                              id="owner"
-                              name="owner"
-                              value={editResidentName}
-                              onChange={(e) => setEditResidentName(e.target.value)}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          {/* Add Business Picture */}
-                          <div className="form-group">
-                            <label htmlFor="file">Business Picture</label>
-                            <input
-                              type="file"
-                              id="file"
-                              name="file"
-                              accept="image/*"
-                              onChange={(e) => setEditFile(e.target.files[0])}
-                              className="form-control"
-                              required
-                            />
-                          </div>
-
-                          <div className="form-buttons">
-                            <button type="submit" className="btn btn-primary" onClick={updateRowData}>
-                              Submit
-                            </button>
-                            <button type="button" className="btn btn-secondary" onClick={handleEditDiscard}>
-                              Discard
-                            </button>
+                              {/* Add Business Hours */}
+                              <div className="form-group">
+                                <label htmlFor="bhours">Business Hours</label>
+                                <input
+                                  type="text"
+                                  id="bhours"
+                                  name="bhours"
+                                  value={editHours}
+                                  onChange={(e) => setEditHours(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="category">Business Category</label>
+                                <input
+                                  type="text"
+                                  id="category"
+                                  name="category"
+                                  value={editCategory}
+                                  onChange={(e) => setEditCategory(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              {/* Add Contact Number */}
+                              <div className="form-group">
+                                <label htmlFor="bcontact">Contact Number</label>
+                                <input
+                                  type="text"
+                                  id="bcontact"
+                                  name="bcontact"
+                                  value={editContact}
+                                  onChange={(e) => setEditContact(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
+                                <label htmlFor="owner">Business Owner</label>
+                                <input
+                                  type="text"
+                                  id="owner"
+                                  name="owner"
+                                  value={editResidentName}
+                                  onChange={(e) => setEditResidentName(e.target.value)}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              {/* Add Business Picture */}
+                              <div className="form-group">
+                                <label htmlFor="file">Business Picture</label>
+                                <input
+                                  type="file"
+                                  id="file"
+                                  name="file"
+                                  accept="image/*"
+                                  onChange={(e) => setEditFile(e.target.files[0])}
+                                  className="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="form-buttons">
+                              <button type="submit" className="btn btn-primary" onClick={updateRowData}>
+                                Submit
+                              </button>
+                              <button type="button" className="btn btn-secondary" onClick={handleEditDiscard}>
+                                Discard
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -794,9 +810,9 @@ function BpromotionAdmin() {
               )}
 
             </div>
-          </section>
-        </main>
-      </div>
+          </section >
+        </main >
+      </div >
     </>
   );
 }
