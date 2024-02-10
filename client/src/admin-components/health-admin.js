@@ -561,87 +561,103 @@ function Healthadmin() {
                     <div className="certificate">
                       <h2 className="certificate-title">ADD MEDICAL REPORT</h2>
                       <div className="certificate-content">
+                        <div className='row'>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="date">DATE </label>
+                              <input
+                                type="date"
+                                id="date"
+                                name="date" onChange={(e) => { setDate(e.target.value); }}
+                                className="form-control" required />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="reporter">REPORTER</label>
+                              <input
+                                type="text"
+                                id="reporter"
+                                name="reporter" onChange={(e) => { setReporter(e.target.value); }}
+                                className="form-control" required />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="respondents">RESPONDENT</label>
+                              <input
+                                type="text"
+                                id="respondents"
+                                name="respondents" onChange={(e) => { setRespondents(e.target.value); }}
+                                className="form-control" required />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="type"> MEDICAL TYPE </label>
+                              <select
+                                id="type"
+                                className="form-control"
+                                onChange={(e) => { setType(e.target.value); }}
 
-                        <div className="form-group">
-                          <label htmlFor="date">DATE </label>
-                          <input
-                            type="date"
-                            id="date"
-                            name="date" onChange={(e) => { setDate(e.target.value); }}
-                            className="form-control" required /> </div>
+                                required
+                              >
+                                <option value="????" ></option>
+                                <option value="Accident">ACCIDENT</option>
+                                <option value="Heart Attack">HEART ATTACK</option>
+                                <option value="Stroke">STROKE</option>
+                                <option value="Dengue">DENGUE</option>
+                                <option value="Pneumonia">PNEUMONIA</option>
+                                <option value="Chicken pox">CHICKEN POX</option>
+                                <option value="HIV">HIV</option>
+                                <option value="Influenza">INFLUENZA</option>
+                                <option value="COVID-19">COVID-19</option>
+                                <option value="Others">OTHERS</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="address">INCIDENT ADDRESS </label>
+                              <input
+                                type="text"
+                                id="address"
+                                name="address"
+                                onChange={(e) => { setAddress(e.target.value); }}
+                                className="form-control" required />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="status">STATUS</label>
+                              <select
+                                id="status"
+                                className="form-control"
+                                onChange={(e) => { setStatus(e.target.value); }}
 
-                        <div className="form-group">
-                          <label htmlFor="reporter">REPORTER</label>
-                          <input
-                            type="text"
-                            id="reporter"
-                            name="reporter" onChange={(e) => { setReporter(e.target.value); }}
-                            className="form-control" required /></div>
-
-                        <div className="form-group">
-                          <label htmlFor="respondents">RESPONDENT</label>
-                          <input
-                            type="text"
-                            id="respondents"
-                            name="respondents" onChange={(e) => { setRespondents(e.target.value); }}
-                            className="form-control" required /></div>
-
-                        <div className="form-group">
-                          <label htmlFor="type"> MEDICAL TYPE </label>
-                          <select
-                            id="type"
-                            className="form-control"
-                            onChange={(e) => { setType(e.target.value); }}
-                            style={{ fontSize: '20px', marginBottom: '10px' }}
-                            required
-                          >
-                            <option value="????" ></option>
-                            <option value="Accident">ACCIDENT</option>
-                            <option value="Heart Attack">HEART ATTACK</option>
-                            <option value="Stroke">STROKE</option>
-                            <option value="Dengue">DENGUE</option>
-                            <option value="Pneumonia">PNEUMONIA</option>
-                            <option value="Chicken pox">CHICKEN POX</option>
-                            <option value="HIV">HIV</option>
-                            <option value="Influenza">INFLUENZA</option>
-                            <option value="COVID-19">COVID-19</option>
-                            <option value="Others">OTHERS</option>
-                          </select>
-                        </div>
-
-                        <div className="form-group">
-                          <label htmlFor="address">INCIDENT ADDRESS </label>
-                          <input
-                            type="text"
-                            id="address"
-                            name="address"
-                            onChange={(e) => { setAddress(e.target.value); }}
-                            className="form-control" required /></div>
-
-                        <div className="form-group">
-                          <label htmlFor="documentation">DOCUMENTATION </label>
-                          <input
-                            type="text"
-                            id="documentation"
-                            name="documentation" onChange={(e) => { setDocumentation(e.target.value); }}
-                            className="form-control" required /></div>
-
-                        <div className="form-group">
-                          <label htmlFor="status">STATUS</label>
-                          <select
-                            id="status"
-                            className="form-control"
-                            onChange={(e) => { setStatus(e.target.value); }}
-                            style={{ fontSize: '20px', marginBottom: '10px' }}
-                          >
-                            <option value="????" ></option>
-                            <option value="pending">PENDING</option>
-                            <option value="processed">PROCESSED</option>
-                          </select>
-                        </div>
-                        <div className="form-buttons">
-                          <button type="submit" className="btn btn-primary" onClick={health}>Submit </button>
-                          <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
+                              >
+                                <option value="????" ></option>
+                                <option value="pending">PENDING</option>
+                                <option value="processed">PROCESSED</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className='row p-0 m-0'>
+                            <div className="col-md-12">
+                              <div className="form-group">
+                                <label htmlFor="documentation">DOCUMENTATION </label>
+                                <input
+                                  type="text"
+                                  id="documentation"
+                                  name="documentation" onChange={(e) => { setDocumentation(e.target.value); }}
+                                  className="form-control" required />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="form-buttons">
+                            <button type="submit" className="btn btn-primary" onClick={health}>Submit </button>
+                            <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -659,92 +675,107 @@ function Healthadmin() {
                     <div className='certificate'>
                       <h2 className='certificate-title'>EDIT RESIDENTS INFO</h2>
                       <div className='certificate-content'>
-                        <div className="form-group">
-                          <label htmlFor="date"> Date </label>
-                          <input
-                            type="date"
-                            id="date"
-                            value={editDate}
-                            name="date" onChange={(e) => { setEditDate(e.target.value); }}
-                            className="form-control" required /> </div>
-
-                        <div className="form-group">
-                          <label htmlFor="reporter">REPORTER </label>
-                          <input
-                            type="text"
-                            id="reporter"
-                            value={editReporter}
-                            name="reporter" onChange={(e) => { setEditReporter(e.target.value); }}
-                            className="form-control" required /></div>
-
-                        <div className="form-group">
-                          <label htmlFor="respondents">RESPONDENTS</label>
-                          <input
-                            type="text"
-                            id="respondents"
-                            value={editRespondents}
-                            name="respondents" onChange={(e) => { setEditRespondents(e.target.value); }}
-                            className="form-control" required /></div>
-
-                        <div className="form-group">
-                          <label htmlFor="type"> MEDICAL TYPE </label>
-                          <select
-                            id="type"
-                            className="form-control"
-                            value={editType}
-                            onChange={(e) => { setEditType(e.target.value); }}
-                            style={{ fontSize: '20px', marginBottom: '10px' }}
-                            required
-                          >
-                            <option value="????" ></option>
-                            <option value="Accident">ACCIDENT</option>
-                            <option value="Heart Attack">HEART ATTACK</option>
-                            <option value="Stroke">STROKE</option>
-                            <option value="Dengue">DENGUE</option>
-                            <option value="Pneumonia">PNEUMONIA</option>
-                            <option value="Chicken pox">CHICKEN POX</option>
-                            <option value="HIV">HIV</option>
-                            <option value="Influenza">INFLUENZA</option>
-                            <option value="COVID-19">COVID-19</option>
-                            <option value="Others">OTHERS</option>
-                          </select> </div>
-
-                        <div className="form-group">
-                          <label htmlFor="address">INCIDENT ADDRESS </label>
-                          <input
-                            type="text"
-                            id="address"
-                            name="address"
-                            value={editAddress}
-                            onChange={(e) => { setEditAddress(e.target.value); }}
-                            className="form-control" required /></div>
-
-                        <div className="form-group">
-                          <label htmlFor="documentation">DOCUMENTATION </label>
-                          <input
-                            type="text"
-                            id="documentation"
-                            value={editDocumentation}
-                            name="documentation" onChange={(e) => { setEditDocumentation(e.target.value); }}
-                            className="form-control" required /></div>
-
-                        <div className="form-group">
-                          <label htmlFor="status">STATUS</label>
-                          <select
-                            id="status"
-                            className="form-control"
-                            value={editStatus}
-                            onChange={(e) => { setEditStatus(e.target.value); }}
-                            style={{ fontSize: '20px', marginBottom: '10px' }}
-                          >
-                            <option value="????" ></option>
-                            <option value="pending">PENDING</option>
-                            <option value="processed">PROCESSED</option>
-                          </select>
-                        </div>
-                        <div className='form-buttons'>
-                          <button type='submit' className='btn btn-primary' onClick={updateRowData}>Submit</button>
-                          <button type='button' className='btn btn-secondary' onClick={handleEditDiscard}>Discard</button>
+                        <div className='row'>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="date"> Date </label>
+                              <input
+                                type="date"
+                                id="date"
+                                value={editDate}
+                                name="date" onChange={(e) => { setEditDate(e.target.value); }}
+                                className="form-control" required />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="reporter">REPORTER </label>
+                              <input
+                                type="text"
+                                id="reporter"
+                                value={editReporter}
+                                name="reporter" onChange={(e) => { setEditReporter(e.target.value); }}
+                                className="form-control" required />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="respondents">RESPONDENTS</label>
+                              <input
+                                type="text"
+                                id="respondents"
+                                value={editRespondents}
+                                name="respondents" onChange={(e) => { setEditRespondents(e.target.value); }}
+                                className="form-control" required />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="type"> MEDICAL TYPE </label>
+                              <select
+                                id="type"
+                                className="form-control"
+                                value={editType}
+                                onChange={(e) => { setEditType(e.target.value); }}
+                               
+                                required
+                              >
+                                <option value="????" ></option>
+                                <option value="Accident">ACCIDENT</option>
+                                <option value="Heart Attack">HEART ATTACK</option>
+                                <option value="Stroke">STROKE</option>
+                                <option value="Dengue">DENGUE</option>
+                                <option value="Pneumonia">PNEUMONIA</option>
+                                <option value="Chicken pox">CHICKEN POX</option>
+                                <option value="HIV">HIV</option>
+                                <option value="Influenza">INFLUENZA</option>
+                                <option value="COVID-19">COVID-19</option>
+                                <option value="Others">OTHERS</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="address">INCIDENT ADDRESS </label>
+                              <input
+                                type="text"
+                                id="address"
+                                name="address"
+                                value={editAddress}
+                                onChange={(e) => { setEditAddress(e.target.value); }}
+                                className="form-control" required />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="status">STATUS</label>
+                              <select
+                                id="status"
+                                className="form-control"
+                                value={editStatus}
+                                onChange={(e) => { setEditStatus(e.target.value); }}
+                              
+                              >
+                                <option value="????" ></option>
+                                <option value="pending">PENDING</option>
+                                <option value="processed">PROCESSED</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-md-12">
+                            <div className="form-group">
+                              <label htmlFor="documentation">DOCUMENTATION </label>
+                              <input
+                                type="text"
+                                id="documentation"
+                                value={editDocumentation}
+                                name="documentation" onChange={(e) => { setEditDocumentation(e.target.value); }}
+                                className="form-control" required /></div>
+                          </div>
+                          <div className='form-buttons'>
+                            <button type='submit' className='btn btn-primary' onClick={updateRowData}>Submit</button>
+                            <button type='button' className='btn btn-secondary' onClick={handleEditDiscard}>Discard</button>
+                          </div>
                         </div>
                       </div>
                     </div>

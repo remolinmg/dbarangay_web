@@ -567,102 +567,147 @@ function Complaintsadmin() {
             {showForm && (
               <div className="popup-overlay">
                 <div className="popup-form">
-                  <form >
+                  <form>
                     <div className="certificate">
                       <h2 className="certificate-title">ADD COMPLAINT INFO</h2>
                       <div className="certificate-content">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="date">COMPLAINT DATE</label>
+                              <input
+                                type="date"
+                                id="date"
+                                name="date"
+                                onChange={(e) => {
+                                  setDate(e.target.value);
+                                }}
+                                className="form-control"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="complainant">COMPLAINANT</label>
+                              <input
+                                type="text"
+                                id="complainant"
+                                name="complainant"
+                                onChange={(e) => {
+                                  setComplainant(e.target.value);
+                                }}
+                                className="form-control"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="defendant">DEFENDANT</label>
+                              <input
+                                type="text"
+                                id="defendant"
+                                name="defendant"
+                                onChange={(e) => {
+                                  setDefendant(e.target.value);
+                                }}
+                                className="form-control"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="type">COMPLAINT TYPE</label>
+                              <select
+                                id="type"
+                                className="form-control"
+                                onChange={(e) => {
+                                  setType(e.target.value);
+                                }}
 
+                                required
+                              >
+                                <option value="????"></option>
+                                <option value="Noise Complaints">NOISE COMPLAINT</option>
+                                <option value="Illegal Parking">ILLEGAL PARKING</option>
+                                <option value="Curfew Violator">CURFEW VIOLATOR</option>
+                                <option value="Vandalism">VANDALISM</option>
+                                <option value="Rescission">RESCISSION OF CONTRACT</option>
+                                <option value="Garbage Problem">GARBAGE PROBLEM</option>
+                                <option value="Others">OTHERS</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="kind">TYPE</label>
+                              <select
+                                id="kind"
+                                className="form-control"
+                                onChange={(e) => {
+                                  setKind(e.target.value);
+                                }}
+
+                              >
+                                <option value="????"></option>
+                                <option value="major">MAJOR</option>
+                                <option value="minor">MINOR</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="status">STATUS</label>
+                              <select
+                                id="status"
+                                className="form-control"
+                                onChange={(e) => {
+                                  setStatus(e.target.value);
+                                }}
+
+                              >
+                                <option value="????"></option>
+                                <option value="pending">PENDING</option>
+                                <option value="processed">PROCESSED</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
                         <div className="form-group">
-                          <label htmlFor="date">COMPLAINT DATE </label>
-                          <input
-                            type="date"
-                            id="date"
-                            name="date" onChange={(e) => { setDate(e.target.value); }}
-                            className="form-control" required /> </div>
-
-
-                        <div className="form-group">
-                          <label htmlFor="complainant">COMPLAINANT </label>
-                          <input
-                            type="text"
-                            id="complainant"
-                            name="complainant" onChange={(e) => { setComplainant(e.target.value); }}
-                            className="form-control" required /></div>
-
-                        <div className="form-group">
-                          <label htmlFor="defendant">DEFENDANT</label>
-                          <input
-                            type="text"
-                            id="defendant"
-                            name="defendant" onChange={(e) => { setDefendant(e.target.value); }}
-                            className="form-control" required /></div>
-
-                        <div className="form-group">
-                          <label htmlFor="type"> COMPLAINT TYPE </label>
-                          <select
-                            id="type"
-                            className="form-control"
-                            onChange={(e) => { setType(e.target.value); }}
-                            style={{ fontSize: '20px', marginBottom: '10px' }}
-                            required
-                          >
-                            <option value="????" ></option>
-                            <option value="Noise Complaints">NOISE COMPLAINT</option>
-                            <option value="Illegal Parking">ILLEGAL PARKING</option>
-                            <option value="Curfew Violator">CURFEW VIOLATOR</option>
-                            <option value="Vandalism">VANDALISM</option>
-                            <option value="Rescission">RESCISSION OF CONTRACT</option>
-                            <option value="Garbage Problem">GARBAGE PROBLEM</option>
-                            <option value="Others">OTHERS</option>
-                          </select> </div>
-
-                        <div className="form-group">
-                          <label htmlFor="address">INCIDENT ADDRESS </label>
+                          <label htmlFor="address">INCIDENT ADDRESS</label>
                           <input
                             type="text"
                             id="address"
                             name="address"
-                            onChange={(e) => { setAddress(e.target.value); }}
-                            className="form-control" required /></div>
-
+                            onChange={(e) => {
+                              setAddress(e.target.value);
+                            }}
+                            className="form-control"
+                            required
+                          />
+                        </div>
                         <div className="form-group">
-                          <label htmlFor="documentation">DOCUMENTATION </label>
+                          <label htmlFor="documentation">DOCUMENTATION</label>
                           <input
                             type="text"
                             id="documentation"
-                            name="documentation" onChange={(e) => { setDocumentation(e.target.value); }}
-                            className="form-control" required /></div>
-
-                        <div className="form-group">
-                          <label htmlFor="kind">TYPE</label>
-                          <select
-                            id="kind"
+                            name="documentation"
+                            onChange={(e) => {
+                              setDocumentation(e.target.value);
+                            }}
                             className="form-control"
-                            onChange={(e) => { setKind(e.target.value); }}
-                            style={{ fontSize: '20px', marginBottom: '10px' }}
-                          >
-                            <option value="????" ></option>
-                            <option value="major">MAJOR</option>
-                            <option value="minor">MINOR</option>
-                          </select>
-                        </div>
-
-                        <div className="form-group">
-                          <label htmlFor="status">STATUS</label>
-                          <select
-                            id="status"
-                            className="form-control"
-                            onChange={(e) => { setStatus(e.target.value); }}
-                            style={{ fontSize: '20px', marginBottom: '10px' }}
-                          >
-                            <option value="????" ></option>
-                            <option value="pending">PENDING</option>
-                            <option value="processed">PROCESSED</option>
-                          </select>
+                            required
+                          />
                         </div>
                         <div className="form-buttons">
-                          <button type="submit" className="btn btn-primary" onClick={complaint}>Submit </button>
-                          <button type="button" className="btn btn-secondary" onClick={handleDiscard}> Discard </button>
+                          <button type="submit" className="btn btn-primary" onClick={complaint}>
+                            Submit
+                          </button>
+                          <button type="button" className="btn btn-secondary" onClick={handleDiscard}>
+                            Discard
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -670,6 +715,7 @@ function Complaintsadmin() {
                 </div>
               </div>
             )}
+
             {/*
              EDIT FORM */}
 
@@ -680,105 +726,124 @@ function Complaintsadmin() {
                     <div className='certificate'>
                       <h2 className='certificate-title'>EDIT RESIDENTS INFO</h2>
                       <div className='certificate-content'>
-                        <div className="form-group">
-                          <label htmlFor="date">COMPLAINT DATE </label>
-                          <input
-                            type="date"
-                            id="date"
-                            value={editDate}
-                            name="date" onChange={(e) => { setEditDate(e.target.value); }}
-                            className="form-control" required /> </div>
+                        <div className='row'>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="date">COMPLAINT DATE </label>
+                              <input
+                                type="date"
+                                id="date"
+                                value={editDate}
+                                name="date" onChange={(e) => { setEditDate(e.target.value); }}
+                                className="form-control" required />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="complainant">COMPLAINANT </label>
+                              <input
+                                type="text"
+                                id="complainant"
+                                value={editComplainant}
+                                name="complainant" onChange={(e) => { setEditComplainant(e.target.value); }}
+                                className="form-control" required />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="defendant">DEFENDANT</label>
+                              <input
+                                type="text"
+                                id="defendant"
+                                value={editDefendant}
+                                name="defendant" onChange={(e) => { setEditDefendant(e.target.value); }}
+                                className="form-control" required />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="type"> COMPLAINT TYPE </label>
+                              <select
+                                id="type"
+                                className="form-control"
+                                onChange={(e) => { setEditType(e.target.value); }}
+                                style={{ fontSize: '20px', marginBottom: '10px' }}
+                                required
+                                value={editType}
+                              >
+                                <option value="????" ></option>
+                                <option value="Noise Complaints">NOISE COMPLAINT</option>
+                                <option value="Illegal Parking">ILLEGAL PARKING</option>
+                                <option value="Curfew Violator">CURFEW VIOLATOR</option>
+                                <option value="Vandalism">VANDALISM</option>
+                                <option value="Rescission">RESCISSION OF CONTRACT</option>
+                                <option value="Garbage Problem">GARBAGE PROBLEM</option>
+                                <option value="Others">OTHERS</option>
+                              </select>
+                            </div>
+                          </div>
 
-                        <div className="form-group">
-                          <label htmlFor="complainant">COMPLAINANT </label>
-                          <input
-                            type="text"
-                            id="complainant"
-                            value={editComplainant}
-                            name="complainant" onChange={(e) => { setEditComplainant(e.target.value); }}
-                            className="form-control" required /></div>
-
-                        <div className="form-group">
-                          <label htmlFor="defendant">DEFENDANT</label>
-                          <input
-                            type="text"
-                            id="defendant"
-                            value={editDefendant}
-                            name="defendant" onChange={(e) => { setEditDefendant(e.target.value); }}
-                            className="form-control" required /></div>
-
-                        <div className="form-group">
-                          <label htmlFor="type"> COMPLAINT TYPE </label>
-                          <select
-                            id="type"
-                            className="form-control"
-                            onChange={(e) => { setEditType(e.target.value); }}
-                            style={{ fontSize: '20px', marginBottom: '10px' }}
-                            required
-                            value={editType}
-                          >
-                            <option value="????" ></option>
-                            <option value="Noise Complaints">NOISE COMPLAINT</option>
-                            <option value="Illegal Parking">ILLEGAL PARKING</option>
-                            <option value="Curfew Violator">CURFEW VIOLATOR</option>
-                            <option value="Vandalism">VANDALISM</option>
-                            <option value="Rescission">RESCISSION OF CONTRACT</option>
-                            <option value="Garbage Problem">GARBAGE PROBLEM</option>
-                            <option value="Others">OTHERS</option>
-                          </select> </div>
-
-                        <div className="form-group">
-                          <label htmlFor="address">INCIDENT ADDRESS </label>
-                          <input
-                            type="text"
-                            id="address"
-                            name="address"
-                            value={editAddress}
-                            onChange={(e) => { setEditAddress(e.target.value); }}
-                            className="form-control" required /></div>
-
-                        <div className="form-group">
-                          <label htmlFor="documentation">DOCUMENTATION </label>
-                          <input
-                            type="text"
-                            id="documentation"
-                            value={editDocumentation}
-                            name="documentation" onChange={(e) => { setEditDocumentation(e.target.value); }}
-                            className="form-control" required /></div>
-
-
-                        <div className="form-group">
-                          <label htmlFor="kind">TYPE</label>
-                          <select
-                            id="kind"
-                            className="form-control"
-                            onChange={(e) => { setEditKind(e.target.value); }}
-                            style={{ fontSize: '20px', marginBottom: '10px' }}
-                            value={editKind}
-                          >
-                            <option value="????" ></option>
-                            <option value="major">MAJOR</option>
-                            <option value="minor">MINOR</option>
-                          </select>
-                        </div>
-
-                        <div className="form-group">
-                          <label htmlFor="status">STATUS</label>
-                          <select
-                            id="status"
-                            className="form-control"
-                            value={editStatus}
-                            onChange={(e) => { setEditStatus(e.target.value); }}
-                            style={{ fontSize: '20px', marginBottom: '10px' }}
-                          >
-                            <option value="????" ></option>
-                            <option value="pending">PENDING</option>
-                            <option value="processed">PROCESSED</option>
-                          </select>
-                        </div>
-                        <div className='form-buttons'>
-                          <button type='submit' className='btn btn-primary' onClick={updateRowData}>Submit</button>
-                          <button type='button' className='btn btn-secondary' onClick={handleEditDiscard}>Discard</button>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="kind">TYPE</label>
+                              <select
+                                id="kind"
+                                className="form-control"
+                                onChange={(e) => { setEditKind(e.target.value); }}
+                                style={{ fontSize: '20px', marginBottom: '10px' }}
+                                value={editKind}
+                              >
+                                <option value="????" ></option>
+                                <option value="major">MAJOR</option>
+                                <option value="minor">MINOR</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group">
+                              <label htmlFor="status">STATUS</label>
+                              <select
+                                id="status"
+                                className="form-control"
+                                value={editStatus}
+                                onChange={(e) => { setEditStatus(e.target.value); }}
+                                style={{ fontSize: '20px', marginBottom: '10px' }}
+                              >
+                                <option value="????" ></option>
+                                <option value="pending">PENDING</option>
+                                <option value="processed">PROCESSED</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className='row p-0 m-0'>
+                            <div className="col-md-12">
+                              <div className="form-group">
+                                <label htmlFor="address">INCIDENT ADDRESS </label>
+                                <input
+                                  type="text"
+                                  id="address"
+                                  name="address"
+                                  value={editAddress}
+                                  onChange={(e) => { setEditAddress(e.target.value); }}
+                                  className="form-control" required />
+                              </div>
+                            </div>
+                            <div className="col-md-12">
+                              <div className="form-group">
+                                <label htmlFor="documentation">DOCUMENTATION </label>
+                                <input
+                                  type="text"
+                                  id="documentation"
+                                  value={editDocumentation}
+                                  name="documentation" onChange={(e) => { setEditDocumentation(e.target.value); }}
+                                  className="form-control" required />
+                              </div>
+                            </div>
+                          </div>
+                          <div className='form-buttons'>
+                            <button type='submit' className='btn btn-primary' onClick={updateRowData}>Submit</button>
+                            <button type='button' className='btn btn-secondary' onClick={handleEditDiscard}>Discard</button>
+                          </div>
                         </div>
                       </div>
                     </div>
