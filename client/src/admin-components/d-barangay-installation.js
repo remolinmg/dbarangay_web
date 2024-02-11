@@ -158,7 +158,7 @@ function Binstallation() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`https://dbarangay.onrender.com/delete/installation/${id}`, tFirstName, tLastName);
+      await axios.delete(`https://dbarangay.onrender.com/delete/installation/${id}`, { data: { tFirstName, tLastName } });
       fetchData();
     } catch (error) {
       console.error(error);

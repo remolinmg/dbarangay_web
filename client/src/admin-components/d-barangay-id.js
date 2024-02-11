@@ -161,7 +161,7 @@ function Biddmin() {
     //  DELETE  
     const deleteRow = async (id) => {
         try {
-            await axios.delete(`https://dbarangay.onrender.com/delete/barangayid/${id}`, tFirstName, tLastName);
+            await axios.delete(`https://dbarangay.onrender.com/delete/barangayid/${id}`, { data: { tFirstName, tLastName } });
             fetchData();
         } catch (error) {
             console.error(error);
