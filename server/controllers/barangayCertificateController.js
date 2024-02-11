@@ -93,7 +93,7 @@ exports.deleteCertificate = async (req, res) => {
     if (!deletedDocument) {
       return res.status(404).json({ message: 'Document not found' });
     }
-    const { tFirstName, tLastName } = req.body = req.body
+    const { tFirstName, tLastName } = req.body
     const date = new Date();
     const accessDate = date.toISOString().slice(0, 10);
     const accessTime =
