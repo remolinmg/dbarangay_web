@@ -64,6 +64,21 @@ exports.getAllAnnouncements = async (req, res) => {
 exports.deleteAnnouncement = async (req, res) => {
   const id = req.params.id;
   try {
+    const { tFirstName, tLastName } = req.body
+    const date = new Date();
+    const accessDate = date.toISOString().slice(0, 10);
+    const accessTime =
+      date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    const name = tFirstName + " " + tLastName;
+    const activity = "Deleted an Announcement";
+
+    const newCustomData = new StaffLogs({
+      name: name,
+      accessDate: accessDate,
+      accessTime: accessTime,
+      activity: activity,
+    });
+    await newCustomData.save();
     const deletedDocument = await announcement.findByIdAndDelete(id);
     if (!deletedDocument) {
       return res.status(404).json({ message: "Document not found" });
@@ -75,7 +90,6 @@ exports.deleteAnnouncement = async (req, res) => {
         console.error(err);
         return res.status(500).json({ message: "Error deleting file" });
       }
-
       res.json({ message: "Document and file deleted successfully" });
     });
   } catch (error) {

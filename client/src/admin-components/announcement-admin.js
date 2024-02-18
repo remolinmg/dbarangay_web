@@ -175,7 +175,7 @@ function AnnouncementAdmin() {
   const deleteRow = async (id) => {
     try {
       await axios.delete(
-        `https://dbarangay.onrender.com/delete/announcement/${id}`
+        `https://dbarangay.onrender.com/delete/announcement/${id}`, { data: { tFirstName, tLastName } }
       );
       fetchData();
     } catch (error) {

@@ -78,13 +78,8 @@ function StafflogsAdmin() {
     const getCurrentPageData = () => {
         const startIndex = (currentPage - 1) * rowCount;
         const endIndex = startIndex + rowCount;
-        const sortedData = data.slice().sort((a, b) => {
-            // Parse the time strings and compare them
-            const timeA = new Date(`1970-01-01T${a.accessTime}`);
-            const timeB = new Date(`1970-01-01T${b.accessTime}`);
-            return timeB - timeA;
-        });
-        return sortedData.slice(startIndex, endIndex);
+        const reversedData = [...filteredAndSortedData].reverse(); // Reverse the data
+        return reversedData.slice(startIndex, endIndex);
     };
 
 
@@ -382,15 +377,25 @@ function StafflogsAdmin() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {getCurrentPageData().map((item) => (
-                                                    <tr key={item._id}>
-                                                        <td>{item.name}</td>
-                                                        <td>{item.accessDate}</td>
-                                                        <td>{item.accessTime}</td>
-                                                        <td>{item.activity}</td>
-                                                    </tr>
-                                                ))}
+                                                {getCurrentPageData()
+                                                    .sort((a, b) => {
+                                                        // Assuming accessDate and accessTime are combined to represent the timestamp
+                                                        const timestampA = new Date(`${a.accessDate} ${a.accessTime}`);
+                                                        const timestampB = new Date(`${b.accessDate} ${b.accessTime}`);
+
+                                                        // Sort in descending order
+                                                        return timestampB - timestampA;
+                                                    })
+                                                    .map((item) => (
+                                                        <tr key={item._id}>
+                                                            <td>{item.name}</td>
+                                                            <td>{item.accessDate}</td>
+                                                            <td>{item.accessTime}</td>
+                                                            <td>{item.activity}</td>
+                                                        </tr>
+                                                    ))}
                                             </tbody>
+
 
                                         </table>
                                     </div>
