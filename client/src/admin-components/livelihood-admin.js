@@ -72,6 +72,9 @@ function LivelihoodAdmin() {
 
   // DATA ---------------------------------------------------------------
   const [data, setData] = useState([]);
+  const [tFirstName, setTFirstName] = useState();
+  const [tLastName, setTLastName] = useState();
+
   useEffect(() => {
     fetchData(); // Fetch initial data when the component mounts
   }, []);
@@ -84,6 +87,17 @@ function LivelihoodAdmin() {
       console.error(error);
     }
   };
+
+  const fetchName = async () => {
+    // Access Token
+    const token = Cookies.get("access_token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      setTFirstName(decoded.firstName);
+      setTLastName(decoded.lastName);
+    }
+  };
+
   // Event handler for dropdown change ----------------------------------------
   const handleRowCountChange = (e) => {
     const selectedRowCount = parseInt(e.target.value);
@@ -148,7 +162,7 @@ function LivelihoodAdmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`https://dbarangay.onrender.com/delete/livelihood/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/livelihood/${id}`, { data: { tFirstName, tLastName } });
       fetchData();
     } catch (error) {
       console.error(error);
@@ -170,6 +184,8 @@ function LivelihoodAdmin() {
     formData.append('when', when);
     formData.append('who', who);
     formData.append('file', file);
+    formData.append("tFirstName", tFirstName);
+    formData.append("tLastName", tLastName);
     axios.post('https://dbarangay.onrender.com/livelihood', formData)
       .then(res => {
         if (res.data === "Error saving data to MongoDB and Cloudinary") {
@@ -430,7 +446,7 @@ function LivelihoodAdmin() {
         </div>
       </div>
       <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
-      <Notification/>
+        <Notification />
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
             <div className="col-4">

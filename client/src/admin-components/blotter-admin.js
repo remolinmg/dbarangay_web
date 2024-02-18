@@ -165,7 +165,7 @@ function BlotterAdmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`https://dbarangay.onrender.com/delete/blotter/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/blotter/${id}`, { data: { tFirstName, tLastName } });
       fetchData();
     } catch (error) {
       console.error(error);

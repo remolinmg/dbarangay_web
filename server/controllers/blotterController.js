@@ -67,6 +67,22 @@ exports.deleteBlotter = async (req, res) => {
     if (!deletedDocument) {
       return res.status(404).json({ message: 'Document not found' });
     }
+
+    const { tFirstName, tLastName } = req.body
+    const date = new Date();
+    const accessDate = date.toISOString().slice(0, 10);
+    const accessTime =
+      date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    const name = tFirstName + " " + tLastName;
+    const activity = "Deleted a Blotter Request";
+
+    const newCustomData = new StaffLogs({
+      name: name,
+      accessDate: accessDate,
+      accessTime: accessTime,
+      activity: activity,
+    });
+    await newCustomData.save();
     res.json({ message: 'Document and file deleted successfully' });
   } catch (error) {
     console.error(error);

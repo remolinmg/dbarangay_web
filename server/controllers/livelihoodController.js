@@ -4,7 +4,7 @@ const cloudinary = require('../uploads/cloudinary');
 
 // Function to create a new livelihood
 exports.createLivelihood = async (req, res) => {
-  const { what, where, when, who } = req.body;
+  const { what, where, when, who, tFirstName, tLastName } = req.body;
   const { path } = req.file;
 
   try {
@@ -24,14 +24,29 @@ exports.createLivelihood = async (req, res) => {
       },
     });
 
+    const date = new Date();
+    const accessDate = date.toISOString().slice(0, 10);
+    const accessTime =
+      date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    const name = tFirstName + " " + tLastName;
+    const activity = "Created a Livelihood Announcement";
+
+    const newCustomData = new StaffLogs({
+      name: name,
+      accessDate: accessDate,
+      accessTime: accessTime,
+      activity: activity,
+    });
+
+    await newCustomData.save();
     await newLivelihood.save();
+
     res.status(201).send('File and text data saved to MongoDB and Cloudinary');
   } catch (error) {
     console.error(error);
     res.status(500).send('Error saving data to MongoDB and Cloudinary');
   }
 };
-
 
 // Function to get all livelihood
 exports.getAllLivelihood = async (req, res) => {
@@ -54,6 +69,21 @@ exports.deleteLivelihood = async (req, res) => {
       return res.status(404).json({ message: 'Document not found' });
     }
     const filename = `./uploads/livelihood/${deletedDocument.filename}`;
+    const { tFirstName, tLastName } = req.body
+    const date = new Date();
+    const accessDate = date.toISOString().slice(0, 10);
+    const accessTime =
+      date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    const name = tFirstName + " " + tLastName;
+    const activity = "Deleted a Livelihood Announcement";
+
+    const newCustomData = new StaffLogs({
+      name: name,
+      accessDate: accessDate,
+      accessTime: accessTime,
+      activity: activity,
+    });
+    await newCustomData.save();
     fs.unlink(filename, (err) => {
       if (err) {
         console.error(err);
@@ -99,11 +129,11 @@ exports.updateLivelihood = async (req, res) => {
     // Update the livelihood with new data (excluding the file)
     existingLivelihood.set(formData);
 
-  const updatedLivelihood = await existingLivelihood.save();
+    const updatedLivelihood = await existingLivelihood.save();
 
-  res.status(200).json(updatedLivelihood);
-} catch (error) {
-  console.error(error);
-  res.status(500).json({ message: 'Internal server error' });
-}
+    res.status(200).json(updatedLivelihood);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 };
