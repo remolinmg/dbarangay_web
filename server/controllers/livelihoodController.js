@@ -1,6 +1,6 @@
-const livelihood = require('../models/livelihoodModel');
-const fs = require('fs');
-const cloudinary = require('../uploads/cloudinary');
+const livelihood = require("../models/livelihoodModel");
+const fs = require("fs");
+const cloudinary = require("../uploads/cloudinary");
 
 // Function to create a new livelihood
 exports.createLivelihood = async (req, res) => {
@@ -8,22 +8,6 @@ exports.createLivelihood = async (req, res) => {
   const { path } = req.file;
 
   try {
-    // Upload the image to Cloudinary
-    const result = await cloudinary.uploader.upload(path, {
-      folder: 'livelihood', // You can change the folder name as needed
-    });
-
-    const newLivelihood = new livelihood({
-      what,
-      where,
-      when,
-      who,
-      filename: {
-        url: result.secure_url,
-        public_id: result.public_id,
-      },
-    });
-
     const date = new Date();
     const accessDate = date.toISOString().slice(0, 10);
     const accessTime =
@@ -39,12 +23,28 @@ exports.createLivelihood = async (req, res) => {
     });
 
     await newCustomData.save();
+    // Upload the image to Cloudinary
+    const result = await cloudinary.uploader.upload(path, {
+      folder: "livelihood", // You can change the folder name as needed
+    });
+
+    const newLivelihood = new livelihood({
+      what,
+      where,
+      when,
+      who,
+      filename: {
+        url: result.secure_url,
+        public_id: result.public_id,
+      },
+    });
+
     await newLivelihood.save();
 
-    res.status(201).send('File and text data saved to MongoDB and Cloudinary');
+    res.status(201).send("File and text data saved to MongoDB and Cloudinary");
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error saving data to MongoDB and Cloudinary');
+    res.status(500).send("Error saving data to MongoDB and Cloudinary");
   }
 };
 
@@ -55,7 +55,7 @@ exports.getAllLivelihood = async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -64,12 +64,7 @@ exports.deleteLivelihood = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const deletedDocument = await livelihood.findByIdAndDelete(id);
-    if (!deletedDocument) {
-      return res.status(404).json({ message: 'Document not found' });
-    }
-    const filename = `./uploads/livelihood/${deletedDocument.filename}`;
-    const { tFirstName, tLastName } = req.body
+    const { tFirstName, tLastName } = req.body;
     const date = new Date();
     const accessDate = date.toISOString().slice(0, 10);
     const accessTime =
@@ -84,16 +79,22 @@ exports.deleteLivelihood = async (req, res) => {
       activity: activity,
     });
     await newCustomData.save();
+
+    const deletedDocument = await livelihood.findByIdAndDelete(id);
+    if (!deletedDocument) {
+      return res.status(404).json({ message: "Document not found" });
+    }
+    const filename = `./uploads/livelihood/${deletedDocument.filename}`;
     fs.unlink(filename, (err) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Error deleting file' });
+        return res.status(500).json({ message: "Error deleting file" });
       }
-      res.json({ message: 'Document and file deleted successfully' });
+      res.json({ message: "Document and file deleted successfully" });
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -109,14 +110,14 @@ exports.updateLivelihood = async (req, res) => {
     const existingLivelihood = await livelihood.findById(id);
 
     if (!existingLivelihood) {
-      return res.status(404).json({ message: 'Livelihood not found' });
+      return res.status(404).json({ message: "Livelihood not found" });
     }
 
     // Check if a new file was uploaded
     if (newFile) {
       // Upload the new image to Cloudinary
       const result = await cloudinary.uploader.upload(newFile.path, {
-        folder: 'livelihood', // The folder for new images
+        folder: "livelihood", // The folder for new images
       });
 
       // Update the livelihood data with the new image URL
@@ -134,6 +135,6 @@ exports.updateLivelihood = async (req, res) => {
     res.status(200).json(updatedLivelihood);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
