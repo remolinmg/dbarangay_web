@@ -168,7 +168,6 @@
   cursor: pointer;
 }
 
-
 .evacuation-center:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
@@ -309,7 +308,6 @@
 
 .evac-content-container {
   width: 100%;
-
 }
 
 #evac-icon {
@@ -317,7 +315,6 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-
 }
 
 .emergency-plan {
@@ -437,7 +434,6 @@
   flex-direction: column;
 }
 
-
 .service.component__space {
   width: 100%;
   height: 100%;
@@ -472,7 +468,6 @@ p.heading.p__color {
   line-height: 1.2;
 
 }
-
 
 .service__box {
   margin-top: 20px;
@@ -511,14 +506,11 @@ p.heading.p__color {
   color: white;
 }
 
-
-
 h1.service__text {
   font-size: 16px;
   font-family: Poppins, sans-serif;
   padding: 10px 0px;
 }
-
 
 @media only screen and (max-width: 1024px) {
   .col__3 {
@@ -536,7 +528,6 @@ h1.service__text {
   .service-right {
     margin-left: 10%;
   }
-
 }
 
 
@@ -545,7 +536,6 @@ h1.service__text {
     flex-direction: row;
     margin-top: 20px;
   }
-
 
   .col__3 {
     max-width: 100%;
@@ -575,7 +565,6 @@ h1.service__text {
     margin-bottom: 20px;
     border-radius: 5px;
   }
-
 }
 
 /* POP-UP FORMS DESIGN */
@@ -590,7 +579,6 @@ h1.service__text {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   width: 800px;
-
 }
 
 .popup-overlay {
@@ -603,21 +591,19 @@ h1.service__text {
   z-index: 9998;
 }
 
-
-
 .certificate {
-  border: 2px solid #000000;
+  /* border: 2px solid #000000; */
   padding: 20px;
   text-align: center;
 }
 
 .certificate-title {
-  font-size: 24px;
   margin-bottom: 20px;
 }
 
 .certificate-content {
   margin-bottom: 20px;
+  text-align: left;
 
 }
 
@@ -1684,7 +1670,7 @@ li {
   cursor: pointer;
   position: absolute;
   top: 10px;
-  right: 10px; 
+  right: 10px;
   font-size: 20px;
 }
 
@@ -1696,7 +1682,7 @@ h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center; 
+  text-align: center;
 }
 
 .faqcontainer p {
@@ -1714,7 +1700,8 @@ h3 {
   margin: 10px;
   max-height: 100px;
 }
-.Profilesubmenuadmin{
+
+.Profilesubmenuadmin {
   width: auto;
 }
 
@@ -1737,9 +1724,9 @@ h3 {
 .custom-tab {
   list-style: none;
   display: inline-block;
-  padding: 10px 20px; 
-  background-color: fff; 
-  color: #007BFF; 
+  padding: 10px 20px;
+  background-color: fff;
+  color: #007BFF;
   border: 1px solid #007BFF;
   border-radius: 4px;
   cursor: pointer;
@@ -1749,7 +1736,8 @@ h3 {
 
 .custom-tab:hover {
   background-color: #0056b3;
-  color: #fff /* Change background color on hover */
+  color: #fff
+    /* Change background color on hover */
 }
 
 /*==================== NEW MEDIA QUERIES (for responsive) ====================*/
@@ -1841,10 +1829,12 @@ h3 {
     width: 100px;
     height: 100px;
   }
+
   .left-side-reg {
     padding-top: 50px;
     margin-bottom: 50px;
   }
+
   /* services */
 
   .service {

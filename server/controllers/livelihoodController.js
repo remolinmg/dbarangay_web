@@ -1,6 +1,7 @@
 const livelihood = require("../models/livelihoodModel");
 const fs = require("fs");
 const cloudinary = require("../uploads/cloudinary");
+const StaffLogs = require("../models/staffLogsModel");
 
 // Function to create a new livelihood
 exports.createLivelihood = async (req, res) => {
@@ -98,7 +99,6 @@ exports.deleteLivelihood = async (req, res) => {
   }
 };
 
-// Function to update an livelihood by ID
 // Function to update a livelihood by ID
 exports.updateLivelihood = async (req, res) => {
   const id = req.params.id;
