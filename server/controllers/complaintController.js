@@ -3,8 +3,6 @@ const StaffLogs = require("../models/staffLogsModel");
 
 // Function to create a new complaint
 exports.createComplaint = async (req, res) => {
-
-
   const {
     date, complainant, defendant, complainttype, address, kind, status, documentation, tFirstName, tLastName
   } = req.body = req.body
@@ -66,6 +64,22 @@ exports.deleteComplaint = async (req, res) => {
   const id = req.params.id;
 
   try {
+
+    const { tFirstName, tLastName } = req.body
+    const date = new Date();
+    const accessDate = date.toISOString().slice(0, 10);
+    const accessTime =
+      date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    const name = tFirstName + " " + tLastName;
+    const activity = "Deleted a Barangay Complaint Data";
+
+    const newCustomData = new StaffLogs({
+      name: name,
+      accessDate: accessDate,
+      accessTime: accessTime,
+      activity: activity,
+    });
+    await newCustomData.save();
     const deletedDocument = await complaint.findByIdAndDelete(id);
     if (!deletedDocument) {
       return res.status(404).json({ message: 'Document not found' });

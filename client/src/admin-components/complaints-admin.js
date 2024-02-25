@@ -155,8 +155,6 @@ function Complaintsadmin() {
     return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
   });
 
-
-
   // Forms ----------------------------------------------
   const [showForm, setShowForm] = useState(false);
   const toggleForm = () => { setShowForm(!showForm); }; // SHOW FORMS
@@ -166,7 +164,7 @@ function Complaintsadmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`https://dbarangay.onrender.com/delete/complaint/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/complaint/${id}`, { data: { tFirstName, tLastName } });
       fetchData();
     } catch (error) {
       console.error(error);
