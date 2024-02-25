@@ -1,23 +1,38 @@
 const promoteBusiness = require('../models/promoteBusinessModel');
+const StaffLogs = require("../models/staffLogsModel");
 const fs = require('fs');
 const cloudinary = require('../uploads/cloudinary')
 // Function to create a new promoteBusiness
 exports.createPromoteBusiness = async (req, res) => {
   const {
-    businessName,address,hours,category,contact,residentName
+    businessName, address, hours, category, contact, residentName, tFirstName, tLastName
   } = req.body;
   const { path } = req.file;
 
   try {
+    const date = new Date();
+    const accessDate = date.toISOString().slice(0, 10);
+    const accessTime =
+      date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    const name = tFirstName + " " + tLastName;
+    const activity = "Added a Business Promotion";
+
+    const newCustomData = new StaffLogs({
+      name: name,
+      accessDate: accessDate,
+      accessTime: accessTime,
+      activity: activity,
+    });
+    await newCustomData.save();
     // Upload the image to Cloudinary
     const result = await cloudinary.uploader.upload(path, {
       folder: 'promotebusiness',
     });
 
     const newPromoteBusiness = new promoteBusiness({
-      businessName,address,hours,category,contact,residentName,
+      businessName, address, hours, category, contact, residentName,
       filename: {
-        url: result.secure_url, 
+        url: result.secure_url,
         public_id: result.public_id,
       },
     });
@@ -47,6 +62,22 @@ exports.deletePromoteBusiness = async (req, res) => {
   const id = req.params.id;
 
   try {
+    const { tFirstName, tLastName } = req.body
+    const date = new Date();
+    const accessDate = date.toISOString().slice(0, 10);
+    const accessTime =
+      date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    const name = tFirstName + " " + tLastName;
+    const activity = "Deleted a Business Promotion";
+
+    const newCustomData = new StaffLogs({
+      name: name,
+      accessDate: accessDate,
+      accessTime: accessTime,
+      activity: activity,
+    });
+    await newCustomData.save();
+
     const deletedDocument = await promoteBusiness.findByIdAndDelete(id);
     if (!deletedDocument) {
       return res.status(404).json({ message: 'Document not found' });
@@ -79,19 +110,19 @@ exports.updatePromoteBusiness = async (req, res) => {
       return res.status(404).json({ message: 'Promote Business not found' });
     }
 
-  // Check if a new file was uploaded
-  if (newFile) {
-    // Upload the new image to Cloudinary
-    const result = await cloudinary.uploader.upload(newFile.path, {
-      folder: 'promotebusiness', // The folder for new images
-    });
+    // Check if a new file was uploaded
+    if (newFile) {
+      // Upload the new image to Cloudinary
+      const result = await cloudinary.uploader.upload(newFile.path, {
+        folder: 'promotebusiness', // The folder for new images
+      });
 
-    // Update the announcement data with the new image URL
-    existingPromoteBusiness.filename = {
-      url: result.secure_url,
-      public_id: result.public_id,
-    };
-  }
+      // Update the announcement data with the new image URL
+      existingPromoteBusiness.filename = {
+        url: result.secure_url,
+        public_id: result.public_id,
+      };
+    }
 
 
     // Update the promoteBusiness with new data (excluding the file)

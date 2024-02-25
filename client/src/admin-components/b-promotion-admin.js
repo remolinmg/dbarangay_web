@@ -72,8 +72,11 @@ function BpromotionAdmin() {
 
   // DATA ---------------------------------------------------------------
   const [data, setData] = useState([]);
+  const [tFirstName, setTFirstName] = useState();
+  const [tLastName, setTLastName] = useState();
   useEffect(() => {
     fetchData(); // Fetch initial data when the component mounts
+    fetchName();
   }, []);
 
   const fetchData = async () => {
@@ -82,6 +85,16 @@ function BpromotionAdmin() {
       setData(response.data);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const fetchName = async () => {
+    // Access Token
+    const token = Cookies.get("access_token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      setTFirstName(decoded.firstName);
+      setTLastName(decoded.lastName);
     }
   };
   // Event handler for dropdown change ----------------------------------------
@@ -149,7 +162,7 @@ function BpromotionAdmin() {
   //  DELETE  
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`https://dbarangay.onrender.com/delete/promotebusiness/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/promotebusiness/${id}`, { data: { tFirstName, tLastName } });
       fetchData();
     } catch (error) {
       console.error(error);
@@ -175,6 +188,8 @@ function BpromotionAdmin() {
     formData.append('category', category);
     formData.append('residentName', residentName);
     formData.append('file', file);
+    formData.append('tFirstName', tFirstName);
+    formData.append('tLastName', tLastName);
     axios.post('https://dbarangay.onrender.com/promotebusiness', formData).then(res => {
       if (res.data === "Error saving data to MongoDB and Cloudinary") {
         alert("Business Already Exist!");
