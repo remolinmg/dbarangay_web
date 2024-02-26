@@ -189,17 +189,15 @@ function Healthadmin() {
     try {
       await axios
         .post("https://dbarangay.onrender.com/health", {
-          data: {
-            date,
-            reporter,
-            respondents,
-            type,
-            address,
-            status,
-            documentation,
-            tFirstName,
-            tLastName,
-          },
+          date,
+          reporter,
+          respondents,
+          type,
+          address,
+          status,
+          documentation,
+          tFirstName,
+          tLastName,
         })
         .then((res) => {
           if (res.data === "Error saving data to MongoDB") {
