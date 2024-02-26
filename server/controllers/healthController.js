@@ -14,8 +14,7 @@ exports.createHealth = async (req, res) => {
     address: address,
     status: status,
     documentation: documentation
-  }
-
+  };
   try {
     const check = await health.findOne({ $and: [{ date: date }, { reporter: reporter }, { respondents: respondents }, { type: type }] })
     if (check) {
