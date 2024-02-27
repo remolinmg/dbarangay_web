@@ -12,47 +12,47 @@ exports.createHealth = async (req, res) => {
     documentation,
     tFirstName,
     tLastName,
-  } = (req.body = req.body);
+  } = req.body;
+
   const data = {
-    date: date,
-    reporter: reporter,
-    respondents: respondents,
-    type: type,
-    address: address,
-    status: status,
-    documentation: documentation,
+    date,
+    reporter,
+    respondents,
+    type,
+    address,
+    status,
+    documentation,
   };
+
   try {
     const check = await health.findOne({
-      $and: [
-        { date: date },
-        { reporter: reporter },
-        { respondents: respondents },
-        { type: type },
-      ],
+      $and: [{ date }, { reporter }, { respondents }, { type }],
     });
-    if (check) {
-      res.status(400).json("Error saving data to MongoDB");
-    } else {
-      res.status(201).send("File and text data saved to MongoDB");
-      const date = new Date();
-      const accessDate = date.toISOString().slice(0, 10);
-      const accessTime =
-        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-      const name = tFirstName + " " + tLastName;
-      const activity = "Created a Medical Report";
 
-      const newCustomData = new StaffLogs({
-        name: name,
-        accessDate: accessDate,
-        accessTime: accessTime,
-        activity: activity,
-      });
-      await newCustomData.save();
-      await health.insertMany([data]);
+    if (check) {
+      return res.status(400).json("Error saving data to MongoDB");
     }
-  } catch (e) {
-    res.status(500).send("Error saving data to MongoDB");
+
+    const currentDate = new Date();
+    const accessDate = currentDate.toISOString().slice(0, 10);
+    const accessTime = `${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+    const name = `${tFirstName} ${tLastName}`;
+    const activity = "Created a Medical Report";
+
+    const newCustomData = new StaffLogs({
+      name,
+      accessDate,
+      accessTime,
+      activity,
+    });
+
+    await newCustomData.save();
+    await health.insertMany([data]);
+
+    return res.status(201).send("File and text data saved to MongoDB");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Error saving data to MongoDB");
   }
 };
 
