@@ -187,32 +187,27 @@ function Healthadmin() {
   async function health(e) {
     e.preventDefault();
     try {
-      await axios
-        .post("https://dbarangay.onrender.com/health", {
-          date,
-          reporter,
-          respondents,
-          type,
-          address,
-          status,
-          documentation,
-          tFirstName,
-          tLastName,
-        })
-        .then((res) => {
-          if (res.data === "Error saving data to MongoDB") {
-            alert("Medical Already Exist!");
-          } else if (res.data === "File and text data saved to MongoDB") {
-            setShowForm(false);
-            fetchData();
-          }
-        })
-        .catch((e) => {
-          alert("Failed!");
-          console.log(e);
-        });
-    } catch (e) {
-      console.log(e);
+      const res = await axios.post("https://dbarangay.onrender.com/health", {
+        date,
+        reporter,
+        respondents,
+        type,
+        address,
+        status,
+        documentation,
+        tFirstName,
+        tLastName,
+      });
+
+      if (res.data === "Error saving data to MongoDB") {
+        alert("Medical Already Exist!");
+      } else if (res.data === "File and text data saved to MongoDB") {
+        setShowForm(false);
+        fetchData();
+      }
+    } catch (error) {
+      alert("Failed!");
+      console.error(error);
     }
   }
   // EDIT FORM STATES (ShowForms) ------------------------------
