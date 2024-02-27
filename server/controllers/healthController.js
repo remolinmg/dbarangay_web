@@ -12,7 +12,7 @@ exports.createHealth = async (req, res) => {
     documentation,
     tFirstName,
     tLastName,
-  } = req.body;
+  } = (req.body = req.body);
 
   const data = {
     date,
