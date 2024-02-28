@@ -48,6 +48,7 @@ exports.createHealth = async (req, res) => {
 
     await newCustomData.save();
     await health.insertMany([data]);
+    //sadasaw
 
     return res.status(201).send("File and text data saved to MongoDB");
   } catch (error) {
