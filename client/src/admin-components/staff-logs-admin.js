@@ -316,7 +316,7 @@ function StafflogsAdmin() {
                         <li className={`${isDropdownOpen ? 'hide' : ''}`}>
                             <Link to="/staff-logs-admin" className="nav-link">
                                 <BsTerminal className="sidebaricon" />
-                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Staff Logs</span>
+                                <span className="sidebarlabel ms-1 d-none d-sm-inline">Logs</span>
                             </Link>
                         </li>
                         <li className={`${isDropdownOpen ? 'hide' : ''}`}>
@@ -331,7 +331,7 @@ function StafflogsAdmin() {
             <div className={`container-documents vh-100 h-100 ${isSidebarCollapsed ? 'expanded' : ''}`}>
                 <Notification />
                 <div class="pagetitle">
-                    <h1> Staff Logs </h1>
+                    <h1> Logs </h1>
                 </div>
                 {/* -------------------------------------------------------------  TABLE -------------------------------------------------------------  */}
                 <main id="main" class="main">
