@@ -33,7 +33,7 @@ const Admin = () => {
         setCookie('access_token', response.data.token);
         window.localStorage.setItem('accountType', response.data.type);
         setLoginAttempts(0); // Reset login attempts on successful login
-        navigate("/dashboard");
+        navigate("/dashboard3");
       } else {
         setEmailValid('Invalid data');
         setPasswordValid('Invalid data');

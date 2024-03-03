@@ -315,7 +315,7 @@ function EmergencyAdmin() {
           <ul>
 
             <li>
-              <Link to="/dashboard" className="nav-link ">
+              <Link to="/dashboard3" className="nav-link ">
                 <AiOutlineDashboard className="sidebaricon " />
                 <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
               </Link>

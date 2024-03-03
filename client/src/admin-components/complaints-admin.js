@@ -342,7 +342,7 @@ function Complaintsadmin() {
       <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`} style={{ background: "#0C356A" }}>
         <div className="newsidebar">
           <div className="text-center">
-            <Link className="navbar-brand" to="/dashboard">
+            <Link className="navbar-brand" to="/dashboard3">
               <img className="tblImage w-50" src={logo} alt="" />
             </Link>
           </div>

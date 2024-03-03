@@ -390,7 +390,7 @@ function Healthadmin() {
       >
         <div className="newsidebar">
           <div className="text-center">
-            <Link className="navbar-brand" to="/dashboard">
+            <Link className="navbar-brand" to="/dashboard3">
               <img className="tblImage w-50" src={logo} alt="" />
             </Link>
           </div>
