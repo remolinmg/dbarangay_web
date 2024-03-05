@@ -1,16 +1,16 @@
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
-import './assets/css/style.css';
-import axios from 'axios';
-import logo from '../admin-components/assets/img/brgy.png';
-import { BiMenu, BiChevronDown } from 'react-icons/bi';
+import "./assets/css/style.css";
+import axios from "axios";
+import logo from "../admin-components/assets/img/brgy.png";
+import { BiMenu, BiChevronDown } from "react-icons/bi";
 import { BiLogOut, BiCog } from "react-icons/bi";
-import { AiOutlineDashboard } from 'react-icons/ai';
-import { format } from 'date-fns';
+import { AiOutlineDashboard } from "react-icons/ai";
+import { format } from "date-fns";
 import { jwtDecode } from "jwt-decode";
-import Notification from './notifications';
+import Notification from "./notifications";
 
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import {
   BsPersonFill,
   BsMegaphoneFill,
@@ -22,12 +22,10 @@ import {
   BsFillPeopleFill,
   BsEnvelopePaper,
   BsBuildingFillUp,
-  BsMailbox
+  BsMailbox,
 } from "react-icons/bs";
-import {
-  RiFolderWarningFill,
-} from "react-icons/ri";
-import 'bootstrap/dist/css/bootstrap.css';
+import { RiFolderWarningFill } from "react-icons/ri";
+import "bootstrap/dist/css/bootstrap.css";
 import { FaUserCircle } from "react-icons/fa";
 
 function EmergencyAdmin() {
@@ -54,10 +52,10 @@ function EmergencyAdmin() {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -78,14 +76,14 @@ function EmergencyAdmin() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('https://dbarangay.onrender.com/get/emergency');
+      const response = await axios.get(
+        "https://dbarangay.onrender.com/get/emergency"
+      );
       setData(response.data);
     } catch (error) {
       console.error(error);
     }
   };
-
-
 
   // Event handler for dropdown change ----------------------------------------
   const handleRowCountChange = (e) => {
@@ -108,19 +106,19 @@ function EmergencyAdmin() {
     return reversedData.slice(startIndex, endIndex);
   };
   // stay on first page
-  const filteredAndSortedData = data
-    .filter((item) => {
-      const itemValues = Object.values(item).map((value) => {
-        if (value) {
-          return value.toString().toLowerCase();
-        } else {
-          return "";
-        }
-      });
+  const filteredAndSortedData = data.filter((item) => {
+    const itemValues = Object.values(item).map((value) => {
+      if (value) {
+        return value.toString().toLowerCase();
+      } else {
+        return "";
+      }
+    });
 
-
-      return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
-    })
+    return itemValues.some((value) =>
+      value.includes(searchQuery.toLowerCase())
+    );
+  });
 
   // Function to go to the next page ------------------------------------------
   const nextPage = () => {
@@ -148,18 +146,26 @@ function EmergencyAdmin() {
       }
     });
 
-    return itemValues.some((value) => value.includes(searchQuery.toLowerCase()));
+    return itemValues.some((value) =>
+      value.includes(searchQuery.toLowerCase())
+    );
   });
 
   // Forms ----------------------------------------------
   const [showForm, setShowForm] = useState(false);
-  const toggleForm = () => { setShowForm(!showForm); }; //   SHOW FORMS 
-  const handleDiscard = () => { setShowForm(false); }; //   DISCARD FUNCTION
+  const toggleForm = () => {
+    setShowForm(!showForm);
+  }; //   SHOW FORMS
+  const handleDiscard = () => {
+    setShowForm(false);
+  }; //   DISCARD FUNCTION
 
-  //  DELETE  
+  //  DELETE
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`https://dbarangay.onrender.com/delete/emergency/${id}`);
+      await axios.delete(
+        `https://dbarangay.onrender.com/delete/emergency/${id}`
+      );
       fetchData();
     } catch (error) {
       console.error(error);
@@ -167,16 +173,18 @@ function EmergencyAdmin() {
   };
 
   //  ------------------------------ EDIT FORM STATES (ShowForrms) ------------------------------
-  const [editCurrentLocation, setEditCurrentLocation] = useState('');
-  const [editUserId, setEditUserId] = useState('');
-  const [editPhoneNumber, setEditPhoneNumber] = useState('');
-  const [editEmergencyType, setEditEmergencyType] = useState('');
+  const [editCurrentLocation, setEditCurrentLocation] = useState("");
+  const [editUserId, setEditUserId] = useState("");
+  const [editPhoneNumber, setEditPhoneNumber] = useState("");
+  const [editEmergencyType, setEditEmergencyType] = useState("");
   const [editDate, setEditDate] = useState(Date);
-  const [editResidentName, setEditResidentName] = useState('');
-  const [editStatus, setEditStatus] = useState('');
+  const [editResidentName, setEditResidentName] = useState("");
+  const [editStatus, setEditStatus] = useState("");
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
-  const handleEditDiscard = () => { setShowEditForm(false); };
+  const handleEditDiscard = () => {
+    setShowEditForm(false);
+  };
 
   // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
   const showEditFormHandler = (rowData) => {
@@ -199,9 +207,8 @@ function EmergencyAdmin() {
         phoneNumber: editPhoneNumber,
         emergencyType: editEmergencyType,
         currentLocation: editCurrentLocation,
-        date: editDate
+        date: editDate,
       };
-
 
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/emergency/${selectedRowData}`,
@@ -219,10 +226,10 @@ function EmergencyAdmin() {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    document.cookie = 'access_token=; ';
-    localStorage.removeItem('jwtToken');
+    document.cookie = "access_token=; ";
+    localStorage.removeItem("jwtToken");
     window.localStorage.clear();
-    navigate('/admin')
+    navigate("/admin");
   };
 
   // User FETCHING
@@ -233,11 +240,13 @@ function EmergencyAdmin() {
 
   const fetchUser = async () => {
     try {
-      const token = Cookies.get('access_token');
+      const token = Cookies.get("access_token");
       if (token) {
         const decoded = jwtDecode(token);
         const _id = decoded.id;
-        const response = await axios.get(`https://dbarangay.onrender.com/get/userprofile/${_id}`);
+        const response = await axios.get(
+          `https://dbarangay.onrender.com/get/userprofile/${_id}`
+        );
         setUserData(response.data);
       }
     } catch (error) {
@@ -247,14 +256,16 @@ function EmergencyAdmin() {
 
   return (
     <>
-
       <div className="topbarsection" style={{ background: "#034f84" }}>
         {Array.isArray(userData) ? (
           userData.map((item, index) => (
             <div key={index}>
               <div className="topnavbar d-flex justify-content-between align-items-center">
                 <div className="topnavleft">
-                  <button className="collapse-button" onClick={handleSidebarCollapse}>
+                  <button
+                    className="collapse-button"
+                    onClick={handleSidebarCollapse}
+                  >
                     <BiMenu />
                   </button>
                 </div>
@@ -263,21 +274,39 @@ function EmergencyAdmin() {
                 </div>
                 <div className="topnavright">
                   <div ref={profileRef}>
-                    <FaUserCircle className="adminicon" onClick={toggleProfileSubmenu} />
+                    <FaUserCircle
+                      className="adminicon"
+                      onClick={toggleProfileSubmenu}
+                    />
                     {ProfilesubmenuVisible && (
                       <div className="Profilesubmenuadmin">
                         <div className="admininfo">
                           <div className="rightprofile">
-                            <img src={item.filename.url} style={{ width: "80px", height: "80px", borderRadius: "50px" }} calt="Profile Picture" className="profile-pic" id="profile-pic" />
+                            <img
+                              src={item.filename.url}
+                              style={{
+                                width: "80px",
+                                height: "80px",
+                                borderRadius: "50px",
+                              }}
+                              calt="Profile Picture"
+                              className="profile-pic"
+                              id="profile-pic"
+                            />
                           </div>
                           <div className="leftprofile">
-                            <h5>{item.firstName} {item.middleName} {item.lastName}</h5>
+                            <h5>
+                              {item.firstName} {item.middleName} {item.lastName}
+                            </h5>
                             <h5>{item.email}</h5>
                           </div>
                         </div>
                         <div className="lowerprofile">
                           <div className="button-profile1">
-                            <NavLink to="/admin-profile" activeClassName="active">
+                            <NavLink
+                              to="/admin-profile"
+                              activeClassName="active"
+                            >
                               <div href="#" className="profilebuttons">
                                 <BiCog className="profileicons" /> Settings
                               </div>
@@ -285,19 +314,18 @@ function EmergencyAdmin() {
                           </div>
                           <hr />
                           <div className="button-profile1">
-
-
-                            <div onClick={handleSignOut} className="profilebuttons">
+                            <div
+                              onClick={handleSignOut}
+                              className="profilebuttons"
+                            >
                               <BiLogOut className="profileicons" /> Log out
                             </div>
-
                           </div>
                         </div>
                       </div>
                     )}
                   </div>
                 </div>
-
               </div>
             </div>
           ))
@@ -305,7 +333,10 @@ function EmergencyAdmin() {
           <p>No data to display.</p>
         )}
       </div>
-      <div className={`containersidebar ${isSidebarCollapsed ? 'collapsed' : ''}`} style={{ background: "#0C356A" }}>
+      <div
+        className={`containersidebar ${isSidebarCollapsed ? "collapsed" : ""}`}
+        style={{ background: "#0C356A" }}
+      >
         <div className="newsidebar">
           <div className="text-center">
             <Link className="navbar-brand" to="/dashboard">
@@ -313,23 +344,28 @@ function EmergencyAdmin() {
             </Link>
           </div>
           <ul>
-
             <li>
               <Link to="/dashboard3" className="nav-link ">
                 <AiOutlineDashboard className="sidebaricon " />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Dashboard</span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                  Dashboard
+                </span>
               </Link>
             </li>
             <li>
               <Link to="/announcement-admin" className="nav-link ">
                 <BsMegaphoneFill className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Announcement</span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                  Announcement
+                </span>
               </Link>
             </li>
-            <li  style={{ background: "#d8a600" }}>
+            <li style={{ background: "#d8a600" }}>
               <Link to="/emergency-admin" className="nav-link ">
                 <BsTelephoneFill className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Emergency</span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                  Emergency
+                </span>
               </Link>
             </li>
             {/* <li className={`dropdown-sidebar ${isDropdownOpen ? 'open' : ''}`}> */}
@@ -345,72 +381,88 @@ function EmergencyAdmin() {
                 </div>
               </Link>
               {/* <ul className="sidebar-submenu"> */}
-              <ul className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? 'open' : ''}`}>
+              <ul
+                className={`sidebar-submenu w-100 ms-3 ${
+                  isDropdownOpen ? "open" : ""
+                }`}
+              >
                 {isDropdownOpen && (
                   <>
                     <li>
                       <Link to="/b-officials-admin" className="nav-link ">
                         <BsFillPersonBadgeFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Barangay Officials</span>
-
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                          {" "}
+                          Barangay Officials
+                        </span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/d-barangay-certificate" className="nav-lin">
                         <BsFillFileEarmarkArrowDownFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline"> Document Requests</span>
-
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                          {" "}
+                          Document Requests
+                        </span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/blotter-admin" className="nav-link ">
                         <RiFolderWarningFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Incident Reports</span>
-
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                          Incident Reports
+                        </span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/residents-admin" className="nav-link">
                         <BsFillPeopleFill className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Residents Info</span>
-
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                          Residents Info
+                        </span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/b-promotion-admin" className="nav-link">
                         <BsBuildingFillUp className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Business Promotion</span>
-
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                          Business Promotion
+                        </span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/feedbacks-admin" className="nav-link">
                         <BsMailbox className="sidebaricon" />
-                        <span className="sidebarlabel ms-1 d-none d-sm-inline">Feedbacks</span>
-
+                        <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                          Feedbacks
+                        </span>
                       </Link>
                     </li>
                   </>
                 )}
               </ul>
             </li>
-            <li className={`${isDropdownOpen ? 'hide' : ''}`}>
+            <li className={`${isDropdownOpen ? "hide" : ""}`}>
               <Link to="/staff-logs-admin" className="nav-link">
                 <BsTerminal className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Logs</span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                  Logs
+                </span>
               </Link>
             </li>
-            <li className={`${isDropdownOpen ? 'hide' : ''}`}>
+            <li className={`${isDropdownOpen ? "hide" : ""}`}>
               <Link to="/admin-accounts" className="nav-link">
                 <BsPersonFill className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Admin Accounts</span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">
+                  Admin Accounts
+                </span>
               </Link>
             </li>
           </ul>
         </div>
       </div>
-      <div className={`business-body ${isSidebarCollapsed ? 'expanded' : ''}`}>
-      <Notification emergencyData={data} />
+      <div className={`business-body ${isSidebarCollapsed ? "expanded" : ""}`}>
+        <Notification emergencyData={data} />
         <div className="document-body w-100 pt-5 mt-0 d-flex justify-content-center">
           <div className="toppart-table border row w-75 d-flex align-items-center">
             <div className="col-6">
@@ -427,7 +479,11 @@ function EmergencyAdmin() {
             </div>
             <div className="col-6">
               <div className="dropdown-tablenumbers">
-                <select className="Table-numbers form-control" value={rowCount} onChange={handleRowCountChange}>
+                <select
+                  className="Table-numbers form-control"
+                  value={rowCount}
+                  onChange={handleRowCountChange}
+                >
                   <option value="10">10</option>
                   <option value="20">20</option>
                   <option value="50">50</option>
@@ -438,7 +494,7 @@ function EmergencyAdmin() {
           </div>
         </div>
         <div class="pagetitle">
-          <h1> Emergency  </h1>
+          <h1> Emergency </h1>
         </div>
         <main id="main" class="main">
           <section class="section">
@@ -452,19 +508,45 @@ function EmergencyAdmin() {
                           <nav aria-label="Page navigation example">
                             <ul className="pagination">
                               <li className="page-item">
-                                <a className="page-link" href="#" aria-label="Previous" onClick={prevPage}>
+                                <a
+                                  className="page-link"
+                                  href="#"
+                                  aria-label="Previous"
+                                  onClick={prevPage}
+                                >
                                   <span aria-hidden="true">&laquo;</span>
                                 </a>
                               </li>
-                              {Array.from({ length: Math.ceil(filteredData.length / rowCount) }, (_, i) => (
-                                <li className={`page-item ${i + 1 === currentPage ? 'active' : ''}`} key={i}>
-                                  <a className="page-link" href="#" onClick={() => setCurrentPage(i + 1)}>
-                                    {i + 1}
-                                  </a>
-                                </li>
-                              ))}
+                              {Array.from(
+                                {
+                                  length: Math.ceil(
+                                    filteredData.length / rowCount
+                                  ),
+                                },
+                                (_, i) => (
+                                  <li
+                                    className={`page-item ${
+                                      i + 1 === currentPage ? "active" : ""
+                                    }`}
+                                    key={i}
+                                  >
+                                    <a
+                                      className="page-link"
+                                      href="#"
+                                      onClick={() => setCurrentPage(i + 1)}
+                                    >
+                                      {i + 1}
+                                    </a>
+                                  </li>
+                                )
+                              )}
                               <li className="page-item">
-                                <a className="page-link" href="#" aria-label="Next" onClick={nextPage}>
+                                <a
+                                  className="page-link"
+                                  href="#"
+                                  aria-label="Next"
+                                  onClick={nextPage}
+                                >
                                   <span aria-hidden="true">&raquo;</span>
                                 </a>
                               </li>
@@ -473,8 +555,6 @@ function EmergencyAdmin() {
                         </div>
                       </div>
                     </div>
-
-
 
                     <table class="table caption-top">
                       <thead>
@@ -485,6 +565,7 @@ function EmergencyAdmin() {
                           <th scope="col">Emergency Type</th>
                           <th scope="col">Date</th>
                           <th scope="col">Status</th>
+                          <th scope="col">Image</th>
                           <th scope="col">Action</th>
                         </tr>
                       </thead>
@@ -497,6 +578,14 @@ function EmergencyAdmin() {
                             <td>{item.emergencyType}</td>
                             <td>{item.date}</td>
                             <td>{item.status}</td>
+                            <td>
+                              <img
+                                style={{ width: "100px", height: "100px" }}
+                                src={item.emergencyProofImage.url}
+                                alt=""
+                                className="officials-picture"
+                              />
+                            </td>
                             <td>
                               <button
                                 className="btn btn-primary btn-sm me-2"
@@ -514,7 +603,6 @@ function EmergencyAdmin() {
                           </tr>
                         ))}
                       </tbody>
-
                     </table>
                   </div>
                 </div>
@@ -531,19 +619,33 @@ function EmergencyAdmin() {
                       <div className="certificate-content">
                         <div className="form-group">
                           <label htmlFor="status">Status</label>
-                          <select id="status"
+                          <select
+                            id="status"
                             className="form-control"
                             value={editStatus}
                             onChange={(e) => setEditStatus(e.target.value)}
-                            style={{ fontSize: '20px', marginBottom: '10px' }} >
-                            <option value="NEW" >New</option>
+                            style={{ fontSize: "20px", marginBottom: "10px" }}
+                          >
+                            <option value="NEW">New</option>
                             <option value="On Process">On Process</option>
                             <option value="Processed">Processed</option>
                           </select>
                         </div>
                       </div>
-                      <button type="button" className="btn btn-primary" onClick={updateRowData}>Save</button>
-                      <button type="button" className="btn btn-danger" onClick={handleEditDiscard}>Discard</button>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={updateRowData}
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={handleEditDiscard}
+                      >
+                        Discard
+                      </button>
                     </div>
                   </form>
                 </div>
