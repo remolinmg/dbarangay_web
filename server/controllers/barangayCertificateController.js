@@ -68,11 +68,16 @@ exports.getCertificates = async (req, res) => {
 
 exports.updateCertificate = async (req, res) => {
   const id = req.params.id;
-  const { updatedData, tFirstName, tLastName } = (req.body = req.body);
+  const { updatedData } = (req.body = req.body);
+
   try {
     const updatedUserCertificate = await userCertificate.findByIdAndUpdate(
       id,
-      updatedData,
+      updatedData.residentName,
+      updatedData.address,
+      updatedData.residentName,
+      updatedData.residentName,
+      updatedData.residentName,
       { new: true }
     );
 
@@ -84,7 +89,7 @@ exports.updateCertificate = async (req, res) => {
     const accessDate = date.toISOString().slice(0, 10);
     const accessTime =
       date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    const name = tFirstName + " " + tLastName;
+    const name = updatedData.tFirstName + " " + updatedData.tLastName;
     const activity = "Edited a Barangay Certificate Request";
 
     const newCustomData = new StaffLogs({

@@ -298,16 +298,16 @@ function BclearanceAdmin() {
         reasonOfRequest: editReasonOfRequest,
         pickUpDate: editDate,
         status: editStatus,
+        tFirstName,
+        tLastName,
       };
       const requestBody = {
         ...updatedData,
-        tFirstName,
-        tLastName,
       };
 
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/barangaycertificate/${selectedRowData}`,
-        requestBody
+        updatedData
       );
       console.log(response.data);
       fetchData();
