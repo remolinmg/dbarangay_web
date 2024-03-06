@@ -1,26 +1,40 @@
-const userCertificate = require('../models/barangayCertificateModel');
+const userCertificate = require("../models/barangayCertificateModel");
 const StaffLogs = require("../models/staffLogsModel");
 
 exports.createCertificate = async (req, res) => {
-  const { residentName, userId, address, reasonOfRequest, pickUpDate, modeOfPayment, reference, tFirstName, tLastName } = req.body = req.body
-  const data =
-  {
+  const {
+    residentName,
+    userId,
+    address,
+    reasonOfRequest,
+    pickUpDate,
+    modeOfPayment,
+    reference,
+    tFirstName,
+    tLastName,
+  } = (req.body = req.body);
+  const data = {
     residentName: residentName,
     userId: userId,
     address: address,
     reasonOfRequest: reasonOfRequest,
     pickUpDate: pickUpDate,
     modeOfPayment: modeOfPayment,
-    reference: reference
-  }
+    reference: reference,
+  };
 
   try {
-    const check = await userCertificate.findOne({ $and: [{ residentName: residentName }, { reasonOfRequest: reasonOfRequest }, { pickUpDate: pickUpDate }] })
+    const check = await userCertificate.findOne({
+      $and: [
+        { residentName: residentName },
+        { reasonOfRequest: reasonOfRequest },
+        { pickUpDate: pickUpDate },
+      ],
+    });
     if (check) {
-      res.status(400).json("exist")
-    }
-    else {
-      res.status(201).json("notexist")
+      res.status(400).json("exist");
+    } else {
+      res.status(201).json("notexist");
       const date = new Date();
       const accessDate = date.toISOString().slice(0, 10);
       const accessTime =
@@ -37,9 +51,8 @@ exports.createCertificate = async (req, res) => {
       await newCustomData.save();
       await userCertificate.insertMany([data]);
     }
-  }
-  catch (e) {
-    res.json("notexist")
+  } catch (e) {
+    res.json("notexist");
   }
 };
 
@@ -49,20 +62,22 @@ exports.getCertificates = async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 exports.updateCertificate = async (req, res) => {
   const id = req.params.id;
-  const { updatedData, tFirstName, tLastName } = req.body;
+  const { updatedData, tFirstName, tLastName } = (req.body = req.body);
   try {
     const updatedUserCertificate = await userCertificate.findByIdAndUpdate(
-      id, updatedData, { new: true }
+      id,
+      updatedData,
+      { new: true }
     );
 
     if (!updatedUserCertificate) {
-      return res.status(404).json({ message: 'Request not found' });
+      return res.status(404).json({ message: "Request not found" });
     }
 
     const date = new Date();
@@ -83,17 +98,19 @@ exports.updateCertificate = async (req, res) => {
     res.status(200).json(updatedUserCertificate);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
 exports.deleteCertificate = async (req, res) => {
   try {
-    const deletedDocument = await userCertificate.findByIdAndDelete(req.params.id);
+    const deletedDocument = await userCertificate.findByIdAndDelete(
+      req.params.id
+    );
     if (!deletedDocument) {
-      return res.status(404).json({ message: 'Document not found' });
+      return res.status(404).json({ message: "Document not found" });
     }
-    const { tFirstName, tLastName } = req.body
+    const { tFirstName, tLastName } = req.body;
     const date = new Date();
     const accessDate = date.toISOString().slice(0, 10);
     const accessTime =
@@ -109,10 +126,10 @@ exports.deleteCertificate = async (req, res) => {
     });
     await newCustomData.save();
 
-    res.json({ message: 'Document deleted successfully' });
+    res.json({ message: "Document deleted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -123,6 +140,6 @@ exports.getUserBrgyCert = async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
