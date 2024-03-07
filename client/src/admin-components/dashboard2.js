@@ -20,6 +20,7 @@ import {
     BsEnvelopePaper,
     BsBuildingFillUp,
     BsMailbox,
+    BsFillInfoCircleFill,
 } from "react-icons/bs";
 
 import {
@@ -435,7 +436,12 @@ function Dashboard2() {
                                 <div className="card barchartcard">
                                     <div className="filter"></div>
                                     <div className="bar-chart card-body Chart">
-                                        <h2>Health Data by Type for the Last 12 Months</h2>
+
+                                        <div className="charttopdivider d-flex justify-content-between sm-5">
+                                            <h2>Health Data by Type for the Last 12 Months</h2>
+                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay Indigency Requests status">
+                                                <BsFillInfoCircleFill /> </h5>
+                                        </div>
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
                                             <Bar
                                                 data={data}

@@ -20,6 +20,7 @@ import {
     BsEnvelopePaper,
     BsBuildingFillUp,
     BsMailbox,
+    BsFillInfoCircleFill,
 } from "react-icons/bs";
 
 import {
@@ -555,8 +556,11 @@ function Dashboard1() {
                                 <div className="card ">
                                     <div className="filter"></div>
                                     <div className="bar-chart card-body Chart">
-                                        <h5 className="card-title">Blotter Records by Month</h5>
-                                        <p className="card-text">Categorized as Minor and Major Cases.</p>
+                                        <div className="charttopdivider d-flex justify-content-between sm-5">
+                                            <h5 className="card-title">Blotter Records by Month</h5>
+                                            <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Indigency Requests status">
+                                                <BsFillInfoCircleFill /> </h5>
+                                        </div>
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
                                             <Line // Use Line chart
                                                 data={{
@@ -608,7 +612,12 @@ function Dashboard1() {
                                 <div className="card ">
                                     <div className="filter"></div>
                                     <div className="bar-chart card-body Chart">
-                                        <h5 className="card-title">Type Blotter</h5>
+                                       
+                                        <div className="charttopdivider d-flex justify-content-between sm-5">
+                                            <h5 className="card-title">Type Blotter</h5>
+                                            <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Indigency Requests status">
+                                                <BsFillInfoCircleFill /> </h5>
+                                        </div>
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
                                             <Bar data={data}
                                                 options={{
@@ -646,8 +655,11 @@ function Dashboard1() {
                                 <div className="card ">
                                     <div className="filter"></div>
                                     <div className="bar-chart card-body Chart">
-                                        <h5 className="card-title">Complaints Records by Month</h5>
-                                        <p className="card-text">Categorized as Minor and Major Cases.</p>
+                                        <div className="charttopdivider d-flex justify-content-between sm-5">
+                                            <h5 className="card-title">Complaints Records by Month</h5>
+                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay Indigency Requests status">
+                                                <BsFillInfoCircleFill /> </h5>
+                                        </div>
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
                                             <Line // Use Line chart
                                                 data={{
@@ -699,7 +711,12 @@ function Dashboard1() {
                                 <div className="card ">
                                     <div className="filter"></div>
                                     <div className="bar-chart card-body Chart">
-                                        <h5 className="card-title">Type Complaints</h5>
+
+                                        <div className="charttopdivider d-flex justify-content-between sm-5">
+                                            <h5 className="card-title">Type Complaints</h5>
+                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay Indigency Requests status">
+                                                <BsFillInfoCircleFill /> </h5>
+                                        </div>
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
                                             <Bar
                                                 data={complaintTypeData}

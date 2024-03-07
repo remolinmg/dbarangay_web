@@ -20,6 +20,7 @@ import {
     BsEnvelopePaper,
     BsBuildingFillUp,
     BsMailbox,
+    BsFillInfoCircleFill,
 } from "react-icons/bs";
 
 import {
@@ -674,7 +675,12 @@ function Dashboard() {
                                 <div className="card barchartcard">
                                     <div className="filter"></div>
                                     <div className="bar-chart card-body Chart">
-                                        <h5 className="card-title">Employment Status</h5>
+
+                                        <div className="charttopdivider d-flex justify-content-between sm-5">
+                                            <h5 className="card-title">Employment Status</h5>
+                                            <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Indigency Requests status">
+                                                <BsFillInfoCircleFill /> </h5>
+                                        </div>
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
                                             <Bar data={employmentData} options={employmentOptions} />
                                         </div>
@@ -683,7 +689,12 @@ function Dashboard() {
                                 <div className="card barchartcard">
                                     <div className="filter"></div>
                                     <div className="bar-chart card-body Chart">
-                                        <h5 className="card-title">Age</h5>
+                                        <div className="charttopdivider d-flex justify-content-between sm-5">
+                                            <h5 className="card-title">Age</h5>
+                                            <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Indigency Requests status">
+                                                <BsFillInfoCircleFill /> </h5>
+                                        </div>
+
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
                                             <Doughnut data={ageData} options={ageOptions} />
                                         </div>
@@ -698,7 +709,13 @@ function Dashboard() {
                                 <div className="card barchartcard">
                                     <div className="filter"></div>
                                     <div className="bar-chart card-body Chart">
-                                        <h5 className="card-title">Civil Status</h5>
+
+                                        <div className="charttopdivider d-flex justify-content-between sm-5">
+                                            <h5 className="card-title">Civil Status</h5>
+                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay Indigency Requests status">
+                                                <BsFillInfoCircleFill /> </h5>
+                                        </div>
+
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
                                             <Bar data={civilStatusData} options={civilStatusOptions} />
                                         </div>
@@ -707,7 +724,13 @@ function Dashboard() {
                                 <div className="card barchartcard">
                                     <div className="filter"></div>
                                     <div className="bar-chart card-body Chart">
-                                        <h5 className="card-title">educational attainments</h5>
+
+                                        <div className="charttopdivider d-flex justify-content-between sm-5">
+                                            <h5 className="card-title">educational attainments</h5>
+                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay Indigency Requests status">
+                                                <BsFillInfoCircleFill /> </h5>
+                                        </div>
+
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
                                             <Doughnut data={educationData} options={educationOptions} />
 
