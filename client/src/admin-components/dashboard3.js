@@ -20,6 +20,7 @@ import {
     BsEnvelopePaper,
     BsBuildingFillUp,
     BsMailbox,
+    BsFillInfoCircleFill,
 } from "react-icons/bs";
 
 import {
@@ -545,7 +546,7 @@ function Dashboard3() {
     };
 
     return (
-        <>
+        <div className='dbody'>
             <div className="topbarsection" style={{ background: "#034f84" }}>
                 {Array.isArray(userData) ? (
                     userData.map((item, index) => (
@@ -737,7 +738,7 @@ function Dashboard3() {
                             <Link to="/d-barangay-certificate" className="card topcard m-1 col-md-4 p-0" style={{ textDecoration: 'none', color: 'inherit' }}>
                                 <div className="total-population card-body text-center">
                                     <h5 className="card-title">Barangay Certificate</h5>
-                                    <p className="card-text" style={{ fontSize: '24px' }}>Total barangaycertificate Recorded.</p>
+                                    <p className="card-text" style={{ fontSize: '24px' }}>Total Barangaycertificate Recorded.</p>
                                     <p className="card-text" style={{ fontSize: '24px' }}>
                                         Total Certificates: {totalCertificates}
                                     </p>
@@ -757,7 +758,7 @@ function Dashboard3() {
                             <Link to="/d-barangay-id" className="card topcard m-1 col-md-4 p-0" style={{ textDecoration: 'none', color: 'inherit' }}>
                                 <div className="total-population card-body text-center">
                                     <h5 className="card-title">Barangay ID</h5>
-                                    <p className="card-text" style={{ fontSize: '24px' }}>Total barangay ID Recorded.</p>
+                                    <p className="card-text" style={{ fontSize: '24px' }}>Total Barangay ID Recorded.</p>
                                     <p className="card-text" style={{ fontSize: '24px' }}>
                                         Total Certificates: {totalBarangayId}
                                     </p>
@@ -799,118 +800,114 @@ function Dashboard3() {
                             </Link>
                         </div>
                     </div>
-                    {/* FIRST PART */}
-                    <div className="col-md-12 mt-2 p-0">
-                        <div className="row ">
-                            <div className="col-4 col-md-4">
-                                <div className="card barchartcard">
-                                    <div className="filter"></div>
-                                    <div className="bar-chart card-body Chart">
-                                        <div className="charttopdivider d-flex justify-content-between sm-5">
-                                            <h5>Barangay Certificate Requests</h5>
-                                            <Link to="/d-barangay-certificate" className="nav-link">
-                                                <h5>view</h5></Link>
-                                        </div>
-                                        <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
-                                            <Bar data={certificateChartData} options={certificateOptions} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-4 col-md-4">
-                                <div className="card barchartcard">
-                                    <div className="filter"></div>
-                                    <div className="bar-chart card-body Chart">
-                                        <div className="charttopdivider d-flex justify-content-between sm-5">
-                                            <h5>Business Permit Requests</h5>
-                                            <Link to="/b-permit-admin" className="nav-link">
-                                                <h5>view</h5>
-                                            </Link>
-                                        </div>
-                                        <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
-                                            <Bar data={businessClearanceChartData} options={businessClearanceOptions} />
+                    <div>
+                        {/* FIRST PART */}
+                        <div className="col-md-12 mt-2 p-0">
+                            <div className="row ">
+                                <div className="col-4 col-md-4 p-1">
+                                    <div className="card barchartcard">
+                                        <div className="filter"></div>
+                                        <div className="bar-chart card-body Chart">
+                                            <div className="charttopdivider d-flex justify-content-between sm-5">
+                                                <h5>Barangay Certificate Requests</h5>
+                                                <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Certificate Request status">
+                                                    <BsFillInfoCircleFill /> </h5>
+                                            </div>
+                                            <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
+                                                <Bar data={certificateChartData} options={certificateOptions} />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="col-4 col-md-4">
-                                <div className="card barchartcard">
-                                    <div className="filter"></div>
-                                    <div className="bar-chart card-body Chart">
+                                <div className="col-4 col-md-4 p-1">
+                                    <div className="card barchartcard">
+                                        <div className="filter"></div>
+                                        <div className="bar-chart card-body Chart">
+                                            <div className="charttopdivider d-flex justify-content-between sm-5">
+                                                <h5>Business Permit Requests</h5>
+                                                <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Business Permit Request status">
+                                                    <BsFillInfoCircleFill /> </h5>
+                                            </div>
+                                            <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
+                                                <Bar data={businessClearanceChartData} options={businessClearanceOptions} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-4 col-md-4 p-1">
+                                    <div className="card barchartcard">
+                                        <div className="filter"></div>
+                                        <div className="bar-chart card-body Chart">
 
-                                        <div className="charttopdivider d-flex justify-content-between sm-5">
-                                            <h5>Barangay ID Requests</h5>
-                                            <Link to="/d-barangay-id" className="nav-link">
-                                                <h5>view</h5>
-                                            </Link>
+                                            <div className="charttopdivider d-flex justify-content-between sm-5">
+                                                <h5>Barangay ID Requests</h5>
+                                                <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay ID Requests Request status">
+                                                    <BsFillInfoCircleFill /> </h5>
+                                            </div>
+                                            <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
+                                                <Bar data={barangayIdChartData} options={barangayIdOptions} />
+                                            </div>
                                         </div>
-                                        <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
-                                            <Bar data={barangayIdChartData} options={barangayIdOptions} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* SECOND PART */}
+                        <div className="col-md-12 mt-2">
+                            <div className="row">
+                                <div className="col-4 col-md-4 p-1">
+                                    <div className="card barchartcard">
+                                        <div className="filter"></div>
+                                        <div className="bar-chart card-body Chart">
+                                            <div className="charttopdivider d-flex justify-content-between sm-5">
+                                                <h5>Barangay Installation Requests</h5>
+                                                <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Installation Requests status">
+                                                    <BsFillInfoCircleFill /> </h5>
+                                            </div>
+                                            <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
+                                                <Bar data={installationChartData} options={installationOptions} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-4 col-md-4 p-1">
+                                    <div className="card barchartcard">
+                                        <div className="filter"></div>
+                                        <div className="bar-chart card-body Chart">
+                                            <div className="charttopdivider d-flex justify-content-between sm-5">
+                                                <h5>Barangay Construction Requests</h5>
+                                                <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Construction Requests status">
+                                                    <BsFillInfoCircleFill /> </h5>
+                                            </div>
+                                            <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
+                                                <Bar data={constructionStatusChartData} options={constructionStatusOptions} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-4 col-md-4 p-1">
+                                    <div className="card barchartcard">
+                                        <div className="filter"></div>
+                                        <div className="bar-chart card-body Chart">
+                                            <div className="charttopdivider d-flex justify-content-between sm-5">
+                                                <h5>Barangay Indigency Requests</h5>
+                                                <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay Indigency Requests status">
+                                                    <BsFillInfoCircleFill /> </h5>
+                                            </div>
+                                            <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
+                                                <Bar data={indigencyChartData} options={indigencyOptions} />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    {/* SECOND PART */}
-                    <div className="col-md-12 mt-2 p-0">
-                        <div className="row ">
-                            <div className="col-4 col-md-4">
-                                <div className="card barchartcard">
-                                    <div className="filter"></div>
-                                    <div className="bar-chart card-body Chart">
-                                        <div className="charttopdivider d-flex justify-content-between sm-5">
-                                            <h5>Barangay Installation Requests</h5>
-                                            <Link to="/d-barangay-installation" className="nav-link">
-                                                <h5>view</h5>
-                                            </Link>
-                                        </div>
-                                        <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
-                                            <Bar data={installationChartData} options={installationOptions} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-4 col-md-4">
-                                <div className="card barchartcard">
-                                    <div className="filter"></div>
-                                    <div className="bar-chart card-body Chart">
-                                        <div className="charttopdivider d-flex justify-content-between sm-5">
-                                            <h5>Barangay Construction Requests</h5>
-                                            <Link to="/d-barangay-construction" className="nav-link">
-                                                <h5>view</h5>
-                                            </Link>
-                                        </div>
-                                        <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
-                                            <Bar data={constructionStatusChartData} options={constructionStatusOptions} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-4 col-md-4">
-                                <div className="card barchartcard">
-                                    <div className="filter"></div>
-                                    <div className="bar-chart card-body Chart">
-                                        <div className="charttopdivider d-flex justify-content-between sm-5">
-                                            <h5>Barangay Indigency Requests</h5>
-                                            <Link to="/d-barangay-indigency" className="nav-link">
-                                                <h5>view</h5>
-                                            </Link>
-                                        </div>
-                                        <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
-                                            <Bar data={indigencyChartData} options={indigencyOptions} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
             </div >
-        </>
+        </div >
     );
 }
 
