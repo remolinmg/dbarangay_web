@@ -1,5 +1,5 @@
 const health = require("../models/healthModel");
-
+const StaffLogs = require("../models/staffLogsModel");
 // Function to create a new health
 exports.createHealth = async (req, res) => {
   const {
