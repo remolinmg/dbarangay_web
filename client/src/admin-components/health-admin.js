@@ -207,10 +207,6 @@ function Healthadmin() {
             fetchData();
           }
         })
-        .catch((e) => {
-          alert("Failed!");
-          console.log(e);
-        });
 
       //     if (res.data === "Error saving data to MongoDB") {
       //       alert("Medical Already Exist!");

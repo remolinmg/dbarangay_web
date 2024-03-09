@@ -23,23 +23,8 @@ exports.updateEmergency = async (req, res) => {
       if (!updatedUserEmergency) {
         return res.status(404).json({ message: 'Emergency not found' });
       }else{
-        if(updatedData.status === "Processed"){
-          if(updatedData.emergencyType ==="FIRE Assistance"){
-            res.status(200).json(updatedUserEmergency);
-          }
-          else if(updatedData.emergencyType ==="POLICE Assistance"){
-            res.status(200).json(updatedUserEmergency);
-          }
-          else if(updatedData.emergencyType ==="AMBULANCE Assistance"){
-            res.status(200).json(updatedUserEmergency);
-          }
-        }
-        else{
         res.status(200).json(updatedUserEmergency);
-        }
       }
-  
-      
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
