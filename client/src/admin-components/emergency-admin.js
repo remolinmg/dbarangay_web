@@ -31,6 +31,8 @@ import { FaUserCircle } from "react-icons/fa";
 function EmergencyAdmin() {
   //  ------------------------------ SIDEBAR TOPBAR ------------------------------
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [tFirstName, setTFirstName] = useState();
+  const [tLastName, setTLastName] = useState();
 
   const handleSidebarCollapse = () => {
     setSidebarCollapsed(!isSidebarCollapsed);
@@ -72,6 +74,7 @@ function EmergencyAdmin() {
   const [data, setData] = useState([]);
   useEffect(() => {
     fetchData(); // Fetch initial data when the component mounts
+    fetchName();
   }, []);
 
   const fetchData = async () => {
@@ -82,6 +85,16 @@ function EmergencyAdmin() {
       setData(response.data);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const fetchName = async () => {
+    // Access Token
+    const token = Cookies.get("access_token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      setTFirstName(decoded.firstName);
+      setTLastName(decoded.lastName);
     }
   };
 
@@ -208,15 +221,82 @@ function EmergencyAdmin() {
         emergencyType: editEmergencyType,
         currentLocation: editCurrentLocation,
         date: editDate,
+        tFirstName,
+        tLastName,
       };
 
-      const response = await axios.put(
-        `https://dbarangay.onrender.com/update/emergency/${selectedRowData}`,
-        updatedData
-      );
-      console.log(response.data);
-      setShowEditForm(false);
-      fetchData();
+      const newBlotter = {
+        date: editDate,
+        complainant: editResidentName,
+        defendant: "unknown",
+        type: "Others",
+        address: editCurrentLocation,
+        kind: "minor",
+        status: "processed",
+        documentation: editEmergencyType,
+        tFirstName,
+        tLastName,
+      };
+
+      const newFire = {
+        date: editDate,
+        reporter: editResidentName,
+        respondents: "unknown",
+        type: "others",
+        address: editCurrentLocation,
+        status: "processed",
+        documentation: editEmergencyType,
+        tFirstName,
+        tLastName,
+      }
+
+      if (updatedData.status === "Processed") {
+
+        if (updatedData.emergencyType === "FIRE TRUCK Assistance") {
+          const response = await axios.put(
+            `https://dbarangay.onrender.com/update/emergency/${selectedRowData}`,
+            updatedData
+          );
+          const addFire = await axios.post("https://dbarangay.onrender.com/health",
+            newFire)
+          console.log(response.data, addFire.data);
+          setShowEditForm(false);
+          fetchData();
+        }
+        else if (updatedData.emergencyType === "POLICE Assistance") {
+          const response = await axios.put(
+            `https://dbarangay.onrender.com/update/emergency/${selectedRowData}`,
+            updatedData
+          );
+          const addBlotter = await axios.post("https://dbarangay.onrender.com/blotter",
+            newBlotter)
+          console.log(response.data, addBlotter.data);
+          console.log(response.data);
+          setShowEditForm(false);
+          fetchData();
+        }
+        else if (updatedData.emergencyType === "AMBULANCE Assistance") {
+          const response = await axios.put(
+            `https://dbarangay.onrender.com/update/emergency/${selectedRowData}`,
+            updatedData
+          );
+          const addFire = await axios.post("https://dbarangay.onrender.com/health",
+            newFire)
+          console.log(response.data, addFire.data);
+          setShowEditForm(false);
+          fetchData();
+        }
+
+      }
+      else {
+        const response = await axios.put(
+          `https://dbarangay.onrender.com/update/emergency/${selectedRowData}`,
+          updatedData
+        );
+        console.log(response.data);
+        setShowEditForm(false);
+        fetchData();
+      }
     } catch (error) {
       console.error(error);
       // Handle error, show an error message to the user
@@ -382,9 +462,8 @@ function EmergencyAdmin() {
               </Link>
               {/* <ul className="sidebar-submenu"> */}
               <ul
-                className={`sidebar-submenu w-100 ms-3 ${
-                  isDropdownOpen ? "open" : ""
-                }`}
+                className={`sidebar-submenu w-100 ms-3 ${isDropdownOpen ? "open" : ""
+                  }`}
               >
                 {isDropdownOpen && (
                   <>
@@ -525,9 +604,8 @@ function EmergencyAdmin() {
                                 },
                                 (_, i) => (
                                   <li
-                                    className={`page-item ${
-                                      i + 1 === currentPage ? "active" : ""
-                                    }`}
+                                    className={`page-item ${i + 1 === currentPage ? "active" : ""
+                                      }`}
                                     key={i}
                                   >
                                     <a
@@ -579,12 +657,14 @@ function EmergencyAdmin() {
                             <td>{item.date}</td>
                             <td>{item.status}</td>
                             <td>
-                              <img
-                                style={{ width: "100px", height: "100px" }}
-                                src={item.emergencyProofImage.url}
-                                alt=""
-                                className="officials-picture"
-                              />
+                              {item.emergencyProofImage && item.emergencyProofImage.url && (
+                                <img
+                                  style={{ width: "100px", height: "100px" }}
+                                  src={item.emergencyProofImage.url}
+                                  alt=""
+                                  className="officials-picture"
+                                />
+                              )}
                             </td>
                             <td>
                               <button
