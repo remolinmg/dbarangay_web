@@ -15,42 +15,41 @@ exports.createHealth = async (req, res) => {
   } = (req.body = req.body);
 
   const data = {
-    date,
-    reporter,
-    respondents,
-    type,
-    address,
-    status,
-    documentation,
+    date:date,
+    reporter:reporter,
+    respondents:respondents,
+    type:type,
+    address:address,
+    status:status,
+    documentation:documentation,
   };
 
   try {
     const check = await health.findOne({
-      $and: [{ date }, { reporter }, { respondents }, { type }],
+      $and: [{ date:date }, { reporter:reporter}, { respondents:respondents }, { type:type }],
     });
 
     if (check) {
-      return res.status(400).json("Error saving data to MongoDB");
+       res.status(400).json("Error saving data to MongoDB");
+    }else{
+      res.status(201).send("File and text data saved to MongoDB");
+      const currentDate = new Date();
+      const accessDate = currentDate.toISOString().slice(0, 10);
+      const accessTime = `${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+      const name = `${tFirstName} ${tLastName}`;
+      const activity = "Created a Medical Report";
+  
+      const newCustomData = new StaffLogs({
+        name: name,
+        accessDate: accessDate,
+        accessTime: accessTime,
+        activity: activity,
+      });
+  
+      await newCustomData.save();
+      await health.insertMany([data]);
+      //sadasaw
     }
-
-    const currentDate = new Date();
-    const accessDate = currentDate.toISOString().slice(0, 10);
-    const accessTime = `${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
-    const name = `${tFirstName} ${tLastName}`;
-    const activity = "Created a Medical Report";
-
-    const newCustomData = new StaffLogs({
-      name,
-      accessDate,
-      accessTime,
-      activity,
-    });
-
-    await newCustomData.save();
-    await health.insertMany([data]);
-    //sadasaw
-
-    return res.status(201).send("File and text data saved to MongoDB");
   } catch (error) {
     console.error(error);
     return res.status(500).send("Error saving data to MongoDB");
