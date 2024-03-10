@@ -167,7 +167,7 @@ function Healthadmin() {
   //  DELETE
   const deleteRow = async (id) => {
     try {
-      await axios.delete(`https://dbarangay.onrender.com/delete/health/${id}`);
+      await axios.delete(`https://dbarangay.onrender.com/delete/health/${id}`, { data: { tFirstName, tLastName } });
       fetchData();
     } catch (error) {
       console.error(error);
