@@ -810,7 +810,7 @@ function Dashboard3() {
                                         <div className="bar-chart card-body Chart">
                                             <div className="charttopdivider d-flex justify-content-between sm-5">
                                                 <h5>Barangay Certificate Requests</h5>
-                                                <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Certificate Request status">
+                                                <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Certificate Request status. The status includes whether the request is New, On Process, Processed, Denied, along with the number of each data sets." >
                                                     <BsFillInfoCircleFill /> </h5>
                                             </div>
                                             <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
@@ -825,7 +825,7 @@ function Dashboard3() {
                                         <div className="bar-chart card-body Chart">
                                             <div className="charttopdivider d-flex justify-content-between sm-5">
                                                 <h5>Business Permit Requests</h5>
-                                                <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Business Permit Request status">
+                                                <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Business Permit Request status The status includes whether the request is New, On Process, Processed, Denied, along with the number of each data sets.">
                                                     <BsFillInfoCircleFill /> </h5>
                                             </div>
                                             <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
@@ -841,7 +841,7 @@ function Dashboard3() {
 
                                             <div className="charttopdivider d-flex justify-content-between sm-5">
                                                 <h5>Barangay ID Requests</h5>
-                                                <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay ID Requests Request status">
+                                                <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay ID Requests Request status The status includes whether the request is New, On Process, Processed, Denied, along with the number of each data sets.">
                                                     <BsFillInfoCircleFill /> </h5>
                                             </div>
                                             <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
@@ -862,7 +862,7 @@ function Dashboard3() {
                                         <div className="bar-chart card-body Chart">
                                             <div className="charttopdivider d-flex justify-content-between sm-5">
                                                 <h5>Barangay Installation Requests</h5>
-                                                <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Installation Requests status">
+                                                <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Installation Requests status The status includes whether the request is New, On Process, Processed, Denied, along with the number of each data sets.">
                                                     <BsFillInfoCircleFill /> </h5>
                                             </div>
                                             <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
@@ -877,7 +877,7 @@ function Dashboard3() {
                                         <div className="bar-chart card-body Chart">
                                             <div className="charttopdivider d-flex justify-content-between sm-5">
                                                 <h5>Barangay Construction Requests</h5>
-                                                <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Construction Requests status">
+                                                <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Construction Requests status The status includes whether the request is New, On Process, Processed, Denied, along with the number of each data sets.">
                                                     <BsFillInfoCircleFill /> </h5>
                                             </div>
                                             <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
@@ -892,7 +892,7 @@ function Dashboard3() {
                                         <div className="bar-chart card-body Chart">
                                             <div className="charttopdivider d-flex justify-content-between sm-5">
                                                 <h5>Barangay Indigency Requests</h5>
-                                                <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay Indigency Requests status">
+                                                <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay Indigency Requests status The status includes whether the request is New, On Process, Processed, Denied, along with the number of each data sets.">
                                                     <BsFillInfoCircleFill /> </h5>
                                             </div>
                                             <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>

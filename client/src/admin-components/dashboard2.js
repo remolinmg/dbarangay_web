@@ -439,7 +439,7 @@ function Dashboard2() {
 
                                         <div className="charttopdivider d-flex justify-content-between sm-5">
                                             <h2>Health Data by Type for the Last 12 Months</h2>
-                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay Indigency Requests status">
+                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="This diagram presents a comprehensive overview of health issues within the population over the past year, categorizing data into various types. The data sets include 'Accident', 'Heart Attack', 'Stroke', 'Dengue', 'Pneumonia', 'Chicken pox', 'HIV', 'Influenza', 'COVID-19', and 'Others'. The diagram provides valuable insights into the prevalence and distribution of different health conditions, aiding in the assessment and planning of healthcare initiatives.">
                                                 <BsFillInfoCircleFill /> </h5>
                                         </div>
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
