@@ -137,47 +137,83 @@ exports.signup = async (req, res) => {
 
   const { path } = req.file;
   const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  const lastCustomIdDoc = await User.findOne().sort({ _id: -1 });
+
   let newCustomId = currentDate + '01';
 
-  if (lastCustomIdDoc) {
-    const lastIncrementDate = lastCustomIdDoc._id.slice(0, 8);
-    if (lastIncrementDate !== currentDate) {
-      // If the last document's date is different from the current date, reset increment to 1
-      newCustomId = currentDate + '01';
-    } else {
-      // If the dates are the same, increment the existing increment
-      const lastIncrement = parseInt(lastCustomIdDoc._id.slice(-4));
-      const newIncrement = (lastIncrement + 1).toString().padStart(4, '0');
-      newCustomId = currentDate + newIncrement;
+  while (true) {
+    try {
+      // Check if the generated _id already exists
+      const existingUser = await User.findById(newCustomId);
+      if (!existingUser) {
+        // Upload the image to Cloudinary
+        const result = await cloudinary.uploader.upload(path, {
+          folder: 'profile',
+        });
+
+        // Create a new user document with all the fields
+        const newCustomData = new User({
+          _id: newCustomId,
+          firstName,
+          middleName,
+          lastName,
+          suffix,
+          houseNumber,
+          barangay,
+          district,
+          cityMunicipality,
+          province,
+          region,
+          email,
+          phoneNumber,
+          nationality,
+          sex,
+          civilStatus,
+          employmentStatus,
+          homeOwnership,
+          dateOfBirth,
+          birthPlace,
+          age,
+          highestEducation,
+          residentClass,
+          votersRegistration,
+          password,
+          companyName,
+          position,
+          status,
+          type,
+          filename: {
+            url: result.secure_url,
+            public_id: result.public_id,
+          },
+        });
+
+        // Save the new user data to MongoDB
+        await newCustomData.save();
+
+        // Send success response
+        res.send('File and text data saved to MongoDB and Cloudinary');
+        break;
+      } else {
+        // Increment the last 4 digits of _id and try again
+        const lastIncrement = parseInt(newCustomId.slice(-4));
+        const newIncrement = (lastIncrement + 1).toString().padStart(4, '0');
+        newCustomId = currentDate + newIncrement;
+      }
+    } catch (err) {
+      if (err.code === 11000) {
+        // Duplicate key error, try generating a new _id
+        const lastIncrement = parseInt(newCustomId.slice(-4));
+        const newIncrement = (lastIncrement + 1).toString().padStart(4, '0');
+        newCustomId = currentDate + newIncrement;
+      } else {
+        // Handle other errors
+        console.error(err);
+        res.status(500).send('Error saving data to MongoDB and Cloudinary');
+        break;
+      }
     }
   }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  try {
-    // Upload the image to Cloudinary
-    const result = await cloudinary.uploader.upload(path, {
-      folder: 'profile',
-    });
-
-    const newCustomData = new User({
-      _id: newCustomId,
-      firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residentClass, votersRegistration, password: hashedPassword, companyName, position, status, type,
-      filename: {
-        url: result.secure_url,
-        public_id: result.public_id,
-      },
-    });
-
-    await newCustomData.save();
-    res.send('File and text data saved to MongoDB and Cloudinary');
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error saving data to MongoDB and Cloudinary');
-  }
-};
-    
+}; 
 
   
 
