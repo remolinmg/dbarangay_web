@@ -21,6 +21,7 @@ app.set('views', path.join(__dirname, '../views'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 const cloudinary = require('../uploads/cloudinary')
+const { ObjectId } = require('mongodb');
 
 
 
@@ -155,8 +156,11 @@ exports.signup = async (req, res) => {
     // Ensure the counter is padded to 4 digits
     const paddedCounter = counter.toString().padStart(4, '0');
 
-    // Concatenate currentDate and paddedCounter to create a unique _id
-    const newCustomId = currentDate + paddedCounter;
+    // Include a timestamp or a random component for uniqueness
+    const uniqueComponent = Date.now().toString(36).slice(-4);
+
+    // Concatenate currentDate, paddedCounter, and uniqueComponent to create a unique _id
+    const newCustomId = currentDate + paddedCounter + uniqueComponent;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -184,6 +188,8 @@ exports.signup = async (req, res) => {
     res.status(500).send('Error saving data to MongoDB and Cloudinary');
   }
 };
+
+
 
 
 
