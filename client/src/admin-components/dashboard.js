@@ -678,7 +678,7 @@ function Dashboard() {
 
                                         <div className="charttopdivider d-flex justify-content-between sm-5">
                                             <h5 className="card-title">Employment Status</h5>
-                                            <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Indigency Requests status">
+                                            <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="The diagram provides a clear representation of the employment landscape within the population, highlighting the ratio of individuals who are employed versus those who are unemployed.">
                                                 <BsFillInfoCircleFill /> </h5>
                                         </div>
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
@@ -691,7 +691,7 @@ function Dashboard() {
                                     <div className="bar-chart card-body Chart">
                                         <div className="charttopdivider d-flex justify-content-between sm-5">
                                             <h5 className="card-title">Age</h5>
-                                            <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Indigency Requests status">
+                                            <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="The diagram provides a clear depiction of the age distribution within the population, highlighting the distribution of individuals across different age groups. It offers insight into the demographic composition, emphasizing the age demographics present in the population.">
                                                 <BsFillInfoCircleFill /> </h5>
                                         </div>
 
@@ -712,7 +712,7 @@ function Dashboard() {
 
                                         <div className="charttopdivider d-flex justify-content-between sm-5">
                                             <h5 className="card-title">Civil Status</h5>
-                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay Indigency Requests status">
+                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="The diagram provides a clear overview of the civil status distribution within the population, highlighting the proportions of individuals who are Single, Married, Widowed, and Separated. It offers insight into the marital status composition, illustrating the distribution of civil statuses among the population">
                                                 <BsFillInfoCircleFill /> </h5>
                                         </div>
 
@@ -726,8 +726,8 @@ function Dashboard() {
                                     <div className="bar-chart card-body Chart">
 
                                         <div className="charttopdivider d-flex justify-content-between sm-5">
-                                            <h5 className="card-title">educational attainments</h5>
-                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay Indigency Requests status">
+                                            <h5 className="card-title">Educational Attainments</h5>
+                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="The diagram provides a comprehensive view of the educational attainments within the population, highlighting the distribution across various levels of education. It offers insight into the educational landscape, emphasizing the proportion of individuals with different educational backgrounds.">
                                                 <BsFillInfoCircleFill /> </h5>
                                         </div>
 
