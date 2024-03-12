@@ -146,7 +146,10 @@ exports.signup = async (req, res) => {
 
     // If there are existing documents, extract and increment the counter
     if (lastCustomIdDoc) {
-      counter = parseInt(lastCustomIdDoc._id.slice(-4)) + 1;
+      const lastCounter = parseInt(lastCustomIdDoc._id.slice(-4), 10);
+      if (!isNaN(lastCounter)) {
+        counter = lastCounter + 1;
+      }
     }
 
     // Ensure the counter is padded to 4 digits
