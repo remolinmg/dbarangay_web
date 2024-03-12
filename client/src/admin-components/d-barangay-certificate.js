@@ -165,6 +165,15 @@ function BclearanceAdmin() {
     );
   });
 
+  // Modal --------------------------------------------------------------------------------------------------
+  const [reasonDel, setReasonDel] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const closeModal = () => {
+    // Close the modal without proceeding with deletion
+    setShowModal(false);
+  };
+
   // Forms -------------------------------------------------------------------------------------------------
   const [showForm, setShowForm] = useState(false);
   const toggleForm = () => {
@@ -177,10 +186,23 @@ function BclearanceAdmin() {
   //  DELETE
   const deleteRow = async (id) => {
     try {
+      // Show the modal to get the reason
+      setShowModal(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const confirmDeletion = async (id) => {
+    try {
+      // Send the deletion request with the reason
       await axios.delete(
         `https://dbarangay.onrender.com/delete/barangaycertificate/${id}`,
-        { data: { tFirstName, tLastName } }
+        { data: { tFirstName, tLastName, reason: reasonDel } }
       );
+      // Close the modal
+      setShowModal(false);
+      // Fetch data or perform any other necessary actions
       fetchData();
     } catch (error) {
       console.error(error);
@@ -1009,6 +1031,23 @@ function BclearanceAdmin() {
                       </button>
                     </div>
                   </form>
+                </div>
+              </div>
+            )}
+
+            {/* DELETE FORM */}
+            {showModal && (
+              <div className="modal">
+                <div className="modal-content">
+                  <label htmlFor="reasonInput">Reason for deletion:</label>
+                  <input
+                    type="text"
+                    id="reasonInput"
+                    value={reasonDel}
+                    onChange={(e) => setReasonDel(e.target.value)}
+                  />
+                  <button onClick={confirmDeletion}>Confirm Deletion</button>
+                  <button onClick={closeModal}>Cancel</button>
                 </div>
               </div>
             )}
