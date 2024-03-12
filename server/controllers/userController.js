@@ -114,7 +114,7 @@ exports.updatepass = async (req, res) => {
     console.log(user.id);
 
     const updatedPassword = await User.findByIdAndUpdate(
-      user.id,{ password:  hashedPassword } 
+      user.id, { password: hashedPassword }
     );
 
     if (!updatedPassword) {
@@ -132,43 +132,44 @@ exports.updatepass = async (req, res) => {
 //user signup
 exports.signup = async (req, res) => {
 
-    const {
-      firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residentClass, votersRegistration, password, companyName, position, status, type
-    } = req.body;
-    const { path } = req.file;
-    const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-    const lastCustomIdDoc = await User.findOne().sort({ _id: -1 });
-    let newCustomId = currentDate + '0001';
-    if (lastCustomIdDoc) {
-      const lastIncrement = parseInt(lastCustomIdDoc._id.slice(-2));
-      const newIncrement = (lastIncrement + 1).toString().padStart(2, '0');
-      newCustomId = currentDate + newIncrement;
-    }
-    const hashedPassword = await bcrypt.hash(password, 10);
-    try {
-      // Upload the image to Cloudinary
-      const result = await cloudinary.uploader.upload(path, {
-        folder: 'profile',
-      });
-  
-      const newCustomData = new User({
-      _id: newCustomId,
-      firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residentClass, votersRegistration, password:hashedPassword, companyName, position, status, type,
-        filename: {
-          url: result.secure_url, 
-          public_id: result.public_id,
-        },
-      });
-      await newCustomData.save();
-      res.send('File and text data saved to MongoDB and Cloudinary');
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Error saving data to MongoDB and Cloudinary');
-    }
-  };
-    
+  const {
+    firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residentClass, votersRegistration, password, companyName, position, status, type
+  } = req.body;
+  const { path } = req.file;
+  const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  const lastCustomIdDoc = await User.findOne().sort({ _id: -1 });
+  let newCustomId = currentDate + '0001';
+  if (lastCustomIdDoc) {
+    const lastIncrement = parseInt(lastCustomIdDoc._id.slice(-4));
+    const newIncrement = (lastIncrement + 1).toString().padStart(4, '0');
+    newCustomId = currentDate + newIncrement;
 
-  
+  }
+  const hashedPassword = await bcrypt.hash(password, 10);
+  try {
+    // Upload the image to Cloudinary
+    const result = await cloudinary.uploader.upload(path, {
+      folder: 'profile',
+    });
+
+    const newCustomData = new User({
+      _id: newCustomId,
+      firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residentClass, votersRegistration, password: hashedPassword, companyName, position, status, type,
+      filename: {
+        url: result.secure_url,
+        public_id: result.public_id,
+      },
+    });
+    await newCustomData.save();
+    res.send('File and text data saved to MongoDB and Cloudinary');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error saving data to MongoDB and Cloudinary');
+  }
+};
+
+
+
 
 //user login
 exports.login = async (req, res) => {
