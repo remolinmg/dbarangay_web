@@ -131,27 +131,38 @@ exports.updatepass = async (req, res) => {
 
 //user signup
 exports.signup = async (req, res) => {
-
   const {
     firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residentClass, votersRegistration, password, companyName, position, status, type
   } = req.body;
   const { path } = req.file;
   const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  const lastCustomIdDoc = await User.findOne().sort({ _id: -1 });
-  let newCustomId = currentDate + '01';
-  if (lastCustomIdDoc) {
-    const lastIncrement = parseInt(lastCustomIdDoc._id.slice(-4));
-    const newIncrement = (lastIncrement + 1).toString().padStart(4, '0');
-    newCustomId = currentDate + newIncrement;
-
-  }
-  const hashedPassword = await bcrypt.hash(password, 10);
+  
   try {
+    // Find the latest user document to get the counter
+    const lastCustomIdDoc = await User.findOne().sort({ _id: -1 });
+
+    // Initialize counter to 1 if no existing documents
+    let counter = 1;
+
+    // If there are existing documents, extract and increment the counter
+    if (lastCustomIdDoc) {
+      counter = parseInt(lastCustomIdDoc._id.slice(-4)) + 1;
+    }
+
+    // Ensure the counter is padded to 4 digits
+    const paddedCounter = counter.toString().padStart(4, '0');
+
+    // Concatenate currentDate and paddedCounter to create a unique _id
+    const newCustomId = currentDate + paddedCounter;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     // Upload the image to Cloudinary
     const result = await cloudinary.uploader.upload(path, {
       folder: 'profile',
     });
 
+    // Create a new User document with the unique _id
     const newCustomData = new User({
       _id: newCustomId,
       firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residentClass, votersRegistration, password: hashedPassword, companyName, position, status, type,
@@ -160,13 +171,17 @@ exports.signup = async (req, res) => {
         public_id: result.public_id,
       },
     });
+
+    // Save the new User document to MongoDB
     await newCustomData.save();
+
     res.send('File and text data saved to MongoDB and Cloudinary');
   } catch (err) {
     console.error(err);
     res.status(500).send('Error saving data to MongoDB and Cloudinary');
   }
 };
+
 
 
 
