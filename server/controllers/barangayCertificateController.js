@@ -85,20 +85,20 @@ exports.updateCertificate = async (req, res) => {
       return res.status(404).json({ message: "Request not found" });
     }
 
-    const date = new Date();
-    const accessDate = date.toISOString().slice(0, 10);
-    const accessTime =
-      date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    const name = updatedData.tFirstName + " " + updatedData.tLastName;
-    const activity = "Edited a Barangay Certificate Request";
+    // const date = new Date();
+    // const accessDate = date.toISOString().slice(0, 10);
+    // const accessTime =
+    //   date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    // const name = updatedData.tFirstName + " " + updatedData.tLastName;
+    // const activity = "Edited a Barangay Certificate Request";
 
-    const newCustomData = new StaffLogs({
-      name: name,
-      accessDate: accessDate,
-      accessTime: accessTime,
-      activity: activity,
-    });
-    await newCustomData.save();
+    // const newCustomData = new StaffLogs({
+    //   name: name,
+    //   accessDate: accessDate,
+    //   accessTime: accessTime,
+    //   activity: activity,
+    // });
+    // await newCustomData.save();
 
     res.status(200).json(updatedUserCertificate);
   } catch (error) {
@@ -115,13 +115,13 @@ exports.deleteCertificate = async (req, res) => {
     if (!deletedDocument) {
       return res.status(404).json({ message: "Document not found" });
     }
-    const { tFirstName, tLastName, reason } = req.body;
+    const { tFirstName, tLastName} = req.body;
     const date = new Date();
     const accessDate = date.toISOString().slice(0, 10);
     const accessTime =
       date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     const name = tFirstName + " " + tLastName;
-    const activity = "Deleted a Barangay Certificate Request. /n" + "Reason:" + reason;
+    const activity = "Deleted a Barangay Certificate Request.";
 
     const newCustomData = new StaffLogs({
       name: name,

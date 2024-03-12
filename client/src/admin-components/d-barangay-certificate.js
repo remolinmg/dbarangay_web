@@ -186,8 +186,11 @@ function BclearanceAdmin() {
   //  DELETE
   const deleteRow = async (id) => {
     try {
-      // Show the modal to get the reason
-      setShowModal(true);
+      await axios.delete(
+        `https://dbarangay.onrender.com/delete/barangaycertificate/${id}`,
+        { data: { tFirstName, tLastName } }
+      );
+      fetchData();
     } catch (error) {
       console.error(error);
     }
@@ -320,8 +323,6 @@ function BclearanceAdmin() {
         reasonOfRequest: editReasonOfRequest,
         pickUpDate: editDate,
         status: editStatus,
-        tFirstName,
-        tLastName,
       };
       const requestBody = {
         ...updatedData,
