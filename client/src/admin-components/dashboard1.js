@@ -558,7 +558,7 @@ function Dashboard1() {
                                     <div className="bar-chart card-body Chart">
                                         <div className="charttopdivider d-flex justify-content-between sm-5">
                                             <h5 className="card-title">Blotter Records by Month</h5>
-                                            <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Indigency Requests status">
+                                            <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="The diagram visually represents blotter records by month, categorizing them into Minor Cases and Major Cases. It provides an overview of the distribution of these cases over time, offering insights into the frequency and severity of incidents recorded each month.">
                                                 <BsFillInfoCircleFill /> </h5>
                                         </div>
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
@@ -615,7 +615,7 @@ function Dashboard1() {
                                        
                                         <div className="charttopdivider d-flex justify-content-between sm-5">
                                             <h5 className="card-title">Type Blotter</h5>
-                                            <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="Barangay Indigency Requests status">
+                                            <h5 className="tooltipicon" data-toggle="tooltip" data-placement="top" aria-label="The diagram provides a comprehensive overview of blotter records, highlighting different categories such as Missing Person, Missing Property, Missing Animal, INJURY, Damage to Property, Sexual Harrasment, and Others. Each category is visually represented to show the frequency or occurrence of each type of incident, offering valuable insights into the nature of incidents recorded.">
                                                 <BsFillInfoCircleFill /> </h5>
                                         </div>
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
@@ -657,7 +657,7 @@ function Dashboard1() {
                                     <div className="bar-chart card-body Chart">
                                         <div className="charttopdivider d-flex justify-content-between sm-5">
                                             <h5 className="card-title">Complaints Records by Month</h5>
-                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay Indigency Requests status">
+                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="This diagram illustrates the distribution of complaints recorded each month, distinguishing between Minor Cases and Major Cases. It provides a visual representation of the monthly trends in complaint incidents, highlighting the relative proportions of Minor and Major Cases over time.">
                                                 <BsFillInfoCircleFill /> </h5>
                                         </div>
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
@@ -714,7 +714,7 @@ function Dashboard1() {
 
                                         <div className="charttopdivider d-flex justify-content-between sm-5">
                                             <h5 className="card-title">Type Complaints</h5>
-                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="Barangay Indigency Requests status">
+                                            <h5 className="tooltipiconright" data-toggle="tooltip" data-placement="top" aria-labels="The diagram provides an overview of the types of complaints recorded within the population, including Noise Complaints, Illegal Parking, Curfew Violations, Vandalism, Rescission, Garbage Problems, and Others. It offers a clear representation of the distribution of different types of complaints, highlighting the prevalence of each category within the population.">
                                                 <BsFillInfoCircleFill /> </h5>
                                         </div>
                                         <div style={{ borderRadius: '10px', border: '1px solid #ddd' }}>
