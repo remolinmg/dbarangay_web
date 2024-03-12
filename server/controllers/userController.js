@@ -21,7 +21,6 @@ app.set('views', path.join(__dirname, '../views'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 const cloudinary = require('../uploads/cloudinary')
-const { ObjectId } = require('mongodb');
 
 
 
@@ -115,7 +114,7 @@ exports.updatepass = async (req, res) => {
     console.log(user.id);
 
     const updatedPassword = await User.findByIdAndUpdate(
-      user.id, { password: hashedPassword }
+      user.id,{ password:  hashedPassword } 
     );
 
     if (!updatedPassword) {
@@ -132,68 +131,44 @@ exports.updatepass = async (req, res) => {
 
 //user signup
 exports.signup = async (req, res) => {
-  const {
-    firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residentClass, votersRegistration, password, companyName, position, status, type
-  } = req.body;
-  const { path } = req.file;
-  const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  
-  try {
-    // Find the latest user document to get the counter
+
+    const {
+      firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residentClass, votersRegistration, password, companyName, position, status, type
+    } = req.body;
+    const { path } = req.file;
+    const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, '');
     const lastCustomIdDoc = await User.findOne().sort({ _id: -1 });
-
-    // Initialize counter to 1 if no existing documents
-    let counter = 1;
-
-    // If there are existing documents, extract and increment the counter
+    let newCustomId = currentDate + '0001';
     if (lastCustomIdDoc) {
-      const lastCounter = parseInt(lastCustomIdDoc._id.slice(-4), 10);
-      if (!isNaN(lastCounter)) {
-        counter = lastCounter + 1;
-      }
+      const lastIncrement = parseInt(lastCustomIdDoc._id.slice(-2));
+      const newIncrement = (lastIncrement + 1).toString().padStart(2, '0');
+      newCustomId = currentDate + newIncrement;
     }
-
-    // Ensure the counter is padded to 4 digits
-    const paddedCounter = counter.toString().padStart(4, '0');
-
-    // Include a timestamp or a random component for uniqueness
-    const uniqueComponent = Date.now().toString(36).slice(-4);
-
-    // Concatenate currentDate, paddedCounter, and uniqueComponent to create a unique _id
-    const newCustomId = currentDate + paddedCounter + uniqueComponent;
-
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Upload the image to Cloudinary
-    const result = await cloudinary.uploader.upload(path, {
-      folder: 'profile',
-    });
-
-    // Create a new User document with the unique _id
-    const newCustomData = new User({
+    try {
+      // Upload the image to Cloudinary
+      const result = await cloudinary.uploader.upload(path, {
+        folder: 'profile',
+      });
+  
+      const newCustomData = new User({
       _id: newCustomId,
-      firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residentClass, votersRegistration, password: hashedPassword, companyName, position, status, type,
-      filename: {
-        url: result.secure_url,
-        public_id: result.public_id,
-      },
-    });
+      firstName, middleName, lastName, suffix, houseNumber, barangay, district, cityMunicipality, province, region, email, phoneNumber, nationality, sex, civilStatus, employmentStatus, homeOwnership, dateOfBirth, birthPlace, age, highestEducation, residentClass, votersRegistration, password:hashedPassword, companyName, position, status, type,
+        filename: {
+          url: result.secure_url, 
+          public_id: result.public_id,
+        },
+      });
+      await newCustomData.save();
+      res.send('File and text data saved to MongoDB and Cloudinary');
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error saving data to MongoDB and Cloudinary');
+    }
+  };
+    
 
-    // Save the new User document to MongoDB
-    await newCustomData.save();
-
-    res.send('File and text data saved to MongoDB and Cloudinary');
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error saving data to MongoDB and Cloudinary');
-  }
-};
-
-
-
-
-
-
+  
 
 //user login
 exports.login = async (req, res) => {
