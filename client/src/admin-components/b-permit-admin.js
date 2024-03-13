@@ -161,10 +161,19 @@ function BpermitAdmin() {
     const handleDiscard = () => { setShowForm(false); }; //   DISCARD FUNCTION
 
     //  DELETE  
-    const deleteRow = async (id) => {
+    const [rowToDelete, setRowToDelete] = useState('');
+    const [reasonDelete, setReasonDelete] = useState('');
+
+    const deleteModal = (val) =>{
+        setRowToDelete(val._id);
+        setShowDeleteForm(true);
+    }
+
+    const deleteRow = async () => {
         try {
-            await axios.delete(`https://dbarangay.onrender.com/delete/businessclearance/${id}`, { data: { tFirstName, tLastName } });
+            await axios.delete(`https://dbarangay.onrender.com/delete/businessclearance/${rowToDelete}`, { data: { tFirstName, tLastName, reasonDelete } });
             fetchData();
+            setShowDeleteForm(false);
         } catch (error) {
             console.error(error);
         }
@@ -257,7 +266,9 @@ function BpermitAdmin() {
     const [editStatus, setEditStatus] = useState('');
     const [selectedRowData, setSelectedRowData] = useState(null);
     const [showEditForm, setShowEditForm] = useState(false);
+    const [showDeleteForm, setShowDeleteForm] = useState(false);
     const handleEditDiscard = () => { setShowEditForm(false); };
+    const handleDeleteDiscard = () => { setShowDeleteForm(false); };
 
     // ----------------------------------  Function to show the edit form with the default data of the selected row ----------------------------------
     const showEditFormHandler = (rowData) => {
@@ -607,7 +618,7 @@ function BpermitAdmin() {
                                                                 <button type="button" className="btn btn-primary" onClick={() => showEditFormHandler(val)}> Edit</button>
                                                                 <button
                                                                     className="btn btn-outline-danger"
-                                                                    onClick={() => { deleteRow(val._id); }}>Delete</button>
+                                                                    onClick={() => deleteModal(val)}>Delete</button>
 
                                                             </div>
                                                         </td>
@@ -876,6 +887,38 @@ function BpermitAdmin() {
 
                                             </div>
                                         </form>
+                                    </div>
+                                </div>
+                            )}
+                            {/* Delete form */}
+                            {showDeleteForm && (
+                                <div className='popup-overlay'>
+                                    <div className='popup-form'>
+                                            <div className='certificate'>
+                                                <h2 className='certificate-title'>Reason for Deletion</h2>
+                                                <div className='certificate-content'>
+                                                    <div className="row">
+                                                        <div className="col-12">
+                                                            <div className='form-group'>
+                                                                <label htmlFor='bname'> Reason </label>
+                                                                <input
+                                                                    type='text'
+                                                                    id='reason'
+                                                                    name='reason'
+                                                                    onChange={(e) => setReasonDelete(e.target.value)}
+                                                                    className='form-control' required
+                                                                />
+                                                            </div>
+                                                        
+                                                        <div className='form-buttons'>
+                                                            <button type='submit' className='btn btn-primary' onClick={deleteRow}>Delete</button>
+                                                            <button type='button' className='btn btn-secondary' onClick={handleDeleteDiscard}> Discard </button>
+                                                        </div>
+                                                         
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                     </div>
                                 </div>
                             )}
