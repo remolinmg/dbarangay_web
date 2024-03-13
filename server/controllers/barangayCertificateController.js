@@ -84,6 +84,7 @@ exports.updateCertificate = async (req, res) => {
         pickUpDate: updatedData.pickUpDate,
         modeOfPayment: updatedData.modeOfPayment,
         reference: updatedData.reference,
+        status: updatedData.status,
       },
       { new: true }
     );
