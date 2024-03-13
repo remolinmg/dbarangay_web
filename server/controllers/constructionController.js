@@ -61,13 +61,13 @@ async function deleteConstruction(req, res) {
     if (!deletedDocument) {
       return res.status(404).json({ message: 'Document not found' });
     }
-    const { tFirstName, tLastName } = req.body
+    const { tFirstName, tLastName, reasonDelete } = req.body
     const date = new Date();
     const accessDate = date.toISOString().slice(0, 10);
     const accessTime =
       date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     const name = tFirstName + " " + tLastName;
-    const activity = "Deleted a Construction Permit Request";
+    const activity = "Deleted a Construction Permit Request due to " + reasonDelete;
 
     const newCustomData = new StaffLogs({
       name: name,

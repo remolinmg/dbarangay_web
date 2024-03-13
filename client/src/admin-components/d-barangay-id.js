@@ -159,10 +159,21 @@ function Biddmin() {
     const handleDiscard = () => { setShowForm(false); }; //   DISCARD FUNCTION
 
     //  DELETE  
-    const deleteRow = async (id) => {
+    const [showDeleteForm, setShowDeleteForm] = useState(false);
+    const handleDeleteDiscard = () => { setShowDeleteForm(false); };
+   
+    const [rowToDelete, setRowToDelete] = useState('');
+       const [reasonDelete, setReasonDelete] = useState('');
+   
+       const deleteModal = (val) =>{
+           setRowToDelete(val._id);
+           setShowDeleteForm(true);
+       }
+    const deleteRow = async () => {
         try {
-            await axios.delete(`https://dbarangay.onrender.com/delete/barangayid/${id}`, { data: { tFirstName, tLastName } });
+            await axios.delete(`https://dbarangay.onrender.com/delete/barangayid/${rowToDelete}`, { data: { tFirstName, tLastName, reasonDelete } });
             fetchData();
+            setShowDeleteForm(false);
         } catch (error) {
             console.error(error);
         }
@@ -591,7 +602,7 @@ function Biddmin() {
                                                             </button>
                                                             <button
                                                                 className="btn btn-danger btn-sm"
-                                                                onClick={() => deleteRow(item._id)}
+                                                                onClick={() => deleteModal(item)}
                                                             >
                                                                 Delete
                                                             </button>
@@ -772,6 +783,39 @@ function Biddmin() {
                                 </div>
                             </div>
                         )}
+
+                         {/* Delete form */}
+                         {showDeleteForm && (
+                                <div className='popup-overlay'>
+                                    <div className='popup-form'>
+                                            <div className='certificate'>
+                                                <h2 className='certificate-title'>Reason for Deletion</h2>
+                                                <div className='certificate-content'>
+                                                    <div className="row">
+                                                        <div className="col-12">
+                                                            <div className='form-group'>
+                                                                <label htmlFor='bname'> Reason </label>
+                                                                <input
+                                                                    type='text'
+                                                                    id='reason'
+                                                                    name='reason'
+                                                                    onChange={(e) => setReasonDelete(e.target.value)}
+                                                                    className='form-control' required
+                                                                />
+                                                            </div>
+                                                        
+                                                        <div className='form-buttons'>
+                                                            <button type='submit' className='btn btn-primary' onClick={deleteRow}>Delete</button>
+                                                            <button type='button' className='btn btn-secondary' onClick={handleDeleteDiscard}> Discard </button>
+                                                        </div>
+                                                         
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            )}
                     </section>
                 </main>
             </div>
