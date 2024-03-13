@@ -324,13 +324,15 @@ function BclearanceAdmin() {
         pickUpDate: editDate,
         status: editStatus,
       };
+      
+      // Ensure requestBody is an object with updatedData property
       const requestBody = {
-        ...updatedData,
+        updatedData: updatedData,
       };
-
+  
       const response = await axios.put(
         `https://dbarangay.onrender.com/update/barangaycertificate/${selectedRowData}`,
-        updatedData
+        requestBody
       );
       console.log(response.data);
       fetchData();
@@ -340,7 +342,7 @@ function BclearanceAdmin() {
       // Handle error, show an error message to the user
     }
   };
-
+  
   const navigate = useNavigate();
 
   const handleSignOut = () => {

@@ -71,15 +71,19 @@ exports.updateCertificate = async (req, res) => {
   const { updatedData } = req.body;
 
   try {
+    if (!updatedData) {
+      return res.status(400).json({ message: "Invalid request body" });
+    }
+
     const updatedUserCertificate = await userCertificate.findByIdAndUpdate(
       id,
       {
         residentName: updatedData.residentName,
         address: updatedData.address,
-        reasonOfRequest:  updatedData.reasonOfRequest,
-        pickUpDate:  updatedData.pickUpDate,
-        modeOfPayment:  updatedData.modeOfPayment,
-        reference:  updatedData.reference,
+        reasonOfRequest: updatedData.reasonOfRequest,
+        pickUpDate: updatedData.pickUpDate,
+        modeOfPayment: updatedData.modeOfPayment,
+        reference: updatedData.reference,
       },
       { new: true }
     );
@@ -110,6 +114,7 @@ exports.updateCertificate = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 exports.deleteCertificate = async (req, res) => {
   try {
