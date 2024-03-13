@@ -42,8 +42,10 @@ module.exports = {
       }
     }
     catch (e) {
-      res.json("notexist")
+      console.error(e);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
+    
   },
 
   getAllBarangayIds: async (req, res) => {
