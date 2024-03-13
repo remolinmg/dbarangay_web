@@ -2,6 +2,11 @@ const userBusinessClearance = require('../models/businessClearanceModule');
 const StaffLogs = require("../models/staffLogsModel");
 
 // Handle POST request
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  // Handle the error or log it
+});
+
 exports.createBusinessClearance = async (req, res) => {
   const { businessName, address, residentName, userId, type, reasonOfRequest, pickUpDate, modeOfPayment, reference, tFirstName, tLastName } = req.body;
 
@@ -44,9 +49,11 @@ exports.createBusinessClearance = async (req, res) => {
       await userBusinessClearance.insertMany([data]);
     }
   } catch (e) {
+    console.error('Error in createBusinessClearance:', e);
     res.status(500).json("error");
   }
 };
+
 
 // Handle GET request
 exports.getBusinessClearances = async (req, res) => {
