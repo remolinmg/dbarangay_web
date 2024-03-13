@@ -469,7 +469,7 @@ function BconstuctionAdmin() {
             <li className={`${isDropdownOpen ? 'hide' : ''}`}>
               <Link to="/staff-logs-admin" className="nav-link">
                 <BsTerminal className="sidebaricon" />
-                <span className="sidebarlabel ms-1 d-none d-sm-inline">Logs</span>
+                <span className="sidebarlabel ms-1 d-none d-sm-inline">Log Trail</span>
               </Link>
             </li>
             <li className={`${isDropdownOpen ? 'hide' : ''}`}>
