@@ -68,16 +68,19 @@ exports.getCertificates = async (req, res) => {
 
 exports.updateCertificate = async (req, res) => {
   const id = req.params.id;
-  const { updatedData } = (req.body = req.body);
+  const { updatedData } = req.body;
 
   try {
     const updatedUserCertificate = await userCertificate.findByIdAndUpdate(
       id,
-      updatedData.residentName,
-      updatedData.address,
-      updatedData.residentName,
-      updatedData.residentName,
-      updatedData.residentName,
+      {
+        residentName: updatedData.residentName,
+        address: updatedData.address,
+        reasonOfRequest:  updatedData.reasonOfRequest,
+        pickUpDate:  updatedData.pickUpDate,
+        modeOfPayment:  updatedData.modeOfPayment,
+        reference:  updatedData.reference,
+      },
       { new: true }
     );
 
@@ -85,6 +88,7 @@ exports.updateCertificate = async (req, res) => {
       return res.status(404).json({ message: "Request not found" });
     }
 
+    // Add your custom data logging logic if needed
     // const date = new Date();
     // const accessDate = date.toISOString().slice(0, 10);
     // const accessTime =
