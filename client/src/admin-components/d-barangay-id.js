@@ -164,7 +164,8 @@ function Biddmin() {
    
     const [rowToDelete, setRowToDelete] = useState('');
        const [reasonDelete, setReasonDelete] = useState('');
-   
+
+       
        const deleteModal = (val) =>{
            setRowToDelete(val._id);
            setShowDeleteForm(true);
