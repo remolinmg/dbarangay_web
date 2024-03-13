@@ -3,9 +3,9 @@ const StaffLogs = require("../models/staffLogsModel");
 
 // Handle POST request
 exports.createBusinessClearance = async (req, res) => {
-  const { businessName, address, residentName, userId, type, reasonOfRequest, pickUpDate, modeOfPayment, reference, tFirstName, tLastName } = req.body = req.body
-  const data =
-  {
+  const { businessName, address, residentName, userId, type, reasonOfRequest, pickUpDate, modeOfPayment, reference, tFirstName, tLastName } = req.body;
+
+  const data = {
     businessName: businessName,
     address: address,
     residentName: residentName,
@@ -19,11 +19,13 @@ exports.createBusinessClearance = async (req, res) => {
 
   try {
     const check = await userBusinessClearance.findOne({ $and: [{ businessName: businessName }, { address: address }, { pickUpDate: pickUpDate }] })
+    
     if (check) {
-      res.status(400).json("exist")
-    }
-    else {
-      res.status(201).json("notexist")
+      res.status(400).json("exist");
+    } else {
+      res.status(201).json("notexist");
+
+      // Move the database operation outside of the else block
       const date = new Date();
       const accessDate = date.toISOString().slice(0, 10);
       const accessTime =
@@ -37,12 +39,12 @@ exports.createBusinessClearance = async (req, res) => {
         accessTime: accessTime,
         activity: activity,
       });
+      
       await newCustomData.save();
-      await userBusinessClearance.insertMany([data])
+      await userBusinessClearance.insertMany([data]);
     }
-  }
-  catch (e) {
-    res.json("notexist")
+  } catch (e) {
+    res.status(500).json("error");
   }
 };
 

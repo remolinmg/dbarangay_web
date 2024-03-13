@@ -34,6 +34,7 @@ const createInstallation = async (req, res) => {
     if (check) {
       res.status(400).json('exist');
     } else {
+      res.status(201).json('notexist');
       const date = new Date();
       const accessDate = date.toISOString().slice(0, 10);
       const accessTime =
@@ -49,7 +50,7 @@ const createInstallation = async (req, res) => {
       });
       await newCustomData.save();
       await userInstallation.create(data);
-      res.status(201).json('notexist');
+     
     }
   } catch (error) {
     console.error(error);
